@@ -13,6 +13,7 @@ namespace projectLudo
         {
             Console.WriteLine("Jó munkát. =)");
             // báááááá
+            Console.ReadLine();
         }
     }
 }
