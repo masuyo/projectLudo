@@ -5,4 +5,4 @@
 - working sign up
 - horizontal menu
 - tesztelési céllal tartalmaz egy Users adatbázis táblát
-- TODO: UserID automatikusan generálódjon
+- TODO: UserID automatikusan generálódjon, login
