@@ -8,6 +8,45 @@ namespace pageLudo.Controllers
 {
     public class UserController : Controller
     {
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(Users u)
+        {
+            if (ModelState.IsValid)
+            {
+                using (UserDatabaseEntities ude = new UserDatabaseEntities())
+                {
+                    // kikeresi az adatbázisból a beadott adatok alapján a usert, ha megtalálja, Sessiont kap
+                    var obj = ude.Users.Where(a => a.Username.Equals(u.Username) && a.Password.Equals(u.Password)).FirstOrDefault();
+                    if (obj != null)
+                    {
+                        Session["LogedUserID"] = obj.UserID.ToString();
+                        Session["LogedUsername"] = obj.Username.ToString();
+                        return RedirectToAction("AfterLogin");
+                    }
+                }
+            }
+            return View(u);
+        }
+
+        public ActionResult AfterLogin()
+        {
+            if (Session["LogedUserID"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
         public ActionResult Register()
         {
             return View();
@@ -26,7 +65,7 @@ namespace pageLudo.Controllers
                     ude.SaveChanges();
                     ModelState.Clear();
                     u = null;
-                    ViewBag.Message = "Registration done";
+                    ViewBag.Message = "Registration successful";
                 }
             }
             return View(u);

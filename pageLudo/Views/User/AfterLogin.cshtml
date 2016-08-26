@@ -1,0 +1,14 @@
+﻿@model pageLudo.Users
+
+@{
+    ViewBag.Title = "AfterLogin";
+}
+
+<h2>AfterLogin</h2>
+
+@if (Session["LogedUsername"] != null)
+{
+    <text>
+        Welcome @Session["LogedUsername"].ToString()
+    </text>
+}
