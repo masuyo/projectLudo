@@ -8,6 +8,10 @@ namespace Game.GenericInterfacesandClasses
 {
     abstract public class Action
     {
-        public Player Doer { get; set; }
+        public readonly Player doer;
+        public Action(Player newDoer)
+        {
+            doer = newDoer;
+        }
     }
 }

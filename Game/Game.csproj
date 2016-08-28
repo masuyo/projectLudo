@@ -40,16 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LudoAction.cs" />
+    <Compile Include="LudoActions\LudoAction.cs" />
     <Compile Include="GenericInterfacesandClasses\Action.cs" />
     <Compile Include="GenericInterfacesandClasses\Game.cs" />
     <Compile Include="GenericInterfacesandClasses\IGameManager.cs" />
+    <Compile Include="LudoActions\LudoActionType.cs" />
     <Compile Include="LudoGame.cs" />
     <Compile Include="GenericInterfacesandClasses\Player.cs" />
     <Compile Include="LudoGameManager.cs" />
     <Compile Include="LudoPlayer.cs" />
+    <Compile Include="LudoActions\MoveLudoAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PuppetColor.cs" />
+    <Compile Include="LudoActions\ThrowLudoAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public  class LudoAction : GenericInterfacesandClasses.Action
-    {
-    }
+    public enum LudoActionType { Throw,Move}
 }
