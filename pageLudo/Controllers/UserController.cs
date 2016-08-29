@@ -1,4 +1,5 @@
-﻿using System;
+﻿using pageLudo.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,7 +17,7 @@ namespace pageLudo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(Users u)
+        public ActionResult Login(LoginUser u)
         {
             if (ModelState.IsValid)
             {
