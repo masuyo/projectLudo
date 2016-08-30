@@ -16,28 +16,31 @@ namespace pageLudo.Controllers
         }
 
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Login(LoginUser u) // Username helyett emaillel lép be
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        using (DatabaseEntities DE = new DatabaseEntities())
-        //        {
-                    
-        //            var repo = new Repository.TableRepositories.UsersRepository(DE);
-        //            // kikeresi az adatbázisból a beadott adatok alapján a usert, ha megtalálja, Sessiont kap
-        //            var obj = ude.Users.Where(a => a.Username.Equals(u.Username) && a.Password.Equals(u.Password)).FirstOrDefault();
-        //            if (obj != null)
-        //            {
-        //                Session["LogedUserID"] = obj.UserID.ToString();
-        //                Session["LogedUsername"] = obj.Username.ToString();
-        //                return RedirectToAction("AfterLogin");
-        //            }
-        //        }
-        //    }
-        //    return View(u);
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginUser u) // Username helyett emaillel lép be
+        {
+            if (ModelState.IsValid)
+            {
+                using (DatabaseEntities DE = new DatabaseEntities())
+                {
+
+                    var repo = new Repository.TableRepositories.UsersRepository(DE);
+                    // kikeresi az adatbázisból a beadott adatok alapján a usert, ha megtalálja, Sessiont kap
+                    // TODO: repositoryba kell egy lekérdezés Email és Password alapján, ami visszaadja az objectet,
+                    // illetve megoldandó, h tudja, h a pw vagy az email volt-e rossz
+
+                    //var obj = ude.Users.Where(a => a.Username.Equals(u.Username) && a.Password.Equals(u.Password)).FirstOrDefault();
+                    //if (obj != null)
+                    //{
+                    //    Session["LogedUserID"] = obj.UserID.ToString();
+                    //    Session["LogedUsername"] = obj.Username.ToString();
+                    //    return RedirectToAction("AfterLogin");
+                    //}
+                }
+            }
+            return View(u);
+        }
 
         public ActionResult AfterLogin()
         {
@@ -62,7 +65,6 @@ namespace pageLudo.Controllers
         {
             if (ModelState.IsValid)
             {
-                // hozzáadja a felhasználót az adatbázishoz
                 using (DatabaseEntities DE = new DatabaseEntities())
                 {
                     var repo = new Repository.TableRepositories.UsersRepository(DE);
