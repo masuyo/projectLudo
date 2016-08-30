@@ -23,12 +23,11 @@ namespace pageLudo
 
         [Required(ErrorMessage = "Missing password", AllowEmptyStrings = false)]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
-        [StringLength(50,MinimumLength = 6,ErrorMessage = "Password must be between 6 and 50 characters.")]
         public string Password { get; set; }
 
         // nincs benne az adatbázisban, csak a regisztrációhoz kell
         [DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
-        [Compare("Password",ErrorMessage = "Does not match!")]
+        [Compare("Password", ErrorMessage = "Does not match!")]
         public string ConfirmPassword { get; set; }
 
         [RegularExpression(@"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$",
