@@ -1,4 +1,5 @@
-﻿using pageLudo.Models;
+﻿using Entities;
+using pageLudo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,26 +16,28 @@ namespace pageLudo.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginUser u)
-        {
-            if (ModelState.IsValid)
-            {
-                using (UserDatabaseEntities ude = new UserDatabaseEntities())
-                {
-                    // kikeresi az adatbázisból a beadott adatok alapján a usert, ha megtalálja, Sessiont kap
-                    var obj = ude.Users.Where(a => a.Username.Equals(u.Username) && a.Password.Equals(u.Password)).FirstOrDefault();
-                    if (obj != null)
-                    {
-                        Session["LogedUserID"] = obj.UserID.ToString();
-                        Session["LogedUsername"] = obj.Username.ToString();
-                        return RedirectToAction("AfterLogin");
-                    }
-                }
-            }
-            return View(u);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Login(LoginUser u) // Username helyett emaillel lép be
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        using (DatabaseEntities DE = new DatabaseEntities())
+        //        {
+                    
+        //            var repo = new Repository.TableRepositories.UsersRepository(DE);
+        //            // kikeresi az adatbázisból a beadott adatok alapján a usert, ha megtalálja, Sessiont kap
+        //            var obj = ude.Users.Where(a => a.Username.Equals(u.Username) && a.Password.Equals(u.Password)).FirstOrDefault();
+        //            if (obj != null)
+        //            {
+        //                Session["LogedUserID"] = obj.UserID.ToString();
+        //                Session["LogedUsername"] = obj.Username.ToString();
+        //                return RedirectToAction("AfterLogin");
+        //            }
+        //        }
+        //    }
+        //    return View(u);
+        //}
 
         public ActionResult AfterLogin()
         {
@@ -55,18 +58,20 @@ namespace pageLudo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(Users u)
+        public ActionResult Register(RegisterUser u)
         {
             if (ModelState.IsValid)
             {
                 // hozzáadja a felhasználót az adatbázishoz
-                using (UserDatabaseEntities ude = new UserDatabaseEntities())
+                using (DatabaseEntities DE = new DatabaseEntities())
                 {
-                    ude.Users.Add(u);
-                    ude.SaveChanges();
+                    var repo = new Repository.TableRepositories.UsersRepository(DE);
+                    if (repo.Register(u.Username, u.Password, u.EmailID))
+                    {
+                        ViewBag.Message = "Registration successful";
+                    }
                     ModelState.Clear();
                     u = null;
-                    ViewBag.Message = "Registration successful";
                 }
             }
             return View(u);

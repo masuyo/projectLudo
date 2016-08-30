@@ -4,11 +4,11 @@ drop sequence seq_users;
 
 create sequence seq_users as int start with 1 increment by 1;
 
-create table users(
-	id		int primary key constraint pk_user default next value for seq_users,
-	name	varchar(100) not null,
-	pass	varchar(100) not null,
-	email	varchar(100) not null,
-	status	int,
-	token	int
+create table Users(
+	Id		int primary key constraint pk_user default next value for seq_users,
+	Name	varchar(100) not null,
+	Pass	varchar(100) not null,
+	Email	varchar(100) not null,
+	Status	int,
+	Token	int
 );
