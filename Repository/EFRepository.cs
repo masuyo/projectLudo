@@ -48,7 +48,7 @@ namespace Repository
         abstract public TEntity GetById(int id);
         
 
-        public void Insert(TEntity newentity)
+        virtual public void Insert(TEntity newentity)
         {
             context.Set<TEntity>().Add(newentity);
             context.Entry(newentity).State = EntityState.Added;
