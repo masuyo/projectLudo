@@ -22,9 +22,6 @@ namespace Repository.TableRepositories
 
         public User GetByName(string name)
         {
-            //checkolom
-            //ha van akkor beállítom aktívra
-            //return sikerült/nem sikerült
             return Get(akt => akt.Username == name).SingleOrDefault();
         }
 

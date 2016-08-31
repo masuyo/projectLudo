@@ -1,0 +1,90 @@
+﻿drop table [InvationDesktop];
+drop table [FriendConnections];
+drop table [Step];
+drop table [Man];
+drop table [Player];
+drop table [Game];
+drop table [User];
+
+
+drop sequence seq_users;
+drop sequence seq_games;
+drop sequence seq_players;
+drop sequence seq_man;
+drop sequence seq_steps;
+drop sequence seq_friendconns;
+drop sequence seq_invdesks;
+
+
+create sequence seq_users as int start with 1 increment by 1;
+create sequence seq_games as int start with 1 increment by 1;
+create sequence seq_players as int start with 1 increment by 1;
+create sequence seq_man as int start with 1 increment by 1;
+create sequence seq_steps as int start with 1 increment by 1;
+create sequence seq_friendconns as int start with 1 increment by 1;
+create sequence seq_invdesks as int start with 1 increment by 1;
+
+create table [User](
+	UserID		int primary key constraint pk_user default next value for seq_users,
+	Username	varchar(50) not null,
+	[Password]	varchar(20) not null,
+	EmailID		varchar(100) not null,
+	[Status]		varchar(10),
+	Token		varchar(10)
+);
+
+create table [Game](
+	GameID		int primary key constraint pk_game default next value for seq_games,
+	[Start]		datetime,
+	[End]		datetime,
+	Turns		int
+);
+
+create table [Player](
+	PlayerID	int primary key constraint pk_player default next value for seq_players,
+	UserID		int references [User](UserID) not null,
+	GameID		int references [Game](GameID) not null,
+	IsWinner	int,
+	Dice1		int,
+	Dice2		int,
+	[Status]	varchar(10),
+	Color		varchar(10)
+);
+
+create table [Man](
+	ManID		int primary key constraint pk_man default next value for seq_man,
+	PlayerID	int references [Player](PlayerID) not null,
+	Pozition	int
+);
+
+create table [Step](
+	StepID		int primary key constraint pk_step default next value for seq_steps,
+	ManID		int	references [Man](ManID) not null,
+	FromPoz		int,
+	ToPoz		int,
+	[Time]		datetime
+);
+
+create table [FriendConnections](
+	FriendConnID	int primary key constraint pk_friendconn default next value for friendconns,
+	UserID			int references [User](UserID) not null,
+	FriendUserID	int	references [User](UserID) not null
+);
+
+create table [InvationDesktop](
+	InvID		int primary key constraint pk_invdesks default next value for seq_invdesks,
+	AdminUserID	int	references [User](UserID) not null,
+	DName		varchar(50),
+	DPass		varchar(50),
+	User1		int references [User](UserID),
+	User2		int references [User](UserID),
+	User3		int references [User](UserID),
+);
+
+
+GO
+insert into [User](Username,Password,EmailID,Status,Token) values('Zoli','asd123','zoli@email.com','off','token');
+insert into [User](Username,Password,EmailID,Status,Token) values('Gabi','asd123','gabi@email.com','off','token');
+insert into [User](Username,Password,EmailID,Status,Token) values('Erika','asd123','erika@email.com','off','token');
+insert into [User](Username,Password,EmailID,Status,Token) values('Project','asd123','project@email.com','off','token');
+insert into [User](Username,Password,EmailID,Status,Token) values('Ludo','asd123','ludo@email.com','off','token');

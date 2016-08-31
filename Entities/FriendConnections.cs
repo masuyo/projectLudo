@@ -12,13 +12,13 @@ namespace Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class users
+    public partial class FriendConnections
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string pass { get; set; }
-        public string email { get; set; }
-        public Nullable<int> status { get; set; }
-        public Nullable<int> token { get; set; }
+        public int FriendConnID { get; set; }
+        public int UserID { get; set; }
+        public int FriendUserID { get; set; }
+    
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }
