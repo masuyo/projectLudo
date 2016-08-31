@@ -105,13 +105,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Database_log.ldf">
-      <DependentUpon>Database.mdf</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="DataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DataModel.edmx</DependentUpon>

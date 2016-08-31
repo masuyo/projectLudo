@@ -27,8 +27,8 @@ namespace pageLudo.Controllers
 
                     var repo = new Repository.TableRepositories.UsersRepository(DE);
                     // kikeresi az adatbázisból a beadott adatok alapján a usert, ha megtalálja, Sessiont kap
-                    // TODO: repositoryba kell egy lekérdezés Email és Password alapján, ami visszaadja az objectet,
-                    // illetve megoldandó, h tudja, h a pw vagy az email volt-e rossz
+                    // TODO: repositoryba kell egy lekérdezés Email és Password alapján, true, ha legalább az email megvan,
+                    // én csekkolom, h a jelszó egyezik-e
 
                     //var obj = ude.Users.Where(a => a.Username.Equals(u.Username) && a.Password.Equals(u.Password)).FirstOrDefault();
                     //if (obj != null)
