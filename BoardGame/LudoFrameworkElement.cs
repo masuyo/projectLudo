@@ -11,8 +11,6 @@ namespace BoardGame
 {
     class LudoFrameworkElement : FrameworkElement
     {
-
-        private bool fullBoardRender;
         List<IMan> menList;
         int[,] fieldIDMatrix;
         const int DIM = 11;
@@ -21,11 +19,12 @@ namespace BoardGame
         int X_offset = 0;
         int Y_offset = 0;
 
+        TestServerMsg tmsg;
+        List<IMan> newmenList;
 
 
         public LudoFrameworkElement()
         {
-            fullBoardRender = true;
             menList = new List<IMan>();
             fieldIDMatrix = new int[DIM, DIM] {
                 {  11, 12, 0 , 0 ,118,119,120, 0 , 0 , 21, 22},
@@ -43,12 +42,21 @@ namespace BoardGame
 
             this.Loaded += LudoFrameworkElement_Loaded;
             this.MouseDown += LudoFrameworkElement_MouseDown;
-
+            tmsg = new TestServerMsg();
+            menList = tmsg.MenList;
         }
 
+
         private void LudoFrameworkElement_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            throw new NotImplementedException();
+        {            
+            tmsg.ChangePoz();
+            newmenList = tmsg.MenList;
+            if (tmsg.OnManHit)
+            {
+                Console.WriteLine("FULL");
+            }
+
+            InvalidateVisual();
         }
         private void LudoFrameworkElement_Loaded(object sender, RoutedEventArgs e)
         {
@@ -56,7 +64,6 @@ namespace BoardGame
             Focus();
 
             InvalidateVisual();
-            //fullBoardRender = false;
         }
 
         private Point GetXY(int search)
@@ -74,56 +81,6 @@ namespace BoardGame
                 }
             }
             return coordinate;
-        }
-        private void MoveMan(int from, int where)
-        {
-            DeleteMan(from);
-            DrawMan(from, where);
-        }
-        private Geometry DrawMan(int from, int where)
-        {
-            EllipseGeometry ell = new EllipseGeometry();
-
-            double X_man = (GetXY(where).X) * width / DIM; //width / DIM + 
-            double Y_man = (GetXY(where).Y) * height / DIM; //height / DIM + 
-            double W_man = width / DIM / DIM * (DIM - 2);
-            double H_man = height / DIM / DIM * (DIM - 2);
-
-            ell = new EllipseGeometry(new Rect(X_man, Y_man, W_man, H_man));
-            //Console.WriteLine(W_man + " - " + H_man);
-            //Console.WriteLine(X_man + " : " + Y_man);
-
-            return ell;
-        }
-        private Geometry DrawManGraphics(int from, int where, double resize_param)
-        {
-            EllipseGeometry ell = new EllipseGeometry();
-
-            double X_man = (GetXY(where).X) * width / DIM; //width / DIM + 
-            double Y_man = (GetXY(where).Y) * height / DIM; //height / DIM + 
-            double W_man = width / DIM / DIM * (DIM - resize_param);
-            double H_man = height / DIM / DIM * (DIM - resize_param);
-
-            ell = new EllipseGeometry(new Rect(X_man, Y_man, W_man, H_man));
-            //Console.WriteLine(W_man + " - " + H_man);
-            //Console.WriteLine(X_man + " : " + Y_man);
-
-            return ell;
-        }
-        private void DeleteMan(int from) { DrawField(from); }
-
-        private Geometry DrawField(int where)
-        {
-            RectangleGeometry rec = new RectangleGeometry();
-
-            double X_field = X_offset + (GetXY(where).X * width / DIM);
-            double Y_field = Y_offset + (GetXY(where).Y * height / DIM);
-            double W_field = width / DIM;
-            double H_field = height / DIM;
-
-            rec = new RectangleGeometry(new Rect(X_field, Y_field, W_field, H_field));
-
-            return rec;
         }
         private Brush IDToColor(int ID)
         {
@@ -174,80 +131,118 @@ namespace BoardGame
                 default: return Brushes.DimGray;
             }
         }
+        private Brush PlayerColorToBrushColor(PlayerColor color)
+        {
+            switch (color)
+            {
+                case PlayerColor.RED:
+                    return Brushes.Red;
+                case PlayerColor.GREEN:
+                    return Brushes.Green;
+                case PlayerColor.BLUE:
+                    return Brushes.Blue;
+                case PlayerColor.YELLOW:
+                    return Brushes.Yellow;
+                default:
+                    return null;
+            }
+        }
+
+
+        private void DeleteMan(DrawingContext drawingContext, int from)
+        {
+            if (from != 0)
+            {
+                if (from / 10 < 5)
+                {
+                    drawingContext.DrawGeometry(Brushes.Black, new Pen(IDToColor(from), 1), DrawField(from));
+                }
+                else
+                {
+                    drawingContext.DrawGeometry(IDToColor(from) == Brushes.DimGray ? Brushes.Transparent : IDToColor(from), new Pen(IDToColor(from), 1), DrawField(from));
+                }
+            }
+        }
+        private Geometry DrawManGraphics(int where, double resize_param)
+        {
+            EllipseGeometry ell = new EllipseGeometry();
+
+            double X_man = (GetXY(where).X) * width / DIM + width / DIM / 4; ; //width / DIM + 
+            double Y_man = (GetXY(where).Y) * height / DIM + width / DIM / 4; //height / DIM + 
+            double W_man = width / DIM / DIM * (DIM - resize_param);
+            double H_man = height / DIM / DIM * (DIM - resize_param);
+
+            ell = new EllipseGeometry(new Rect(X_man, Y_man, W_man, H_man));
+            //Console.WriteLine(W_man + " - " + H_man);
+            //Console.WriteLine(X_man + " : " + Y_man);
+
+            return ell;
+        }
+        private Geometry DrawField(int where)
+        {
+            RectangleGeometry rec = new RectangleGeometry();
+
+            double X_field = X_offset + (GetXY(where).X * width / DIM);
+            double Y_field = Y_offset + (GetXY(where).Y * height / DIM);
+            double W_field = width / DIM;
+            double H_field = height / DIM;
+
+            rec = new RectangleGeometry(new Rect(X_field, Y_field, W_field, H_field));
+
+            return rec;
+        }
+
+
+        private void MoveMan(DrawingContext drawingContext, int from, int where, PlayerColor color)
+        {
+            DeleteMan(drawingContext, from);
+            Brush drawingBrush = PlayerColorToBrushColor(color);
+
+            drawingContext.DrawGeometry(drawingBrush, new Pen(Brushes.Black, 2), DrawManGraphics(where, 2));
+            drawingContext.DrawGeometry(drawingBrush, new Pen(Brushes.Black, 1), DrawManGraphics(where, 4));
+            drawingContext.DrawGeometry(drawingBrush, new Pen(Brushes.Black, 1), DrawManGraphics(where, 6.5));
+            drawingContext.DrawGeometry(drawingBrush, new Pen(Brushes.Black, 1), DrawManGraphics(where, 7));
+        }
         private void Init(DrawingContext drawingContext)
         {
-            foreach (int item in fieldIDMatrix)
+            foreach (int item in fieldIDMatrix) //drawing fields
             {
                 if (item != 0)
                 {
                     if (item / 10 < 5)
                     {
-                        EllipseGeometry tmp = (EllipseGeometry)DrawMan(1, item);
+                        //EllipseGeometry tmp = (EllipseGeometry)DrawManGraphics(item,2);
+                        //drawingContext.DrawGeometry(Brushes.Transparent, new Pen(IDToColor(item), 1), new RectangleGeometry(new Rect(tmp.Bounds.Left, tmp.Bounds.Top, tmp.Bounds.Width, tmp.Bounds.Height)));
 
-                        drawingContext.DrawGeometry(
-                            Brushes.Transparent,
-                            new Pen(IDToColor(item), 1),
-                            new RectangleGeometry(
-                                new Rect(
-                                    tmp.Bounds.Left,
-                                    tmp.Bounds.Top,
-                                    tmp.Bounds.Width,
-                                    tmp.Bounds.Height)
-                                    )
-                                 );
-                        drawingContext.DrawGeometry(IDToColor(item), new Pen(Brushes.Black, 2), DrawMan(1, item));
-                        //decor...
-                        drawingContext.DrawGeometry(IDToColor(item), new Pen(Brushes.Black, 1), DrawManGraphics(1, item, 3));
-                        drawingContext.DrawGeometry(IDToColor(item), new Pen(Brushes.Black, 0.5), DrawManGraphics(1, item, 6.5));
-                        drawingContext.DrawGeometry(IDToColor(item), new Pen(Brushes.Black, 1), DrawManGraphics(1, item, 7));
-                        //...
-
-                        //Console.WriteLine(IDToColor(item).ToString());
-                        //Console.WriteLine(
-                        //    DrawMan((int)GetXY(item).X, (int)GetXY(item).Y).Bounds.Left
-                        //    + " - "
-                        //    + DrawMan((int)GetXY(item).X, (int)GetXY(item).Y).Bounds.Top
-                        //    + " : "
-                        //    + DrawMan((int)GetXY(item).X, (int)GetXY(item).Y).Bounds.Width
-                        //    + " - "
-                        //    + DrawMan((int)GetXY(item).X, (int)GetXY(item).Y).Bounds.Height
-                        //    );
+                        drawingContext.DrawGeometry(Brushes.Black, new Pen(IDToColor(item), 1), DrawField(item));
                     }
                     else
                     {
-                        if (IDToColor(item) == Brushes.DimGray)
-                        {
-                            drawingContext.DrawGeometry(Brushes.Transparent, new Pen(IDToColor(item), 1), DrawField(item));
-                        }
-                        else
-                        {
-                            drawingContext.DrawGeometry(IDToColor(item), new Pen(IDToColor(item), 1), DrawField(item));
-                        }
-                        //Console.WriteLine(
-                        //    DrawField(item).Bounds.X
-                        //    + " - "
-                        //    + DrawField(item).Bounds.X
-                        //    + " : "
-                        //    + DrawField(item).Bounds.Width
-                        //    + " - "
-                        //    + DrawField(item).Bounds.Height
-                        //    );
+                        drawingContext.DrawGeometry(IDToColor(item) == Brushes.DimGray ? Brushes.Transparent : IDToColor(item), new Pen(IDToColor(item), 1), DrawField(item));
                     }
                 }
             }
+            foreach (IMan m in menList) //drawing men
+            {
+                MoveMan(drawingContext, 0, m.Poz, m.Player.Color);
+            }
         }
+
         protected override void OnRender(DrawingContext drawingContext)
         {
-            base.OnRender(drawingContext);
-
-            if (fullBoardRender)
+            Init(drawingContext);
+            Console.WriteLine("Init");
+            if (newmenList != null)
             {
-                Init(drawingContext);
-            }
-            else
-            {
-                Console.WriteLine("TODO");
-                //MoveMan();
+                for (int i = 0; i < menList.Count; i++)
+                {
+                    //if (menList[i].Poz != newmenList[i].Poz) ///TODO: find bug ALWAYS a match -.-
+                    //{
+                    //    Console.WriteLine("TODO");
+                    Console.WriteLine("moved from {0} moved to {1} ", menList[i].Poz, newmenList[i].Poz);
+                    MoveMan(drawingContext, menList[i].Poz, newmenList[i].Poz, menList[i].Player.Color);
+                    //}
+                }
             }
 
         }

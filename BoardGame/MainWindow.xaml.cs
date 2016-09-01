@@ -43,7 +43,7 @@ namespace BoardGame
                 ///TODO : send pswd and uname
                 ///
 
-                ConnectToGameWindow rooms = new ConnectToGameWindow();
+                ConnectToGameWindow rooms = new ConnectToGameWindow(uname);
                 rooms.ShowDialog();
             }
         }

@@ -19,13 +19,15 @@ namespace BoardGame
     /// </summary>
     public partial class ConnectToGameWindow : Window
     {
-        public ConnectToGameWindow()
+        string username;
+        public ConnectToGameWindow(string username)
         {
             InitializeComponent();
+            this.username = username;
         }
         private void LBL_Start_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            LudoWindow ludo = new LudoWindow();
+            LudoWindow ludo = new LudoWindow(username);
             ludo.ShowDialog();
         }
     }

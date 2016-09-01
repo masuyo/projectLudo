@@ -12,6 +12,7 @@ namespace BoardGame.Interfaces
         string Msg { get; }
         List<IMan> MenList { get; }
         bool End { get; }
+        bool OnManHit { get; } //redraw full visual
         bool Reroll { get; }
 
         int Dice1 { get; }
