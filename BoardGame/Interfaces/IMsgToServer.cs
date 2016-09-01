@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.Interfaces.RoomToGame
+namespace BoardGame.Interfaces
 {
-    interface IRoomAddToServer
+    interface IMsgToServer
     {
-        string Name { get; }
-        string ID { get; }
+        IMan ManMsg { get; set; }
+        int PlayerID { get; set; }
     }
 }

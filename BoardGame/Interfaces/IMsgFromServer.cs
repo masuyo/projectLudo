@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.Interfaces.Ludo
+namespace BoardGame.Interfaces
 {
     interface IMsgFromServer
     {

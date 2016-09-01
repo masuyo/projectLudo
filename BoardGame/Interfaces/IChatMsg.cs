@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace BoardGame.Interfaces
 {
-    class IRoom
+    interface IChatMsg
     {
-        int id;
-        public int ID { get; }
-        public string Name { get; }
-        public string Password { get; }
+        string Name { get; }
+        string SentBy { get; }
+        string Time { get; }
     }
 }

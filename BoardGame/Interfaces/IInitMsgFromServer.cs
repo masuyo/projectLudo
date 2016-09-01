@@ -1,4 +1,4 @@
-﻿namespace BoardGame.Interfaces.Ludo
+﻿namespace BoardGame.Interfaces
 {
     interface IInitMsgFromServer
     {

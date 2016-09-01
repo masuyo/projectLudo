@@ -66,9 +66,6 @@
     <Compile Include="Interfaces\Login\ILoginMsgFromServer.cs" />
     <Compile Include="Interfaces\Login\ILoginMsgToServer.cs" />
     <Compile Include="Interfaces\Login\IPreLoginMsgFromServer.cs" />
-    <Compile Include="Interfaces\IRoom.cs" />
-    <Compile Include="Interfaces\Rooms\IRoomAddToServer.cs" />
-    <Compile Include="Interfaces\Rooms\IRoomsListFromServer.cs" />
     <Compile Include="TestMan.cs" />
     <Compile Include="TestServerMsg.cs" />
     <Compile Include="ViewModel.cs" />
@@ -93,11 +90,11 @@
     <Compile Include="ConnectToGameWindow.xaml.cs">
       <DependentUpon>ConnectToGameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Ludo\IChatMsg.cs" />
-    <Compile Include="Interfaces\Ludo\IInitMsgFromServer.cs" />
+    <Compile Include="Interfaces\IChatMsg.cs" />
+    <Compile Include="Interfaces\IInitMsgFromServer.cs" />
     <Compile Include="Interfaces\IMan.cs" />
-    <Compile Include="Interfaces\Ludo\IMsgFromServer.cs" />
-    <Compile Include="Interfaces\Ludo\IMsgToServer.cs" />
+    <Compile Include="Interfaces\IMsgFromServer.cs" />
+    <Compile Include="Interfaces\IMsgToServer.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="LudoFrameworkElement.cs" />
     <Compile Include="LudoWindow.xaml.cs">
@@ -140,7 +137,9 @@
   <ItemGroup>
     <Resource Include="Images\l2.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Interfaces\RoomToGame\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
