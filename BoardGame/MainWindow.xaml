@@ -117,7 +117,8 @@
                 SelectionMode="Single" 
                 HorizontalContentAlignment="Center"
                 Grid.Column="1" Grid.Row="1" Margin="10,5" Background="Transparent"
-                BorderBrush="Blue" BorderThickness="1" Foreground="Blue" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" FontSize="16" FontWeight="Bold" ToolTip="Select game!"/> <!--ItemsSource="{Binding Path=GameType}"-->
+                BorderBrush="Blue" BorderThickness="1" Foreground="Blue" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" FontSize="16" FontWeight="Bold" ToolTip="Select game!"/>
+            <!--ItemsSource="{Binding Path=GameType}"-->
 
         </Grid>
     </Grid>
