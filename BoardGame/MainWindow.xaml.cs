@@ -26,9 +26,9 @@ namespace BoardGame
             //ImageBrush imgb = new ImageBrush();
             //imgb.ImageSource = new BitmapImage(new Uri(@"Images\bg3.jpg", UriKind.Relative));
             //this.Background = imgb;
-            ImageBrush imgb = new ImageBrush();
-            imgb.ImageSource = new BitmapImage(new Uri(@"Images\l2.png", UriKind.Relative));
-            this.Background = imgb;
+            //ImageBrush imgb = new ImageBrush();
+            //imgb.ImageSource = new BitmapImage(new Uri(@"Images\l2.png", UriKind.Relative));
+            //this.Background = imgb;
         }
         private void Login_MouseDown(object sender, MouseButtonEventArgs e)
         {

@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public class LudoGame : GenericInterfacesandClasses.Game
+    public class LudoGame : GenericInterfacesandClasses.Game<LudoPlayer>
     {
         public LudoGame(LudoPlayer player1, LudoPlayer player2, LudoPlayer player3, LudoPlayer player4, DateTime newcreationtime) : base(player1,player2,player3,player4)
         {
             Rounds = 0;
             creationTime = newcreationtime;
+            nextplayer = Players.Where(akt => akt.sequence == 1).SingleOrDefault();
         }
 
-        public GenericInterfacesandClasses.Player nextplayer { get; set; }
+        public LudoPlayer nextplayer { get; set; }
         public int Rounds { get; set; }
         public DateTime creationTime { get; private set; }
     }

@@ -12,7 +12,7 @@ namespace Game
         public int Puppet { get; private set; }
         public int Amount { get; private set; }
 
-        public MoveLudoAction(Player newDoer, LudoActionType newactiontype,int puppet,int amount) : base(newDoer,LudoActionType.Move)
+        public MoveLudoAction(Player newDoer,int puppet,int amount) : base(newDoer,LudoActionType.Move)
         {
             if (puppet < 1 || puppet > 4) throw new ArgumentException("Not valid puppet number");
             Puppet = puppet;

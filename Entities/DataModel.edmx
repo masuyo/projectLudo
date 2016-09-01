@@ -5,53 +5,591 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="users">
+        <EntityType Name="FriendConnections">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="FriendConnID" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="pass" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="status" Type="int" />
-          <Property Name="token" Type="int" />
+          <Property Name="FriendConnID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="FriendUserID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="GameID" />
+          </Key>
+          <Property Name="GameID" Type="int" Nullable="false" />
+          <Property Name="Start" Type="datetime" />
+          <Property Name="End" Type="datetime" />
+          <Property Name="Turns" Type="int" />
+        </EntityType>
+        <EntityType Name="InvationDesktop">
+          <Key>
+            <PropertyRef Name="InvID" />
+          </Key>
+          <Property Name="InvID" Type="int" Nullable="false" />
+          <Property Name="AdminUserID" Type="int" Nullable="false" />
+          <Property Name="DName" Type="varchar" MaxLength="50" />
+          <Property Name="DPass" Type="varchar" MaxLength="50" />
+          <Property Name="User1" Type="int" />
+          <Property Name="User2" Type="int" />
+          <Property Name="User3" Type="int" />
+        </EntityType>
+        <EntityType Name="Man">
+          <Key>
+            <PropertyRef Name="ManID" />
+          </Key>
+          <Property Name="ManID" Type="int" Nullable="false" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="Pozition" Type="int" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="GameID" Type="int" Nullable="false" />
+          <Property Name="IsWinner" Type="int" />
+          <Property Name="Dice1" Type="int" />
+          <Property Name="Dice2" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="Color" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Step">
+          <Key>
+            <PropertyRef Name="StepID" />
+          </Key>
+          <Property Name="StepID" Type="int" Nullable="false" />
+          <Property Name="ManID" Type="int" Nullable="false" />
+          <Property Name="FromPoz" Type="int" />
+          <Property Name="ToPoz" Type="int" />
+          <Property Name="Time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="EmailID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="Token" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__FriendCon__Frien__74CE504D">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="FriendConnections" Type="Self.FriendConnections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="FriendConnections">
+              <PropertyRef Name="FriendUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FriendCon__UserI__73DA2C14">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="FriendConnections" Type="Self.FriendConnections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="FriendConnections">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvationD__Admin__789EE131">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="InvationDesktop" Type="Self.InvationDesktop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="InvationDesktop">
+              <PropertyRef Name="AdminUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvationD__User1__7993056A">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="InvationDesktop" Type="Self.InvationDesktop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="InvationDesktop">
+              <PropertyRef Name="User1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvationD__User2__7A8729A3">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="InvationDesktop" Type="Self.InvationDesktop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="InvationDesktop">
+              <PropertyRef Name="User2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvationD__User3__7B7B4DDC">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="InvationDesktop" Type="Self.InvationDesktop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="InvationDesktop">
+              <PropertyRef Name="User3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Man__PlayerID__6C390A4C">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Man" Type="Self.Man" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="Man">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player__GameID__68687968">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="GameID" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player__UserID__6774552F">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Step__ManID__70099B30">
+          <End Role="Man" Type="Self.Man" Multiplicity="1" />
+          <End Role="Step" Type="Self.Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Man">
+              <PropertyRef Name="ManID" />
+            </Principal>
+            <Dependent Role="Step">
+              <PropertyRef Name="ManID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DatabaseModelStoreContainer">
-          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FriendConnections" EntityType="Self.FriendConnections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InvationDesktop" EntityType="Self.InvationDesktop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Man" EntityType="Self.Man" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Step" EntityType="Self.Step" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__FriendCon__Frien__74CE504D" Association="Self.FK__FriendCon__Frien__74CE504D">
+            <End Role="User" EntitySet="User" />
+            <End Role="FriendConnections" EntitySet="FriendConnections" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FriendCon__UserI__73DA2C14" Association="Self.FK__FriendCon__UserI__73DA2C14">
+            <End Role="User" EntitySet="User" />
+            <End Role="FriendConnections" EntitySet="FriendConnections" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvationD__Admin__789EE131" Association="Self.FK__InvationD__Admin__789EE131">
+            <End Role="User" EntitySet="User" />
+            <End Role="InvationDesktop" EntitySet="InvationDesktop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvationD__User1__7993056A" Association="Self.FK__InvationD__User1__7993056A">
+            <End Role="User" EntitySet="User" />
+            <End Role="InvationDesktop" EntitySet="InvationDesktop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvationD__User2__7A8729A3" Association="Self.FK__InvationD__User2__7A8729A3">
+            <End Role="User" EntitySet="User" />
+            <End Role="InvationDesktop" EntitySet="InvationDesktop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvationD__User3__7B7B4DDC" Association="Self.FK__InvationD__User3__7B7B4DDC">
+            <End Role="User" EntitySet="User" />
+            <End Role="InvationDesktop" EntitySet="InvationDesktop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Man__PlayerID__6C390A4C" Association="Self.FK__Man__PlayerID__6C390A4C">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Man" EntitySet="Man" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player__GameID__68687968" Association="Self.FK__Player__GameID__68687968">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player__UserID__6774552F" Association="Self.FK__Player__UserID__6774552F">
+            <End Role="User" EntitySet="User" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Step__ManID__70099B30" Association="Self.FK__Step__ManID__70099B30">
+            <End Role="Man" EntitySet="Man" />
+            <End Role="Step" EntitySet="Step" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="users">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="status" Type="Int32" />
-          <Property Name="token" Type="Int32" />
-        </EntityType>
         <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="User" EntityType="DatabaseModel.User" />
+          <EntitySet Name="FriendConnections" EntityType="DatabaseModel.FriendConnections" />
+          <EntitySet Name="Game" EntityType="DatabaseModel.Game" />
+          <EntitySet Name="InvationDesktop" EntityType="DatabaseModel.InvationDesktop" />
+          <EntitySet Name="Man" EntityType="DatabaseModel.Man" />
+          <EntitySet Name="Player" EntityType="DatabaseModel.Player" />
+          <EntitySet Name="Step" EntityType="DatabaseModel.Step" />
+          <AssociationSet Name="FK__FriendCon__Frien__74CE504D" Association="DatabaseModel.FK__FriendCon__Frien__74CE504D">
+            <End Role="User" EntitySet="User" />
+            <End Role="FriendConnections" EntitySet="FriendConnections" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FriendCon__UserI__73DA2C14" Association="DatabaseModel.FK__FriendCon__UserI__73DA2C14">
+            <End Role="User" EntitySet="User" />
+            <End Role="FriendConnections" EntitySet="FriendConnections" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player__GameID__68687968" Association="DatabaseModel.FK__Player__GameID__68687968">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvationD__Admin__789EE131" Association="DatabaseModel.FK__InvationD__Admin__789EE131">
+            <End Role="User" EntitySet="User" />
+            <End Role="InvationDesktop" EntitySet="InvationDesktop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvationD__User1__7993056A" Association="DatabaseModel.FK__InvationD__User1__7993056A">
+            <End Role="User" EntitySet="User" />
+            <End Role="InvationDesktop" EntitySet="InvationDesktop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvationD__User2__7A8729A3" Association="DatabaseModel.FK__InvationD__User2__7A8729A3">
+            <End Role="User" EntitySet="User" />
+            <End Role="InvationDesktop" EntitySet="InvationDesktop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvationD__User3__7B7B4DDC" Association="DatabaseModel.FK__InvationD__User3__7B7B4DDC">
+            <End Role="User" EntitySet="User" />
+            <End Role="InvationDesktop" EntitySet="InvationDesktop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Man__PlayerID__6C390A4C" Association="DatabaseModel.FK__Man__PlayerID__6C390A4C">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Man" EntitySet="Man" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Step__ManID__70099B30" Association="DatabaseModel.FK__Step__ManID__70099B30">
+            <End Role="Man" EntitySet="Man" />
+            <End Role="Step" EntitySet="Step" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player__UserID__6774552F" Association="DatabaseModel.FK__Player__UserID__6774552F">
+            <End Role="User" EntitySet="User" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Token" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FriendConnections" Relationship="DatabaseModel.FK__FriendCon__Frien__74CE504D" FromRole="User" ToRole="FriendConnections" />
+          <NavigationProperty Name="FriendConnections1" Relationship="DatabaseModel.FK__FriendCon__UserI__73DA2C14" FromRole="User" ToRole="FriendConnections" />
+          <NavigationProperty Name="InvationDesktop" Relationship="DatabaseModel.FK__InvationD__Admin__789EE131" FromRole="User" ToRole="InvationDesktop" />
+          <NavigationProperty Name="InvationDesktop1" Relationship="DatabaseModel.FK__InvationD__User1__7993056A" FromRole="User" ToRole="InvationDesktop" />
+          <NavigationProperty Name="InvationDesktop2" Relationship="DatabaseModel.FK__InvationD__User2__7A8729A3" FromRole="User" ToRole="InvationDesktop" />
+          <NavigationProperty Name="InvationDesktop3" Relationship="DatabaseModel.FK__InvationD__User3__7B7B4DDC" FromRole="User" ToRole="InvationDesktop" />
+          <NavigationProperty Name="Player" Relationship="DatabaseModel.FK__Player__UserID__6774552F" FromRole="User" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="FriendConnections">
+          <Key>
+            <PropertyRef Name="FriendConnID" />
+          </Key>
+          <Property Name="FriendConnID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="FriendUserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="DatabaseModel.FK__FriendCon__Frien__74CE504D" FromRole="FriendConnections" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="DatabaseModel.FK__FriendCon__UserI__73DA2C14" FromRole="FriendConnections" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="GameID" />
+          </Key>
+          <Property Name="GameID" Type="Int32" Nullable="false" />
+          <Property Name="Start" Type="DateTime" Precision="3" />
+          <Property Name="End" Type="DateTime" Precision="3" />
+          <Property Name="Turns" Type="Int32" />
+          <NavigationProperty Name="Player" Relationship="DatabaseModel.FK__Player__GameID__68687968" FromRole="Game" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="InvationDesktop">
+          <Key>
+            <PropertyRef Name="InvID" />
+          </Key>
+          <Property Name="InvID" Type="Int32" Nullable="false" />
+          <Property Name="AdminUserID" Type="Int32" Nullable="false" />
+          <Property Name="DName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DPass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User1" Type="Int32" />
+          <Property Name="User2" Type="Int32" />
+          <Property Name="User3" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="DatabaseModel.FK__InvationD__Admin__789EE131" FromRole="InvationDesktop" ToRole="User" />
+          <NavigationProperty Name="User4" Relationship="DatabaseModel.FK__InvationD__User1__7993056A" FromRole="InvationDesktop" ToRole="User" />
+          <NavigationProperty Name="User5" Relationship="DatabaseModel.FK__InvationD__User2__7A8729A3" FromRole="InvationDesktop" ToRole="User" />
+          <NavigationProperty Name="User6" Relationship="DatabaseModel.FK__InvationD__User3__7B7B4DDC" FromRole="InvationDesktop" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Man">
+          <Key>
+            <PropertyRef Name="ManID" />
+          </Key>
+          <Property Name="ManID" Type="Int32" Nullable="false" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="Pozition" Type="Int32" />
+          <NavigationProperty Name="Player" Relationship="DatabaseModel.FK__Man__PlayerID__6C390A4C" FromRole="Man" ToRole="Player" />
+          <NavigationProperty Name="Step" Relationship="DatabaseModel.FK__Step__ManID__70099B30" FromRole="Man" ToRole="Step" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="GameID" Type="Int32" Nullable="false" />
+          <Property Name="IsWinner" Type="Int32" />
+          <Property Name="Dice1" Type="Int32" />
+          <Property Name="Dice2" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Game" Relationship="DatabaseModel.FK__Player__GameID__68687968" FromRole="Player" ToRole="Game" />
+          <NavigationProperty Name="Man" Relationship="DatabaseModel.FK__Man__PlayerID__6C390A4C" FromRole="Player" ToRole="Man" />
+          <NavigationProperty Name="User" Relationship="DatabaseModel.FK__Player__UserID__6774552F" FromRole="Player" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Step">
+          <Key>
+            <PropertyRef Name="StepID" />
+          </Key>
+          <Property Name="StepID" Type="Int32" Nullable="false" />
+          <Property Name="ManID" Type="Int32" Nullable="false" />
+          <Property Name="FromPoz" Type="Int32" />
+          <Property Name="ToPoz" Type="Int32" />
+          <Property Name="Time" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Man" Relationship="DatabaseModel.FK__Step__ManID__70099B30" FromRole="Step" ToRole="Man" />
+        </EntityType>
+        <Association Name="FK__FriendCon__Frien__74CE504D">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.FriendConnections" Role="FriendConnections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="FriendConnections">
+              <PropertyRef Name="FriendUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FriendCon__UserI__73DA2C14">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.FriendConnections" Role="FriendConnections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="FriendConnections">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player__GameID__68687968">
+          <End Type="DatabaseModel.Game" Role="Game" Multiplicity="1" />
+          <End Type="DatabaseModel.Player" Role="Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="GameID" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvationD__Admin__789EE131">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.InvationDesktop" Role="InvationDesktop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="InvationDesktop">
+              <PropertyRef Name="AdminUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvationD__User1__7993056A">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DatabaseModel.InvationDesktop" Role="InvationDesktop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="InvationDesktop">
+              <PropertyRef Name="User1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvationD__User2__7A8729A3">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DatabaseModel.InvationDesktop" Role="InvationDesktop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="InvationDesktop">
+              <PropertyRef Name="User2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvationD__User3__7B7B4DDC">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DatabaseModel.InvationDesktop" Role="InvationDesktop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="InvationDesktop">
+              <PropertyRef Name="User3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Man__PlayerID__6C390A4C">
+          <End Type="DatabaseModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="DatabaseModel.Man" Role="Man" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="Man">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Step__ManID__70099B30">
+          <End Type="DatabaseModel.Man" Role="Man" Multiplicity="1" />
+          <End Type="DatabaseModel.Step" Role="Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Man">
+              <PropertyRef Name="ManID" />
+            </Principal>
+            <Dependent Role="Step">
+              <PropertyRef Name="ManID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player__UserID__6774552F">
+          <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
+          <End Type="DatabaseModel.Player" Role="Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="DatabaseModel.users">
-              <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="pass" ColumnName="pass" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="token" ColumnName="token" />
+        <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DatabaseModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FriendConnections">
+            <EntityTypeMapping TypeName="DatabaseModel.FriendConnections">
+              <MappingFragment StoreEntitySet="FriendConnections">
+                <ScalarProperty Name="FriendUserID" ColumnName="FriendUserID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FriendConnID" ColumnName="FriendConnID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Game">
+            <EntityTypeMapping TypeName="DatabaseModel.Game">
+              <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="Turns" ColumnName="Turns" />
+                <ScalarProperty Name="End" ColumnName="End" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="GameID" ColumnName="GameID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InvationDesktop">
+            <EntityTypeMapping TypeName="DatabaseModel.InvationDesktop">
+              <MappingFragment StoreEntitySet="InvationDesktop">
+                <ScalarProperty Name="User3" ColumnName="User3" />
+                <ScalarProperty Name="User2" ColumnName="User2" />
+                <ScalarProperty Name="User1" ColumnName="User1" />
+                <ScalarProperty Name="DPass" ColumnName="DPass" />
+                <ScalarProperty Name="DName" ColumnName="DName" />
+                <ScalarProperty Name="AdminUserID" ColumnName="AdminUserID" />
+                <ScalarProperty Name="InvID" ColumnName="InvID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Man">
+            <EntityTypeMapping TypeName="DatabaseModel.Man">
+              <MappingFragment StoreEntitySet="Man">
+                <ScalarProperty Name="Pozition" ColumnName="Pozition" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="ManID" ColumnName="ManID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Player">
+            <EntityTypeMapping TypeName="DatabaseModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Dice2" ColumnName="Dice2" />
+                <ScalarProperty Name="Dice1" ColumnName="Dice1" />
+                <ScalarProperty Name="IsWinner" ColumnName="IsWinner" />
+                <ScalarProperty Name="GameID" ColumnName="GameID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Step">
+            <EntityTypeMapping TypeName="DatabaseModel.Step">
+              <MappingFragment StoreEntitySet="Step">
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="ToPoz" ColumnName="ToPoz" />
+                <ScalarProperty Name="FromPoz" ColumnName="FromPoz" />
+                <ScalarProperty Name="ManID" ColumnName="ManID" />
+                <ScalarProperty Name="StepID" ColumnName="StepID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

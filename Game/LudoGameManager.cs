@@ -11,8 +11,8 @@ namespace Game
     {
         private LudoGame _game;
         private Random randomgenerator;
-        private int dice1;
-        private int dice2;
+        public int dice1 { get; set; }
+        public int dice2 { get; set; }
 
         public LudoGameManager(LudoPlayer player1, LudoPlayer player2, LudoPlayer player3, LudoPlayer player4)
         {
@@ -43,12 +43,12 @@ namespace Game
                     if ((action as MoveLudoAction).Amount == dice1)
                     {
                         dice1 = 0;
-                        Move((action as MoveLudoAction));                     
+                        Move((action as MoveLudoAction));
                     }
                     else if ((action as MoveLudoAction).Amount == dice2)
                     {
                         dice2 = 0;
-                        Move((action as MoveLudoAction));            
+                        Move((action as MoveLudoAction));          
                     }
                     else throw new ArgumentException("Not valid amount to move");
                     break;
@@ -64,11 +64,32 @@ namespace Game
 
         private void Move(MoveLudoAction action)
         {
-            //TODO
-            //check poppet position before move
-            //count the new position, move with poppet
-                //check poppet new position
-            //set nextplayer
+            var doer = (LudoPlayer)action.doer;
+            
+            switch (action.Puppet)
+            {
+                case 1:
+                    doer.puppet1position += action.Amount;
+                    break;
+                case 2:
+                    doer.puppet2position += action.Amount;
+                    break;
+                case 3:
+                    doer.puppet3position += action.Amount;
+                    break;
+                case 4:
+                    doer.puppet4position += action.Amount;
+                    break;
+                default:
+                    break;
+            }
+            
+            if(dice1==0 && dice2 == 0)
+            {
+                if (doer.sequence == 4) _game.nextplayer = _game.Players.Where(akt => akt.sequence == 1).SingleOrDefault();
+                else _game.nextplayer = _game.Players.Where(akt => akt.sequence == doer.sequence + 1).SingleOrDefault();
+                _game.Rounds++;
+            }
         }
 
         private void Throw()

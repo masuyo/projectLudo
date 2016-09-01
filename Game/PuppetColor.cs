@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public enum puppetColor { Red, White, Blue, Green,Default };
+    public enum puppetColor { Red, Yellow, Blue, Green,Default };
 }

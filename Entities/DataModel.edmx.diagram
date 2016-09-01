@@ -5,7 +5,23 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="027841eb0cca48daabaf7e9c3069421d" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseModel.users" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.User" Width="1.5" PointX="0.75" PointY="0.5" />
+        <EntityTypeShape EntityType="DatabaseModel.FriendConnections" Width="1.5" PointX="5.625" PointY="8.5" />
+        <EntityTypeShape EntityType="DatabaseModel.Game" Width="1.5" PointX="4.125" PointY="5.125" />
+        <EntityTypeShape EntityType="DatabaseModel.InvationDesktop" Width="1.5" PointX="0.625" PointY="11.5" />
+        <EntityTypeShape EntityType="DatabaseModel.Man" Width="1.5" PointX="6.625" PointY="1.375" />
+        <EntityTypeShape EntityType="DatabaseModel.Player" Width="1.5" PointX="4.25" PointY="0.5" />
+        <EntityTypeShape EntityType="DatabaseModel.Step" Width="1.5" PointX="8.875" PointY="1.25" />
+        <AssociationConnector Association="DatabaseModel.FK__FriendCon__Frien__74CE504D" />
+        <AssociationConnector Association="DatabaseModel.FK__FriendCon__UserI__73DA2C14" />
+        <AssociationConnector Association="DatabaseModel.FK__Player__GameID__68687968" />
+        <AssociationConnector Association="DatabaseModel.FK__InvationD__Admin__789EE131" />
+        <AssociationConnector Association="DatabaseModel.FK__InvationD__User1__7993056A" />
+        <AssociationConnector Association="DatabaseModel.FK__InvationD__User2__7A8729A3" />
+        <AssociationConnector Association="DatabaseModel.FK__InvationD__User3__7B7B4DDC" />
+        <AssociationConnector Association="DatabaseModel.FK__Man__PlayerID__6C390A4C" />
+        <AssociationConnector Association="DatabaseModel.FK__Step__ManID__70099B30" />
+        <AssociationConnector Association="DatabaseModel.FK__Player__UserID__6774552F" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
