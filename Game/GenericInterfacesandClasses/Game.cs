@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Game.GenericInterfacesandClasses
 {
-    abstract public class Game
+    abstract public class Game<TPlayer> where TPlayer:Player
     {
-        public Game(params Player[] newplayers)
+        public Game(params TPlayer[] newplayers)
         {
+            Players = new List<TPlayer>();
             Players.AddRange(newplayers);
         }
-        public List<Player> Players { get; set; }
+        public List<TPlayer> Players { get; set; }
     }
 }
