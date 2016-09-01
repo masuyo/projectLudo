@@ -10,6 +10,14 @@ namespace pageLudo.Controllers
 {
     public class UserController : Controller
     {
+        public ActionResult Logout()
+        {
+            System.Web.Security.FormsAuthentication.SignOut();
+            Session.Clear();
+            Session.RemoveAll();
+            return RedirectToAction("Index","Home");
+        }
+
         public ActionResult Login()
         {
             return View();

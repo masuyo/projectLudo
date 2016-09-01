@@ -7,3 +7,8 @@
 
 <p>Üdv néked s házad népének, te jó szántó-vető!</p>
 
+@if (Session["LogedUserID"] != null)
+{
+    Layout = "~/Views/Shared/_AfterLoginLayout.cshtml";
+}
+

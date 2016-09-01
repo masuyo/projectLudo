@@ -3,6 +3,11 @@
     ViewBag.Title = "Ludo";
 }
 
+@if (Session["LogedUserID"] != null)
+{
+    Layout = "~/Views/Shared/_AfterLoginLayout.cshtml";
+}
+
 <h2>Ki nevet a végén?</h2>
 <br />
 <h4>Történelem</h4>
