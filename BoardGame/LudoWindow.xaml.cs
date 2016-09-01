@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,27 +22,81 @@ namespace BoardGame
     public partial class LudoWindow : Window
     {
         ViewModel VM;
-        public LudoWindow()
+
+        public String UserName { get; set; }
+
+        //ezen keresztül fogod elérni a hubomat, amit a szerver oldalon osztályt csináltam, lásd lentebb
+        public IHubProxy HubProxy { get; set; }
+        const string ServerURI = "http://localhost:8080/signalr";
+        public HubConnection Connection { get; set; }
+
+
+        public LudoWindow(string username)
         {
             InitializeComponent();
+            UserName = username;
             VM = ViewModel.GetVM;
             this.DataContext = VM;
 
-            VM.ChatMsgs.Add(new ChatMsg("slfmsflnlkwnfleknflekwneklnefklenwklfnkln", "Tom"));
-            VM.ChatMsgs.Add(new ChatMsg("msg2", "Ben"));
-            VM.ChatMsgs.Add(new ChatMsg("msg3", "Alice"));
-            VM.ChatMsgs.Add(new ChatMsg("msg4", "David"));
+            //connect to server with ConnectAsync(); display what's happening
+            VM.ServerMsgs.Add(new ChatMsg(UserName, "Connecting to server..."));            
+            ConnectAsync();
         }
-
-        private void LBL_Send_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ButtonSend_Click(object sender, RoutedEventArgs e) //server method name : SendChatClientText, params: string name, string sentBy
         {
-            Console.WriteLine("a");
-            MessageBox.Show(VM.ChatMsg);
-            Console.WriteLine("b");
+            ///WPF client defines method call on server side
+            HubProxy.Invoke("SendChatClientText", VM.ChatMsg, UserName);//VM.ChatMsgs.Add(new ChatMsg(VM.ChatMsg, UserName)
+            VM.ChatMsg = String.Empty;
+        }
+        private void TestMethod(string name, string msg)
+        {
+            VM.ChatMsgs.Add(new ChatMsg(msg, UserName));
+            Console.WriteLine("test");
+        }
+        private async void ConnectAsync()
+        {
+            Connection = new HubConnection(ServerURI);
+            Connection.Closed += Connection_Closed;
 
-            VM.ChatMsgs.Add(new ChatMsg("msgLBLdlmwfnlwnfklwn,mc mfkekjwémwlenrén ee", "Lalalallalaa"));
+            HubProxy = Connection.CreateHubProxy("MyHub");
+
+            HubProxy.On<string, string>("addMessage", (name, message) => TestMethod(name, message));
+            Console.WriteLine("hubtest");
+            // WPF client defines its method
+            //HubProxy.On<string, string>("addMessage", (name, message) =>
+            //    this.Dispatcher.Invoke(() =>
+            //        RichTextBoxConsole.AppendText(String.Format("{0}: {1}\r", name, message))
+            //    )
+            //);
+            try
+            {
+                await Connection.Start();
+            }
+            catch (HttpRequestException)
+            {
+                VM.ServerMsgs.Add(new ChatMsg("server", "Unable to connect: Start server before connecting clients."));
+                return;
+            }
+            VM.ServerMsgs.Add(new ChatMsg("server", "Connected to server at " + ServerURI + "\r"));
+        }
+        
+        void Connection_Closed()
+        {
+            //Hide chat UI; show login UI
+            //var dispatcher = Application.Current.Dispatcher;
+            //dispatcher.Invoke(() => StatusText.Content = "You have been disconnected.");
+            //VM.ServerMsgs.Add(new ChatMsg("server:" + ServerURI + "\r", "You have been disconnected. "));
         }
 
+        private void WPFClient_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (Connection != null)
+            {
+                Connection.Stop();
+                Connection.Dispose();
+            }
+        }
+        
         private void TXB_Enter_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

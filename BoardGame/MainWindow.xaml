@@ -55,7 +55,9 @@
             FontSize="20" Foreground="Black" FontWeight="Bold"
             Padding="0,15,0,0"
             />-->
-            <Label Content="Welcome, choose your boardgame !" Foreground="White" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" FontWeight="Bold" FontSize="14"/>
+            <Label Content="Welcome, choose your boardgame !" 
+                   Foreground="Green" 
+                   Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" FontWeight="Bold" FontSize="14"/>
             <Grid Grid.Column="1" Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -92,25 +94,25 @@
             <Label
             Tag="XY_Binding_UnameLbl"
             Grid.Column="1" Grid.Row="3"
-            Content="Login" Foreground="White" FontWeight="Bold" Background="Yellow" Opacity="0.8"
+            Content="Login" Foreground="Black" FontWeight="Bold" Background="Green" Opacity="0.8"
             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
             Margin="10,10,10,0"          
             MouseDown="Login_MouseDown" />
             <Label
             Grid.Column="1" Grid.Row="4"
-            Content="Forgot password" Foreground="White" FontWeight="Bold" Background="Orange" Opacity="0.7"
+            Content="Forgot password" Foreground="Black" FontWeight="Bold" Background="Orange" Opacity="0.7"
             Margin="10,10,10,0"       
             HorizontalAlignment="Stretch" VerticalAlignment="Top"
             HorizontalContentAlignment="Center"                   
             MouseDown="ForgotPswd_MouseDown" />
             <Label
                 Grid.Column="1" Grid.Row="5"
-                Content="Exit" Foreground="White" FontWeight="Bold" Background="Red" Opacity="0.7"
+                Content="Exit" Foreground="Black" FontWeight="Bold" Background="Red" Opacity="0.7"
                 Margin="10,5,10,0"       
                 HorizontalAlignment="Stretch" VerticalAlignment="Top"
                 HorizontalContentAlignment="Center"                   
                 MouseDown="LblExit_MouseDown" />
-            <ListBox Grid.Column="1" Grid.Row="1" Margin="10,5" Background="Transparent" Foreground="White"/>
+            <ListBox Grid.Column="1" Grid.Row="1" Margin="10,5" Background="Transparent" BorderBrush="Green" BorderThickness="1" Foreground="White"/>
 
         </Grid>
     </Grid>

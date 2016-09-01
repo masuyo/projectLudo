@@ -7,7 +7,8 @@
          mc:Ignorable="d"
         Title="LudoClassicWindow" Width="1024" Height="768"
         WindowState="Maximized" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
-        Background="Black"        
+        Background="Black"     
+        Closing="WPFClient_Closing"
         >
     <!--WindowStyle="None"-->
     <Grid>
@@ -44,6 +45,8 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+
+            <!--<Button Grid.Row="0" Grid.Column="0" Content="TEST" VerticalAlignment="Top" Click="Button_Click"/>-->
             <Label Content="4"
                    Grid.Row="0"
                    Width="100" Height="100" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="ExtraBold" FontSize="30"  />

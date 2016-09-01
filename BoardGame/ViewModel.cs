@@ -11,8 +11,7 @@ namespace BoardGame
     {
         ObservableCollection<ChatMsg> serverMsgs;
         ObservableCollection<ChatMsg> chatMsgs;
-        string chatMsg = "asd";
-
+        string chatMsg;
         public ObservableCollection<ChatMsg> ServerMsgs
         {
             get { return serverMsgs; }
