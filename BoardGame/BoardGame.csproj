@@ -63,6 +63,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\Login\ILoginMsgFromServer.cs" />
+    <Compile Include="Interfaces\Login\ILoginMsgToServer.cs" />
+    <Compile Include="Interfaces\Login\IPreLoginMsgFromServer.cs" />
     <Compile Include="TestMan.cs" />
     <Compile Include="TestServerMsg.cs" />
     <Compile Include="ViewModel.cs" />
@@ -135,7 +138,6 @@
     <Resource Include="Images\l2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interfaces\Login\" />
     <Folder Include="Interfaces\RoomToGame\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoardGame.Interfaces.Login;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,16 +21,25 @@ namespace BoardGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        enum GameType { LUDO, CHESS, TICTACTOE }
         public MainWindow()
         {
             InitializeComponent();
             //ImageBrush imgb = new ImageBrush();
             //imgb.ImageSource = new BitmapImage(new Uri(@"Images\bg3.jpg", UriKind.Relative));
             //this.Background = imgb;
-            //ImageBrush imgb = new ImageBrush();
-            //imgb.ImageSource = new BitmapImage(new Uri(@"Images\l2.png", UriKind.Relative));
-            //this.Background = imgb;
+            ImageBrush imgb = new ImageBrush();
+            imgb.ImageSource = new BitmapImage(new Uri(@"Images\l2.png", UriKind.Relative));
+            this.Background = imgb;
+
+            lsb_Enum.ItemsSource = Enum.GetNames(typeof(GameType)).ToList();
+            lsb_Enum.SelectedItem = GameType.LUDO.ToString();
+                 
+
         }
+
+      
+
         private void Login_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Console.WriteLine("Logging in...");
