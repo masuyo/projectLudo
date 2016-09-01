@@ -166,6 +166,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\AfterLogin.cshtml" />
     <Content Include="Views\Games\Ludo.cshtml" />
+    <Content Include="Views\Shared\_AfterLoginLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -47,9 +47,18 @@
                 </ul>
 
                 <div style="float:right">
-                    @Html.ActionLink("Sign up", "Register", "User", new { area = "" }, new { @class = "navbar-brand" })
-                    @Html.ActionLink("Login", "Login", "User", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
+                    <ul class="nav navbar-nav">
+                        @*<li>@Html.ActionLink("Log out", "Login", "User", new { area = "" }, new { @class = "navbar-brand" })</li>*@
+                        <li class="dropdown">
+                            <a href="#" class="navbar-brand" data-toggle="dropdown">@Session["LogedUsername"].ToString()<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Profile", "Ludo", "Games")</li>
+                                <li>@Html.ActionLink("Log out", "Login", "User")</li >
+                            </ul >
+                        </li >
+                        @*@Html.ActionLink(@Session["LogedUsername"].ToString(), "Login", "User", new { area = "" }, new { @class = "navbar-brand" })*@
+                    </ul>
+                 </div>
             </div>
         </div>
     </div>

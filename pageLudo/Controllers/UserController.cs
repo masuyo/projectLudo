@@ -25,17 +25,18 @@ namespace pageLudo.Controllers
                 using (DatabaseEntities DE = new DatabaseEntities())
                 {
 
-                    var repo = new Repository.TableRepositories.UsersRepository(DE);
+                    //var repo = new Repository.TableRepositories.UsersRepository(DE);
                     // kikeresi az adatbázisból a beadott adatok alapján a usert, ha megtalálja, Sessiont kap
                     // TODO: repositoryba kell egy lekérdezés Email és Password alapján, true, ha legalább az email megvan,
                     // én csekkolom, h a jelszó egyezik-e
 
+                    var obj = new LoginUser(){ UserID = 1, Username = "Cressida", Password = "123456", EmailID = "cressida@citromail.hu" };
                     //var obj = ude.Users.Where(a => a.Username.Equals(u.Username) && a.Password.Equals(u.Password)).FirstOrDefault();
                     //if (obj != null)
                     //{
-                    //    Session["LogedUserID"] = obj.UserID.ToString();
-                    //    Session["LogedUsername"] = obj.Username.ToString();
-                    //    return RedirectToAction("AfterLogin");
+                    Session["LogedUserID"] = obj.UserID.ToString();
+                    Session["LogedUsername"] = obj.Username.ToString();
+                    return RedirectToAction("AfterLogin");
                     //}
                 }
             }
