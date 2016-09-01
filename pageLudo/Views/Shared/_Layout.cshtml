@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title Ludo Game</title>
+    <title>@ViewBag.Title BoardGames</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
@@ -19,11 +19,19 @@
                 </button>
 
                 <!-- itten helyezkedik el a vízszintes menü / horizontal menu -->
-                @Html.ActionLink("Ludo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Login", "Login", "User", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Sign up", "Register", "User", new { area = "" }, new { @class = "navbar-brand" })
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand"})</li>
+                    <li>@Html.ActionLink("Login", "Login", "User", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    <li>@Html.ActionLink("Sign up", "Register", "User", new { area = "" }, new { @class = "navbar-brand" })</li> 
+                    <li class="dropdown">
+                        <a href="#" class="navbar-brand" data-toggle="dropdown">Games<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Ludo", "Ludo", "Games")</li>
+                        </ul>
+                    </li>
+                </ul>
 
-            </div>
+</div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                 </ul>
