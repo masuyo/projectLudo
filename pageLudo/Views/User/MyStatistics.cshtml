@@ -12,11 +12,11 @@
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
-        ["Game", "Winrate", { role: "style" } ],
-        ["Ludo", 30, "#b87333"],
-        ["Chess", 0, "silver"],
-        ["Balderdash", 0, "gold"],
-        ["Tictactoe", 0, "color: #e5e4e2"]
+        ["Game", "Win", "Lose", { role: "style" } ],
+        ["Ludo", 30, 70, "blue"],
+        ["Chess",55, 45,"grey"],
+        ["Balderdash", 12, 88,"blue"],
+        ["Tictactoe", 56,44, "grey"]
       ]);
 
       var view = new google.visualization.DataView(data);
@@ -29,8 +29,9 @@
 
       var options = {
         title: "Győzelmi ráta játékonként",
+        isStacked: 'percent',
         width: 900,
-        height: 100,
+        height: 150,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
       };
