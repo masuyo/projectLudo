@@ -20,7 +20,7 @@ namespace BoardGame
     /// Interaction logic for LudoWindow.xaml
     /// </summary>
     public partial class LudoWindow : Window
-    {
+    {        
         ViewModel VM;
 
         public String UserName { get; set; }

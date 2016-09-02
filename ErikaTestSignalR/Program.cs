@@ -16,10 +16,10 @@ namespace ErikaTestSignalR
             // See http://msdn.microsoft.com/en-us/library/system.net.httplistener.aspx 
             // for more information.
 
-            using (WebApp.Start<Startup>("http://localhost:8080/"))
+            using (WebApp.Start<Startup>("http://localhost:8080/signalr")) /*http://localhost:8080/*/
             {
                 Console.WriteLine("Server running at http://localhost:8080/");
-                Console.ReadLine();
+                Console.ReadLine();                
             }
         }
     }
