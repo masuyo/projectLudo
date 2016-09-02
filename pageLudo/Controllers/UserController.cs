@@ -10,6 +10,11 @@ namespace pageLudo.Controllers
 {
     public class UserController : Controller
     {
+        public ActionResult MyStatistics()
+        {
+            return View();
+        }
+
         public ActionResult MyProfile()
         {
             return View();
@@ -27,7 +32,6 @@ namespace pageLudo.Controllers
         {
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

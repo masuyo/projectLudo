@@ -3,10 +3,5 @@
     ViewBag.Title = "MyProfile";
 }
 
-@if (Session["LogedUserID"] != null)
-{
-    Layout = "~/Views/Shared/_AfterLoginLayout.cshtml";
-}
-
 <h2>@Session["LogedUsername"].ToString() adatlap</h2>
 

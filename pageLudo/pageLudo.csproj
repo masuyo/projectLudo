@@ -149,6 +149,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChangeUser.cs" />
     <Compile Include="Models\LoginUser.cs" />
     <Compile Include="Models\RegisterUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -166,8 +167,8 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\AfterLogin.cshtml" />
     <Content Include="Views\Games\Ludo.cshtml" />
-    <Content Include="Views\Shared\_AfterLoginLayout.cshtml" />
     <Content Include="Views\User\MyProfile.cshtml" />
+    <Content Include="Views\User\MyStatistics.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
