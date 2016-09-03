@@ -38,8 +38,8 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
+             
                         <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
-                        @*<li>@Html.ActionLink("Sign up", "Register", "User", new { area = "" }, new { @class = "navbar-brand"})</li>*@
                         <li class="dropdown">
                             <a href="#" class="navbar-brand" data-toggle="dropdown">Games<b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -50,7 +50,16 @@
 
                     <div style="float:right">
                         <ul class="nav navbar-nav">
-                            @*<li>@Html.ActionLink("Log out", "Login", "User", new { area = "" }, new { @class = "navbar-brand" })</li>*@
+                            <!-- Searchbar -->
+                            <li class="navbar-brand">
+                                @using (Html.BeginForm("Search", "User", FormMethod.Get))
+                                {
+                                    @*@Html.TextBoxFor(m => m.Query)*@
+                                    @Html.TextBox("Bob")
+                                    <input type="submit" value="Search" class="btn btn-default"/>
+                                }
+                            </li>
+                            <!-- Searchbar ends here -->
                             <li class="dropdown">
                                 <a href="#" class="navbar-brand" data-toggle="dropdown">@Session["LogedUsername"].ToString()<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
