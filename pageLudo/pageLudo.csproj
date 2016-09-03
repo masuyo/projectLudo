@@ -168,7 +168,6 @@
     <Content Include="Views\User\AfterLogin.cshtml" />
     <Content Include="Views\Games\Ludo.cshtml" />
     <Content Include="Views\User\MyProfile.cshtml" />
-    <Content Include="Views\User\MyStatistics.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

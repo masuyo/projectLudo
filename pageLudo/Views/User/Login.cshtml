@@ -4,13 +4,13 @@
     ViewBag.Title = "Login";
 }
 
-<h2>Login</h2>
-
 <div align="center">
+    <h4>Login</h4>
+    <br />
     @using (Html.BeginForm("Login", "User", FormMethod.Post))
     {
         @Html.AntiForgeryToken()          // CSRF attack
-                                    @Html.ValidationSummary(true)
+        @Html.ValidationSummary(true)
         if (@ViewBag.Message != null)
         {
             <div style="border: 1px solid red">
@@ -18,20 +18,25 @@
             </div>
         }
 
-        <fieldset>
-            <div class="form-group">
-                @Html.LabelFor(a => a.EmailID)
-                @Html.TextBoxFor(a => a.EmailID)
-                @Html.ValidationMessageFor(a => a.EmailID)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(a => a.Password)
-                @Html.PasswordFor(a => a.Password)
-                @Html.ValidationMessageFor(a => a.Password)
-            </div>
-            <div><input type="submit" value="OK" class="btn btn-default" /></div>
-
-        </fieldset>
+        <table>
+            <tr>
+                <td>@Html.Label("Email")</td>
+                <td>@Html.TextBoxFor(a => a.EmailID)</td>
+                <td>@Html.ValidationMessageFor(a => a.EmailID)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(a => a.Password)</td>
+                <td>@Html.PasswordFor(a => a.Password)</td>
+                <td>@Html.ValidationMessageFor(a => a.Password)</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="LOG IN" class="btn btn-default"/>
+                </td>
+                <td></td>
+            </tr>
+        </table>
     }
 </div>
 @section Scripts{
