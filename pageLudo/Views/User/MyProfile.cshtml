@@ -3,19 +3,31 @@
 @{
     ViewBag.Title = "MyProfile";
 }
-<br />
-<h4>@Session["LogedUsername"].ToString() adatlap</h4>
-<br />
-<div>
-    Username: @Session["LogedUsername"].ToString()
+
+@if (Session["LogedUsername"] != null)
+{ 
     <br />
-    E-mail address: @Session["LogedEmailID"].ToString()
-</div>
-<br />
-<h4>Statisztika</h4>
-<!-- Adott játékosnak minden játéktípusban(Ludóban) winrate -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
+    <h4>Adatlap</h4>
+    <br />
+    <div>
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td>@Session["LogedUsername"].ToString()</td>
+            </tr>
+            <tr>
+                <td>E-mail address:</td>
+                <td>@Session["LogedEmailID"].ToString()</td>
+            </tr>
+        </table>
+        <br />
+    </div>
+    <br />
+    <h4>Statisztika</h4>
+
+    <!-- Adott játékosnak minden játéktípusban(Ludóban) winrate -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
     google.charts.load("current", {packages:["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
@@ -46,6 +58,8 @@
       var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
       chart.draw(view, options);
   }
-</script>
-<div id="barchart_values" style="width: 900px; height: 300px;"></div>
+    </script>
+    <div id="barchart_values" style="width: 900px; height: 300px;"></div>
+}
+
 

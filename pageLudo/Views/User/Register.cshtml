@@ -3,16 +3,15 @@
 @{
     ViewBag.Title = "Registration";
 }
-
-<h2>Registration</h2>
-
+<br />
+<h4>Registration</h4>
+<br />
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4> </h4>
         <br />
         @if (ViewBag.Message != null)
         {

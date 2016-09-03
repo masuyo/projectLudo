@@ -5,6 +5,7 @@
 }
 
 <div align="center">
+    <br />
     <h4>Login</h4>
     <br />
     @using (Html.BeginForm("Login", "User", FormMethod.Post))
@@ -20,13 +21,13 @@
 
         <table>
             <tr>
-                <td>@Html.Label("Email")</td>
-                <td>@Html.TextBoxFor(a => a.EmailID)</td>
+                <td>@Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })</td>
+                <td>@Html.TextBoxFor(a => a.EmailID, new { htmlAttributes = new { @class = "form-control" } })</td>
                 <td>@Html.ValidationMessageFor(a => a.EmailID)</td>
             </tr>
             <tr>
-                <td>@Html.LabelFor(a => a.Password)</td>
-                <td>@Html.PasswordFor(a => a.Password)</td>
+                <td>@Html.LabelFor(a => a.Password, htmlAttributes: new { @class = "control-label col-md-2" })</td>
+                <td>@Html.PasswordFor(a => a.Password, new { htmlAttributes = new { @class = "form-control" } })</td>
                 <td>@Html.ValidationMessageFor(a => a.Password)</td>
             </tr>
             <tr>
