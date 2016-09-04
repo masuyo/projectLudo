@@ -15,7 +15,8 @@ namespace pageLudo.Controllers
         }
 
         [HttpGet]
-        //mindig false-ra ugrik
+        // mindig false-ra ugrik
+        // db-ben megnézi az adott searchStringgel van-e azonos Username vagy Email
         public ActionResult Search(string searchString)
         {
             if (searchString == "keresek")

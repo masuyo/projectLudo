@@ -25,41 +25,96 @@
     <br />
     <h4>Statisztika</h4>
 
-    <!-- Adott játékosnak minden játéktípusban(Ludóban) winrate -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-    google.charts.load("current", {packages:["corechart"]});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-        ["Game", "Win", "Lose", { role: "style" } ],
-        ["Ludo", 30, 70, "blue"],
-        ["Chess",55, 45,"grey"],
-        ["Balderdash", 12, 88,"blue"],
-        ["Tictactoe", 56,44, "grey"]
-      ]);
 
-      var view = new google.visualization.DataView(data);
-      view.setColumns([0, 1,
-                       { calc: "stringify",
-                         sourceColumn: 1,
-                         type: "string",
-                         role: "annotation" },
-                       2]);
+        <!-- Adott játékosnak minden játéktípusban(Ludóban) winrate -->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            // Load the Visualization API and the piechart package.
+            google.charts.load('current', { packages: ['corechart'] });
 
-      var options = {
-        title: "Győzelmi ráta játékonként",
-        isStacked: 'percent',
-        width: 900,
-        height: 150,
-        bar: {groupWidth: "95%"},
-        legend: { position: "none" },
-      };
-      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
-      chart.draw(view, options);
-  }
-    </script>
-    <div id="barchart_values" style="width: 900px; height: 300px;"></div>
+            // Set a callback to run when the Google Visualization API is loaded.
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Callback that creates and populates a data table,
+            // instantiates the pie chart, passes in the data and
+            // draws it.
+            function drawChart() {
+
+                // Create the data table.
+                var data = google.visualization.arrayToDataTable([
+                  ["Game", "Win", "Lose", { role: "style" }],
+                  ["Ludo", 30, 70, "blue"],
+                  ["Chess", 55, 45, "grey"],
+                  ["Balderdash", 12, 88, "blue"],
+                  ["Tictactoe", 56, 44, "grey"]
+                ]);
+
+                var data2 = google.visualization.arrayToDataTable([
+                 ["Game", "Win", "Lose", { role: "style" }],
+                 ["Ludo", 30, 70, "blue"],
+                 ["Chess", 55, 45, "grey"],
+                 ["Balderdash", 12, 88, "blue"],
+                 ["Tictactoe", 56, 44, "grey"]
+                ]);
+
+                var view = new google.visualization.DataView(data);
+                view.setColumns([0, 1,
+                                 {
+                                     calc: "stringify",
+                                     sourceColumn: 1,
+                                     type: "string",
+                                     role: "annotation"
+                                 },
+                                 2]);
+
+                var view2 = new google.visualization.DataView(data2);
+
+                view.setColumns([0, 1,
+                                 {
+                                     calc: "stringify",
+                                     sourceColumn: 1,
+                                     type: "string",
+                                     role: "annotation"
+                                 },
+                                 2]);
+
+                view2.setColumns([0, 1,
+                 {
+                     calc: "stringify",
+                     sourceColumn: 1,
+                     type: "string",
+                     role: "annotation"
+                 },
+                 2]);
+
+                var options = {
+                    title: "Győzelmi ráta játékonként",
+                    isStacked: 'percent',
+                    width: 900,
+                    height: 150,
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                };
+
+                var options2 = {
+                    title: "Győzelmi ráta játékonként",
+                    isStacked: 'percent',
+                    width: 900,
+                    height: 150,
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+                chart.draw(view, options);
+                var chart2 = new google.visualization.BarChart(document.getElementById("barchart_values2"));
+                chart2.draw(view2, options2);
+
+            }
+        </script>
+        <div id="barchart_values" style="width: 900px; height: 300px;"></div>
+        <div id="barchart_values2" style="width: 900px; height: 300px;"></div>
 }
 
 
