@@ -11,11 +11,7 @@ namespace pageLudo.Controllers
     public class UserController : Controller
     {
         // db-ben megnézi az adott searchStringgel van-e azonos Username vagy Email
-        public ActionResult Search(string searchString)
-        {
-            //return View(users);
-            return View();
-        }
+
 
         public ActionResult MyProfile()
         {
