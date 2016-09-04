@@ -52,11 +52,12 @@
                         <ul class="nav navbar-nav">
                             <!-- Searchbar -->
                             <li class="navbar-brand">
+                                <!-- majd ajaxszal kell -->
                                 @using (Html.BeginForm("Search", "User", FormMethod.Get))
                                 {
                                     @*@Html.TextBoxFor(m => m.Query)*@
                                     @Html.TextBox("Bob")
-                                    <input type="submit" value="Search" class="btn btn-default"/>
+                                    <input type="submit" value="Search" @*class="btn btn-default"*@/>
                                 }
                             </li>
                             <!-- Searchbar ends here -->

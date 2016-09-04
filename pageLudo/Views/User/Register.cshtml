@@ -5,14 +5,12 @@
 }
 <br />
 <h4>Registration</h4>
-<br />
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <br />
         @if (ViewBag.Message != null)
         {
             <div style="border:solid 1px green">
@@ -56,7 +54,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Done!" class="btn btn-default" />
+                <input type="submit" value="Done!" class="btn btn-primary btn-block" />
             </div>
         </div>
     </div>
