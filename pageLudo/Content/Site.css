@@ -1,19 +1,26 @@
 ﻿html {
-  background: url('http://magicbeansco.com/wp-content/uploads/2015/11/boardgames.jpg') no-repeat center center fixed; 
+
+}
+body {
+      background: url('../Images/boardgames.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
-}
-body {
+  background-size: auto;
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    background-color: white;
     padding-left: 15px;
     padding-right: 15px;
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
