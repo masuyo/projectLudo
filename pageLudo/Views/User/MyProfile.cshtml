@@ -41,66 +41,22 @@
             function drawChart() {
 
                 // Create the data table.
+                //Adott játékosnak minden játéktípusban(Ludóban) winrate (elég a win%-ot visszaadni sztem max 2 tizedesjegyig)
                 var data = google.visualization.arrayToDataTable([
                   ["Game", "Win", "Lose", { role: "style" }],
-                  ["Ludo", 30, 70, "blue"],
-                  ["Chess", 55, 45, "grey"],
-                  ["Balderdash", 12, 88, "blue"],
-                  ["Tictactoe", 56, 44, "grey"]
-                ]);
-
-                var data2 = google.visualization.arrayToDataTable([
-                 ["Game", "Win", "Lose", { role: "style" }],
-                 ["Ludo", 30, 70, "blue"],
-                 ["Chess", 55, 45, "grey"],
-                 ["Balderdash", 12, 88, "blue"],
-                 ["Tictactoe", 56, 44, "grey"]
+                  ["Ludo", 30, 70, ""],
+                  ["Chess", 55, 45,""],
+                  ["Balderdash", 12, 88, ""],
+                  ["Tictactoe", 56, 44,""]
                 ]);
 
                 var view = new google.visualization.DataView(data);
-                view.setColumns([0, 1,
-                                 {
-                                     calc: "stringify",
-                                     sourceColumn: 1,
-                                     type: "string",
-                                     role: "annotation"
-                                 },
-                                 2]);
-
-                var view2 = new google.visualization.DataView(data2);
-
-                view.setColumns([0, 1,
-                                 {
-                                     calc: "stringify",
-                                     sourceColumn: 1,
-                                     type: "string",
-                                     role: "annotation"
-                                 },
-                                 2]);
-
-                view2.setColumns([0, 1,
-                 {
-                     calc: "stringify",
-                     sourceColumn: 1,
-                     type: "string",
-                     role: "annotation"
-                 },
-                 2]);
 
                 var options = {
-                    title: "Győzelmi ráta játékonként",
+                    title: "Győzelem-vereség aránya",
                     isStacked: 'percent',
-                    width: 900,
-                    height: 150,
-                    bar: { groupWidth: "95%" },
-                    legend: { position: "none" },
-                };
-
-                var options2 = {
-                    title: "Győzelmi ráta játékonként",
-                    isStacked: 'percent',
-                    width: 900,
-                    height: 150,
+                    //width: 900,
+                    //height: 150,
                     bar: { groupWidth: "95%" },
                     legend: { position: "none" },
                 };
@@ -108,13 +64,42 @@
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
                 chart.draw(view, options);
-                var chart2 = new google.visualization.BarChart(document.getElementById("barchart_values2"));
-                chart2.draw(view2, options2);
+
+
+                //Adott játékos adott játéktípusban adott játéktípushoz tartozó színekkel milyen arányban nyert
+                var data2 = google.visualization.arrayToDataTable([
+                  ['', 'Blue', { role: 'annotation' }, 'Red', { role: 'annotation' }, 'Yellow', { role: 'annotation' }, 'Green', { role: 'annotation' }, 'Black', {
+                    role: 'annotation'}, 'White', { role: 'annotation'},{ role: 'style' }],
+                  ['Ludo', 112, '', 82, '', 47, '', 55, '', 0, '', 0, '', ''],
+                  ['Chess', 0, '', 0, '', 0, '', 0, '', 102, '', 110, '', '']
+                ]);
+
+                var options2 = {
+                    title: "Győzelem színek szerinti eloszlása",
+                    isStacked: 'percent',
+                    hAxis: {
+                        minValue: 0
+                    },
+                    series: {
+                        0: { color: 'blue' },
+                        1: { color: 'red' },
+                        2: { color: 'yellow' },
+                        3: { color: 'green' },
+                        4: { color: 'black' },
+                        5: { color: '#fff7e3' },
+                    }
+                };
+
+                var chart2 = new google.visualization.BarChart(document.getElementById('mood_chart'));
+                chart2.draw(data2, options2);
 
             }
         </script>
-        <div id="barchart_values" style="width: 900px; height: 300px;"></div>
-        <div id="barchart_values2" style="width: 900px; height: 300px;"></div>
+        <div>
+            <div id="barchart_values" style="width: 500px; height: 200px; float:left;"></div>
+            <div id="mood_chart" style="width: 500px; height: 200px; float:left;"></div>
+        </div>
+        <div class="clearfix"></div>
 }
 
 
