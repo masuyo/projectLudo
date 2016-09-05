@@ -11,7 +11,7 @@ namespace BoardGame.Interfaces.Login
     {   
         bool AuthenticationSuccess { get; }
         string UserName { get; } //?
-        Connection Conn { get; } 
+        string ConnectionID { get; } 
 
     }
 }

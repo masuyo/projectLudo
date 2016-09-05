@@ -1,4 +1,5 @@
 ﻿using BoardGame.Interfaces;
+using BoardGame.TestClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,13 +43,17 @@ namespace BoardGame
 
             this.Loaded += LudoFrameworkElement_Loaded;
             this.MouseDown += LudoFrameworkElement_MouseDown;
+
+            //this.MouseMove += LudoFrameworkElement_MouseMove;
+
             tmsg = new TestServerMsg();
             menList = tmsg.MenList;
+            
         }
 
-
         private void LudoFrameworkElement_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {            
+        {    
+              
             tmsg.ChangePoz();
             newmenList = tmsg.MenList;
             if (tmsg.OnManHit)

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace BoardGame.Interfaces.RoomToGame
 {
-    interface IConnectToRoomClientMsg
+    interface IUserConnectedToRoomServerMsgTest
     {
-        IRoom ConnetToRoomMsg { get; }
+        string Username { get; }
+        IRoom SelectedRoom { get; }
+        bool ConectionSuccess { get; }
     }
 }

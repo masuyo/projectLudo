@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,18 +10,31 @@ namespace ErikaTestSignalR
 {
     class Program
     {
+        public static IDisposable SignalR { get; set; }
+        const string ServerURI = "http://localhost:8080";
+
         static void Main(string[] args)
         {
-            // This will *ONLY* bind to localhost, if you want to bind to all addresses
-            // use http://*:8080 or http://+:8080 to bind to all addresses. 
-            // See http://msdn.microsoft.com/en-us/library/system.net.httplistener.aspx 
-            // for more information.
+            Console.WriteLine("Starting server...");
+            Task.Run(() => StartServer());
 
-            using (WebApp.Start<Startup>("http://localhost:8080/signalr")) /*http://localhost:8080/*/
+            //System.MissingMemberException' occurred in Microsoft.Owin.Hosting.dll
+            //You have to include Microsoft.Owin.Host.HttpListener.dll in your project references - nuGet
+            Console.ReadKey();
+                        
+        }
+        private static void StartServer()
+        {
+            try
             {
-                Console.WriteLine("Server running at http://localhost:8080/");
-                Console.ReadLine();                
+                SignalR = WebApp.Start(ServerURI);
             }
+            catch (TargetInvocationException)
+            {
+                Console.WriteLine("A server is already running at " + ServerURI);
+                return;
+            }
+            Console.WriteLine("Server started at " + ServerURI);
         }
     }
 }

@@ -4,8 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoardGame"
+        xmlns:tlc="clr-namespace:BoardGame.TestClasses"
         mc:Ignorable="d"
-         Title="Join Ludo Group" Height="600" Width="800" WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize">
+        Title="Join Ludo Group" 
+        Height="600" Width="800" 
+        WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize">
+    <Window.Resources>
+        <tlc:TestLockedConverter x:Key="TestLockedConverter" />
+    </Window.Resources>
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -16,35 +22,81 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="DodgerBlue" Opacity="0.4"/>
-        <Label Grid.Row="0" Grid.Column="1" Content="Start Ludo" Background="DodgerBlue" Width="100" Margin="10" HorizontalAlignment="Right" HorizontalContentAlignment="Center" FontWeight="Bold" BorderBrush="AliceBlue" BorderThickness="1" MouseDown="LBL_Start_MouseDown"/>
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Background="DimGray" Opacity="0.8" Margin="0,10,10,10" >
-            <TextBox MinWidth="150" 
-                     TextWrapping="Wrap" Text="Search room by name..."
-                     VerticalContentAlignment="Center" Foreground="White" Background="Transparent" BorderThickness="0"/>
-            <Image HorizontalAlignment="Right" Height="20" Width="20" />
-        </StackPanel>
+        <Label 
+            Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+            Background="DodgerBlue" Opacity="0.4"
+            />
+        <Label 
+            Grid.Row="0" Grid.Column="1" 
+            Content="Start Ludo" 
+            Background="DodgerBlue" 
+            Width="100" Margin="10" 
+            HorizontalAlignment="Right" HorizontalContentAlignment="Center" 
+            FontWeight="Bold" 
+            BorderBrush="AliceBlue" BorderThickness="1" 
+            MouseDown="LBL_Start_MouseDown"
+            MouseEnter="LBL_Hover_MouseEnter"
+            MouseLeave="LBL_Hover_MouseLeave" 
+            />
+        <TextBox 
+                Grid.Row="0" Grid.Column="0" 
+                Background="DimGray" Opacity="0.8" 
+                Margin="0,10,10,10"
+                MinWidth="150" 
+                TextWrapping="Wrap" 
+                Text="{Binding Path=SearchKeyWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                VerticalContentAlignment="Center" 
+                Foreground="White"
+                BorderThickness="0"
+                PreviewMouseDown="TXB_Search_PreviewMouseDown"
+                KeyDown="TXB_Search_KeyDown"/>
+
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="6*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <ListBox Grid.Row="0" Grid.Column="0" 
-                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                     Margin="0,5,10,10" SelectionMode="Single" 
-                     Background="DimGray" Opacity="0.7" Foreground="AliceBlue" BorderThickness="0" 
-                     >
+            <ListBox                 
+                ItemsSource="{Binding Path=SearchRoomList}"
+                SelectedItem="{Binding Path=SelectedRoom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Grid.Row="0" Grid.Column="0" 
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                Margin="0,5,10,10" 
+                SelectionMode="Single"                 
+                Background="DimGray" Opacity="0.7" Foreground="AliceBlue" 
+                BorderThickness="0" 
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="binding roomName"/>
-                            <Label Content="binding availablePlaces"/>
-                            <Label Content="binding password required -- converter color ---"/>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="6*"/>
+                                <RowDefinition Height="5*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Label
+                                Grid.Row="0"
+                                Content="{Binding Path=Name}"
+                                Padding="0,5" FontSize="16" FontWeight="Bold"
+                                Foreground="White"
+                                HorizontalAlignment="Stretch"/>
+                            <Label 
+                                Grid.Row="1"
+                                Foreground="White"
+                                Content="{Binding Path=AvailablePlaces}" ContentStringFormat="Waiting for {0} player."
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Right"/>
+                            <Label 
+                                Grid.Row="2"
+                                HorizontalAlignment="Stretch" MinHeight="2" 
+                                Background="{Binding Path=Password, Converter={StaticResource TestLockedConverter}}"/>
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Grid Grid.Row="1" Grid.Column="0" Margin="0,0,10,0">
+            <Grid 
+                Grid.Row="1" Grid.Column="0" Margin="0,0,10,0"
+                >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1.5*"/>
                     <ColumnDefinition Width="2*"/>
@@ -53,7 +105,6 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-
                 <Label 
                         Grid.Column="0" Grid.Row="0"
                         Content="Room name:"
@@ -61,34 +112,80 @@
                         />
                 <TextBox 
                     Grid.Column="1" Grid.Row="0"
-                        Text="" 
+                        Text="{Binding Path=SelectedRoom.Name}" 
                         MinWidth="100" Background="DimGray" Opacity="0.7" Foreground="White" Margin="5"/>
                 <Label 
                     Grid.Column="0" Grid.Row="1"
                         Content="Password:" 
-                        FontWeight="Bold" Foreground="DodgerBlue" 
-                        
+                        FontWeight="Bold" Foreground="DodgerBlue"                         
                        />
                 <PasswordBox 
                     Grid.Column="1" Grid.Row="1"
-                        Password="" 
-                        MinWidth="100" Background="DimGray" Opacity="0.7" Foreground="White" Margin="5"/>
+                    MinWidth="100" Background="DimGray" Opacity="0.7" Foreground="White" Margin="5"/>
             </Grid>
         </Grid>
-        <Label Grid.Column="0" Grid.Row="2" Content="Create New"
-               FontWeight="Bold" Background="DodgerBlue" VerticalAlignment="Bottom" HorizontalAlignment="Left"  
-               MinWidth="100" Margin="0,0,5,10" BorderBrush="AliceBlue" BorderThickness="1"/>
-        <Label Grid.Column="0" Grid.Row="2" Content="Connect" 
-               FontWeight="Bold" Background="DodgerBlue" VerticalAlignment="Bottom" HorizontalAlignment="Right" HorizontalContentAlignment="Right" 
-               MinWidth="100" Margin="100,0,10,10" BorderBrush="AliceBlue" BorderThickness="1"/>
-        <Grid Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <Label Content="binding roomname"/>
-
-            <StackPanel Orientation="Horizontal">
-                <Label Content="binding roomName"/>
-                <Label Content="binding availablePlaces"/>
-                <Label Content="binding password required -- converter color ---"/>
-            </StackPanel>
+        <Label 
+            Content="Create New"
+            Grid.Column="0" Grid.Row="2"
+            FontWeight="Bold" Background="DodgerBlue" VerticalAlignment="Bottom" 
+            HorizontalAlignment="Left"  
+            MinWidth="100" Margin="0,0,5,10" BorderBrush="AliceBlue" BorderThickness="1"
+            MouseDown="LBL_New_MouseDown"
+            MouseEnter="LBL_Hover_MouseEnter"
+            MouseLeave="LBL_Hover_MouseLeave" 
+            />
+        <Label 
+            Content="Connect" 
+            Grid.Column="0" Grid.Row="2" 
+            FontWeight="Bold" Background="DodgerBlue" VerticalAlignment="Bottom" 
+            HorizontalAlignment="Right" HorizontalContentAlignment="Right" 
+            MinWidth="100" Margin="100,0,10,10" BorderBrush="AliceBlue" BorderThickness="1"
+            MouseDown="LBL_Connect_MouseDown"
+            MouseEnter="LBL_Hover_MouseEnter"
+            MouseLeave="LBL_Hover_MouseLeave" 
+            />
+        <Grid Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">          
+            <Grid x:Name="grid_bg">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="9*"/>
+                </Grid.RowDefinitions>
+                <Label 
+                    Grid.Row="0"
+                    Grid.Column="0" Grid.ColumnSpan="2"
+                    Content=""
+                    Margin="0,2" 
+                    Background="DodgerBlue" Opacity="0.4" 
+                    HorizontalAlignment="Stretch" 
+                       />
+                            
+                <Label 
+                    Grid.Row="0"
+                    Grid.Column="0" Grid.ColumnSpan="2"
+                    Content="{Binding Path=SelectedRoom.Name}"
+                    Margin="0,2" Padding="0,5" FontWeight="Bold"
+                    Foreground="White" Background="Transparent" 
+                    HorizontalAlignment="Stretch"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                       />
+                <Label 
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Content="Exit" 
+                    Background="DarkOrange" 
+                    Width="100" Margin="10" 
+                    HorizontalAlignment="Right" HorizontalContentAlignment="Center" 
+                    FontWeight="Bold" 
+                    BorderBrush="AliceBlue" BorderThickness="1" 
+                    MouseEnter="LBL_Hover_MouseEnter"
+                    MouseLeave="LBL_Hover_MouseLeave"
+                       />    
+                <Label Grid.Row="1" Content="binding availablePlaces"/>
+                <Label Grid.Row="1" Content="binding password required -- converter color ---"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

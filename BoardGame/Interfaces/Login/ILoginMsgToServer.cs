@@ -10,7 +10,7 @@ namespace BoardGame.Interfaces.Login
     {
         string UserName { get; } //from user table
         string EncryptedPassword { get; } //from user table
-        string GameType { get; } //return LUDO 
+        string SelectedGameType { get; } //return LUDO 
 
     }
 }
