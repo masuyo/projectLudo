@@ -10,6 +10,9 @@ namespace pageLudo.Controllers
 {
     public class UserController : Controller
     {
+        
+
+
         public ActionResult MyProfile()
         {
             return View();
@@ -28,7 +31,6 @@ namespace pageLudo.Controllers
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginUser u) // Username helyett emaillel lép be
@@ -40,15 +42,18 @@ namespace pageLudo.Controllers
 
                     //var repo = new Repository.TableRepositories.UsersRepository(DE);
                     // kikeresi az adatbázisból a beadott adatok alapján a usert, ha megtalálja, Sessiont kap
-                    // TODO: repositoryba kell egy lekérdezés Email és Password alapján, true, ha legalább az email megvan,
-                    // én csekkolom, h a jelszó egyezik-e
+                    // TODO: repositoryba kell egy lekérdezés Email és Password alapján
 
-                    var obj = new LoginUser(){ UserID = 1, Username = "Cressida", Password = "123456", EmailID = "cressida@citromail.hu" };
+                    var obj = new LoginUser(){ UserID = 1, Username = "Cressida", Password = "123456", EmailID = "cressida@citromail.hu", Role = "admin"};
                     //var obj = ude.Users.Where(a => a.Username.Equals(u.Username) && a.Password.Equals(u.Password)).FirstOrDefault();
                     //if (obj != null)
                     //{
                     Session["LogedUserID"] = obj.UserID.ToString();
                     Session["LogedUsername"] = obj.Username.ToString();
+                    Session["LogedEmailID"] = obj.EmailID.ToString();
+
+                    //adminhoz kell, ha a sessionrole admin, akkor mást fog megjeleníthetővé tenni a layout
+                    Session["LogedUserRole"] = obj.Role.ToString();
                     return RedirectToAction("AfterLogin");
                     //}
                 }
