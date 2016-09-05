@@ -1,4 +1,4 @@
-﻿@model pageLudo.Models.RegisterUser
+﻿@model pageLudo.Models.UserStatistics
 
 @{
     ViewBag.Title = "MyProfile";
@@ -44,7 +44,7 @@
                 //Adott játékosnak minden játéktípusban(Ludóban) winrate (elég a win%-ot visszaadni sztem max 2 tizedesjegyig)
                 var data = google.visualization.arrayToDataTable([
                   ["Game", "Win", "Lose", { role: "style" }],
-                  ["Ludo", 30, 70, ""],
+                  ["Ludo", 100, 70, ""],
                   ["Chess", 55, 45,""],
                   ["Balderdash", 12, 88, ""],
                   ["Tictactoe", 56, 44,""]
@@ -59,6 +59,7 @@
                     //height: 150,
                     bar: { groupWidth: "95%" },
                     legend: { position: "none" },
+                    backgroundColor: { fill: 'transparent' }
                 };
 
                 // Instantiate and draw our chart, passing in some options.
@@ -87,7 +88,8 @@
                         3: { color: 'green' },
                         4: { color: 'black' },
                         5: { color: '#fff7e3' },
-                    }
+                    },
+                    backgroundColor: { fill: 'transparent' }
                 };
 
                 var chart2 = new google.visualization.BarChart(document.getElementById('mood_chart'));

@@ -55,7 +55,8 @@
         var options = {
             title: 'Győzelmi eloszlás színenként',
             chartArea: { left: 50, top: 50, width: "50%", height: "50%" },
-            colors: ['blue','red','yellow','green']
+            colors: ['blue', 'red', 'yellow', 'green'],
+            backgroundColor: { fill: 'transparent' }
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));

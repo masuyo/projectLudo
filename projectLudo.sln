@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardGame", "BoardGame\Boar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErikaTestSignalR", "ErikaTestSignalR\ErikaTestSignalR.csproj", "{C3CE7E37-29A6-4F10-8551-CB04DADAA1FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{C0F52833-4A70-4311-BB1F-E4AD9FFC3406}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,10 +63,6 @@ Global
 		{C3CE7E37-29A6-4F10-8551-CB04DADAA1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3CE7E37-29A6-4F10-8551-CB04DADAA1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3CE7E37-29A6-4F10-8551-CB04DADAA1FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0F52833-4A70-4311-BB1F-E4AD9FFC3406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0F52833-4A70-4311-BB1F-E4AD9FFC3406}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0F52833-4A70-4311-BB1F-E4AD9FFC3406}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0F52833-4A70-4311-BB1F-E4AD9FFC3406}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
