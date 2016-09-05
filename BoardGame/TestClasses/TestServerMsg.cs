@@ -1,11 +1,12 @@
 ﻿using BoardGame.Interfaces;
+using BoardGame.Interfaces.Ludo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame
+namespace BoardGame.TestClasses
 {
     class TestServerMsg : IMsgFromServer
     {
@@ -34,7 +35,8 @@ namespace BoardGame
             menList.Add(new TestMan(43, 43, new Player(1, PlayerColor.GREEN)));
             menList.Add(new TestMan(44, 44, new Player(1, PlayerColor.GREEN)));
         }
-        public void ChangePoz() {
+        public void ChangePoz()
+        {
             int idx = rnd.Next(16);
             menList[idx] = new TestMan(menList[idx].ID, rnd.Next(110, 150), menList[idx].Player);
             //menList[idx] = new TestMan(menList[idx].ID, rnd.Next(11,14), menList[idx].Player);
@@ -44,11 +46,11 @@ namespace BoardGame
         {
             get
             {
-                if (rnd.Next(10)<3)
+                if (rnd.Next(10) < 3)
                 {
                     return 0;
                 }
-                else if (rnd.Next(10) <5)
+                else if (rnd.Next(10) < 5)
                 {
                     return 1;
                 }
@@ -72,7 +74,7 @@ namespace BoardGame
         {
             get
             {
-                return rnd.Next(1, 7); 
+                return rnd.Next(1, 7);
             }
         }
 
@@ -85,7 +87,7 @@ namespace BoardGame
         }
 
         public List<IMan> MenList
-        {           
+        {
             get
             {
                 return menList;

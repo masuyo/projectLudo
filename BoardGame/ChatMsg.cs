@@ -46,6 +46,11 @@ namespace BoardGame
             this.sentBy = sentBy;
             this.time = DateTime.Now.ToShortDateString() + " >> " + DateTime.Now.ToLongTimeString();
         }
-
+        public ChatMsg(string name, string sentBy, string dateTime)
+        {
+            this.name = name;
+            this.sentBy = sentBy;
+            this.time = dateTime;
+        }
     }
 }

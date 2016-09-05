@@ -1,4 +1,6 @@
 ﻿using BoardGame.Interfaces.Login;
+using BoardGame.TestClasses;
+using BoardGame.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,40 +23,51 @@ namespace BoardGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        enum GameType { LUDO, CHESS, TICTACTOE }
+        LoginView VM;
         public MainWindow()
         {
             InitializeComponent();
-            //ImageBrush imgb = new ImageBrush();
-            //imgb.ImageSource = new BitmapImage(new Uri(@"Images\bg3.jpg", UriKind.Relative));
-            //this.Background = imgb;
-            ImageBrush imgb = new ImageBrush();
-            imgb.ImageSource = new BitmapImage(new Uri(@"Images\l2.png", UriKind.Relative));
-            this.Background = imgb;
+            VM = LoginView.GetVM;
+            this.DataContext = VM;
 
-            lsb_Enum.ItemsSource = Enum.GetNames(typeof(GameType)).ToList();
-            lsb_Enum.SelectedItem = GameType.LUDO.ToString();
-                 
+            this.Background = LoginView.GetBG;
 
         }
 
-      
+
 
         private void Login_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Console.WriteLine("Logging in...");
             if (sender is Label)
             {
-                Label sndr = (sender as Label);
-                sndr.IsEnabled = false;
-                sndr.Background = Brushes.Green;
-                sndr.Content = String.Format("Logging in as {0}.", uname);
-                ///TODO : check uname and pswd ...
-                ///TODO : send pswd and uname
-                ///
 
-                ConnectToGameWindow rooms = new ConnectToGameWindow(uname);
-                rooms.ShowDialog();
+                if (!String.IsNullOrEmpty(VM.UserName) && VM.UserName.Length > 5 &&
+                    !String.IsNullOrEmpty(VM.Password) && VM.Password.Length > 5)
+                {
+                    //send
+                    LoginMsgToServerTest testCTS = new LoginMsgToServerTest();
+
+                    //recieve
+                    LoginMsgFromServerTest testSTC = new LoginMsgFromServerTest();
+                    if (testSTC.AuthenticationSuccess)
+                    {
+                        ConnectToGameWindow rooms = new ConnectToGameWindow(testSTC.UserName);
+                        this.Close();
+                        rooms.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to login.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(VM.UserName + "  " + VM.Password);
+                    MessageBox.Show("Username and password must contain at least 6 characters. ");
+                }
+
+
             }
         }
         private void Txb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -65,7 +78,7 @@ namespace BoardGame
             }
             if (sender is PasswordBox)
             {
-                lbl_hdn.Visibility = Visibility.Hidden;
+                VM.PassMessage = String.Empty;
             }
         }
         private void ForgotPswd_MouseDown(object sender, MouseButtonEventArgs e)
@@ -73,31 +86,27 @@ namespace BoardGame
             Console.WriteLine("Forgot");
         }
 
-        string pass = "";
         private void Pswd_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (sender is PasswordBox && (sender as PasswordBox).Password.ToString() != String.Empty)
+            if (sender is PasswordBox && !String.IsNullOrEmpty((sender as PasswordBox).Password))
             {
-                lbl_hdn.Visibility = Visibility.Hidden;
-                pass = (sender as PasswordBox).Password.ToString();
+                VM.PassMessage = String.Empty;
+                VM.Password = (sender as PasswordBox).Password;
+                Console.WriteLine(VM.Password);
             }
+            else
+            {
+                VM.PassMessage = "Enter password";
+            }
+
         }
-        string uname = "";
         private void Uname_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (sender is TextBox && (sender as TextBox).Text != String.Empty)
+            if (sender is TextBox && !String.IsNullOrEmpty((sender as TextBox).Text))
             {
-                uname = (sender as TextBox).Text;
+                VM.UserName = (sender as TextBox).Text;
             }
         }
-        private void LblPswd_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (sender is Label && pass == String.Empty)
-            {
-                (sender as Label).Visibility = Visibility.Visible;
-            }
-        }
-
         private void LblExit_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.Close();

@@ -9,9 +9,12 @@ namespace ErikaTestSignalR
 {
     class MyHub : Hub
     {
-        public void Send(string message)
+        public void SendChatMsg(string message)
         {
-            Clients.All.clientmethod(message);
+            //Console.WriteLine(">>" + message.Name + "(" + message.SentBy + ")" + "::" + message.Time);
+            Clients.All.addMessage(message);
+            // just one ludo group, not all clients get the ChatMsg
+
         }
 
         public override Task OnConnected()

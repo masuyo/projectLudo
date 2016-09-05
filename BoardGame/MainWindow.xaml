@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoardGame"
-       mc:Ignorable="d"
+        mc:Ignorable="d"
         Title="Login"        
         Width="400" Height="400"
         Cursor="Hand" 
@@ -27,7 +27,10 @@
         </LinearGradientBrush>
     </Window.BorderBrush>-->
     <Grid >
-        <Grid Height="350" Width="250" Background="#FF1D1A1A" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10">
+        <Grid Height="350" Width="250" 
+              Background="#FF1D1A1A" 
+              VerticalAlignment="Top" HorizontalAlignment="Left" 
+              Margin="10">
             <!--<Grid.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -55,9 +58,12 @@
             FontSize="20" Foreground="Black" FontWeight="Bold"
             Padding="0,15,0,0"
             />-->
-            <Label Content="Welcome, choose your boardgame !" 
-                   Foreground="Blue" 
-                   Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" FontWeight="Bold" FontSize="14"/>
+            <Label 
+                Content="Welcome, choose your boardgame !"                    
+                Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" 
+                Foreground="White" 
+                FontWeight="Bold" FontSize="14"
+                />
             <Grid Grid.Column="1" Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -65,60 +71,70 @@
                 </Grid.RowDefinitions>
                 <TextBox 
                     Grid.Row="0"
-                    Text="Enter username" Foreground="Blue"
-                Background="Transparent"
+                    Text="{Binding Path=UserName}" Foreground="White"
+                    Background="Transparent"
                     Margin="10,20" BorderBrush="Blue"
                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
                     PreviewMouseDown="Txb_PreviewMouseDown"
                     MouseLeave="Uname_MouseLeave"
                 />
-                <Label   
-                   x:Name="lbl_hdn"
-                Content="Enter password" Foreground="Blue"
-                Grid.Row="1"
-                Background="Transparent"
-                Margin="10,-10,10,50" BorderBrush="Blue"
-                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-                MouseLeave="LblPswd_MouseLeave"                  
+                <Label
+                    Content="{Binding Path=PassMessage}"                  
+                    Grid.Row="1"
+                    Background="Transparent" Foreground="White"
+                    Margin="10,-10,10,50" 
+                    BorderBrush="Blue"
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"               
                 />
                 <PasswordBox 
-                Grid.Row="1"
-                ToolTip="Password must contain at least 6 characters."
-                Foreground="Blue" 
-                Background="Transparent" 
-                Margin="10,-10,10,50" BorderBrush="Blue"
-                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-                PreviewMouseDown="Txb_PreviewMouseDown" MouseLeave="Pswd_MouseLeave"                   
+                    Grid.Row="1"
+                    ToolTip="Password must contain at least 6 characters."                    
+                    Background="Transparent" Foreground="White" 
+                    Margin="10,-10,10,50" 
+                    BorderBrush="Blue"
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                    PreviewMouseDown="Txb_PreviewMouseDown" MouseLeave="Pswd_MouseLeave"                   
                 />
             </Grid>
             <Label
-            Tag="XY_Binding_UnameLbl"
-            Grid.Column="1" Grid.Row="3"
-            Content="Login" Foreground="Black" FontWeight="Bold" Background="Green" Opacity="0.8"
-            HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-            Margin="10,10,10,0"          
-            MouseDown="Login_MouseDown" />
+                Tag="XY_Binding_UnameLbl"
+                Grid.Column="1" Grid.Row="3"
+                Content="Login" 
+                FontWeight="Bold" 
+                Foreground="Black" Background="Green" Opacity="0.8"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                Margin="10,10,10,0"          
+                MouseDown="Login_MouseDown" />
             <Label
-            Grid.Column="1" Grid.Row="4"
-            Content="Forgot password" Foreground="Black" FontWeight="Bold" Background="Orange" Opacity="0.7"
-            Margin="10,10,10,0"       
-            HorizontalAlignment="Stretch" VerticalAlignment="Top"
-            HorizontalContentAlignment="Center"                   
-            MouseDown="ForgotPswd_MouseDown" />
+                Grid.Column="1" Grid.Row="4"
+                Content="Forgot password" 
+                FontWeight="Bold" 
+                Foreground="Black" Background="Orange" Opacity="0.7"
+                Margin="10,10,10,0"       
+                HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"                   
+                MouseDown="ForgotPswd_MouseDown" />
             <Label
                 Grid.Column="1" Grid.Row="5"
-                Content="Exit" Foreground="Black" FontWeight="Bold" Background="Red" Opacity="0.7"
+                Content="Exit" 
+                FontWeight="Bold" 
+                Foreground="Black" Background="Red" Opacity="0.7"
                 Margin="10,5,10,0"       
                 HorizontalAlignment="Stretch" VerticalAlignment="Top"
                 HorizontalContentAlignment="Center"                   
                 MouseDown="LblExit_MouseDown" />
             <ListBox
-                x:Name="lsb_Enum"       
+                ItemsSource="{Binding Path=GameTypeList}"
+                SelectedItem="{Binding Path=SelectedGameType}"
                 SelectionMode="Single" 
                 HorizontalContentAlignment="Center"
-                Grid.Column="1" Grid.Row="1" Margin="10,5" Background="Transparent"
-                BorderBrush="Blue" BorderThickness="1" Foreground="Blue" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" FontSize="16" FontWeight="Bold" ToolTip="Select game!"/> <!--ItemsSource="{Binding Path=GameType}"-->
-
+                Grid.Column="1" Grid.Row="1" Margin="10,5" 
+                Background="Transparent" Foreground="White" 
+                BorderBrush="Blue" BorderThickness="1"
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+                ScrollViewer.VerticalScrollBarVisibility="Hidden" 
+                FontSize="18" FontWeight="Bold" 
+                ToolTip="Select game!"/>
         </Grid>
     </Grid>
 </Window>

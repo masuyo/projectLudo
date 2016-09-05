@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BoardGame.Interfaces.RoomToGame
 {
-    interface IUserConnToRoomServerMsg : IRoomListFromServer
+    interface IUserConnectingToRoomServerMsg : IRoomListFromServer
     {
         string Username { get; }
-        bool CoonectionSuccess { get; }
-
-
+        IRoom SelectedRoom { get; }
+        
+        
     }
 }
