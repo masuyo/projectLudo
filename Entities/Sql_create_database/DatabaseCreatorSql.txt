@@ -31,6 +31,7 @@ create table [User](
 	EmailID		varchar(100) not null,
 	[Status]		varchar(10),
 	Token		varchar(10)
+	Guid		char(40) not null
 );
 
 create table [Game](

@@ -33,8 +33,8 @@ namespace Repository.TableRepositories
 
         public bool Register(string Username,string Password,string EmailID)
         {
-            if (GetByName(Username) != null) throw new ArgumentException("Taken name");
-            if (GetByEmailID(EmailID) != null) throw new ArgumentException("Taken emailid");
+            if (GetByName(Username) != null) return false;
+            if (GetByEmailID(EmailID) != null) return false;
             Insert(new User() { Username = Username, Password = Password, EmailID = EmailID });
 
             return true; 

@@ -73,6 +73,10 @@
       <Project>{c8f810fb-1072-4961-8b37-c1591b6bca49}</Project>
       <Name>Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SingleRServer\SignalRServer.csproj">
+      <Project>{11e88559-ccc7-4caa-a9b9-d274e2e9ec01}</Project>
+      <Name>SignalRServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

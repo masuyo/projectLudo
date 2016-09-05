@@ -11,28 +11,48 @@ namespace Game
     {
         private LudoGame _game;
         private Random randomgenerator;
-        public int dice1 { get; set; }
-        public int dice2 { get; set; }
+        private puppetColor[] board;
+        public int Dice1 { get; private set; }
+        public int Dice2 { get; private set; }
 
         public LudoGameManager(LudoPlayer player1, LudoPlayer player2, LudoPlayer player3, LudoPlayer player4)
         {
             _game = new LudoGame(player1, player2, player3, player4, DateTime.Now);
             randomgenerator = new Random();
-            dice1 = 0;
-            dice2 = 0;
+            Dice1 = 0;
+            Dice2 = 0;
+            board = new puppetColor[405];
+            Refillboard();
+        }
+
+        private void Refillboard()
+        {
+            for (int i = 0; i < board.Count(); i++)
+            {
+                board[i] = puppetColor.Default;
+            }
+            foreach (var player in _game.Players)
+            {
+                foreach (int puppetposition in player.Puppets)
+                {
+                    board[puppetposition] = player.color;
+                }
+            }
         }
 
         public LudoGameManager(LudoGame newgame)
         {
             _game = newgame;
             randomgenerator = new Random();
-            dice1 = 0;
-            dice2 = 0;
+            Dice1 = 0;
+            Dice2 = 0;
+            board = new puppetColor[405];
+            Refillboard();
         }
 
         public void DoAction(LudoAction action)
         {
-            if (action.doer != _game.nextplayer) throw new ArgumentException("Non available move(other player has the turn)");
+            if (action.doer != _game.nextplayer) return;
 
             switch (action._actionType)
             {
@@ -40,17 +60,24 @@ namespace Game
                     Throw();
                     break;
                 case LudoActionType.Move:
-                    if ((action as MoveLudoAction).Amount == dice1)
+                    if ((action as MoveLudoAction).Amount == Dice1)
                     {
-                        dice1 = 0;
                         Move((action as MoveLudoAction));
+                        Dice1 = 0;
                     }
-                    else if ((action as MoveLudoAction).Amount == dice2)
+                    else if ((action as MoveLudoAction).Amount == Dice2)
+                    {    
+                        Move((action as MoveLudoAction));
+                        Dice2 = 0;
+                    }
+                    else return;
+
+                    if (Dice1 == 0 && Dice2 == 0)
                     {
-                        dice2 = 0;
-                        Move((action as MoveLudoAction));          
+                        if ((action.doer as LudoPlayer).sequence == 4) _game.nextplayer = _game.Players.Where(akt => akt.sequence == 1).SingleOrDefault();
+                        else _game.nextplayer = _game.Players.Where(akt => akt.sequence == (action.doer as LudoPlayer).sequence + 1).SingleOrDefault();
+                        _game.Rounds++;
                     }
-                    else throw new ArgumentException("Not valid amount to move");
                     break;
                 default:
                     break;
@@ -62,41 +89,33 @@ namespace Game
             return _game;
         }
 
+        private void Throw()
+        {
+            if (Dice1 != 0 & Dice2 != 0) throw new InvalidOperationException("Player has already throw with the dices");
+            Dice1 = randomgenerator.Next(1, 6);
+            Dice2 = randomgenerator.Next(1, 6);
+        }
+
         private void Move(MoveLudoAction action)
         {
             var doer = (LudoPlayer)action.doer;
-            
-            switch (action.Puppet)
+
+            switch (doer.color)
             {
-                case 1:
-                    doer.puppet1position += action.Amount;
+                case puppetColor.Red:
                     break;
-                case 2:
-                    doer.puppet2position += action.Amount;
+                case puppetColor.Yellow:
                     break;
-                case 3:
-                    doer.puppet3position += action.Amount;
+                case puppetColor.Blue:
                     break;
-                case 4:
-                    doer.puppet4position += action.Amount;
+                case puppetColor.Green:
+                    break;
+                case puppetColor.Default:
                     break;
                 default:
                     break;
             }
-            
-            if(dice1==0 && dice2 == 0)
-            {
-                if (doer.sequence == 4) _game.nextplayer = _game.Players.Where(akt => akt.sequence == 1).SingleOrDefault();
-                else _game.nextplayer = _game.Players.Where(akt => akt.sequence == doer.sequence + 1).SingleOrDefault();
-                _game.Rounds++;
-            }
         }
 
-        private void Throw()
-        {
-            if (dice1 != 0 & dice2 != 0) throw new InvalidOperationException("Player has already throw with the dices");
-            dice1 = randomgenerator.Next(1, 6);
-            dice2 = randomgenerator.Next(1, 6);
-        }
     }
 }

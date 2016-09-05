@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZoliTest", "ZoliRepoTest\ZoliTest.csproj", "{0689C207-CB29-489F-AA8F-E544D9EF5377}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingleRServer", "SingleRServer\SingleRServer.csproj", "{11E88559-CCC7-4CAA-A9B9-D274E2E9EC01}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRServer", "SingleRServer\SignalRServer.csproj", "{11E88559-CCC7-4CAA-A9B9-D274E2E9EC01}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{BF9CA9FC-2347-40F6-931B-CA8C0B371D52}"
 EndProject

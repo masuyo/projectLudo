@@ -2,9 +2,9 @@
 using Microsoft.Owin.Cors;
 using Owin;
 
-namespace SingleRServer
+namespace SignalRServer
 {
-    public class Startup
+    internal class Startup
     {
         public void Configuration(IAppBuilder app)
         {
