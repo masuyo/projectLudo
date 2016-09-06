@@ -180,6 +180,7 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Search\NoSearchResult.cshtml" />
     <Content Include="Views\Search\ProfileSearchResult.cshtml" />
+    <Content Include="Views\Search\MultipleProfileSearchResult.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

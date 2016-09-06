@@ -1,4 +1,5 @@
 ﻿using pageLudo.FakeData.MethodClasses;
+using pageLudo.FakeData.DataClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,11 @@ namespace pageLudo.Controllers
 {
     public class SearchController : Controller
     {
+        public ActionResult MultipleProfileSearchResult()
+        {
+            return View();
+        }
+
         public ActionResult ProfileSearchResult()
         {
             return View();
@@ -28,44 +34,46 @@ namespace pageLudo.Controllers
             string loginEmailID = (string)Session["LogedEmailID"];
 
             UserActions ua = new UserActions();
-            List<FakeData.DataClasses.UserData> getUsers = new List<FakeData.DataClasses.UserData>();
+            List<UserData> getUsers = new List<UserData>();
             getUsers = ua.UsernameSearch(searchString, loginEmailID);
+            UserData resultUser = new UserData();
+            resultUser = ua.EmaildIDSearch(searchString, loginEmailID);
 
             //igaz esetén Username alapján keres
             if (!Regex.IsMatch(searchString, searchEmailRegEx))
             {
                 if (getUsers.Count() != 0)
                 {
-                    // visszakapott adatok
                     if (getUsers.Count() == 1)
                     {
+                        // visszakapott adatok
                         return RedirectToAction("ProfileSearchResult", "Search");
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("MultipleProfileSearchResult", "Search");
                     }
                 }
                 else
                 {
                     // nem található ilyen felhasználó a rendszerben
-                    return RedirectToAction("Register","User");
+                    return RedirectToAction("NoSearchResult","Search");
                 }
             }
             else
             {
-                if (true)
+                if (resultUser != null)
                 {
                     // visszakapott adatok
 
                     // keresett user profilja
+                    return RedirectToAction("ProfileSearchResult", "Search");
+                }
+                else
+                {
+                    // nem található ilyen felhasználó a rendszerben
                     return RedirectToAction("NoSearchResult", "Search");
                 }
-                //else
-                //{
-                //    // nem található ilyen felhasználó a rendszerben
-                //    return RedirectToAction("NoSearchResult", "Search");
-                //}
             }
         }
     }
