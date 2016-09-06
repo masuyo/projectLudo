@@ -37,7 +37,7 @@ namespace pageLudo.Controllers
                 if (getUsers.Count() != 0)
                 {
                     // visszakapott adatok
-                    if (getUsers.Count() >= 1)
+                    if (getUsers.Count() == 1)
                     {
                         return RedirectToAction("ProfileSearchResult", "Search");
                     }
