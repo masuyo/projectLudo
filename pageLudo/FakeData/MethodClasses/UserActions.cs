@@ -39,7 +39,8 @@ namespace pageLudo.FakeData.MethodClasses
         {
             return new UserData() { Username = "Engem kerestél", EmailID = "keres@email.com", AreWeFriends = false };
         }
-        List<UserData> ud = new List<UserData>();
+
+        // AreWeFriends akkor true, ha végigmész a db friend tábláján, és mindkét usernél megtalálod a másikat
         public List<UserData> UsernameSearch(string username, string searcherEmailID)
         {
             List<UserData> ud = new List<UserData>();

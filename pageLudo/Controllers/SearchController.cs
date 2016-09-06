@@ -11,9 +11,6 @@ namespace pageLudo.Controllers
 {
     public class SearchController : Controller
     {
-        //public string accessedUsername = "";
-        //public string accessedEmailID = "";
-
         public ActionResult MultipleProfileSearchResult()
         {
             return View();
@@ -52,6 +49,7 @@ namespace pageLudo.Controllers
                         // visszakapott adatok
                         TempData["AccessedUsername"] = getUsers[0].Username.ToString();
                         TempData["AccessedEmailID"] = getUsers[0].EmailID.ToString();
+                        TempData["AccessedFriendState"] = getUsers[0].AreWeFriends;
                         return RedirectToAction("ProfileSearchResult", "Search");
                     }
                     else
@@ -70,6 +68,9 @@ namespace pageLudo.Controllers
                 if (resultUser != null)
                 {
                     // visszakapott adatok
+                    TempData["AccessedUsername"] = resultUser.Username.ToString();
+                    TempData["AccessedEmailID"] = resultUser.EmailID.ToString();
+                    TempData["AccessedFriendState"] = resultUser.AreWeFriends;
 
                     // keresett user profilja
                     return RedirectToAction("ProfileSearchResult", "Search");
