@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text.RegularExpressions;
+using pageLudo.FakeData.MethodClasses;
 
 namespace pageLudo.Controllers
 {
@@ -17,10 +18,16 @@ namespace pageLudo.Controllers
         public ActionResult Search(string searchString)
         {
             string searchEmailRegEx = @"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$";
+            string loginEmailID = (string)Session["LogedEmailID"];
+            //bool emptyList = FakeData.MethodClasses.UserActions.UsernameSearch(searchString, "email@email.com").Any();
+
+            UserActions ua = new UserActions();
+            List<FakeData.DataClasses.UserData> getUsers = new List<FakeData.DataClasses.UserData>();
+            getUsers = ua.UsernameSearch(searchString);
 
             if (Regex.IsMatch(searchString, searchEmailRegEx))
             {
-                if (UsernameSearch(searchString, Session["LogedEmailID"] != null))
+                if (getUsers.Any())
                 {
                     // visszakapott adatok
 

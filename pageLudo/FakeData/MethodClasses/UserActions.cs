@@ -10,11 +10,6 @@ namespace pageLudo.FakeData.MethodClasses
     public class UserActions : IUserActions
     {
 
-        public UserData EmaildIDSearch(string emailID, string searcherEmailID)
-        {
-            return new UserData() { Username = "Engem kerestél", EmailID = "engemkeresett@email.com"};
-        }
-
         public bool Friend(string BeMyFriendEmailID, string IMightBecomeYourFriendEmailID)
         {
             throw new NotImplementedException();
@@ -40,9 +35,31 @@ namespace pageLudo.FakeData.MethodClasses
             throw new NotImplementedException();
         }
 
-        List<UserData> IUserActions.UsernameSearch(string username, string searcherEmailID)
+        public UserData EmaildIDSearch(string emailID, string searcherEmailID)
         {
-            throw new NotImplementedException();
+            return new UserData() { Username = "Engem kerestél", EmailID = "keres@email.com" };
+        }
+        List<UserData> ud = new List<UserData>();
+        public List<UserData> UsernameSearch(string username)
+        {
+            List<UserData> ud = new List<UserData>();
+            ud.Add(new UserData() { Username = "Adam", EmailID = "adam@email.com" });
+            ud.Add(new UserData() { Username = "Adam", EmailID = "adam2@email.com" });
+            ud.Add(new UserData() { Username = "Adam", EmailID = "adam3@email.com" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate@email.com" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate2@email.com" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate3@email.com" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate4@email.com" });
+
+            List<UserData> searchResult = new List<UserData>();
+            foreach (var u in ud)
+            {
+                if (u.Username == username)
+                {
+                    searchResult.Add(u);
+                }
+            }
+            return searchResult;
         }
     }
 }
