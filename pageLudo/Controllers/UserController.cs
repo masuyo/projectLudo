@@ -12,52 +12,6 @@ namespace pageLudo.Controllers
 {
     public class UserController : Controller
     {
-
-        [HttpGet]
-        // db-ben megnézi, h adott searchString username vagy email, de előtte csekkolja, hogy melyik van beadva
-        public ActionResult Search(string searchString)
-        {
-            string searchEmailRegEx = @"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$";
-            string loginEmailID = (string)Session["LogedEmailID"];
-            //bool emptyList = FakeData.MethodClasses.UserActions.UsernameSearch(searchString, "email@email.com").Any();
-
-            UserActions ua = new UserActions();
-            List<FakeData.DataClasses.UserData> getUsers = new List<FakeData.DataClasses.UserData>();
-            getUsers = ua.UsernameSearch(searchString);
-
-            if (Regex.IsMatch(searchString, searchEmailRegEx))
-            {
-                if (getUsers.Any())
-                {
-                    // visszakapott adatok
-
-                    // keresett user profilja
-                    return RedirectToAction();
-                }
-                else
-                {
-                    // nem található ilyen felhasználó a rendszerben
-                    return RedirectToAction();
-                }
-            }
-            else
-            {
-                if(UsernameSearch(searchString, Session["LogedEmailID"] != null))
-                {
-                    // visszakapott adatok
-
-                    // keresett user profilja
-                    return RedirectToAction();
-                }
-                else
-                {
-                    // nem található ilyen felhasználó a rendszerben
-                    return RedirectToAction();
-                }
-            }
-        }
- 
-
         public ActionResult MyProfile()
         {
             return View();

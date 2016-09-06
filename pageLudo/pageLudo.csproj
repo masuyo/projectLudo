@@ -146,6 +146,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="FakeData\DataClasses\UserData.cs" />
     <Compile Include="FakeData\Interfaces\IGameStatistics.cs" />
@@ -177,6 +178,8 @@
     <Content Include="Views\Games\Ludo.cshtml" />
     <Content Include="Views\User\MyProfile.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Search\NoSearchResult.cshtml" />
+    <Content Include="Views\Search\ProfileSearchResult.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
