@@ -37,22 +37,22 @@ namespace pageLudo.FakeData.MethodClasses
 
         public UserData EmaildIDSearch(string emailID, string searcherEmailID)
         {
-            return new UserData() { Username = "Engem kerestél", EmailID = "keres@email.com", AreWeFriends = false };
+            return new UserData() { Username = "Engem kerestél", EmailID = "keres@email.com", AreWeFriends = "false" };
         }
 
         // AreWeFriends akkor true, ha végigmész a db friend tábláján, és mindkét usernél megtalálod a másikat
         public List<UserData> UsernameSearch(string username, string searcherEmailID)
         {
             List<UserData> ud = new List<UserData>();
-            ud.Add(new UserData() { Username = "Adam", EmailID = "adam@email.com" , AreWeFriends = true});
-            ud.Add(new UserData() { Username = "Adam", EmailID = "adam2@email.com", AreWeFriends = false });
-            ud.Add(new UserData() { Username = "Adam", EmailID = "adam3@email.com", AreWeFriends = false });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate@email.com", AreWeFriends = true });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate2@email.com", AreWeFriends = true });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate3@email.com", AreWeFriends = true });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate4@email.com", AreWeFriends = true });
-            ud.Add(new UserData() { Username = "Neville", EmailID = "neville@email.com", AreWeFriends = false });
-            ud.Add(new UserData() { Username = "Eve", EmailID = "eve@email.com", AreWeFriends = true });
+            ud.Add(new UserData() { Username = "Adam", EmailID = "adam@email.com" , AreWeFriends = "true"});
+            ud.Add(new UserData() { Username = "Adam", EmailID = "adam2@email.com", AreWeFriends = "false" });
+            ud.Add(new UserData() { Username = "Adam", EmailID = "adam3@email.com", AreWeFriends = "false" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate@email.com", AreWeFriends = "true" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate2@email.com", AreWeFriends = "true" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate3@email.com", AreWeFriends = "true" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate4@email.com", AreWeFriends = "true" });
+            ud.Add(new UserData() { Username = "Neville", EmailID = "neville@email.com", AreWeFriends = "false" });
+            ud.Add(new UserData() { Username = "Eve", EmailID = "eve@email.com", AreWeFriends = "true" });
 
             List<UserData> searchResultList = new List<UserData>();
             foreach (var u in ud)

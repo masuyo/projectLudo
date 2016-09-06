@@ -10,6 +10,6 @@ namespace pageLudo.FakeData.DataClasses
         public string Username { get; set; }
         public string EmailID { get; set; }
 
-        public bool AreWeFriends { get; set; }
+        public string AreWeFriends { get; set; }
     }
 }
