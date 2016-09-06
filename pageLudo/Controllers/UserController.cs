@@ -5,13 +5,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Text.RegularExpressions;
 
 namespace pageLudo.Controllers
 {
     public class UserController : Controller
     {
-        
 
+        [HttpGet]
+        // db-ben megnézi, h adott searchString username vagy email, de előtte csekkolja, hogy melyik van beadva
+        public ActionResult Search(string searchString)
+        {
+            string searchEmailRegEx = @"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$";
+
+            if (Regex.IsMatch(searchString, searchEmailRegEx))
+            {
+                if (UsernameSearch(searchString, Session["LogedEmailID"] != null))
+                {
+                    // visszakapott adatok
+
+                    // keresett user profilja
+                    return RedirectToAction();
+                }
+                else
+                {
+                    // nem található ilyen felhasználó a rendszerben
+                    return RedirectToAction();
+                }
+            }
+            else
+            {
+                if(UsernameSearch(searchString, Session["LogedEmailID"] != null))
+                {
+                    // visszakapott adatok
+
+                    // keresett user profilja
+                    return RedirectToAction();
+                }
+                else
+                {
+                    // nem található ilyen felhasználó a rendszerben
+                    return RedirectToAction();
+                }
+            }
+        }
+ 
 
         public ActionResult MyProfile()
         {

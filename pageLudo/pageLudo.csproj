@@ -147,13 +147,19 @@
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="FakeData\DataClasses\UserData.cs" />
+    <Compile Include="FakeData\Interfaces\IGameStatistics.cs" />
+    <Compile Include="FakeData\Interfaces\IUserActions.cs" />
+    <Compile Include="FakeData\Interfaces\IUserStatistics.cs" />
+    <Compile Include="FakeData\MethodClasses\GameStatistics.cs" />
+    <Compile Include="FakeData\MethodClasses\UserActions.cs" />
+    <Compile Include="FakeData\MethodClasses\UserStatistics.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChangeUser.cs" />
     <Compile Include="Models\LoginUser.cs" />
     <Compile Include="Models\RegisterUser.cs" />
-    <Compile Include="Models\UserStatistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
