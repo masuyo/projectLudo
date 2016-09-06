@@ -9,13 +9,21 @@ namespace pageLudo.FakeData.MethodClasses
 {
     public class UserActions : IUserActions
     {
+        List<UserData> ud = new List<UserData>();
+        List<UserData> searchResultList = new List<UserData>();
 
-        public bool Friend(string BeMyFriendEmailID, string IMightBecomeYourFriendEmailID)
+        public void Friend(string BeMyFriendEmailID, string IMightBecomeYourFriendEmailID)
         {
-            throw new NotImplementedException();
+            foreach (var u in searchResultList)
+            {
+                if (u.EmailID == BeMyFriendEmailID)
+                {
+                    u.AreWeFriends = "true";
+                }
+            }
         }
 
-        public bool FriendAccept(string IWillBeYourFriendEmailID, string ThanksForAcceptingMeAsYourFriendEmailID)
+        public void FriendAccept(string IWillBeYourFriendEmailID, string ThanksForAcceptingMeAsYourFriendEmailID)
         {
             throw new NotImplementedException();
         }
@@ -43,7 +51,8 @@ namespace pageLudo.FakeData.MethodClasses
         // AreWeFriends akkor true, ha végigmész a db friend tábláján, és mindkét usernél megtalálod a másikat
         public List<UserData> UsernameSearch(string username, string searcherEmailID)
         {
-            List<UserData> ud = new List<UserData>();
+            //csak teszteléshez rakom kívülre
+            //List<UserData> ud = new List<UserData>();
             ud.Add(new UserData() { Username = "Adam", EmailID = "adam@email.com" , AreWeFriends = "true"});
             ud.Add(new UserData() { Username = "Adam", EmailID = "adam2@email.com", AreWeFriends = "false" });
             ud.Add(new UserData() { Username = "Adam", EmailID = "adam3@email.com", AreWeFriends = "false" });
@@ -54,7 +63,8 @@ namespace pageLudo.FakeData.MethodClasses
             ud.Add(new UserData() { Username = "Neville", EmailID = "neville@email.com", AreWeFriends = "false" });
             ud.Add(new UserData() { Username = "Eve", EmailID = "eve@email.com", AreWeFriends = "true" });
 
-            List<UserData> searchResultList = new List<UserData>();
+            //teszteléshez
+            //List<UserData> searchResultList = new List<UserData>();
             foreach (var u in ud)
             {
                 if (u.Username == username)

@@ -148,6 +148,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="FakeData\DataClasses\GameWinrate.cs" />
     <Compile Include="FakeData\DataClasses\UserData.cs" />
     <Compile Include="FakeData\Interfaces\IGameStatistics.cs" />
     <Compile Include="FakeData\Interfaces\IUserActions.cs" />

@@ -8,6 +8,8 @@
 {
     <text>
 <br />
-        Welcome @Session["LogedUsername"].ToString()
+        <h4>Welcome @Session["LogedUsername"].ToString()</h4>
     </text>
+    <br />
+    <p>Online játékosok száma: <h2 style="color:green">@TempData["onlineUsers"]</h2></p>
 }
