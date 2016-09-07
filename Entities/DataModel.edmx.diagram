@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="027841eb0cca48daabaf7e9c3069421d" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseModel.User" Width="1.5" PointX="0.75" PointY="0.5" />
-        <EntityTypeShape EntityType="DatabaseModel.FriendConnections" Width="1.5" PointX="5.625" PointY="8.5" />
-        <EntityTypeShape EntityType="DatabaseModel.Game" Width="1.5" PointX="4.125" PointY="5.125" />
+        <EntityTypeShape EntityType="DatabaseModel.User" Width="3.125" PointX="0.75" PointY="0.5" />
+        <EntityTypeShape EntityType="DatabaseModel.FriendConnections" Width="3.625" PointX="5.625" PointY="8.5" />
+        <EntityTypeShape EntityType="DatabaseModel.Game" Width="1.5" PointX="4.5" PointY="5.125" />
         <EntityTypeShape EntityType="DatabaseModel.InvationDesktop" Width="1.5" PointX="0.625" PointY="11.5" />
         <EntityTypeShape EntityType="DatabaseModel.Man" Width="1.5" PointX="6.625" PointY="1.375" />
-        <EntityTypeShape EntityType="DatabaseModel.Player" Width="1.5" PointX="4.25" PointY="0.5" />
+        <EntityTypeShape EntityType="DatabaseModel.Player" Width="1.5" PointX="4.625" PointY="0.5" />
         <EntityTypeShape EntityType="DatabaseModel.Step" Width="1.5" PointX="8.875" PointY="1.25" />
         <AssociationConnector Association="DatabaseModel.FK__FriendCon__Frien__74CE504D" />
         <AssociationConnector Association="DatabaseModel.FK__FriendCon__UserI__73DA2C14" />

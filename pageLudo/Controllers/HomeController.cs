@@ -14,7 +14,5 @@ namespace pageLudo.Controllers
             return View();
         }
 
-
-
     }
 }

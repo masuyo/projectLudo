@@ -13,11 +13,13 @@ namespace Game
             Cheks = new Dictionary<LudoPlayer, bool>();
             Cheks.Add(newcreator, false);
             Startable = false;
+            Started = false;
         }
 
         public bool Startable { get; private set; }
 
         public Dictionary<LudoPlayer,bool> Cheks { get; private set; }
+        public bool Started { get; private set; }
 
         public override void AddPlayer(LudoPlayer newplayer, string password)
         {
@@ -27,6 +29,12 @@ namespace Game
                 Cheks.Add(newplayer, false);
             }
             else throw new ArgumentException("Wrong password");           
+        }
+
+        public override void LeavePlayer(LudoPlayer player)
+        {
+            Players.Remove(player);
+            Cheks.Remove(player);
         }
 
         public void SetCheck(LudoPlayer player, bool value)
@@ -39,7 +47,8 @@ namespace Game
         public void SetColor(LudoPlayer player, puppetColor color)
         {
             Players.Find(akt => player == akt).color = color;
-            Startable = StartCheck();
+            Cheks[player] = false;
+            Startable = false;
         }
 
         public override void Start()
@@ -59,6 +68,7 @@ namespace Game
                     item.sequence = Players.IndexOf(item) + 1;
                 }
                 Gamemanager = new LudoGameManager(Players[0], Players[1], Players[2], Players[3]);
+                Started = true;
             }
         }
 
@@ -66,10 +76,9 @@ namespace Game
         {
             if (Players.Count != 4) return false;
 
-            foreach (var item in Cheks)
+            foreach (var ready in Cheks)
             {
-                Console.WriteLine(item.Key.Name + item.Value);
-                if (item.Value == false) return false;
+                if (ready.Value == false) return false;
             }
 
             List<puppetColor> colors = new List<puppetColor>();
@@ -86,6 +95,12 @@ namespace Game
             }
 
             return true;
+        }
+
+        public LudoGame getGame()
+        {
+            if (Started) return Gamemanager.getGame();
+            else return null;
         }
     }
 }

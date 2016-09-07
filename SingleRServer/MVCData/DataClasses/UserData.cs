@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace pageLudo.FakeData.DataClasses
+namespace SignalRServer.MVCData.DataClasses
 {
     public class UserData
     {

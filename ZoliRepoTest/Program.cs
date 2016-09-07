@@ -10,6 +10,10 @@ using SignalRServer;
 using Entities;
 using Repository;
 using Game;
+using Game.LudoActions;
+using SignalRServer.MVCData.MethodClasses;
+using Repository.TableRepositories;
+using SignalRServer.MVCData.DataClasses;
 
 namespace ZoliRepoTest
 {
@@ -17,19 +21,36 @@ namespace ZoliRepoTest
     {
         static void Main(string[] args)
         {
+            
+            Repotest();
+            FriendOfMeTest();
 
-            //Repotest();
-            //GameTest();
-            GameTestWithTables();
-            //MVCServiceTest();
+        }
 
+        private static void FriendOfMeTest()
+        {
+            do
+            {
+                Console.WriteLine("seacrher and searched:");
+                int searcher = int.Parse(Console.ReadLine());
+                string searched = Console.ReadLine();
+
+                UsersRepository userepo = new UsersRepository(new DatabaseEntities());
+
+                UserActions useractioner = new UserActions();
+                //UserData data= useractioner.EmaildIDSearch(userepo.GetById(searched).EmailID, userepo.GetById(searcher).EmailID);
+                //Console.WriteLine("{0}\t {1}\t {2}\t {3}\t {4}\t", data.Username,data.EmailID,data.AreWeFriends,data.FriendedMe,data.FriendedYou);
+
+                foreach (var data in useractioner.UsernameSearch(searched, userepo.GetById(searcher).EmailID))
+                {
+                    Console.WriteLine("{0}\t {1}\t {2}\t {3}\t {4}\t", data.Username,data.EmailID,data.AreWeFriends,data.FriendedMe,data.FriendedYou);
+                }
+
+            } while (true);
         }
 
         private static void MVCServiceTest()
         {
-            MVCService service = new MVCService();
-            service.Register("Bela", "asdasd", "email@email.com");
-
             Console.ReadLine();
         }
 
@@ -61,15 +82,18 @@ namespace ZoliRepoTest
                 table.Start();
                 do
                 {
+                    WriteOutGame(table.Gamemanager.getGame());
                     LudoGameManager manager = (LudoGameManager)table.Gamemanager;
-                    Console.WriteLine("throw/move ?:");
+                    Console.WriteLine("throw/move/check ?:");
                     var input = Console.ReadLine();
                     switch (input)
                     {
+                        case "check":
+                            table.Gamemanager.DoAction(new CheckLudoAction(manager.getGame().nextplayer));
+                            break;
                         case "throw":
                             table.Gamemanager.DoAction(new ThrowLudoAction(manager.getGame().nextplayer));
                             Console.WriteLine("dices:\t" + manager.Dice1 + "\t" + manager.Dice2);
-                            WriteOutGame(manager.getGame());
                             break;
                         case "move":
                             Console.WriteLine("puppet?:");
@@ -77,7 +101,6 @@ namespace ZoliRepoTest
                             Console.WriteLine("amount?: {0} or {1}", manager.Dice1, manager.Dice2);
                             int amount = int.Parse(Console.ReadLine());
                             table.Gamemanager.DoAction(new MoveLudoAction(table.Gamemanager.getGame().nextplayer, puppet, amount));
-                            WriteOutGame(table.Gamemanager.getGame());
                             break;
                         default:
                             break;
@@ -130,7 +153,7 @@ namespace ZoliRepoTest
 
         private static void WriteOutGame(LudoGame ludoGame)
         {
-
+            Console.WriteLine("---------------------------------------");
             foreach (var players in ludoGame.Players)
             {
                 Console.WriteLine(players.Name + "    " + players.color);
@@ -138,31 +161,31 @@ namespace ZoliRepoTest
             }
             Console.WriteLine("nextplayer: " + ludoGame.nextplayer.Name);
             Console.WriteLine("rounds: " + ludoGame.Rounds);
+            Console.WriteLine("---------------------------------------");
         }
 
         private static void Repotest()
         {
             DatabaseEntities DE = new DatabaseEntities();
-            Repository.TableRepositories.UsersRepository repo = new Repository.TableRepositories.UsersRepository(DE);
-
-            //try
-            //{
-            //    repo.Register("asd", "asd123", "asd@email.com");
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e.Message);
-            //}
-            //repo.Delete(6);
-
-            foreach (var item in repo.GetAll())
+            Repository.TableRepositories.UsersRepository userrepo = new Repository.TableRepositories.UsersRepository(DE);
+            Console.WriteLine("User:");
+            foreach (var item in userrepo.GetAll())
             {
                 Console.WriteLine("{0}\t {1}\t {2}\t {3}\t {4}\t {5}\t", item.UserID, item.Username, item.Password, item.EmailID, item.Status, item.Token);
             }
+            Console.WriteLine("------------------------------------------");
+
+            Repository.TableRepositories.FriendConnectionsRepository friendrepo = new Repository.TableRepositories.FriendConnectionsRepository(DE);
+            Console.WriteLine("FriendConnections:");
+            foreach (var item in friendrepo.GetAll())
+            {
+                Console.WriteLine("{0}\t {1}\t {2}\t",item.FriendConnID,item.UserID, item.FriendUserID);
+            }
+            Console.WriteLine("------------------------------------------");
 
             DE.SaveChanges();
 
-            Console.Read();
+            Console.ReadLine();
         }
     }
 }
