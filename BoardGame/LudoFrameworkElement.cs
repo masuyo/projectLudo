@@ -12,7 +12,7 @@ namespace BoardGame
 {
     class LudoFrameworkElement : FrameworkElement
     {
-        List<IMan> menList;
+        List<IPuppet> puppetList;
         int[,] fieldIDMatrix;
         const int DIM = 11;
         int width = 600;
@@ -21,12 +21,12 @@ namespace BoardGame
         int Y_offset = 0;
 
         TestGameInfo tmsg;
-        List<IMan> newmenList;
+        List<IPuppet> newpuppetList;
 
 
         public LudoFrameworkElement()
         {
-            menList = new List<IMan>();
+            puppetList = new List<IPuppet>();
             fieldIDMatrix = new int[DIM, DIM] {
                 {  11, 12, 0 , 0 ,118,119,120, 0 , 0 , 21, 22},
                 {  13, 14, 0 , 0 ,117,201,121, 0 , 0 , 23, 24},
@@ -47,7 +47,7 @@ namespace BoardGame
             this.MouseMove += LudoFrameworkElement_MouseMove;
 
             tmsg = new TestGameInfo();
-            menList = tmsg.MenList;
+            puppetList = tmsg.PuppetList;
 
         }
 
@@ -60,7 +60,7 @@ namespace BoardGame
         {
 
             tmsg.ChangePoz();
-            newmenList = tmsg.MenList;
+            newpuppetList = tmsg.PuppetList;
             if (tmsg.OnManHit)
             {
                 Console.WriteLine("FULL");
@@ -232,7 +232,7 @@ namespace BoardGame
                     }
                 }
             }
-            foreach (IMan m in menList) //drawing men
+            foreach (IPuppet m in puppetList) //drawing men
             {
                 MoveMan(drawingContext, 0, m.Poz, m.Player.Color);
             }
@@ -242,15 +242,15 @@ namespace BoardGame
         {
             Init(drawingContext);
             Console.WriteLine("Init");
-            if (newmenList != null)
+            if (newpuppetList != null)
             {
-                for (int i = 0; i < menList.Count; i++)
+                for (int i = 0; i < puppetList.Count; i++)
                 {
                     //if (menList[i].Poz != newmenList[i].Poz) ///TODO: find bug ALWAYS a match -.-
                     //{
                     //    Console.WriteLine("TODO");
-                    Console.WriteLine("moved from {0} moved to {1} ", menList[i].Poz, newmenList[i].Poz);
-                    MoveMan(drawingContext, menList[i].Poz, newmenList[i].Poz, menList[i].Player.Color);
+                    Console.WriteLine("moved from {0} moved to {1} ", puppetList[i].Poz, newpuppetList[i].Poz);
+                    MoveMan(drawingContext, puppetList[i].Poz, newpuppetList[i].Poz, puppetList[i].Player.Color);
                     //}
                 }
             }

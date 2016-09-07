@@ -10,7 +10,7 @@ namespace BoardGame.Interfaces
     {
         int ActivePlayerID { get; }
         string Msg { get; }
-        List<IMan> MenList { get; }
+        List<IPuppet> PuppetList { get; }
         bool End { get; }
         bool OnManHit { get; } //redraw full visual
         bool Reroll { get; }

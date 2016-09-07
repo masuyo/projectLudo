@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BoardGame.TestClasses
 {
-    class TestMan : IMan
+    class TestPuppet : IPuppet
     {
         private int id;
         private int poz;
         private TestPlayer player;
-        public TestMan(int id, int poz, TestPlayer player)
+        public TestPuppet(int id, int poz, TestPlayer player)
         {
             this.id = id;
             this.poz = poz;

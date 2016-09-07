@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BoardGame.Interfaces
 {
-    interface IMan
+    interface IPuppet
     {
         int ID { get; set; }
         int Poz { get; set; }

@@ -9,37 +9,37 @@ namespace BoardGame.TestClasses
 {
     class TestGameInfo : IGameInfo
     {
-        List<IMan> menList;
+        List<IPuppet> puppetList;
         Random rnd = new Random();
 
         public TestGameInfo()
         {
-            menList = new List<IMan>();
-            menList.Add(new TestMan(11, 11, new TestPlayer(0, PlayerColor.RED)));
-            menList.Add(new TestMan(12, 12, new TestPlayer(0, PlayerColor.RED)));
-            menList.Add(new TestMan(12, 13, new TestPlayer(0, PlayerColor.RED)));
-            menList.Add(new TestMan(13, 14, new TestPlayer(0, PlayerColor.RED)));
+            puppetList = new List<IPuppet>();
+            puppetList.Add(new TestPuppet(11, 11, new TestPlayer(0, PlayerColor.RED)));
+            puppetList.Add(new TestPuppet(12, 12, new TestPlayer(0, PlayerColor.RED)));
+            puppetList.Add(new TestPuppet(12, 13, new TestPlayer(0, PlayerColor.RED)));
+            puppetList.Add(new TestPuppet(13, 14, new TestPlayer(0, PlayerColor.RED)));
 
-            menList.Add(new TestMan(21, 21, new TestPlayer(1, PlayerColor.BLUE)));
-            menList.Add(new TestMan(22, 22, new TestPlayer(1, PlayerColor.BLUE)));
-            menList.Add(new TestMan(23, 23, new TestPlayer(1, PlayerColor.BLUE)));
-            menList.Add(new TestMan(24, 24, new TestPlayer(1, PlayerColor.BLUE)));
+            puppetList.Add(new TestPuppet(21, 21, new TestPlayer(1, PlayerColor.BLUE)));
+            puppetList.Add(new TestPuppet(22, 22, new TestPlayer(1, PlayerColor.BLUE)));
+            puppetList.Add(new TestPuppet(23, 23, new TestPlayer(1, PlayerColor.BLUE)));
+            puppetList.Add(new TestPuppet(24, 24, new TestPlayer(1, PlayerColor.BLUE)));
 
-            menList.Add(new TestMan(31, 31, new TestPlayer(1, PlayerColor.YELLOW)));
-            menList.Add(new TestMan(32, 32, new TestPlayer(1, PlayerColor.YELLOW)));
-            menList.Add(new TestMan(33, 33, new TestPlayer(1, PlayerColor.YELLOW)));
-            menList.Add(new TestMan(34, 34, new TestPlayer(1, PlayerColor.YELLOW)));
+            puppetList.Add(new TestPuppet(31, 31, new TestPlayer(1, PlayerColor.YELLOW)));
+            puppetList.Add(new TestPuppet(32, 32, new TestPlayer(1, PlayerColor.YELLOW)));
+            puppetList.Add(new TestPuppet(33, 33, new TestPlayer(1, PlayerColor.YELLOW)));
+            puppetList.Add(new TestPuppet(34, 34, new TestPlayer(1, PlayerColor.YELLOW)));
 
-            menList.Add(new TestMan(41, 41, new TestPlayer(1, PlayerColor.GREEN)));
-            menList.Add(new TestMan(42, 42, new TestPlayer(1, PlayerColor.GREEN)));
-            menList.Add(new TestMan(43, 43, new TestPlayer(1, PlayerColor.GREEN)));
-            menList.Add(new TestMan(44, 44, new TestPlayer(1, PlayerColor.GREEN)));            
+            puppetList.Add(new TestPuppet(41, 41, new TestPlayer(1, PlayerColor.GREEN)));
+            puppetList.Add(new TestPuppet(42, 42, new TestPlayer(1, PlayerColor.GREEN)));
+            puppetList.Add(new TestPuppet(43, 43, new TestPlayer(1, PlayerColor.GREEN)));
+            puppetList.Add(new TestPuppet(44, 44, new TestPlayer(1, PlayerColor.GREEN)));            
         }
 
         public void ChangePoz()
         {
             int idx = rnd.Next(16);
-            menList[idx] = new TestMan(menList[idx].ID, rnd.Next(110, 150), menList[idx].Player);
+            puppetList[idx] = new TestPuppet(puppetList[idx].ID, rnd.Next(110, 150), puppetList[idx].Player);
             //menList[idx] = new TestMan(menList[idx].ID, rnd.Next(11,14), menList[idx].Player);
         }
 
@@ -87,11 +87,11 @@ namespace BoardGame.TestClasses
             }
         }
 
-        public List<IMan> MenList
+        public List<IPuppet> PuppetList
         {
             get
             {
-                return menList;
+                return puppetList;
             }
         }
 
