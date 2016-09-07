@@ -18,7 +18,7 @@ namespace Game
         {
             _game = new LudoGame(player1, player2, player3, player4, DateTime.Now);
 
-            _game.nextplayer = _game.Players.Where(akt => akt.sequence == 1).SingleOrDefault();
+            _game.Nextplayer = _game.Players.Where(akt => akt.sequence == 1).SingleOrDefault();
 
             randomgenerator = new Random();
             Dice1 = 0;
@@ -35,7 +35,8 @@ namespace Game
 
         public void DoAction(LudoAction action)
         {
-            if (action.doer != _game.nextplayer) return;
+            if (_game.Winner != null) throw new InvalidOperationException("Game Already Over");
+            if (action.doer != _game.Nextplayer) return;
 
             switch (action._actionType)
             {
@@ -69,12 +70,16 @@ namespace Game
         {
             var doer = (LudoPlayer)action.doer;
 
-            if (action.Puppet==0 && action.Amount==0 && ((Dice1==6 && Dice2==6) || (Dice1==1 && Dice2==1)))
+            if (doer.Puppets[action.Puppet]==0)
             {
-                doer.Puppets[action.Puppet] = 1;
-                Dice1 = 0; Dice2 = 0;
+                if ((Dice1 == 6 && Dice2 == 6) || (Dice1 == 1 && Dice2 == 1))
+                {
+                    doer.Puppets[action.Puppet] = 1;
+                    Dice1 = 0; Dice2 = 0;
+                }
+                else throw new ArgumentException("Can not move from the start without two 6 or 1 dices");
             }else
-            {
+            { 
                 int nextposition = doer.Puppets[action.Puppet] + action.Amount;
                 if (nextposition > 44) throw new InvalidOperationException("Player can move out of the house");
                 foreach (var puppet in doer.Puppets)
@@ -92,6 +97,10 @@ namespace Game
                     Dice2 = 0;
                 }
 
+                if (doer.Puppets.All(akt => akt > 40))
+                {
+                    _game.Winner = doer;
+                }
                 if (Dice1 == 0 && Dice2 == 0) NextPlayer();
             }
         }
@@ -106,6 +115,26 @@ namespace Game
 
         private void Step(int i, puppetColor color)
         {
+            switch (color)
+            {
+                case puppetColor.Red:
+                    i = (i + 0) % 40;
+                    break;
+                case puppetColor.Yellow:
+                    i = (i + 20) % 40;
+                    break;
+                case puppetColor.Blue:
+                    i = (i + 10) % 40;
+                    break;
+                case puppetColor.Green:
+                    i = (i + 30) % 40;
+                    break;
+                case puppetColor.Default:
+                    break;
+                default:
+                    break;
+            }
+
             foreach (var player in _game.Players)
             {
                 for(int j = 0; j<4;j++)
@@ -140,9 +169,14 @@ namespace Game
 
         private void NextPlayer()
         {
-            if (_game.nextplayer.sequence == 4) _game.nextplayer = _game.Players.Where(akt => akt.sequence == 1).SingleOrDefault();
-            else _game.nextplayer = _game.Players.Where(akt => akt.sequence == _game.nextplayer.sequence + 1).SingleOrDefault();
+            Dice1 = 0;
+            Dice2 = 0;
+            if (_game.Nextplayer.sequence == 4) _game.Nextplayer = _game.Players.Where(akt => akt.sequence == 1).SingleOrDefault();
+            else _game.Nextplayer = _game.Players.Where(akt => akt.sequence == _game.Nextplayer.sequence + 1).SingleOrDefault();
             _game.Rounds++;
         }
+
+        
+
     }
 }
