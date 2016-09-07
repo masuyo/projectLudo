@@ -14,6 +14,7 @@ namespace BoardGame.Views
         private string userName;
         private string passMessage;
         private string password;
+        private int userID;
         private string connectionID;
         private bool authenticationSuccess;
 
@@ -34,6 +35,12 @@ namespace BoardGame.Views
             get { return password; }
 
             set { SetProperty(ref password, value); }
+        }
+        public int UserID
+        {
+            get { return userID; }
+
+            set { SetProperty(ref userID, value); }
         }
         public string ConnectionID
         {

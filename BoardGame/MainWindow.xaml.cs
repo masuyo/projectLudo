@@ -3,6 +3,7 @@ using BoardGame.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -37,21 +38,22 @@ namespace BoardGame
 
         private void Login_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //var sha1 = new SHA1CryptoServiceProvider();
-            //byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(VM.Password));
-
-            ////var hashedPassword = ASCIIEncoding.GetString(sha1data);
-
-
             Console.WriteLine("Logging in...");
             if (sender is Label)
             {
-
                 if (!String.IsNullOrEmpty(VM.UserName) && VM.UserName.Length > 5 &&
                     !String.IsNullOrEmpty(VM.Password) && VM.Password.Length > 5)
                 {
-                    if (true)//testSTC.AuthenticationSuccess)
+                    var sha1 = new SHA1CryptoServiceProvider();
+                    byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(VM.Password));
+                    string hashedPassword = new ASCIIEncoding().GetString(sha1data);
+
+                    TestLudoServer TLS = new TestLudoServer();
+                    VM.UserID = TLS.Login(VM.UserName, hashedPassword, VM.SelectedGameType);
+
+                    if (VM.UserID != -1)
                     {
+                        VM.AuthenticationSuccess = true;
                         ConnectToGameWindow rooms = new ConnectToGameWindow(VM.UserName);
                         this.Close();
                         rooms.ShowDialog();

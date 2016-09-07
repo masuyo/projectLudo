@@ -57,7 +57,7 @@ namespace BoardGame.TestClasses
 
         public int Login(string userName, string encryptedPassword, string selectedGameType = "LUDO")
         {
-            throw new NotImplementedException();
+            return 1; //if data correct return ID else return -1;
         }
 
         public IGameInfo Move(int playerID, int actPoz, int destPoz)
