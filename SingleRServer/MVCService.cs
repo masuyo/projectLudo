@@ -7,6 +7,7 @@ using SignalRServer.Interfaces4MVC;
 
 using Repository;
 using Entities;
+using SignalRServer.MVCData.DataClasses;
 
 namespace SignalRServer
 {
@@ -17,6 +18,11 @@ namespace SignalRServer
         public MVCService()
         {
             DE = new DatabaseEntities();
+        }
+
+        public UserData EmaildIDSearch(string emailID, string searcherEmailID)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Friend(string BeMyFriendEmailID, string IMightBecomeYourFriendEmailID)
@@ -41,6 +47,26 @@ namespace SignalRServer
         }
 
         public Something UserCheck(string EmailID, string Password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<UserData> UsernameSearch(string username, string searcherEmailID)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IUserActions.Friend(string BeMyFriendEmailID, string IMightBecomeYourFriendEmailID)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IUserActions.FriendAccept(string IWillBeYourFriendEmailID, string ThanksForAcceptingMeAsYourFriendEmailID)
+        {
+            throw new NotImplementedException();
+        }
+
+        UserData IUserActions.UserCheck(string EmailID, string Password)
         {
             throw new NotImplementedException();
         }

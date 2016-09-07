@@ -2,12 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace SignalRServer.Interfaces4MVC
+namespace SignalRServer.MVCData.Interfaces
 {
-    interface IUserActions
+    public interface IUserActions
     {
         /* search - user kikeresése email vagy név alapján; vissza kéne kapnom mindenképp usert: név, email, 
          * friendek vagyunk-e (velem, aki kerestem, ehhez gondolom, kell majd még egy lekérdezés?), 
@@ -36,5 +35,6 @@ namespace SignalRServer.Interfaces4MVC
 
         //Unfriend - egyik fél dönti el, mint a válásnál, és megtörténik xD
         bool Unfriend(string YouAreNotMyFriendAnymoreEmailID, string IDidntWantYouAnywayEmailID);
+
     }
 }

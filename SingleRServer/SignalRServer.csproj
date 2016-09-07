@@ -91,6 +91,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MVCData\DataClasses\GameWinrate.cs" />
+    <Compile Include="MVCData\DataClasses\UserData.cs" />
+    <Compile Include="MVCData\Interfaces\IGameStatistics.cs" />
+    <Compile Include="MVCData\Interfaces\IUserActions.cs" />
+    <Compile Include="MVCData\Interfaces\IUserStatistics.cs" />
+    <Compile Include="MVCData\MethodClasses\GameStatistics.cs" />
+    <Compile Include="MVCData\MethodClasses\UserActions.cs" />
+    <Compile Include="MVCData\MethodClasses\UserStatistics.cs" />
     <Compile Include="Interfaces4MVC\Something.cs" />
     <Compile Include="MVCService.cs" />
     <Compile Include="MyHubForTest.cs" />
