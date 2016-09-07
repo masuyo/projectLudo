@@ -25,20 +25,22 @@
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Label 
-            Content="{Binding Path=ChatMsg}" ContentStringFormat="Ludo game: blablabla binding {0}"
+            Content="{Binding Path=UserName}" ContentStringFormat="{}{0}'s turn."
             Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-            Background="DodgerBlue" Foreground="Black" Margin="0,0,0,620" Grid.RowSpan="2"   />
-        <ListBox Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" MinHeight="100" 
+            Background="DodgerBlue" Foreground="Black" Margin="0,0,0,620" Grid.RowSpan="2" FontSize="24"   />
+        <ListBox Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" 
+                 MinHeight="100" 
                  ItemsSource="{Binding Path=ServerMsgs}" 
+                 Foreground="AliceBlue"
                  BorderThickness="0"  Background="DimGray" Opacity="0.7" Margin="0,5,5,20">
-            <ListBox.ItemTemplate>
+            <!--<ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Label Content="{Binding Path=Time}" Foreground="Aqua" FontSize="10"/>
-                        <TextBlock MaxWidth="200" TextWrapping="Wrap" Text="{Binding Path=Name}" Background="Transparent" Foreground="AliceBlue"/>
+                        --><!--<Label Content="{Binding Path=Time}" Foreground="Aqua" FontSize="10"/>-->
+                        <!--<TextBlock MaxWidth="200" TextWrapping="Wrap" Background="Transparent" Foreground="AliceBlue"/>--><!--
                     </StackPanel>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
+            </ListBox.ItemTemplate>-->
         </ListBox>
         <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" MaxHeight="300" Background="DimGray" Margin="0,5,5,5">
             <Grid.RowDefinitions>
@@ -60,18 +62,18 @@
             <local:LudoFrameworkElement x:Name="Ludo" />
         </Grid >
         <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical" Background="DimGray" Opacity="0.7" Margin="5,10,0,10">
-            <ListBox ItemsSource="{Binding Path=ChatMsgs}" Height="550" BorderThickness="0" Background="Transparent">
-                <ListBox.ItemTemplate>
+            <ListBox ItemsSource="{Binding Path=ChatMsgs}" Height="550" BorderThickness="0" Background="Transparent" Foreground="AliceBlue">                
+                <!--<ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <!--<Label Content="{Binding Path=SentBy}" Foreground="Aqua"/>
-                                <Label Content="{Binding Path=Time}" Foreground="Aqua" FontSize="10"/>-->
+                                --><!--<Label Content="{Binding Path=SentBy}" Foreground="Aqua"/>
+                                <Label Content="{Binding Path=Time}" Foreground="Aqua" FontSize="10"/>--><!--
                             </StackPanel>
-                            <TextBlock MaxWidth="140" TextWrapping="Wrap" Text="{Binding Path=Name}" Background="Transparent" Foreground="AliceBlue"/>
+                            --><!--<TextBlock MaxWidth="140" TextWrapping="Wrap" Text="{Binding Path=ChatMsg}" Background="Transparent" Foreground="AliceBlue"/>--><!--
                         </StackPanel>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
+                </ListBox.ItemTemplate>-->
             </ListBox>
             <TextBox Height="25" Background="LightGray" Opacity="0.7" Margin="5,0" ToolTip="Type your message." TextWrapping="Wrap" 
                      Text="{Binding Path=ChatMsg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

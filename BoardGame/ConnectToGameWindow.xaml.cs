@@ -39,23 +39,14 @@ namespace BoardGame
             Init(AddListItems());
         }
 
-        private IRoomListFromServer AddListItems()
+        private List<IRoom> AddListItems()
         {
-            List<IRoom> temp = new List<IRoom>();
-
-            temp.Add(new TestRoom(0, 105, "LUDOOOOO", "LUDOOOOO")); // cheat:: doesn t show in list, LudoStart for test only
-            temp.Add(new TestRoom(3, 100, "Room#100", String.Empty));
-            temp.Add(new TestRoom(2, 101, "Room#111", "pswd"));
-            temp.Add(new TestRoom(1, 102, "Room#102", "pswd"));
-            temp.Add(new TestRoom(4, 103, "Room#113", String.Empty));
-            temp.Add(new TestRoom(2, 104, "Room#110", "aaa"));
-
-            IRoomListFromServer list = new RoomListFromServer(temp);
-            return list;
+            TestLudoServer TLS = new TestLudoServer();
+            return TLS.GetAllRoomList();
         }
-        private void Init(IRoomListFromServer list)
+        private void Init(List<IRoom> list)
         {
-            foreach (IRoom r in list.RoomList)
+            foreach (IRoom r in list)
             {
                 VM.RoomList.Add(r);
             }

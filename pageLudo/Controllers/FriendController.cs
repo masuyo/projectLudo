@@ -10,12 +10,12 @@ namespace pageLudo.Controllers
     public class FriendController : Controller
     {
         // initiate friend request
-        [HttpPost]
+        [HttpGet]
         public ActionResult Friending()
         {
             UserActions ua = new UserActions();
-            ua.Friend(Session["LogedEmailID"].ToString(), TempData["AccessedEmailID"].ToString());
-            return new EmptyResult();
+            ua.Friend(Session["LogedEmailID"].ToString(), Session["AccessedEmailID"].ToString());
+            return new ContentResult() { Content = "Sikeresen barátnak jelölted ezt a felhasználót." };
         }
     }
 }

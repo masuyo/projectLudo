@@ -9,6 +9,6 @@ namespace BoardGame.Interfaces.Client
     interface ILudoClient
     {
         void GameStateRefresh(IGameInfo gameInfo);
-
+        void GameStart(IGameInfo gameInfo);
     }
 }
