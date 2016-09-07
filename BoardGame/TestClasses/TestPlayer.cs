@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame
+namespace BoardGame.TestClasses
 {
     enum PlayerColor { RED, GREEN, BLUE, YELLOW }
-    class Player : IPlayer
+    class TestPlayer : IPlayer
     {
         private string name;
         public string Name

@@ -55,7 +55,7 @@ namespace BoardGame
             ///WPF client defines its method
             HubProxy.On<string>("addMessage", (msg) =>
                this.Dispatcher.Invoke(() =>
-                   VM.ChatMsgs.Add(new ChatMsg(msg, ""))
+                   VM.ChatMsgs.Add(msg)
                )
            );
 
@@ -66,12 +66,12 @@ namespace BoardGame
             catch (HttpRequestException)
             {
                 this.Dispatcher.Invoke(() =>
-                VM.ServerMsgs.Add(new ChatMsg("Unable to connect to server.", "server"))
+                VM.ServerMsgs.Add("Unable to connect to server."))
                 );
                 return;
             }
             this.Dispatcher.Invoke(() =>
-           VM.ServerMsgs.Add(new ChatMsg("Connected to server.", "server"))
+           VM.ServerMsgs.Add("Connected to server.")
            );
         }
 
@@ -79,7 +79,7 @@ namespace BoardGame
         void Connection_Closed()
         {
             this.Dispatcher.Invoke(() =>
-           VM.ServerMsgs.Add(new ChatMsg("Disconnected from server.", "server"))
+           VM.ServerMsgs.Add("Disconnected from server.")
            );
         }
 
@@ -97,7 +97,7 @@ namespace BoardGame
             if (e.Key == Key.Enter)
             {
                 ///WPF client defines method call on server side
-                HubProxy.Invoke("Send", VM.ChatMsg);  //VM.ChatMsgs.Add(new ChatMsg(VM.ChatMsg, UserName)
+                HubProxy.Invoke("Send", VM.ChatMsg);
                 VM.ChatMsg = String.Empty;
             }
         }

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.Interfaces.Ludo
+namespace BoardGame.Interfaces
 {
-    interface IMsgToServer
+    class IUser
     {
-        IMan ManMsg { get; set; }
-        int PlayerID { get; set; }
+        int UserID { get;}
+        string UserName { get; set; }
     }
 }

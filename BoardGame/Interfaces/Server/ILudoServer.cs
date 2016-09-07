@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.Interfaces
+namespace BoardGame.Interfaces.Server
 {
     interface ILudoServer
     {
@@ -13,7 +13,7 @@ namespace BoardGame.Interfaces
         /// before login
         /// </summary>
         /// <returns>string List with game types</returns>
-        List<string> GetGameTypes(); 
+        List<string> GetGameTypes();
         /// <summary>
         /// when client signs in Login() checks data, lets user in if params OK
         /// </summary>
@@ -32,7 +32,7 @@ namespace BoardGame.Interfaces
         /// </summary>
         /// <param name="room"></param>
         /// <returns>IUser list of users connected to room</returns>
-        List<IUser> GetPlayersInIRoom(IRoom room);
+        List<IUser> GetPlayersInRoom(IRoom room);
         /// <summary>
         /// 
         /// </summary>
@@ -51,16 +51,4 @@ namespace BoardGame.Interfaces
         void Befriend(int playerID, int friendPlayerID);
 
     }
-    interface ILudoClient {
-        void GameStateRefresh(IGameInfo gameInfo);
-
-    }
-    interface IChatServer {
-        bool ConnectToRoom(int userID, IRoom room);
-        bool SendMessage(int playerID, string text);
-    }
-    interface IChatClient {
-        void BroadcastMessage(string playerName, string text);
-    }
-
 }
