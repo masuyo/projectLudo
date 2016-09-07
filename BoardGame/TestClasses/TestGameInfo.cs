@@ -25,15 +25,15 @@ namespace BoardGame.TestClasses
             puppetList.Add(new TestPuppet(23, 23, new TestPlayer(1, PlayerColor.BLUE)));
             puppetList.Add(new TestPuppet(24, 24, new TestPlayer(1, PlayerColor.BLUE)));
 
-            puppetList.Add(new TestPuppet(31, 31, new TestPlayer(1, PlayerColor.YELLOW)));
-            puppetList.Add(new TestPuppet(32, 32, new TestPlayer(1, PlayerColor.YELLOW)));
-            puppetList.Add(new TestPuppet(33, 33, new TestPlayer(1, PlayerColor.YELLOW)));
-            puppetList.Add(new TestPuppet(34, 34, new TestPlayer(1, PlayerColor.YELLOW)));
+            puppetList.Add(new TestPuppet(31, 31, new TestPlayer(2, PlayerColor.YELLOW)));
+            puppetList.Add(new TestPuppet(32, 32, new TestPlayer(2, PlayerColor.YELLOW)));
+            puppetList.Add(new TestPuppet(33, 33, new TestPlayer(2, PlayerColor.YELLOW)));
+            puppetList.Add(new TestPuppet(34, 34, new TestPlayer(2, PlayerColor.YELLOW)));
 
-            puppetList.Add(new TestPuppet(41, 41, new TestPlayer(1, PlayerColor.GREEN)));
-            puppetList.Add(new TestPuppet(42, 42, new TestPlayer(1, PlayerColor.GREEN)));
-            puppetList.Add(new TestPuppet(43, 43, new TestPlayer(1, PlayerColor.GREEN)));
-            puppetList.Add(new TestPuppet(44, 44, new TestPlayer(1, PlayerColor.GREEN)));            
+            puppetList.Add(new TestPuppet(41, 41, new TestPlayer(3, PlayerColor.GREEN)));
+            puppetList.Add(new TestPuppet(42, 42, new TestPlayer(3, PlayerColor.GREEN)));
+            puppetList.Add(new TestPuppet(43, 43, new TestPlayer(3, PlayerColor.GREEN)));
+            puppetList.Add(new TestPuppet(44, 44, new TestPlayer(3, PlayerColor.GREEN)));            
         }
 
         public void ChangePoz()
