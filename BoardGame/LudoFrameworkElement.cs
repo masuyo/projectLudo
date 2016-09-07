@@ -23,10 +23,8 @@ namespace BoardGame
         TestGameInfo tmsg;
         List<IPuppet> newpuppetList;
 
-
-        public LudoFrameworkElement()
+        private void InitMap()
         {
-            puppetList = new List<IPuppet>();
             fieldIDMatrix = new int[DIM, DIM] {
                 {  11, 12, 0 , 0 ,118,119,120, 0 , 0 , 21, 22},
                 {  13, 14, 0 , 0 ,117,201,121, 0 , 0 , 23, 24},
@@ -41,24 +39,46 @@ namespace BoardGame
                 {  43, 44, 0 , 0 ,140,139,138, 0 , 0 , 33, 34}
             };
 
+        }
+        public LudoFrameworkElement()
+        {
+            puppetList = new List<IPuppet>();
+            tmsg = new TestGameInfo();
+            InitMap();
+
+
             this.Loaded += LudoFrameworkElement_Loaded;
             this.MouseDown += LudoFrameworkElement_MouseDown;
 
             this.MouseMove += LudoFrameworkElement_MouseMove;
 
-            tmsg = new TestGameInfo();
+
             puppetList = tmsg.PuppetList;
 
         }
-
+        bool onHover = false;
+        List<IPuppet> onHoverPuppets;
         private void LudoFrameworkElement_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
+            onHoverPuppets = new List<IPuppet>();
+            RectangleGeometry temp = new RectangleGeometry(new Rect(e.GetPosition(this).X, e.GetPosition(this).Y, 1, 1), 1, 1);
+            foreach (IPuppet p in puppetList)
+            {
+                if (!onHover && Geometry.Combine(DrawManGraphics(p.Poz, 2), temp, GeometryCombineMode.Intersect, null).GetArea() > 0)
+                {
+                    onHover = true;
+                    onHoverPuppets.Add(p);
+                }
+            }
             //MessageBox.Show(e.GetPosition(this).ToString());
+            if (onHover)
+            {
+                InvalidateVisual();
+            }
         }
 
         private void LudoFrameworkElement_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
             tmsg.ChangePoz();
             newpuppetList = tmsg.PuppetList;
             if (tmsg.OnManHit)
@@ -141,18 +161,18 @@ namespace BoardGame
                 default: return Brushes.DimGray;
             }
         }
-        private Brush PlayerColorToBrushColor(PlayerColor color)
+        private Brush PlayerColorToBrushColor(PlayerColor color, bool onHover)
         {
             switch (color)
             {
                 case PlayerColor.RED:
-                    return Brushes.Red;
+                    return onHover ? Brushes.LightPink : Brushes.Red;
                 case PlayerColor.GREEN:
-                    return Brushes.Green;
+                    return onHover ? Brushes.LightGreen : Brushes.Green;
                 case PlayerColor.BLUE:
-                    return Brushes.Blue;
+                    return onHover ? Brushes.LightBlue : Brushes.Blue;
                 case PlayerColor.YELLOW:
-                    return Brushes.Yellow;
+                    return onHover ? Brushes.LightYellow : Brushes.Yellow;
                 default:
                     return null;
             }
@@ -177,12 +197,12 @@ namespace BoardGame
         {
             EllipseGeometry ell = new EllipseGeometry();
 
-            double X_man = (GetXY(where).X) * width / DIM + width / DIM / 4; ; //width / DIM + 
-            double Y_man = (GetXY(where).Y) * height / DIM + width / DIM / 4; //height / DIM + 
-            double W_man = width / DIM / DIM * (DIM - resize_param);
-            double H_man = height / DIM / DIM * (DIM - resize_param);
+            double X_puppet = (GetXY(where).X) * width / DIM + width / DIM / 4; ; //width / DIM + 
+            double Y_puppet = (GetXY(where).Y) * height / DIM + width / DIM / 4; //height / DIM + 
+            double W_puppet = width / DIM / DIM * (DIM - resize_param);
+            double H_puppet = height / DIM / DIM * (DIM - resize_param);
 
-            ell = new EllipseGeometry(new Rect(X_man, Y_man, W_man, H_man));
+            ell = new EllipseGeometry(new Rect(X_puppet, Y_puppet, W_puppet, H_puppet));
             //Console.WriteLine(W_man + " - " + H_man);
             //Console.WriteLine(X_man + " : " + Y_man);
 
@@ -203,10 +223,10 @@ namespace BoardGame
         }
 
 
-        private void MoveMan(DrawingContext drawingContext, int from, int where, PlayerColor color)
+        private void MoveMan(DrawingContext drawingContext, int from, int where, PlayerColor color, bool onHover)
         {
             DeleteMan(drawingContext, from);
-            Brush drawingBrush = PlayerColorToBrushColor(color);
+            Brush drawingBrush = PlayerColorToBrushColor(color, onHover);
 
             drawingContext.DrawGeometry(drawingBrush, new Pen(Brushes.Black, 2), DrawManGraphics(where, 2));
             drawingContext.DrawGeometry(drawingBrush, new Pen(Brushes.Black, 1), DrawManGraphics(where, 4));
@@ -234,25 +254,34 @@ namespace BoardGame
             }
             foreach (IPuppet m in puppetList) //drawing men
             {
-                MoveMan(drawingContext, 0, m.Poz, m.Player.Color);
+                MoveMan(drawingContext, 0, m.Poz, m.Player.Color, false);
             }
         }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
             Init(drawingContext);
-            Console.WriteLine("Init");
-            if (newpuppetList != null)
+
+            //if (newpuppetList != null)
+            //{
+            //    for (int i = 0; i < puppetList.Count; i++)
+            //    {
+            //        //if (menList[i].Poz != newmenList[i].Poz) ///TODO: find bug ALWAYS a match -.-
+            //        //{
+            //        //    Console.WriteLine("TODO");
+            //        Console.WriteLine("moved from {0} moved to {1} ", puppetList[i].Poz, newpuppetList[i].Poz);
+            //        MoveMan(drawingContext, puppetList[i].Poz, newpuppetList[i].Poz, puppetList[i].Player.Color);
+            //        //}
+            //    }
+            //}
+
+            if (onHover)
             {
-                for (int i = 0; i < puppetList.Count; i++)
+                foreach (IPuppet p in onHoverPuppets)
                 {
-                    //if (menList[i].Poz != newmenList[i].Poz) ///TODO: find bug ALWAYS a match -.-
-                    //{
-                    //    Console.WriteLine("TODO");
-                    Console.WriteLine("moved from {0} moved to {1} ", puppetList[i].Poz, newpuppetList[i].Poz);
-                    MoveMan(drawingContext, puppetList[i].Poz, newpuppetList[i].Poz, puppetList[i].Player.Color);
-                    //}
+                    MoveMan(drawingContext, 0, p.Poz + 1, p.Player.Color, onHover);
                 }
+                onHover = false;
             }
 
         }
