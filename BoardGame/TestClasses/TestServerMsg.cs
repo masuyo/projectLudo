@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BoardGame.TestClasses
 {
-    class TestServerMsg : IMsgFromServer
+    class TestServerMsg : IGameInfo
     {
         Random rnd = new Random();
         List<IMan> menList;

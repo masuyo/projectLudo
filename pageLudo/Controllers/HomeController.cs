@@ -8,6 +8,9 @@ namespace pageLudo.Controllers
 {
     public class HomeController : Controller
     {
+        //IZoliFaszaBackendje ize;
+        //ize = new ZoliBackend();
+
         // GET: Home
         public ActionResult Index()
         {
@@ -19,6 +22,7 @@ namespace pageLudo.Controllers
         // db-ben megnézi az adott searchStringgel van-e azonos Username vagy Email
         public ActionResult Search(string searchString)
         {
+            //ize.GetMatchStatistics();
             if (searchString == "keresek")
             {
                 return RedirectToAction("MyProfile","User");

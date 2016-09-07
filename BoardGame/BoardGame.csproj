@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\ILudoServer.cs" />
     <Compile Include="Interfaces\IRoom.cs" />
     <Compile Include="Interfaces\Login\ILoginMsgFromServer.cs" />
     <Compile Include="Interfaces\Login\ILoginMsgToServer.cs" />
@@ -106,10 +107,9 @@
     <Compile Include="ConnectToGameWindow.xaml.cs">
       <DependentUpon>ConnectToGameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IChatMsg.cs" />
-    <Compile Include="Interfaces\Ludo\IInitMsgFromServer.cs" />
+    <Compile Include="Interfaces\Ludo\IStartGameInfo.cs" />
     <Compile Include="Interfaces\IMan.cs" />
-    <Compile Include="Interfaces\Ludo\IMsgFromServer.cs" />
+    <Compile Include="Interfaces\Ludo\IGameInfo.cs" />
     <Compile Include="Interfaces\Ludo\IMsgToServer.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="LudoFrameworkElement.cs" />

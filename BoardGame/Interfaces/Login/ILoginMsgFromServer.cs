@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 namespace BoardGame.Interfaces.Login
 {
     interface ILoginMsgFromServer
-    {   
+    {
         bool AuthenticationSuccess { get; }
         string UserName { get; } //?
-        string ConnectionID { get; } 
+        string ConnectionID { get; }
 
+        //bool Login(string userName, string connectionID); // returnType - authenticationSucceded
     }
 }

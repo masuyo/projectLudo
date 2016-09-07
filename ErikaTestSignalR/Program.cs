@@ -29,7 +29,7 @@ namespace ErikaTestSignalR
             {
                 SignalR = WebApp.Start(ServerURI);
             }
-            catch (TargetInvocationException)
+            catch (Exception)
             {
                 Console.WriteLine("A server is already running at " + ServerURI);
                 return;

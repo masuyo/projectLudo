@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoardGame.Interfaces.Ludo
 {
-    interface IMsgFromServer
+    interface IGameInfo
     {
         int ActivePlayerID { get; }
         string Msg { get; }

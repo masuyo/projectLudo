@@ -8,6 +8,7 @@ namespace BoardGame.Interfaces.Login
 {
     interface IPreLoginMsgFromServer
     {
-        List<string> GameType { get; } //return LUDO, CHESS, TICTACTOE 
+        List<string> GameTypeList(); //return LUDO, CHESS, TICTACTOE 
     }
 }
+

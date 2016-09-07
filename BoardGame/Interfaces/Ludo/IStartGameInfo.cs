@@ -1,10 +1,10 @@
 ﻿namespace BoardGame.Interfaces.Ludo
 {
-    interface IInitMsgFromServer
+    interface IStartGameInfo
     {
         IPlayer WPFPlayer { get; }
         IPlayer[] otherWPFPlayers { get; }
-        IMsgFromServer MsgFromServer { get; }
+        IGameInfo MsgFromServer { get; }
 
     }
 }
