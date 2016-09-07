@@ -8,7 +8,10 @@ namespace pageLudo.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
+        public ActionResult Chat()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             return View();
