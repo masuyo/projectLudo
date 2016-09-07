@@ -43,12 +43,12 @@ namespace BoardGame
         {
             List<IRoom> temp = new List<IRoom>();
 
-            temp.Add(new RoomTest(0, 105, "LUDOOOOO", "LUDOOOOO")); // cheat:: doesn t show in list, LudoStart for test only
-            temp.Add(new RoomTest(3, 100, "Room#100", String.Empty));
-            temp.Add(new RoomTest(2, 101, "Room#111", "pswd"));
-            temp.Add(new RoomTest(1, 102, "Room#102", "pswd"));
-            temp.Add(new RoomTest(4, 103, "Room#113", String.Empty));
-            temp.Add(new RoomTest(2, 104, "Room#110", "aaa"));
+            temp.Add(new TestRoom(0, 105, "LUDOOOOO", "LUDOOOOO")); // cheat:: doesn t show in list, LudoStart for test only
+            temp.Add(new TestRoom(3, 100, "Room#100", String.Empty));
+            temp.Add(new TestRoom(2, 101, "Room#111", "pswd"));
+            temp.Add(new TestRoom(1, 102, "Room#102", "pswd"));
+            temp.Add(new TestRoom(4, 103, "Room#113", String.Empty));
+            temp.Add(new TestRoom(2, 104, "Room#110", "aaa"));
 
             IRoomListFromServer list = new RoomListFromServer(temp);
             return list;
@@ -69,13 +69,8 @@ namespace BoardGame
             {
                 if (!String.IsNullOrEmpty(VM.SelectedRoom.Name) && VM.SelectedRoom.AvailablePlaces == 0)
                 {
-                    //send
-                    UserConnectingToRoomServerMsgTest conn = new UserConnectingToRoomServerMsgTest(VM.UserName, VM.SelectedRoom, VM.RoomList.ToList());
-
-                    //recieve
-                    UserConnectedToRoomServerMsgTest connD = new UserConnectedToRoomServerMsgTest(VM.UserName, VM.SelectedRoom);
-
-                    if (connD.ConectionSuccess)
+                    
+                    if (true)//connD.ConectionSuccess)
                     {
                         LudoWindow ludo = new LudoWindow(VM.UserName);
                         this.Close();
@@ -105,7 +100,7 @@ namespace BoardGame
                 if (String.IsNullOrEmpty(VM.SearchKeyWord))
                 {
                     VM.SearchRoomList.Clear();
-                    foreach (RoomTest r in VM.RoomList)
+                    foreach (TestRoom r in VM.RoomList)
                     {
                         if (r.AvailablePlaces > 0)
                         {
@@ -122,7 +117,7 @@ namespace BoardGame
                     if (q.ToList() != null && q.ToList().Count > 0)
                     {
                         VM.SearchRoomList.Clear();
-                        foreach (RoomTest r in q)
+                        foreach (TestRoom r in q)
                         {
                             if (r.AvailablePlaces > 0)
                             {
@@ -144,13 +139,8 @@ namespace BoardGame
         }
         private void LBL_Connect_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //send
-            UserConnectingToRoomServerMsgTest conn = new UserConnectingToRoomServerMsgTest(VM.UserName, VM.SelectedRoom, VM.RoomList.ToList());
-
-            //recieve
-            UserConnectedToRoomServerMsgTest connD = new UserConnectedToRoomServerMsgTest(VM.UserName, VM.SelectedRoom);
-
-            if (connD.ConectionSuccess)
+           
+            if (true)//connD.ConectionSuccess)
             {
                 Init(AddListItems()); // serversideListChanged
 

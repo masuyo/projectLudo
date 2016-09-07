@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BoardGame.TestClasses
 {
-    class RoomTest : IRoom
+    class TestRoom : IRoom
     {
         private int availablePlaces;
         private int id;
@@ -55,7 +55,7 @@ namespace BoardGame.TestClasses
         }
 
 
-        public RoomTest(int places, int id, string name, string password)
+        public TestRoom(int places, int id, string name, string password)
         {
             this.availablePlaces = places;
             this.id = id;
