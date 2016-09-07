@@ -50,6 +50,8 @@ namespace pageLudo.Controllers
                         Session["AccessedUsername"] = getUsers[0].Username.ToString();
                         Session["AccessedEmailID"] = getUsers[0].EmailID.ToString();
                         Session["AccessedFriendState"] = getUsers[0].AreWeFriends;
+                        Session["AccessedAmIYourFriend"] = getUsers[0].FriendedYou;
+                        Session["AccessedAreYouMyFriend"] = getUsers[0].FriendedMe;
                         return RedirectToAction("ProfileSearchResult", "Search");
                     }
                     else
@@ -71,6 +73,8 @@ namespace pageLudo.Controllers
                     Session["AccessedUsername"] = resultUser.Username.ToString();
                     Session["AccessedEmailID"] = resultUser.EmailID.ToString();
                     Session["AccessedFriendState"] = resultUser.AreWeFriends;
+                    Session["AccessedFriendedYou"] = resultUser.FriendedYou;
+                    Session["AccessedFriendedMe"] = resultUser.FriendedMe;
 
                     // keresett user profilja
                     return RedirectToAction("ProfileSearchResult", "Search");
