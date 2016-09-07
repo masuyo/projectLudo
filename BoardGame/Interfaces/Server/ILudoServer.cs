@@ -45,6 +45,7 @@ namespace BoardGame.Interfaces.Server
         /// <param name="room"></param>
         /// <returns></returns>
         bool ConnectUserToRoom(IUser user, IRoom room);
+        IStartGameInfo Start(int playerID);
         IGameInfo Move(int playerID, int actPoz, int destPoz);
         string GetOverall(int playerID);
         void Befriend(int playerID, int friendPlayerID);

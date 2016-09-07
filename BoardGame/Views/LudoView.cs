@@ -12,6 +12,7 @@ namespace BoardGame.Views
     {
         ObservableCollection<string> serverMsgs;
         ObservableCollection<string> chatMsgs;
+        string userName;
         string chatMsg;
         public ObservableCollection<string> ServerMsgs
         {
@@ -26,6 +27,7 @@ namespace BoardGame.Views
             set { SetProperty(ref chatMsgs, value); }
         }
 
+        public string UserName { get { return userName; } set { SetProperty(ref userName, value); } }
         public string ChatMsg
         {
             get { return chatMsg; }

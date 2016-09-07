@@ -20,7 +20,7 @@ namespace BoardGame
         int X_offset = 0;
         int Y_offset = 0;
 
-        TestServerMsg tmsg;
+        TestGameInfo tmsg;
         List<IMan> newmenList;
 
 
@@ -46,7 +46,7 @@ namespace BoardGame
 
             this.MouseMove += LudoFrameworkElement_MouseMove;
 
-            tmsg = new TestServerMsg();
+            tmsg = new TestGameInfo();
             menList = tmsg.MenList;
 
         }
