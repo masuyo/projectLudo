@@ -56,7 +56,7 @@ namespace BoardGame
             TestChatClient client = new TestChatClient();
             HubProxy.On<string>("addMessage", (msg) =>
                 this.Dispatcher.Invoke(() =>
-                VM.ChatMsgs.Add(VM.UserName + ": " + msg)
+                VM.ChatMsgs.Add(msg)
                 )
            //this.Dispatcher.Invoke(() =>  )
            );
@@ -99,7 +99,7 @@ namespace BoardGame
             if (e.Key == Key.Enter)
             {
                 ///WPF client defines method call on server side
-                HubProxy.Invoke("Send", VM.ChatMsg);
+                HubProxy.Invoke("Send", VM.UserName +": "+ VM.ChatMsg);
                 VM.ChatMsg = String.Empty;
             }
         }

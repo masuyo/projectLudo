@@ -52,7 +52,7 @@ namespace BoardGame
                 {
                     if (true)//testSTC.AuthenticationSuccess)
                     {
-                        ConnectToGameWindow rooms = new ConnectToGameWindow("UserName");
+                        ConnectToGameWindow rooms = new ConnectToGameWindow(VM.UserName);
                         this.Close();
                         rooms.ShowDialog();
                     }
