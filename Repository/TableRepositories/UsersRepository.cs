@@ -21,9 +21,9 @@ namespace Repository.TableRepositories
             return Get(akt => akt.UserID == id).SingleOrDefault();
         }
 
-        public User GetByName(string name)
+        public List<User> GetByName(string name)
         {
-            return Get(akt => akt.Username == name).SingleOrDefault();
+            return Get(akt => akt.Username == name).ToList();
         }
 
         public User GetByEmailID(string emailid)

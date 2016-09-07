@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace BoardGame.TestClasses
 {
-    class TestServerMsg : IGameInfo
+    class TestGameInfo : IGameInfo
     {
-        Random rnd = new Random();
         List<IMan> menList;
-        public TestServerMsg()
+        Random rnd = new Random();
+
+        public TestGameInfo()
         {
             menList = new List<IMan>();
             menList.Add(new TestMan(11, 11, new TestPlayer(0, PlayerColor.RED)));
@@ -32,8 +33,9 @@ namespace BoardGame.TestClasses
             menList.Add(new TestMan(41, 41, new TestPlayer(1, PlayerColor.GREEN)));
             menList.Add(new TestMan(42, 42, new TestPlayer(1, PlayerColor.GREEN)));
             menList.Add(new TestMan(43, 43, new TestPlayer(1, PlayerColor.GREEN)));
-            menList.Add(new TestMan(44, 44, new TestPlayer(1, PlayerColor.GREEN)));
+            menList.Add(new TestMan(44, 44, new TestPlayer(1, PlayerColor.GREEN)));            
         }
+
         public void ChangePoz()
         {
             int idx = rnd.Next(16);
@@ -105,7 +107,7 @@ namespace BoardGame.TestClasses
         {
             get
             {
-                return false; ////////////TODO
+                return false; //TODO
             }
         }
 

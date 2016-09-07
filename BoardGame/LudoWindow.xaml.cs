@@ -1,4 +1,5 @@
 ﻿using BoardGame.Interfaces;
+using BoardGame.TestClasses;
 using BoardGame.Views;
 using Microsoft.AspNet.SignalR.Client;
 using System;
@@ -25,8 +26,6 @@ namespace BoardGame
     {
         LudoView VM;
 
-        public String UserName { get; set; }
-
         //ezen keresztül fogod elérni a hubomat, amit a szerver oldalon osztályt csináltam, lásd lentebb
         public IHubProxy HubProxy { get; set; }
         const string ServerURI = "http://localhost:8080/signalr";
@@ -36,12 +35,12 @@ namespace BoardGame
         public LudoWindow(string username)
         {
             InitializeComponent();
-            UserName = username;
             VM = LudoView.GetVM;
+            VM.UserName = username;
             this.DataContext = VM;
 
             //connect to server with ConnectAsync(); display what's happening
-            VM.ServerMsgs.Add(UserName + ":: Connecting to server...");
+            VM.ServerMsgs.Add(VM.UserName + ":: Connecting to server...");
             ConnectAsync();
         }
         private async void ConnectAsync()
@@ -53,10 +52,10 @@ namespace BoardGame
             HubProxy = Connection.CreateHubProxy("MyHub");
 
             ///WPF client defines its method
+            TestChatClient client = new TestChatClient();
             HubProxy.On<string>("addMessage", (msg) =>
-               this.Dispatcher.Invoke(() =>
-                   VM.ChatMsgs.Add(msg)
-               )
+                client.BroadcastMessage(VM.UserName, msg)
+               //this.Dispatcher.Invoke(() =>  )
            );
 
             try
