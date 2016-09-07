@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SignalRServer.MVCData.DataClasses;
+using Entities;
+using Repository.TableRepositories;
 
 namespace SignalRServer.MVCData.MethodClasses
 {
@@ -36,7 +38,10 @@ namespace SignalRServer.MVCData.MethodClasses
 
         public bool Register(string Username, string Password, string EmailID)
         {
-            throw new NotImplementedException();
+            using (Repository.TableRepositories.UsersRepository repo = new Repository.TableRepositories.UsersRepository(new DatabaseEntities()))
+            {
+                return repo.Register(Username, Password, EmailID);
+            }
         }
 
         public bool Unfriend(string YouAreNotMyFriendAnymoreEmailID, string IDidntWantYouAnywayEmailID)
@@ -51,33 +56,47 @@ namespace SignalRServer.MVCData.MethodClasses
 
         public UserData EmaildIDSearch(string emailID, string searcherEmailID)
         {
-            return new UserData() { Username = "Engem kerestél", EmailID = "keres@email.com", AreWeFriends = "false" };
+            using (DatabaseEntities ED = new DatabaseEntities())
+            {
+                UsersRepository userrepo = new UsersRepository(ED);
+                User searcher = userrepo.GetByEmailID(searcherEmailID);
+                User searched = userrepo.GetByEmailID(emailID);
+
+                FriendConnectionsRepository friendrepo = new FriendConnectionsRepository(ED);
+                string arewefriends = "false";
+                string friendedyou = "false";
+                string friendedme = "false";
+                foreach (var item in friendrepo.GetAll())
+                {
+                    if (item.UserID == searcher.UserID && item.FriendUserID == searched.UserID)
+                    {
+                        friendedyou = "true";
+                    }
+                    if (item.UserID == searched.UserID && item.FriendUserID == searcher.UserID)
+                    {
+                        friendedme = "true";
+                    }
+                }
+                if (friendedyou == "true" && friendedme == "true") arewefriends = "true";
+
+                return new UserData() { Username = searched.Username, AreWeFriends = arewefriends, FriendedMe = friendedme, FriendedYou = friendedyou, EmailID = searched.EmailID };
+            }
         }
 
         // AreWeFriends akkor true, ha végigmész a db friend tábláján, és mindkét usernél megtalálod a másikat
         public List<UserData> UsernameSearch(string username, string searcherEmailID)
         {
-            //csak teszteléshez rakom kívülre
-            //List<UserData> ud = new List<UserData>();
-            ud.Add(new UserData() { Username = "Adam", EmailID = "adam@email.com" , AreWeFriends = "true", FriendedYou= "true", FriendedMe= "true" });
-            ud.Add(new UserData() { Username = "Adam", EmailID = "adam2@email.com", AreWeFriends = "false", FriendedYou = "true", FriendedMe = "false" });
-            ud.Add(new UserData() { Username = "Adam", EmailID = "adam3@email.com", AreWeFriends = "false", FriendedYou = "true", FriendedMe = "false" });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate@email.com", AreWeFriends = "true", FriendedYou = "true", FriendedMe = "true" });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate2@email.com", AreWeFriends = "true", FriendedYou = "true", FriendedMe = "true" });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate3@email.com", AreWeFriends = "true", FriendedYou = "true", FriendedMe = "true" });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate4@email.com", AreWeFriends = "true", FriendedYou = "true", FriendedMe = "true" });
-            ud.Add(new UserData() { Username = "Neville", EmailID = "neville@email.com", AreWeFriends = "false", FriendedYou = "false", FriendedMe = "false" });
-            ud.Add(new UserData() { Username = "Eve", EmailID = "eve@email.com", AreWeFriends = "true", FriendedYou = "true", FriendedMe = "false" });
+            List<UserData> searchResultList = new List<UserData>();
 
-            //teszteléshez
-            //List<UserData> searchResultList = new List<UserData>();
-            foreach (var u in ud)
+            using (DatabaseEntities ED = new DatabaseEntities())
             {
-                if (string.Equals(u.Username,username, StringComparison.OrdinalIgnoreCase))
+                UsersRepository userrepo = new UsersRepository(ED);
+                foreach (var item in userrepo.GetByName(username))
                 {
-                    searchResultList.Add(u);
+                    searchResultList.Add(EmaildIDSearch(item.EmailID, searcherEmailID));
                 }
             }
+
             return searchResultList;
         }
     }

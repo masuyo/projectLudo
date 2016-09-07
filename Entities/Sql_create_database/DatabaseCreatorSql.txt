@@ -30,8 +30,8 @@ create table [User](
 	[Password]	varchar(20) not null,
 	EmailID		varchar(100) not null,
 	[Status]		varchar(10),
-	Token		varchar(10)
-	Guid		char(40) not null
+	Token		varchar(10),
+	Guid		varchar(40)
 );
 
 create table [Game](
@@ -67,7 +67,7 @@ create table [Step](
 );
 
 create table [FriendConnections](
-	FriendConnID	int primary key constraint pk_friendconn default next value for friendconns,
+	FriendConnID	int primary key constraint pk_friendconn default next value for seq_friendconns,
 	UserID			int references [User](UserID) not null,
 	FriendUserID	int	references [User](UserID) not null
 );
@@ -89,3 +89,8 @@ insert into [User](Username,Password,EmailID,Status,Token) values('Gabi','asd123
 insert into [User](Username,Password,EmailID,Status,Token) values('Erika','asd123','erika@email.com','off','token');
 insert into [User](Username,Password,EmailID,Status,Token) values('Project','asd123','project@email.com','off','token');
 insert into [User](Username,Password,EmailID,Status,Token) values('Ludo','asd123','ludo@email.com','off','token');
+
+GO
+insert into [FriendConnections](UserID,FriendUserID) values(1,2);
+insert into [FriendConnections](UserID,FriendUserID) values(2,1);
+insert into [FriendConnections](UserID,FriendUserID) values(3,4);
