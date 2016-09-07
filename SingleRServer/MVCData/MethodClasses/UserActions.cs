@@ -36,7 +36,8 @@ namespace SignalRServer.MVCData.MethodClasses
 
         public bool Register(string Username, string Password, string EmailID)
         {
-            throw new NotImplementedException();
+            Repository.TableRepositories.UsersRepository repo = new Repository.TableRepositories.UsersRepository(DE);
+            return repo.Register(Username, Password, EmailID);
         }
 
         public bool Unfriend(string YouAreNotMyFriendAnymoreEmailID, string IDidntWantYouAnywayEmailID)

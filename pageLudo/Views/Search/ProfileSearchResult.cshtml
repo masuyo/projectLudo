@@ -3,7 +3,7 @@
     ViewBag.Title = "ProfileSearchResult";
 }
 
-@if (TempData["AccessedUsername"] != null)
+@if (Session["AccessedUsername"] != null)
 {
     <br />
     <div class="pull-left">
@@ -12,24 +12,24 @@
         <table>
             <tr>
                 <td>Username:</td>
-                <td>@TempData["AccessedUsername"]</td>
+                <td>@Session["AccessedUsername"]</td>
             </tr>
             <tr>
                 <td>E-mail address:</td>
-                <td>@TempData["AccessedEmailID"]</td>
+                <td>@Session["AccessedEmailID"]</td>
             </tr>
         </table>
         <br />
     </div>
 
 
-        if ((string)TempData["AccessedFriendState"] == "false")
+        if ((string)Session["AccessedFriendState"] == "false")
         {
             using (Html.BeginForm("Friending", "Friend", FormMethod.Post))
             {
                 <div class="form-group pull-right">
                     <div class="col-sm-12 col-xs-12" style="min-width:200px;">
-                        <input type="submit" value="Friend" class="btn btn-success btn-block" onclick='this.disabled = "disabled";' />
+                        <input type="submit" value="Friend" class="btn btn-success btn-block" @*onclick='this.disabled = "disabled";'*@ />
                     </div>
                 </div>
             }

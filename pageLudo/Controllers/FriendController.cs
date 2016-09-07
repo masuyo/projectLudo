@@ -11,11 +11,11 @@ namespace pageLudo.Controllers
     {
         // initiate friend request
         [HttpPost]
-        public ActionResult Friending()
+        [ActionName("Friending")]
+        public void Friending()
         {
             UserActions ua = new UserActions();
-            ua.Friend(Session["LogedEmailID"].ToString(), TempData["AccessedEmailID"].ToString());
-            return new EmptyResult();
+            ua.Friend(Session["LogedEmailID"].ToString(), Session["AccessedEmailID"].ToString());
         }
     }
 }
