@@ -52,10 +52,13 @@ namespace BoardGame
             HubProxy = Connection.CreateHubProxy("MyHub");
 
             ///WPF client defines its method
+            //LudoView.GetVM.ChatMsgs.Add(playerName + ": " + text);
             TestChatClient client = new TestChatClient();
             HubProxy.On<string>("addMessage", (msg) =>
-                client.BroadcastMessage(VM.UserName, msg)
-               //this.Dispatcher.Invoke(() =>  )
+                this.Dispatcher.Invoke(() =>
+                VM.ChatMsgs.Add(VM.UserName + ": " + msg)
+                )
+           //this.Dispatcher.Invoke(() =>  )
            );
 
             try
