@@ -47,9 +47,9 @@ namespace pageLudo.Controllers
                     if (getUsers.Count() == 1)
                     {
                         // visszakapott adatok
-                        TempData["AccessedUsername"] = getUsers[0].Username.ToString();
-                        TempData["AccessedEmailID"] = getUsers[0].EmailID.ToString();
-                        TempData["AccessedFriendState"] = getUsers[0].AreWeFriends;
+                        Session["AccessedUsername"] = getUsers[0].Username.ToString();
+                        Session["AccessedEmailID"] = getUsers[0].EmailID.ToString();
+                        Session["AccessedFriendState"] = getUsers[0].AreWeFriends;
                         return RedirectToAction("ProfileSearchResult", "Search");
                     }
                     else
@@ -68,9 +68,9 @@ namespace pageLudo.Controllers
                 if (resultUser != null)
                 {
                     // visszakapott adatok
-                    TempData["AccessedUsername"] = resultUser.Username.ToString();
-                    TempData["AccessedEmailID"] = resultUser.EmailID.ToString();
-                    TempData["AccessedFriendState"] = resultUser.AreWeFriends;
+                    Session["AccessedUsername"] = resultUser.Username.ToString();
+                    Session["AccessedEmailID"] = resultUser.EmailID.ToString();
+                    Session["AccessedFriendState"] = resultUser.AreWeFriends;
 
                     // keresett user profilja
                     return RedirectToAction("ProfileSearchResult", "Search");
