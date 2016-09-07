@@ -16,16 +16,22 @@ namespace pageLudo.FakeData.MethodClasses
         {
             foreach (var u in searchResultList)
             {
-                if (u.EmailID == BeMyFriendEmailID)
+                if (u.EmailID == BeMyFriendEmailID && u.FriendedYou != "true")
                 {
-                    u.AreWeFriends = "true";
+                    u.FriendedYou = "true";
                 }
             }
         }
 
         public void FriendAccept(string IWillBeYourFriendEmailID, string ThanksForAcceptingMeAsYourFriendEmailID)
         {
-            throw new NotImplementedException();
+            foreach (var u in searchResultList)
+            {
+                if (u.EmailID == ThanksForAcceptingMeAsYourFriendEmailID)
+                {
+                    u.AreWeFriends = "true";
+                }
+            }
         }
 
         public bool Register(string Username, string Password, string EmailID)
@@ -53,15 +59,15 @@ namespace pageLudo.FakeData.MethodClasses
         {
             //csak teszteléshez rakom kívülre
             //List<UserData> ud = new List<UserData>();
-            ud.Add(new UserData() { Username = "Adam", EmailID = "adam@email.com" , AreWeFriends = "true"});
-            ud.Add(new UserData() { Username = "Adam", EmailID = "adam2@email.com", AreWeFriends = "false" });
-            ud.Add(new UserData() { Username = "Adam", EmailID = "adam3@email.com", AreWeFriends = "false" });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate@email.com", AreWeFriends = "true" });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate2@email.com", AreWeFriends = "true" });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate3@email.com", AreWeFriends = "true" });
-            ud.Add(new UserData() { Username = "Kate", EmailID = "kate4@email.com", AreWeFriends = "true" });
-            ud.Add(new UserData() { Username = "Neville", EmailID = "neville@email.com", AreWeFriends = "false" });
-            ud.Add(new UserData() { Username = "Eve", EmailID = "eve@email.com", AreWeFriends = "true" });
+            ud.Add(new UserData() { Username = "Adam", EmailID = "adam@email.com" , AreWeFriends = "true", FriendedYou= "true", FriendedMe= "true" });
+            ud.Add(new UserData() { Username = "Adam", EmailID = "adam2@email.com", AreWeFriends = "false", FriendedYou = "true", FriendedMe = "false" });
+            ud.Add(new UserData() { Username = "Adam", EmailID = "adam3@email.com", AreWeFriends = "false", FriendedYou = "true", FriendedMe = "false" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate@email.com", AreWeFriends = "true", FriendedYou = "true", FriendedMe = "true" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate2@email.com", AreWeFriends = "true", FriendedYou = "true", FriendedMe = "true" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate3@email.com", AreWeFriends = "true", FriendedYou = "true", FriendedMe = "true" });
+            ud.Add(new UserData() { Username = "Kate", EmailID = "kate4@email.com", AreWeFriends = "true", FriendedYou = "true", FriendedMe = "true" });
+            ud.Add(new UserData() { Username = "Neville", EmailID = "neville@email.com", AreWeFriends = "false", FriendedYou = "false", FriendedMe = "false" });
+            ud.Add(new UserData() { Username = "Eve", EmailID = "eve@email.com", AreWeFriends = "true", FriendedYou = "true", FriendedMe = "false" });
 
             //teszteléshez
             //List<UserData> searchResultList = new List<UserData>();
