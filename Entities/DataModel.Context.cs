@@ -25,12 +25,12 @@ namespace Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<FriendConnections> FriendConnections { get; set; }
         public virtual DbSet<Game> Game { get; set; }
         public virtual DbSet<InvationDesktop> InvationDesktop { get; set; }
         public virtual DbSet<Man> Man { get; set; }
         public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<Step> Step { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }

@@ -22,29 +22,93 @@
         <br />
     </div>
 
+    //Session["AccessedFriendState"]
+    //Session["AccessedFriendedYou"]
+    //Session["AccessedFriendedMe"]
+    // ha egyikünk sem barátja a másiknak
+    if (Session["AccessedFriendedYou"].ToString() == "false" && Session["AccessedFriendedMe"].ToString() == "false")
+    {
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#Friend").click(function () {
+                    $.ajax({
+                    url: "/Friend/Friending",
+                        type: "GET",
+                    error: function (response) {
+                            alert(response);
+                        },
+                    success: function (response) {
+                            alert(response);
+                        }
+                    });
+                });
+            })
+        </script>
+        <div class="form-group pull-right">
+            <div class="col-sm-12 col-xs-12" style="min-width:200px;">
+                <button id="Friend" class="btn btn-success btn-block">Friend</button>
+            </div>
+        </div>
 
-        if ((string)Session["AccessedFriendState"] == "false")
+    }
+    else
+    {
+        // ha én barátnak jelöltelek, mindegy, hogy elfogadtad-e, unfriendelhetlek
+        if (Session["AccessedFriendedYou"].ToString() == "true")
         {
-            using (Html.BeginForm("Friending", "Friend", FormMethod.Post))
-            {
-                <div class="form-group pull-right">
-                    <div class="col-sm-12 col-xs-12" style="min-width:200px;">
-                        <input type="submit" value="Friend" class="btn btn-success btn-block" @*onclick='this.disabled = "disabled";'*@ />
-                    </div>
-                </div>
-            }
-        }
-        else
-        {
-            using (Html.BeginForm("Friending", "Friend", FormMethod.Post))
-            {
+            <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+            <script type="text/javascript">
+            $(function () {
+                $("#Unfriend").click(function () {
+                    $.ajax({
+                    url: "/Friend/Unfriending",
+                        type: "GET",
+                    error: function (response) {
+                            alert(response);
+                        },
+                    success: function (response) {
+                            alert(response);
+                        }
+                    });
+                });
+            })
+            </script>
             <div class="form-group pull-right">
                 <div class="col-sm-12 col-xs-12" style="min-width:200px; color: red">
-                    <input type="submit" value="Unfriend" class="btn btn-warning btn-block" onclick='this.disabled = "disabled";' />
+                <button id="Unfriend" class="btn btn-warning btn-block">Unfriend</button>
                 </div>
             </div>
-            }
         }
+        // barátnak jelöltél, de még nem jelöltelek vissza
+        else /*if ((string)Session["AccessedFriendedYou"] == "false" && (string)Session["AccessedFriendedMe"] == "true")*/
+        {
+            <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+            <script type="text/javascript">
+            $(function () {
+                $("#FriendAccept").click(function () {
+                    $.ajax({
+                    url: "/Friend/FriendAccepting",
+                        type: "GET",
+                    error: function (response) {
+                            alert(response);
+                        },
+                    success: function (response) {
+                            alert(response);
+                        }
+                    });
+                });
+            })
+            </script>
+            <div class="form-group pull-right">
+                <div class="col-sm-12 col-xs-12" style="min-width:200px; color: red">
+                    <button id="FriendAccept" class="btn btn-success btn-block">Friend back</button>
+                </div>
+            </div>
+        }
+    }
 
-    <div class="clearfix"></div>
 }
+
+<div class="clearfix"></div>
+

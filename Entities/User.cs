@@ -32,6 +32,7 @@ namespace Entities
         public string EmailID { get; set; }
         public string Status { get; set; }
         public string Token { get; set; }
+        public string Guid { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FriendConnections> FriendConnections { get; set; }
