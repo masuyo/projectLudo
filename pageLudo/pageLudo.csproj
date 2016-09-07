@@ -129,7 +129,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Images\boardgames.jpg" />
+    <Content Include="Images\boardgames2.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -146,14 +146,22 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GamesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="FakeData\DataClasses\GameWinrate.cs" />
+    <Compile Include="FakeData\DataClasses\UserData.cs" />
+    <Compile Include="FakeData\Interfaces\IGameStatistics.cs" />
+    <Compile Include="FakeData\Interfaces\IUserActions.cs" />
+    <Compile Include="FakeData\Interfaces\IUserStatistics.cs" />
+    <Compile Include="FakeData\MethodClasses\GameStatistics.cs" />
+    <Compile Include="FakeData\MethodClasses\UserActions.cs" />
+    <Compile Include="FakeData\MethodClasses\UserStatistics.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChangeUser.cs" />
     <Compile Include="Models\LoginUser.cs" />
     <Compile Include="Models\RegisterUser.cs" />
-    <Compile Include="Models\UserStatistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +179,9 @@
     <Content Include="Views\Games\Ludo.cshtml" />
     <Content Include="Views\User\MyProfile.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Search\NoSearchResult.cshtml" />
+    <Content Include="Views\Search\ProfileSearchResult.cshtml" />
+    <Content Include="Views\Search\MultipleProfileSearchResult.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

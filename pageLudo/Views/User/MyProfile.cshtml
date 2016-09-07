@@ -1,6 +1,4 @@
-﻿@model pageLudo.Models.UserStatistics
-
-@{
+﻿@{
     ViewBag.Title = "MyProfile";
 }
 
@@ -44,7 +42,7 @@
                 //Adott játékosnak minden játéktípusban(Ludóban) winrate (elég a win%-ot visszaadni sztem max 2 tizedesjegyig)
                 var data = google.visualization.arrayToDataTable([
                   ["Game", "Win", "Lose", { role: "style" }],
-                  ["Ludo", 100, 70, ""],
+                  ["Ludo", 20, 70, ""],
                   ["Chess", 55, 45,""],
                   ["Balderdash", 12, 88, ""],
                   ["Tictactoe", 56, 44,""]

@@ -5,16 +5,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Text.RegularExpressions;
+using pageLudo.FakeData.MethodClasses;
+using pageLudo.FakeData.DataClasses;
 
 namespace pageLudo.Controllers
 {
     public class UserController : Controller
     {
-        
-
+        //public ActionResult Friending()
+        //{
+        //  
+        //}
 
         public ActionResult MyProfile()
         {
+            UserStatistics us = new UserStatistics();
+            List<GameWinrate> gwr = new List<GameWinrate>();
+            gwr = us.PlayerWinrate(Session["LogedEmailID"].ToString());
+            TempData["GameName"] = gwr[0].GameName;
+            TempData["NumberOfWins"] = gwr[0].NumberOfWins;
+            TempData["NumberOfLosses"] = gwr[0].NumberOfLosses;
             return View();
         }
 
@@ -63,6 +74,9 @@ namespace pageLudo.Controllers
 
         public ActionResult AfterLogin()
         {
+            GameStatistics gs = new GameStatistics();
+            int numberOfOnlineWpfUsers = gs.NumberOfOnlineWPFUsers();
+            TempData["onlineUsers"] = numberOfOnlineWpfUsers;
             if (Session["LogedUserID"] != null)
             {
                 return View();
