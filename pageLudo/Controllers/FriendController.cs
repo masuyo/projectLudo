@@ -9,9 +9,11 @@ namespace pageLudo.Controllers
 {
     public class FriendController : Controller
     {
-        public ActionResult FriendAccept()
+        public ActionResult FriendAccepting()
         {
+            UserActions ua = new UserActions();
             // metódus mindent true-ra állít
+            ua.FriendAccept(Session["LogedEmailID"].ToString(), Session["AccessedEmailID"].ToString());
             return new ContentResult() { Content = "Visszajelölted ezt a felhasználót, most már barátok vagytok." };
         }
 
@@ -30,7 +32,9 @@ namespace pageLudo.Controllers
         [HttpGet]
         public ActionResult Unfriending()
         {
+            UserActions ua = new UserActions();
             // a meghívott metódus false-ra állítja mindhárom változót
+            ua.Unfriend(Session["LogedEmailID"].ToString(), Session["AccessedEmailID"].ToString());
             return new ContentResult() { Content = "Megszakítottad a barátságot ezzel a felhasználóval." };
         }
     }
