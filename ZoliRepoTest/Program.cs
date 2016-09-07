@@ -10,6 +10,7 @@ using SignalRServer;
 using Entities;
 using Repository;
 using Game;
+using Game.LudoActions;
 
 namespace ZoliRepoTest
 {
@@ -61,15 +62,18 @@ namespace ZoliRepoTest
                 table.Start();
                 do
                 {
+                    WriteOutGame(table.Gamemanager.getGame());
                     LudoGameManager manager = (LudoGameManager)table.Gamemanager;
-                    Console.WriteLine("throw/move ?:");
+                    Console.WriteLine("throw/move/check ?:");
                     var input = Console.ReadLine();
                     switch (input)
                     {
+                        case "check":
+                            table.Gamemanager.DoAction(new CheckLudoAction(manager.getGame().nextplayer));
+                            break;
                         case "throw":
                             table.Gamemanager.DoAction(new ThrowLudoAction(manager.getGame().nextplayer));
                             Console.WriteLine("dices:\t" + manager.Dice1 + "\t" + manager.Dice2);
-                            WriteOutGame(manager.getGame());
                             break;
                         case "move":
                             Console.WriteLine("puppet?:");
@@ -77,7 +81,6 @@ namespace ZoliRepoTest
                             Console.WriteLine("amount?: {0} or {1}", manager.Dice1, manager.Dice2);
                             int amount = int.Parse(Console.ReadLine());
                             table.Gamemanager.DoAction(new MoveLudoAction(table.Gamemanager.getGame().nextplayer, puppet, amount));
-                            WriteOutGame(table.Gamemanager.getGame());
                             break;
                         default:
                             break;
@@ -130,7 +133,7 @@ namespace ZoliRepoTest
 
         private static void WriteOutGame(LudoGame ludoGame)
         {
-
+            Console.WriteLine("---------------------------------------");
             foreach (var players in ludoGame.Players)
             {
                 Console.WriteLine(players.Name + "    " + players.color);
@@ -138,6 +141,7 @@ namespace ZoliRepoTest
             }
             Console.WriteLine("nextplayer: " + ludoGame.nextplayer.Name);
             Console.WriteLine("rounds: " + ludoGame.Rounds);
+            Console.WriteLine("---------------------------------------");
         }
 
         private static void Repotest()

@@ -14,7 +14,7 @@ namespace Game
 
         public MoveLudoAction(Player newDoer,int puppet,int amount) : base(newDoer,LudoActionType.Move)
         {
-            if (puppet < 1 || puppet > 4) throw new ArgumentException("Not valid puppet number");
+            if (puppet < 0 || puppet > 3) throw new ArgumentException("Not valid puppet number");
             Puppet = puppet;
             if (amount < 0 || amount > 6) throw new ArgumentException("Not valid amount number");
             Amount = amount;

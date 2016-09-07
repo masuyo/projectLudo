@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LudoActions\CheckLudoAction.cs" />
     <Compile Include="LudoActions\LudoAction.cs" />
     <Compile Include="GenericInterfacesandClasses\Action.cs" />
     <Compile Include="GenericInterfacesandClasses\Game.cs" />
