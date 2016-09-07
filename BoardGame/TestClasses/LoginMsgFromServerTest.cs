@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BoardGame.Interfaces.Login;
 using BoardGame.Views;
 
 namespace BoardGame.TestClasses
 {
-    class LoginMsgFromServerTest : ILoginMsgFromServer
+    class LoginMsgFromServerTest
     {
         public bool AuthenticationSuccess
         {

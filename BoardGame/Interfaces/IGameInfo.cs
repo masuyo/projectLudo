@@ -8,19 +8,15 @@ namespace BoardGame.Interfaces
 {
     interface IGameInfo
     {
-        interface IGameInfo
-        {
-            int ActivePlayerID { get; }
-            string Msg { get; }
-            List<IMan> MenList { get; }
-            bool End { get; }
-            bool OnManHit { get; } //redraw full visual
-            bool Reroll { get; }
+        int ActivePlayerID { get; }
+        string Msg { get; }
+        List<IMan> MenList { get; }
+        bool End { get; }
+        bool OnManHit { get; } //redraw full visual
+        bool Reroll { get; }
 
-            int Dice1 { get; }
-            int Dice2 { get; }
-
-
-        }
+        int Dice1 { get; }
+        int Dice2 { get; }
+        
     }
 }

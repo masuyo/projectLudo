@@ -1,5 +1,4 @@
-﻿using BoardGame.Interfaces.Login;
-using BoardGame.TestClasses;
+﻿using BoardGame.TestClasses;
 using BoardGame.Views;
 using System;
 using System.Collections.Generic;

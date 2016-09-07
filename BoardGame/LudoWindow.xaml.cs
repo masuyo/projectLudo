@@ -41,7 +41,7 @@ namespace BoardGame
             this.DataContext = VM;
 
             //connect to server with ConnectAsync(); display what's happening
-            VM.ServerMsgs.Add(new ChatMsg(UserName, "Connecting to server..."));
+            VM.ServerMsgs.Add(UserName + ":: Connecting to server...");
             ConnectAsync();
         }
         private async void ConnectAsync()
@@ -66,7 +66,7 @@ namespace BoardGame
             catch (HttpRequestException)
             {
                 this.Dispatcher.Invoke(() =>
-                VM.ServerMsgs.Add("Unable to connect to server."))
+                VM.ServerMsgs.Add("Unable to connect to server.")
                 );
                 return;
             }

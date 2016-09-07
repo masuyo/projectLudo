@@ -11,8 +11,8 @@ namespace BoardGame.TestClasses
     {
         private int id;
         private int poz;
-        private Player player;
-        public TestMan(int id, int poz, Player player)
+        private TestPlayer player;
+        public TestMan(int id, int poz, TestPlayer player)
         {
             this.id = id;
             this.poz = poz;
@@ -31,7 +31,7 @@ namespace BoardGame.TestClasses
                 id = value;
             }
         }
-        public Player Player
+        public TestPlayer Player
         {
             get
             {

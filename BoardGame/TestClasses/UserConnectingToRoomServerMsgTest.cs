@@ -1,5 +1,4 @@
-﻿using BoardGame.Interfaces.RoomToGame;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +7,7 @@ using BoardGame.Interfaces;
 
 namespace BoardGame.TestClasses
 {
-    class UserConnectingToRoomServerMsgTest : IUserConnectingToRoomServerMsg
+    class UserConnectingToRoomServerMsgTest 
     {
         private List<IRoom> roomList;
         private IRoom selectedRoom;

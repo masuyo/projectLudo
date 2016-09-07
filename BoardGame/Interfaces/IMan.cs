@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoardGame.TestClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,6 @@ namespace BoardGame.Interfaces
     {
         int ID { get; set; }
         int Poz { get; set; }
-        Player Player { get; set; }
+        TestPlayer Player { get; set; }
     }
 }

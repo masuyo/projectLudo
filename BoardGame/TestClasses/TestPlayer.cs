@@ -36,7 +36,7 @@ namespace BoardGame.TestClasses
             get { return color; }
         }
 
-        public Player(int id, PlayerColor color)
+        public TestPlayer(int id, PlayerColor color)
         {
             this.id = id;
             this.color = color;

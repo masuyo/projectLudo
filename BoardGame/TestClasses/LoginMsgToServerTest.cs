@@ -1,5 +1,4 @@
-﻿using BoardGame.Interfaces.Login;
-using BoardGame.Views;
+﻿using BoardGame.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BoardGame.TestClasses
 {
-    class LoginMsgToServerTest : ILoginMsgToServer
+    class LoginMsgToServerTest 
     {
         LoginView VM;
 
