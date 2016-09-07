@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoardGame.TestClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace BoardGame.Views
 {
-    enum GameType { LUDO, CHESS, TICTACTOE }
+    enum GameType { LUDO, CHESS, TICTACTOE, AAA, SSSSS, DDDD }
     class LoginView : Bindable
     {
         private string userName;
@@ -59,7 +60,7 @@ namespace BoardGame.Views
         {
             get
             {
-                return Enum.GetNames(typeof(GameType)).ToList();
+                return new TestLudoServer().GetGameTypes();
             }
         }
         public string SelectedGameType

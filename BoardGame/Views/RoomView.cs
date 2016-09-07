@@ -20,6 +20,8 @@ namespace BoardGame.Views
         string searchKeyWord;
         IRoom selectedRoom;
         string selectedRoomPassword;
+        ObservableCollection<IUser> usersInRoom;
+
 
         public string UserName
         {
@@ -34,7 +36,12 @@ namespace BoardGame.Views
 
             set { SetProperty(ref searchRoomList, value); }
         }
+        public ObservableCollection<IUser> UsersInRoom
+        {
+            get { return usersInRoom; }
 
+            set { SetProperty(ref usersInRoom, value); }
+        }
         public ObservableCollection<IRoom> RoomList
         {
             get { return roomList; }
@@ -64,6 +71,7 @@ namespace BoardGame.Views
         {
             roomList = new ObservableCollection<IRoom>();
             searchRoomList = new ObservableCollection<IRoom>();
+            usersInRoom = new ObservableCollection<IUser>();
             selectedRoom = default(IRoom);
             selectedRoomPassword = String.Empty;
             SearchKeyWord = "Search room by name...";

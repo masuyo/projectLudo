@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoardGame.Interfaces;
+using BoardGame.Views;
 
 namespace BoardGame.TestClasses
 {
     class TestLudoServer : ILudoServer
     {
+        Random rnd = new Random();
         public void Befriend(int playerID, int friendPlayerID)
         {
             throw new NotImplementedException();
@@ -42,7 +44,7 @@ namespace BoardGame.TestClasses
 
         public List<string> GetGameTypes()
         {
-            throw new NotImplementedException();
+            return Enum.GetNames(typeof(GameType)).ToList();
         }
 
         public string GetOverall(int playerID)
@@ -52,7 +54,14 @@ namespace BoardGame.TestClasses
 
         public List<IUser> GetPlayersInRoom(IRoom room)
         {
-            throw new NotImplementedException();
+            int i = rnd.Next(1, 5);
+            List<IUser> users = new List<IUser>();
+            while (i > 0)
+            {
+                users.Add(new TestUser(i, "user##" + i));
+                i--;
+            }
+            return users;
         }
 
         public int Login(string userName, string encryptedPassword, string selectedGameType = "LUDO")

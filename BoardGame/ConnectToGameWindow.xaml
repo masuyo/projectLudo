@@ -144,15 +144,16 @@
             MouseEnter="LBL_Hover_MouseEnter"
             MouseLeave="LBL_Hover_MouseLeave" 
             />
-        <Grid Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">          
+        <Grid Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid x:Name="grid_bg">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="9*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="23*"/>
                 </Grid.RowDefinitions>
                 <Label 
                     Grid.Row="0"
@@ -162,7 +163,7 @@
                     Background="DodgerBlue" Opacity="0.4" 
                     HorizontalAlignment="Stretch" 
                        />
-                            
+
                 <Label 
                     Grid.Row="0"
                     Grid.Column="0" Grid.ColumnSpan="2"
@@ -176,15 +177,27 @@
                     Grid.Column="1"
                     Content="Exit" 
                     Background="DarkOrange" 
-                    Width="100" Margin="10" 
+                    Width="100" Margin="0,10,10,10" 
                     HorizontalAlignment="Right" HorizontalContentAlignment="Center" 
                     FontWeight="Bold" 
                     BorderBrush="AliceBlue" BorderThickness="1" 
                     MouseEnter="LBL_Hover_MouseEnter"
                     MouseLeave="LBL_Hover_MouseLeave"
-                       />    
-                <Label Grid.Row="1" Content="binding availablePlaces"/>
-                <Label Grid.Row="1" Content="binding password required -- converter color ---"/>
+                       />
+                <ListBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
+                         ItemsSource="{Binding Path=UsersInRoom}"
+                         Background="Transparent"
+                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                         BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label 
+                                Content="{Binding Path=UserName}"  
+                                Foreground="AliceBlue" FontSize="20"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Right"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
         </Grid>
     </Grid>

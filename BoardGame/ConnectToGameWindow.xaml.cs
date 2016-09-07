@@ -129,8 +129,12 @@ namespace BoardGame
             MessageBox.Show(VM.SelectedRoom + "" + VM.SelectedRoomPassword);
         }
         private void LBL_Connect_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-           
+        {            
+            foreach (var u in new TestLudoServer().GetPlayersInRoom((VM.SelectedRoom)))
+            {
+                //VM.UsersInRoom = new ObservableCollection<IUser>();
+                VM.UsersInRoom.Add(u);
+            }
             if (true)//connD.ConectionSuccess)
             {
                 Init(AddListItems()); // serversideListChanged
