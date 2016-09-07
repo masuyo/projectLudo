@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BoardGame.Interfaces
 {
-    interface IChatMsg
+    interface IStartGameInfo
     {
-        string Name { get; }
-        string SentBy { get; }
-        string Time { get; }
+        IPlayer WPFPlayer { get; }
+        IPlayer[] otherWPFPlayers { get; }
+        IGameInfo MsgFromServer { get; }
     }
 }

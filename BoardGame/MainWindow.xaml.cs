@@ -1,5 +1,4 @@
-﻿using BoardGame.Interfaces.Login;
-using BoardGame.TestClasses;
+﻿using BoardGame.TestClasses;
 using BoardGame.Views;
 using System;
 using System.Collections.Generic;
@@ -38,6 +37,12 @@ namespace BoardGame
 
         private void Login_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            //var sha1 = new SHA1CryptoServiceProvider();
+            //byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(VM.Password));
+
+            ////var hashedPassword = ASCIIEncoding.GetString(sha1data);
+
+
             Console.WriteLine("Logging in...");
             if (sender is Label)
             {
@@ -45,14 +50,9 @@ namespace BoardGame
                 if (!String.IsNullOrEmpty(VM.UserName) && VM.UserName.Length > 5 &&
                     !String.IsNullOrEmpty(VM.Password) && VM.Password.Length > 5)
                 {
-                    //send
-                    LoginMsgToServerTest testCTS = new LoginMsgToServerTest();
-
-                    //recieve
-                    LoginMsgFromServerTest testSTC = new LoginMsgFromServerTest();
-                    if (testSTC.AuthenticationSuccess)
+                    if (true)//testSTC.AuthenticationSuccess)
                     {
-                        ConnectToGameWindow rooms = new ConnectToGameWindow(testSTC.UserName);
+                        ConnectToGameWindow rooms = new ConnectToGameWindow("UserName");
                         this.Close();
                         rooms.ShowDialog();
                     }

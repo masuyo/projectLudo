@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.Interfaces.Ludo
+namespace BoardGame.Interfaces
 {
-    interface IMsgFromServer
+    interface IGameInfo
     {
         int ActivePlayerID { get; }
         string Msg { get; }
@@ -17,7 +17,6 @@ namespace BoardGame.Interfaces.Ludo
 
         int Dice1 { get; }
         int Dice2 { get; }
-
-
+        
     }
 }

@@ -31,5 +31,7 @@ namespace Game
         abstract public void Start();
 
         abstract public void AddPlayer(TPlayer newplayer,string password);
+
+        abstract public void LeavePlayer(TPlayer player);
     }
 }

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.Interfaces.RoomToGame
+namespace BoardGame.Interfaces.Client
 {
-    interface IAddRoomToServer
+    interface IChatClient
     {
-        IRoom Room { get; }
+        void BroadcastMessage(string playerName, string text);
     }
+
 }

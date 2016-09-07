@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BoardGame
 {
-    public class ChatMsg : IChatMsg
+    public class ChatMsg
     {
         private string name;
         private string sentBy;

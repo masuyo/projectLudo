@@ -13,6 +13,7 @@ namespace Game.GenericInterfacesandClasses
             Players = new List<TPlayer>();
             Players.AddRange(newplayers);
         }
+
         public List<TPlayer> Players { get; set; }
     }
 }

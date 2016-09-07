@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.Interfaces.RoomToGame
+namespace BoardGame.Interfaces.Client
 {
-    interface IConnectToRoomClientMsg
+    interface ILudoClient
     {
-        IRoom ConnetToRoomMsg { get; }
+        void GameStateRefresh(IGameInfo gameInfo);
+
     }
 }

@@ -16,6 +16,5 @@ namespace SignalRServer.Interfaces4MVC
 
         //Esetleg egy olyan, hogy aktuálisan hány Online játékos van a WPF kliensben?
         int NumberOfOnlineWPFUsers();
-
     }
 }

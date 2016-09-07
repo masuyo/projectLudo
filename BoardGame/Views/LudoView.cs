@@ -10,16 +10,16 @@ namespace BoardGame.Views
 {
     class LudoView : Bindable
     {
-        ObservableCollection<IChatMsg> serverMsgs;
-        ObservableCollection<IChatMsg> chatMsgs;
+        ObservableCollection<string> serverMsgs;
+        ObservableCollection<string> chatMsgs;
         string chatMsg;
-        public ObservableCollection<IChatMsg> ServerMsgs
+        public ObservableCollection<string> ServerMsgs
         {
             get { return serverMsgs; }
 
             set { SetProperty(ref serverMsgs, value); }
         }
-        public ObservableCollection<IChatMsg> ChatMsgs
+        public ObservableCollection<string> ChatMsgs
         {
             get { return chatMsgs; }
 
@@ -36,8 +36,8 @@ namespace BoardGame.Views
         static LudoView VM;
         private LudoView()
         {
-            serverMsgs = new ObservableCollection<IChatMsg>();
-            chatMsgs = new ObservableCollection<IChatMsg>();
+            serverMsgs = new ObservableCollection<string>();
+            chatMsgs = new ObservableCollection<string>();
         }
         public static LudoView GetVM
         {
