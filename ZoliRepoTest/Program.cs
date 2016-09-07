@@ -21,10 +21,10 @@ namespace ZoliRepoTest
     {
         static void Main(string[] args)
         {
-            
-            Repotest();
-            FriendOfMeTest();
 
+            Repotest();
+            //FriendOfMeTest();
+            //GameTestWithTables();
         }
 
         private static void FriendOfMeTest()
@@ -49,10 +49,6 @@ namespace ZoliRepoTest
             } while (true);
         }
 
-        private static void MVCServiceTest()
-        {
-            Console.ReadLine();
-        }
 
         private static void GameTestWithTables()
         {
@@ -77,42 +73,42 @@ namespace ZoliRepoTest
             table.SetCheck(michalangelo, true);
             table.SetCheck(leonadro, true);
 
-            try
-            {
-                table.Start();
+            table.Start();
                 do
                 {
-                    WriteOutGame(table.Gamemanager.getGame());
+                try
+                {
+                    
                     LudoGameManager manager = (LudoGameManager)table.Gamemanager;
-                    Console.WriteLine("throw/move/check ?:");
+                    WriteOutGame(table.Gamemanager.getGame());
+                    Console.WriteLine("dices: {0} - {1}", manager.Dice1, manager.Dice2);
+                    Console.WriteLine("---------------------------------------");
+                    Console.WriteLine("throw/move/check ? (t/m/c):");
                     var input = Console.ReadLine();
                     switch (input)
                     {
-                        case "check":
-                            table.Gamemanager.DoAction(new CheckLudoAction(manager.getGame().nextplayer));
+                        case "c":
+                            table.Gamemanager.DoAction(new CheckLudoAction(manager.getGame().Nextplayer));
                             break;
-                        case "throw":
-                            table.Gamemanager.DoAction(new ThrowLudoAction(manager.getGame().nextplayer));
-                            Console.WriteLine("dices:\t" + manager.Dice1 + "\t" + manager.Dice2);
+                        case "t":
+                            table.Gamemanager.DoAction(new ThrowLudoAction(manager.getGame().Nextplayer));
                             break;
-                        case "move":
+                        case "m":
                             Console.WriteLine("puppet?:");
                             int puppet = int.Parse(Console.ReadLine());
-                            Console.WriteLine("amount?: {0} or {1}", manager.Dice1, manager.Dice2);
+                            Console.WriteLine("amount?:");
                             int amount = int.Parse(Console.ReadLine());
-                            table.Gamemanager.DoAction(new MoveLudoAction(table.Gamemanager.getGame().nextplayer, puppet, amount));
+                            table.Gamemanager.DoAction(new MoveLudoAction(table.Gamemanager.getGame().Nextplayer, puppet, amount));
                             break;
                         default:
                             break;
                     }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
                 } while (true);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            Console.Read();
         }
 
         private static void GameTest()
@@ -133,7 +129,7 @@ namespace ZoliRepoTest
                 switch (input)
                 {
                     case "throw":
-                        manager.DoAction(new ThrowLudoAction(manager.getGame().nextplayer));
+                        manager.DoAction(new ThrowLudoAction(manager.getGame().Nextplayer));
                         Console.WriteLine("dices:\t" + manager.Dice1 + "\t" + manager.Dice2);
                         WriteOutGame(manager.getGame());
                         break;
@@ -142,7 +138,7 @@ namespace ZoliRepoTest
                         int puppet = int.Parse(Console.ReadLine());
                         Console.WriteLine("amount?: {0} or {1}", manager.Dice1, manager.Dice2);
                         int amount = int.Parse(Console.ReadLine());
-                        manager.DoAction(new MoveLudoAction(manager.getGame().nextplayer, puppet, amount));
+                        manager.DoAction(new MoveLudoAction(manager.getGame().Nextplayer, puppet, amount));
                         WriteOutGame(manager.getGame());
                         break;
                     default:
@@ -157,12 +153,49 @@ namespace ZoliRepoTest
             foreach (var players in ludoGame.Players)
             {
                 Console.WriteLine(players.Name + "    " + players.color);
-                Console.WriteLine("\t" + players.Puppets[0] + players.Puppets[1] + players.Puppets[2] + players.Puppets[3]);
+                foreach (var item in CountPuppets(players) )
+                {
+                    Console.Write(item+"\t");
+                }
+                Console.WriteLine();
             }
-            Console.WriteLine("nextplayer: " + ludoGame.nextplayer.Name);
+            Console.WriteLine("nextplayer: " + ludoGame.Nextplayer.Name);
             Console.WriteLine("rounds: " + ludoGame.Rounds);
-            Console.WriteLine("---------------------------------------");
         }
+
+        private static List<int> CountPuppets(LudoPlayer player)
+        {
+            List<int> puppets = new List<int>();
+
+            for (int i = 0; i < 4; i++)
+            {
+                switch (player.color)
+                {
+                    case puppetColor.Red:
+                        if (player.Puppets[i] > 0 && player.Puppets[i] < 41) puppets.Add((player.Puppets[i] + 0) % 40);
+                        else puppets.Add(player.Puppets[i]);
+                        break;
+                    case puppetColor.Yellow:
+                        if (player.Puppets[i] > 0 && player.Puppets[i] < 41) puppets.Add((player.Puppets[i] + 20) % 40);
+                        else puppets.Add(player.Puppets[i]);
+                        break;
+                    case puppetColor.Blue:
+                        if (player.Puppets[i] > 0 && player.Puppets[i] < 41) puppets.Add((player.Puppets[i] + 10) % 40);
+                        else puppets.Add(player.Puppets[i]);
+                        break;
+                    case puppetColor.Green:
+                        if (player.Puppets[i] > 0 && player.Puppets[i] < 41) puppets.Add((player.Puppets[i] + 30) % 40);
+                        else puppets.Add(player.Puppets[i]);
+                        break;
+                    case puppetColor.Default:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return puppets;
+        }
+
 
         private static void Repotest()
         {

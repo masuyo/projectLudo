@@ -14,8 +14,10 @@ namespace Game
             creationTime = newcreationtime;
         }
 
-        public LudoPlayer nextplayer { get; set; }
+        public LudoPlayer Nextplayer { get; set; }
         public int Rounds { get; set; }
         public DateTime creationTime { get; private set; }
+
+        public LudoPlayer Winner { get; set; }
     }
 }
