@@ -67,7 +67,7 @@ namespace pageLudo.FakeData.MethodClasses
             //List<UserData> searchResultList = new List<UserData>();
             foreach (var u in ud)
             {
-                if (u.Username == username)
+                if (string.Equals(u.Username,username, StringComparison.OrdinalIgnoreCase))
                 {
                     searchResultList.Add(u);
                 }

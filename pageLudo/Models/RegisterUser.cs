@@ -24,6 +24,7 @@ namespace pageLudo.Models
 
         [RegularExpression(@"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$",
 ErrorMessage = "Wrong e-mail")]
+        [Required(ErrorMessage = "Missing email", AllowEmptyStrings = false)]
         public string EmailID { get; set; }
 
         public string Status { get; set; }
