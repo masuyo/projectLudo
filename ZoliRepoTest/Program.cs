@@ -4,11 +4,10 @@ using Game;
 using Game.LudoActions;
 using SignalRServer.MVCData.MethodClasses;
 using Repository.TableRepositories;
-using Entities;
 
 using System.Net.Http;
-using System.Windows;
 using Microsoft.AspNet.SignalR.Client;
+using SignalRServer;
 
 namespace ZoliRepoTest
 {
@@ -27,24 +26,21 @@ namespace ZoliRepoTest
         {
             IHubProxy HubProxy;
             HubConnection Connection = new HubConnection("http://localhost:8080/signalr");
-            HubProxy = Connection.CreateHubProxy("MyHubForTest");
+            HubProxy = Connection.CreateHubProxy("WPFHub");
 
-            HubProxy.On<User>("ComplexMethod", (user) => Console.WriteLine("neve:"+user.Username+"\nemailje:"+user.
-                EmailID));
+            //HubProxy.On<int>("Valami", (integer) =>
+            //{
+            //    mit csinálsz vele
+            //});
 
             try
             {
                 Connection.Start();
-            }catch(HttpRequestException e)
+            } catch (HttpRequestException e)
             {
                 Console.WriteLine(e.Message);
             }
-
-            do
-            {
-                string input = Console.ReadLine();
-                HubProxy.Invoke("Complex", input);
-            } while (true);
+            Console.ReadLine();
         }
 
         private static void FriendOfMeTest()

@@ -1,5 +1,6 @@
 ﻿using BoardGame.TestClasses;
 using BoardGame.Views;
+using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +25,34 @@ namespace BoardGame
     public partial class MainWindow : Window
     {
         LoginView VM;
+
+        IHubProxy HubProxy;
+        string connString = "http://localhost:8080/signalr";
+        HubConnection Connection;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            Connection = new HubConnection(connString);
+            HubProxy = Connection.CreateHubProxy("WPFHub");
+            try
+            {
+                Connection.Start();
+            }
+            catch (HttpClientException e)
+            {
+                throw;
+            }
+
+
+
             VM = LoginView.GetVM;
             this.DataContext = VM;
 
-            this.Background = LoginView.GetBG;
+
+
+           // this.Background = LoginView.GetBG;
 
         }
 
@@ -48,8 +70,8 @@ namespace BoardGame
                     byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(VM.Password));
                     string hashedPassword = new ASCIIEncoding().GetString(sha1data);
 
-                    TestLudoServer TLS = new TestLudoServer();
-                    VM.UserID = TLS.Login(VM.UserName, hashedPassword, VM.SelectedGameType);
+                   // TestLudoServer TLS = new TestLudoServer();
+                   //  VM.UserID = TLS.Login(VM.UserName, hashedPassword, VM.SelectedGameType);
 
                     if (VM.UserID != -1)
                     {

@@ -126,19 +126,35 @@
                 HorizontalAlignment="Stretch" VerticalAlignment="Top"
                 HorizontalContentAlignment="Center"                   
                 MouseDown="LblExit_MouseDown" />
-            <!--itemtemplate-->
-            <ComboBox
+            <ComboBox                
                 ItemsSource="{Binding Path=GameTypeList}"
                 SelectedItem="{Binding Path=SelectedGameType}"
                 SelectedIndex="0"
                 HorizontalContentAlignment="Center"
-                Grid.Column="1" Grid.Row="1" Margin="10,5,10,10" 
-                Background="Black" Foreground="White" 
-                BorderBrush="Blue" BorderThickness="1"
-                ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
-                ScrollViewer.VerticalScrollBarVisibility="Hidden" 
-                FontSize="18" FontWeight="Bold" 
-                ToolTip="Select game!"/>
+                Grid.Column="1" Grid.Row="1" Margin="10,5,10,10"                 
+                BorderBrush="Blue" BorderThickness="0.5"             
+                ToolTip="Select game!">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Blue"/>
+                        <!--<Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="Black"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter Property="Background" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>-->
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=.}" FontSize="14" FontWeight="Bold" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
         </Grid>
     </Grid>
 </Window>

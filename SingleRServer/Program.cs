@@ -19,7 +19,7 @@ namespace SignalRServer
             using (WebApp.Start<Startup>("http://localhost:8080/"))
             {
                 Console.WriteLine("Server running at http://localhost:8080/");
-                Console.ReadLine();
+                while (Console.ReadLine() != "stop") { }
             }
         }
     }

@@ -1,9 +1,8 @@
 ﻿using SignalRServer.MVCData.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using SignalRServer.MVCData.DataClasses;
+
 using Entities;
 using Repository.TableRepositories;
 
@@ -11,36 +10,23 @@ namespace SignalRServer.MVCData.MethodClasses
 {
     public class UserActions : IUserActions
     {
-        List<UserData> ud = new List<UserData>();
-        List<UserData> searchResultList = new List<UserData>();
-
         public void Friend(string BeMyFriendEmailID, string IMightBecomeYourFriendEmailID)
         {
-            foreach (var u in searchResultList)
-            {
-                if (u.EmailID == BeMyFriendEmailID && u.FriendedYou != "true")
-                {
-                    u.FriendedYou = "true";
-                }
-            }
+          
         }
 
         public void FriendAccept(string IWillBeYourFriendEmailID, string ThanksForAcceptingMeAsYourFriendEmailID)
         {
-            foreach (var u in searchResultList)
-            {
-                if (u.EmailID == ThanksForAcceptingMeAsYourFriendEmailID)
-                {
-                    u.AreWeFriends = "true";
-                }
-            }
+
         }
 
         public bool Register(string Username, string Password, string EmailID)
         {
-            using (Repository.TableRepositories.UsersRepository repo = new Repository.TableRepositories.UsersRepository())
+            using (UsersRepository repo = new UsersRepository())
             {
-                return repo.Register(Username, Password, EmailID);
+                if (repo.GetByEmailID(EmailID) != null) return false;
+                repo.Insert(new User() { Username = Username, Password = Password, EmailID = EmailID });
+                return true;
             }
         }
 

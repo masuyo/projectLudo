@@ -18,6 +18,7 @@ namespace BoardGame.Views
         private int userID;
         private string connectionID;
         private bool authenticationSuccess;
+        private string selectedGameType;
 
         public string UserName
         {
@@ -71,7 +72,7 @@ namespace BoardGame.Views
             }
             set
             {
-                SelectedGameType = value;
+                selectedGameType = value;
             }
         }
 
