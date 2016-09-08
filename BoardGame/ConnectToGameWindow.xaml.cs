@@ -34,7 +34,7 @@ namespace BoardGame
             ImageBrush imgb = new ImageBrush();
             imgb.ImageSource = new BitmapImage(new Uri(@"Images\l3.png", UriKind.Relative));
             imgb.Opacity = 0.4;
-            grid_bg.Background = imgb;
+            // grid_bg.Background = imgb;
 
             Init(AddListItems());
         }

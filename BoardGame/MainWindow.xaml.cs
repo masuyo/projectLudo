@@ -30,7 +30,7 @@ namespace BoardGame
             VM = LoginView.GetVM;
             this.DataContext = VM;
 
-            this.Background = LoginView.GetBG;
+           // this.Background = LoginView.GetBG;
 
         }
 
