@@ -13,11 +13,13 @@ namespace SignalRServer
 {
     public class WPFHub : Hub
     {
-        private static ConcurrentDictionary<string, string> connections;
-        private static ConcurrentDictionary<string, LudoPlayer> players;
+        private static ConcurrentDictionary<string, string> connections = new ConcurrentDictionary<string, string>();
+        private static ConcurrentDictionary<string, LudoPlayer> players = new ConcurrentDictionary<string, LudoPlayer>();
 
 
-        //belépésnél ( Hupproxy.Invoke("Login",email,password) ) üzenet érkezik a szervernek 
+        //belépésnél ( Hupproxy.Invoke("Login",email,password) ) üzenet érkezik a szervernek, paraméterként a belogolandó emailje és jelszava
+        //ha sikerül minden akkor a kliens SetGuid metódusán keresztül visszaküld egy stringet, ez lesz az ehhez a kapcsolathoz tartozó azonosító
+        //ha nem sikerül akkor akkor a kliens LoginError metódusán keresztül jelez
         public void Login(string email,string password)
         {
             Clients.Caller.Valami(2);
@@ -30,17 +32,16 @@ namespace SignalRServer
                         Clients.Caller.LoginError(); return;
                         }
                     LudoPlayer newplayer = new LudoPlayer() { Name = user.Username };
-                    //players.AddOrUpdate(user.Guid, newplayer,);
-
+                    players.AddOrUpdate(user.Guid, newplayer,(key,oldvalue)=>newplayer);
 
                     //TODO: SetGuid method Hubproxy.ON<string>
-                    //mentse el a hozzá tartozó Guidot, ezzel tudom azonosítani ha esetleg (disconnect, recconect, valami történik)
+                    //mentse el a hozzá tartozó Guidot, a szerver ezzel azonosítja ha esetleg (disconnect, recconect, valami történik)
                     Clients.Caller.SetGuid(user.Guid);
                 }
             }
 
             //TODO: LoginError method Hubproxy.ON<string>
-            //ha hibás jelszó, felhasználó név van megava ezt az üzenetet kapja
+            //Kezelje a Login hibát
             Clients.Caller.LoginError(); return;
         }
 
