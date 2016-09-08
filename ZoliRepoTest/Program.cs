@@ -27,6 +27,12 @@ namespace ZoliRepoTest
             IHubProxy HubProxy;
             HubConnection Connection = new HubConnection("http://localhost:8080/signalr");
             HubProxy = Connection.CreateHubProxy("WPFHub");
+
+            //HubProxy.On<int>("Valami", (integer) =>
+            //{
+            //    mit csinálsz vele
+            //});
+
             try
             {
                 Connection.Start();

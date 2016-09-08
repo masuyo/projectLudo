@@ -20,6 +20,7 @@ namespace SignalRServer
         //belépésnél ( Hupproxy.Invoke("Login",email,password) ) üzenet érkezik a szervernek 
         public void Login(string email,string password)
         {
+            Clients.Caller.Valami(2);
             using (UsersRepository repo = new UsersRepository())
             {
                 User user = repo.GetByEmailID(email);
