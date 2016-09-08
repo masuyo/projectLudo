@@ -15,9 +15,9 @@ namespace ZoliRepoTest
     {
         static void Main(string[] args)
         {
-            Console.ReadLine();
-            SignalRtest();
-            //Repotest();
+            //Console.ReadLine();
+            //SignalRtest();
+            Repotest();
             //FriendOfMeTest();
             //GameTestWithTables();
         }

@@ -20,19 +20,18 @@ namespace SignalRServer
         //belépésnél ( Hupproxy.Invoke("Login",email,password) ) üzenet érkezik a szervernek, paraméterként a belogolandó emailje és jelszava
         //ha sikerül minden akkor a kliens SetGuid metódusán keresztül visszaküld egy stringet, ez lesz az ehhez a kapcsolathoz tartozó azonosító
         //ha nem sikerül akkor akkor a kliens LoginError metódusán keresztül jelez
-        public void Login(string email,string password)
-        {
-            Clients.Caller.Valami(2);
+        public void Login(string email,string password,string selectedgametype)
+        { 
             using (UsersRepository repo = new UsersRepository())
             {
-                User user = repo.GetByEmailID(email);
-                if (user != null && user?.Password == password)
+                User user = repo.GetByEmailID("erika@email.com");
+                if (user != null && user?.Password == "asd123")
                 {
                     if (!connections.TryAdd(Context.ConnectionId, user.Guid)) {
                         Clients.Caller.LoginError(); return;
                         }
                     LudoPlayer newplayer = new LudoPlayer() { Name = user.Username };
-                    players.AddOrUpdate(user.Guid, newplayer,(key,oldvalue)=>newplayer);
+                    players.AddOrUpdate("epicguid", newplayer,(key,oldvalue)=>newplayer);
 
                     //TODO: SetGuid method Hubproxy.ON<string>
                     //mentse el a hozzá tartozó Guidot, a szerver ezzel azonosítja ha esetleg (disconnect, recconect, valami történik)

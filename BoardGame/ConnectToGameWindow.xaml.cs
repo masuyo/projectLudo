@@ -67,10 +67,10 @@ namespace BoardGame
                         this.Close();
                         ludo.ShowDialog();
                     }
-                    else
-                    {
-                        MessageBox.Show("Failed to connect.");
-                    }
+                    //else
+                    //{
+                    //    MessageBox.Show("Failed to connect.");
+                    //}
                 }
                 else
                 {
