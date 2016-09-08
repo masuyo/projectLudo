@@ -126,13 +126,14 @@
                 HorizontalAlignment="Stretch" VerticalAlignment="Top"
                 HorizontalContentAlignment="Center"                   
                 MouseDown="LblExit_MouseDown" />
-            <ListBox
+            <!--itemtemplate-->
+            <ComboBox
                 ItemsSource="{Binding Path=GameTypeList}"
                 SelectedItem="{Binding Path=SelectedGameType}"
-                SelectionMode="Single" 
+                SelectedIndex="0"
                 HorizontalContentAlignment="Center"
-                Grid.Column="1" Grid.Row="1" Margin="10,5" 
-                Background="Transparent" Foreground="White" 
+                Grid.Column="1" Grid.Row="1" Margin="10,5,10,10" 
+                Background="Black" Foreground="White" 
                 BorderBrush="Blue" BorderThickness="1"
                 ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
                 ScrollViewer.VerticalScrollBarVisibility="Hidden" 
