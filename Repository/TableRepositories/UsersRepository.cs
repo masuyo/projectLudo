@@ -12,9 +12,6 @@ namespace Repository.TableRepositories
 {
     public class UsersRepository : EFRepository<User>
     {
-        public UsersRepository(DbContext newctx) : base(newctx)
-        {
-        }
 
         public override User GetById(int id)
         {
@@ -32,8 +29,7 @@ namespace Repository.TableRepositories
         }
 
         public bool Register(string Username,string Password,string EmailID)
-        {
-            if (GetByName(Username) != null) return false;
+        { 
             if (GetByEmailID(EmailID) != null) return false;
             Insert(new User() { Username = Username, Password = Password, EmailID = EmailID });
 
@@ -44,6 +40,7 @@ namespace Repository.TableRepositories
         {
             var sql = @"insert into [User](Username,Password,EmailID,Status,Token) values(@username,@password,@email,'off','token')";
             context.Database.ExecuteSqlCommand(sql,new SqlParameter("@username",newentity.Username), new SqlParameter("@password", newentity.Password), new SqlParameter("@email", newentity.EmailID));
+            context.SaveChanges();
         }
     }
 }

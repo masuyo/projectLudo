@@ -38,7 +38,7 @@ namespace SignalRServer.MVCData.MethodClasses
 
         public bool Register(string Username, string Password, string EmailID)
         {
-            using (Repository.TableRepositories.UsersRepository repo = new Repository.TableRepositories.UsersRepository(new DatabaseEntities()))
+            using (Repository.TableRepositories.UsersRepository repo = new Repository.TableRepositories.UsersRepository())
             {
                 return repo.Register(Username, Password, EmailID);
             }
@@ -58,11 +58,11 @@ namespace SignalRServer.MVCData.MethodClasses
         {
             using (DatabaseEntities ED = new DatabaseEntities())
             {
-                UsersRepository userrepo = new UsersRepository(ED);
+                UsersRepository userrepo = new UsersRepository();
                 User searcher = userrepo.GetByEmailID(searcherEmailID);
                 User searched = userrepo.GetByEmailID(emailID);
 
-                FriendConnectionsRepository friendrepo = new FriendConnectionsRepository(ED);
+                FriendConnectionsRepository friendrepo = new FriendConnectionsRepository();
                 string arewefriends = "false";
                 string friendedyou = "false";
                 string friendedme = "false";
@@ -90,7 +90,7 @@ namespace SignalRServer.MVCData.MethodClasses
 
             using (DatabaseEntities ED = new DatabaseEntities())
             {
-                UsersRepository userrepo = new UsersRepository(ED);
+                UsersRepository userrepo = new UsersRepository();
                 foreach (var item in userrepo.GetByName(username))
                 {
                     searchResultList.Add(EmaildIDSearch(item.EmailID, searcherEmailID));

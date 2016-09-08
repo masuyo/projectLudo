@@ -11,9 +11,6 @@ namespace Repository.TableRepositories
 {
     public class GameRepository : EFRepository<Game>
     {
-        public GameRepository(DbContext newctx) : base(newctx)
-        {
-        }
 
         public override Game GetById(int id)
         {

@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using SignalRServer;
-
-//using Game;
-using Entities;
-using Repository;
 using Game;
 using Game.LudoActions;
 using SignalRServer.MVCData.MethodClasses;
 using Repository.TableRepositories;
-using SignalRServer.MVCData.DataClasses;
+using Entities;
+
+using System.Net.Http;
+using System.Windows;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace ZoliRepoTest
 {
@@ -21,10 +16,35 @@ namespace ZoliRepoTest
     {
         static void Main(string[] args)
         {
-
-            Repotest();
+            Console.ReadLine();
+            SignalRtest();
+            //Repotest();
             //FriendOfMeTest();
             //GameTestWithTables();
+        }
+
+        private static void SignalRtest()
+        {
+            IHubProxy HubProxy;
+            HubConnection Connection = new HubConnection("http://localhost:8080/signalr");
+            HubProxy = Connection.CreateHubProxy("MyHubForTest");
+
+            HubProxy.On<User>("ComplexMethod", (user) => Console.WriteLine("neve:"+user.Username+"\nemailje:"+user.
+                EmailID));
+
+            try
+            {
+                Connection.Start();
+            }catch(HttpRequestException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            do
+            {
+                string input = Console.ReadLine();
+                HubProxy.Invoke("Complex", input);
+            } while (true);
         }
 
         private static void FriendOfMeTest()
@@ -35,7 +55,7 @@ namespace ZoliRepoTest
                 int searcher = int.Parse(Console.ReadLine());
                 string searched = Console.ReadLine();
 
-                UsersRepository userepo = new UsersRepository(new DatabaseEntities());
+                UsersRepository userepo = new UsersRepository();
 
                 UserActions useractioner = new UserActions();
                 //UserData data= useractioner.EmaildIDSearch(userepo.GetById(searched).EmailID, userepo.GetById(searcher).EmailID);
@@ -199,8 +219,8 @@ namespace ZoliRepoTest
 
         private static void Repotest()
         {
-            DatabaseEntities DE = new DatabaseEntities();
-            Repository.TableRepositories.UsersRepository userrepo = new Repository.TableRepositories.UsersRepository(DE);
+           
+            Repository.TableRepositories.UsersRepository userrepo = new Repository.TableRepositories.UsersRepository();
             Console.WriteLine("User:");
             foreach (var item in userrepo.GetAll())
             {
@@ -208,15 +228,16 @@ namespace ZoliRepoTest
             }
             Console.WriteLine("------------------------------------------");
 
-            Repository.TableRepositories.FriendConnectionsRepository friendrepo = new Repository.TableRepositories.FriendConnectionsRepository(DE);
+            FriendConnectionsRepository friendrepo = new FriendConnectionsRepository();
             Console.WriteLine("FriendConnections:");
             foreach (var item in friendrepo.GetAll())
-            {
+            { 
                 Console.WriteLine("{0}\t {1}\t {2}\t",item.FriendConnID,item.UserID, item.FriendUserID);
             }
+            
             Console.WriteLine("------------------------------------------");
 
-            DE.SaveChanges();
+            
 
             Console.ReadLine();
         }

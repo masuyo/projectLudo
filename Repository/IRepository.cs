@@ -15,6 +15,5 @@ namespace Repository
         TEntity GetById(int id);
         IQueryable<TEntity> GetAll();
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter);
-
     }
 }

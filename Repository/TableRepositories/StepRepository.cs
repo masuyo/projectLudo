@@ -11,9 +11,6 @@ namespace Repository.TableRepositories
 {
     public class StepRepository : EFRepository<Step>
     {
-        public StepRepository(DbContext newctx) : base(newctx)
-        {
-        }
 
         public override Step GetById(int id)
         {

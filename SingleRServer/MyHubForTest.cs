@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Entities;
+
 namespace SignalRServer
 {
     public class MyHubForTest : Hub
@@ -12,7 +14,13 @@ namespace SignalRServer
 
         public void Send(string message)
         {
-            Clients.All.clientmethod(message);
+            Clients.All.getMessage(message);
+        }
+
+        public void Complex(string message)
+        {
+
+            Clients.All.ComplexMethod(new User() {Username=message,EmailID="nagyonemail@email.com"});
         }
 
         public override Task OnConnected()
