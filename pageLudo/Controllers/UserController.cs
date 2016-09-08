@@ -63,6 +63,10 @@ namespace pageLudo.Controllers
                     Session["LogedUsername"] = ud.Username.ToString();
                     Session["LogedEmailID"] = ud.EmailID.ToString();
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Failed!");
+                }
 
                 //adminhoz kell, ha a sessionrole admin, akkor mást fog megjeleníthetővé tenni a layout
                 //Session["LogedUserRole"] = ud.Role.ToString();
@@ -103,9 +107,14 @@ namespace pageLudo.Controllers
                 {
                     ViewBag.Message = "Registration successful";
                 }
+                else
+                {
+                    ViewBag.Message = "Registration failed: email already taken";
+                }
                 ModelState.Clear();
                 u = null;
             }
+
             return View(u);
         }
     }

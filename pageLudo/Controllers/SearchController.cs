@@ -1,5 +1,6 @@
-﻿using pageLudo.FakeData.MethodClasses;
-using pageLudo.FakeData.DataClasses;
+﻿using pageLudo.Models;
+using SignalRServer.MVCData.DataClasses;
+using SignalRServer.MVCData.MethodClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,24 @@ namespace pageLudo.Controllers
 {
     public class SearchController : Controller
     {
-        public ActionResult MultipleProfileSearchResult()
+        // többtalálatos keresési eredmény kilistázásához
+        UserListingModel ulm;
+
+        public ActionResult MultipleProfileSearchResult(List<UserListingData> sru)
         {
-            return View();
+            ulm.List = sru;
+            return View("MultipleProfileSearchResult",ulm);
         }
 
-        public ActionResult ProfileSearchResult()
+        // a kilistázott userekből ezzel lehet egy adott user profiljára kattintani
+        public ActionResult Details(string emailID)
+        {
+            // email alapján lekérdezett user ide kerül be
+            UserListingData u = null;
+            return View("ProfileSearchResult",u);
+        }
+
+        public ActionResult ProfileSearchResult(string emailID)
         {
             return View();
         }
@@ -57,6 +70,12 @@ namespace pageLudo.Controllers
                     }
                     else
                     {
+                        List<UserListingData> luld = new List<UserListingData>();
+                        foreach (var user in getUsers)
+                        {
+                            luld.Add(new UserListingData { Username = user.Username, EmailID = user.EmailID });
+                        }
+                        MultipleProfileSearchResult(luld);
                         return RedirectToAction("MultipleProfileSearchResult", "Search");
                     }
                 }

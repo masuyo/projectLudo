@@ -1,4 +1,5 @@
-﻿
+﻿@model pageLudo.Models.UserListingData
+
 @{
     ViewBag.Title = "ProfileSearchResult";
 }
@@ -6,7 +7,7 @@
 @if (Session["AccessedUsername"] != null)
 {
     <br />
-    <div class="pull-left">
+    @*<div class="pull-left">
         <h4>Adatlap</h4>
         <br />
         <table>
@@ -20,7 +21,18 @@
             </tr>
         </table>
         <br />
-    </div>
+    </div>*@
+
+    <table border="1">
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.Username)</td>
+            <td>@Html.DisplayFor(m => m.Username)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.EmailID)</td>
+            <td>@Html.DisplayFor(m => m.EmailID)</td>
+        </tr>
+    </table>
 
     //Session["AccessedFriendState"]
     //Session["AccessedFriendedYou"]
