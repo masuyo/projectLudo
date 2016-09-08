@@ -100,8 +100,8 @@ namespace pageLudo.Controllers
             {
                 using (DatabaseEntities DE = new DatabaseEntities())
                 {
-                    var repo = new Repository.TableRepositories.UsersRepository();
-                    if (repo.Register(u.Username, u.Password, u.EmailID))
+                    var useractioner = new UserActions();
+                    if (useractioner.Register(u.Username, u.Password, u.EmailID))
                     {
                         ViewBag.Message = "Registration successful";
                     }
