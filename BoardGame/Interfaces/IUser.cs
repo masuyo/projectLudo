@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoardGame.Interfaces
 {
-    class IUser
+    interface IUser
     {
         int UserID { get;}
         string UserName { get; set; }

@@ -16,7 +16,11 @@ namespace BoardGame.TestClasses
             this.userID = userID;
             this.userName = userName;
         }
-        int UserID { get { return userID; } }
-        string UserName { get { return userName; } set { userName = value; } }
+        public int UserID { get { return userID; } }
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; }
+        }
     }
 }

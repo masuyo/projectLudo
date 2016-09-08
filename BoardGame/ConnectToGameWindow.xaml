@@ -187,14 +187,28 @@
                 <ListBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
                          ItemsSource="{Binding Path=UsersInRoom}"
                          Background="Transparent"
-                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                         
+                         HorizontalAlignment="Right" VerticalAlignment="Top"
                          BorderThickness="0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
+                            <Grid>
+                            <Label 
+                                Content=""  
+                                Foreground="White" FontSize="20"
+                                Background="DodgerBlue" Opacity="0.4" 
+                                MinWidth="200"
+                                Padding="20,5"
+                                Margin="0,10,20,0"
+                                HorizontalContentAlignment="Right"/>
                             <Label 
                                 Content="{Binding Path=UserName}"  
-                                Foreground="AliceBlue" FontSize="20"
-                                HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Right"/>
+                                Foreground="White" FontSize="20"
+                                MinWidth="200"
+                                Padding="20,5"
+                                Margin="0,10,20,0"
+                                HorizontalContentAlignment="Right"/>
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

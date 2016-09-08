@@ -113,5 +113,13 @@ namespace BoardGame
         {
             this.Close();
         }
+
+        private void TXB_UserName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab)
+            {
+                VM.PassMessage = String.Empty;
+            }
+        }
     }
 }
