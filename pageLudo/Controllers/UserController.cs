@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using SignalRServer.MVCData.MethodClasses;
 using Google.DataTable.Net.Wrapper.Extension;
 using Google.DataTable.Net.Wrapper;
+using SignalRServer.MVCData.DataClasses;
 
 namespace pageLudo.Controllers
 {
@@ -40,7 +41,7 @@ namespace pageLudo.Controllers
             System.Web.Security.FormsAuthentication.SignOut();
             Session.Clear();
             Session.RemoveAll();
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Login()
@@ -54,26 +55,19 @@ namespace pageLudo.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (DatabaseEntities DE = new DatabaseEntities())
+                UserActions ua = new UserActions();
+                UserData ud = ua.Login(u.EmailID, u.Password);
+                if (ud != null)
                 {
-
-                    //var repo = new Repository.TableRepositories.UsersRepository(DE);
-                    // kikeresi az adatbázisból a beadott adatok alapján a usert, ha megtalálja, Sessiont kap
-                    // TODO: repositoryba kell egy lekérdezés Email és Password alapján
-
-                    var obj = new LoginUser(){ UserID = 1, Username = "Cressida", Password = "123456", EmailID = "cressida@citromail.hu", Role = "admin"};
-                    //var obj = ude.Users.Where(a => a.Username.Equals(u.Username) && a.Password.Equals(u.Password)).FirstOrDefault();
-                    //if (obj != null)
-                    //{
-                    Session["LogedUserID"] = obj.UserID.ToString();
-                    Session["LogedUsername"] = obj.Username.ToString();
-                    Session["LogedEmailID"] = obj.EmailID.ToString();
-
-                    //adminhoz kell, ha a sessionrole admin, akkor mást fog megjeleníthetővé tenni a layout
-                    Session["LogedUserRole"] = obj.Role.ToString();
-                    return RedirectToAction("AfterLogin");
-                    //}
+                    Session["LogedUserID"] = ud.UserID.ToString();
+                    Session["LogedUsername"] = ud.Username.ToString();
+                    Session["LogedEmailID"] = ud.EmailID.ToString();
                 }
+
+                //adminhoz kell, ha a sessionrole admin, akkor mást fog megjeleníthetővé tenni a layout
+                //Session["LogedUserRole"] = ud.Role.ToString();
+                return RedirectToAction("AfterLogin");
+                //}
             }
             return View(u);
         }
