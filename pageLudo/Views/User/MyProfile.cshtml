@@ -24,80 +24,54 @@
     <h4>Statisztika</h4>
 
 
-        <!-- Adott játékosnak minden játéktípusban(Ludóban) winrate -->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">
-            // Load the Visualization API and the piechart package.
-            google.charts.load('current', { packages: ['corechart'] });
+    <!-- Here We need to write some js code for load google chart with database data -->
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-            // Set a callback to run when the Google Visualization API is loaded.
-            google.charts.setOnLoadCallback(drawChart);
+    <script>
+                var chartData; // globar variable for hold chart data
+                google.load("visualization", "1", { packages: ["corechart"] });
 
-            // Callback that creates and populates a data table,
-            // instantiates the pie chart, passes in the data and
-            // draws it.
-            function drawChart() {
+                // Here We will fill chartData
 
-                // Create the data table.
-                //Adott játékosnak minden játéktípusban(Ludóban) winrate (elég a win%-ot visszaadni sztem max 2 tizedesjegyig)
-                var data = google.visualization.arrayToDataTable([
-                  ["Game", "Win", "Lose", { role: "style" }],
-                  ["Ludo", 20, 70, ""],
-                  ["Chess", 55, 45,""],
-                  ["Balderdash", 12, 88, ""],
-                  ["Tictactoe", 56, 44,""]
-                ]);
+                $(document).ready(function () {
 
-                var view = new google.visualization.DataView(data);
-
-                var options = {
-                    title: "Győzelem-vereség aránya",
-                    isStacked: 'percent',
-                    //width: 900,
-                    //height: 150,
-                    bar: { groupWidth: "95%" },
-                    legend: { position: "none" },
-                    backgroundColor: { fill: 'transparent' }
-                };
-
-                // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
-                chart.draw(view, options);
+                    $.ajax({
+                        url: "Statistics.aspx/GameWinRateGetChartData",
+                        data: "",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; chartset=utf-8",
+                        success: function (data) {
+                            chartData = data.d;
+                        },
+                        error: function () {
+                            alert("Error loading data! Please try again.");
+                        }
+                    }).done(function () {
+                        // after complete loading data
+                        google.setOnLoadCallback(drawChart);
+                        drawChart();
+                    });
+                });
 
 
-                //Adott játékos adott játéktípusban adott játéktípushoz tartozó színekkel milyen arányban nyert
-                var data2 = google.visualization.arrayToDataTable([
-                  ['', 'Blue', { role: 'annotation' }, 'Red', { role: 'annotation' }, 'Yellow', { role: 'annotation' }, 'Green', { role: 'annotation' }, 'Black', {
-                    role: 'annotation'}, 'White', { role: 'annotation'},{ role: 'style' }],
-                  ['Ludo', 112, '', 82, '', 47, '', 55, '', 0, '', 0, '', ''],
-                  ['Chess', 0, '', 0, '', 0, '', 0, '', 102, '', 110, '', '']
-                ]);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable(chartData);
 
-                var options2 = {
-                    title: "Győzelem színek szerinti eloszlása",
-                    isStacked: 'percent',
-                    hAxis: {
-                        minValue: 0
-                    },
-                    series: {
-                        0: { color: 'blue' },
-                        1: { color: 'red' },
-                        2: { color: 'yellow' },
-                        3: { color: 'green' },
-                        4: { color: 'black' },
-                        5: { color: '#fff7e3' },
-                    },
-                    backgroundColor: { fill: 'transparent' }
-                };
+                    var options = {
+                        title: "Company Revenue",
+                        pointSize: 5
+                    };
 
-                var chart2 = new google.visualization.BarChart(document.getElementById('mood_chart'));
-                chart2.draw(data2, options2);
+                    var barChart = new google.visualization.BarChart(document.getElementById('barchart_values'));
+                    barChart.draw(data, options);
 
-            }
-        </script>
+                }
+
+    </script>
         <div>
             <div id="barchart_values" style="width: 500px; height: 200px; float:left;"></div>
-            <div id="mood_chart" style="width: 500px; height: 200px; float:left;"></div>
         </div>
         <div class="clearfix"></div>
 }

@@ -17,15 +17,11 @@ namespace pageLudo.Controllers
         //{
         //  
         //}
-
         public ActionResult MyProfile()
         {
-            UserStatistics us = new UserStatistics();
-            List<GameWinrate> gwr = new List<GameWinrate>();
-            gwr = us.PlayerWinrate(Session["LogedEmailID"].ToString());
-            TempData["GameName"] = gwr[0].GameName;
-            TempData["NumberOfWins"] = gwr[0].NumberOfWins;
-            TempData["NumberOfLosses"] = gwr[0].NumberOfLosses;
+            //Statistics stc = new Statistics();
+            pageLudo.User.Statistics.GameWinRateGetChartData(Session["LogedEmailID"].ToString());
+
             return View();
         }
 
