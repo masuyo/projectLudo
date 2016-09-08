@@ -6,8 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text.RegularExpressions;
-using pageLudo.FakeData.MethodClasses;
-using pageLudo.FakeData.DataClasses;
+using SignalRServer.MVCData.MethodClasses;
 
 namespace pageLudo.Controllers
 {
@@ -94,16 +93,13 @@ namespace pageLudo.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (DatabaseEntities DE = new DatabaseEntities())
+                UserActions ua = new UserActions();
+                if (ua.Register(u.Username, u.Password, u.EmailID))
                 {
-                    var useractioner = new UserActions();
-                    if (useractioner.Register(u.Username, u.Password, u.EmailID))
-                    {
-                        ViewBag.Message = "Registration successful";
-                    }
-                    ModelState.Clear();
-                    u = null;
+                    ViewBag.Message = "Registration successful";
                 }
+                ModelState.Clear();
+                u = null;
             }
             return View(u);
         }
