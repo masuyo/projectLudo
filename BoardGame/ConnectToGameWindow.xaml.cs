@@ -132,7 +132,6 @@ namespace BoardGame
         {            
             foreach (IUser u in new TestLudoServer().GetPlayersInRoom((VM.SelectedRoom)))
             {                
-                Console.WriteLine(u.UserName);
                 //VM.UsersInRoom = new ObservableCollection<IUser>();
                 VM.UsersInRoom.Add(u);
             }
@@ -156,6 +155,13 @@ namespace BoardGame
             {
                 (sender as Label).FontFamily = new FontFamily("Segoe UI");
             }
+        }
+
+        private void LBL_ExitRoom_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+            VM.UsersInRoom.Clear();
+            VM.UsersInRoom = new ObservableCollection<IUser>();
         }
     }
 }

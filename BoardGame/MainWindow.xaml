@@ -95,7 +95,8 @@
                     Margin="10,-10,10,50" 
                     BorderBrush="Blue"
                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-                    PreviewMouseDown="Txb_PreviewMouseDown" MouseLeave="Pswd_MouseLeave"                   
+                    PreviewMouseDown="Txb_PreviewMouseDown" MouseLeave="Pswd_MouseLeave"  
+                    PasswordChanged="PSWD_PasswordChanged"
                 />
             </Grid>
             <Label

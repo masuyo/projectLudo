@@ -183,11 +183,11 @@
                     BorderBrush="AliceBlue" BorderThickness="1" 
                     MouseEnter="LBL_Hover_MouseEnter"
                     MouseLeave="LBL_Hover_MouseLeave"
+                    MouseDown="LBL_ExitRoom_MouseDown"
                        />
                 <ListBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
                          ItemsSource="{Binding Path=UsersInRoom}"
-                         Background="Transparent"
-                         
+                         Background="Transparent"                
                          HorizontalAlignment="Right" VerticalAlignment="Top"
                          BorderThickness="0">
                     <ListBox.ItemTemplate>

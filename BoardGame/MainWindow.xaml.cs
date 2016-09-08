@@ -90,13 +90,7 @@ namespace BoardGame
 
         private void Pswd_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (sender is PasswordBox && !String.IsNullOrEmpty((sender as PasswordBox).Password))
-            {
-                VM.PassMessage = String.Empty;
-                VM.Password = (sender as PasswordBox).Password;
-                Console.WriteLine(VM.Password);
-            }
-            else
+            if (sender is PasswordBox && String.IsNullOrEmpty((sender as PasswordBox).Password))
             {
                 VM.PassMessage = "Enter password";
             }
@@ -119,6 +113,16 @@ namespace BoardGame
             if (e.Key == Key.Tab)
             {
                 VM.PassMessage = String.Empty;
+            }
+        }
+
+        private void PSWD_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (sender is PasswordBox && !String.IsNullOrEmpty((sender as PasswordBox).Password))
+            {
+                VM.PassMessage = String.Empty;
+                VM.Password = (sender as PasswordBox).Password;
+                Console.WriteLine(VM.Password);
             }
         }
     }
