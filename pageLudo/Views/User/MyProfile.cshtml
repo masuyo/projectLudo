@@ -3,7 +3,7 @@
 }
 
 @if (Session["LogedUsername"] != null)
-{ 
+{
     <br />
     <h4>Adatlap</h4>
     <br />
@@ -24,56 +24,66 @@
     <h4>Statisztika</h4>
 
 
-    <!-- Here We need to write some js code for load google chart with database data -->
-    <script src="Scripts/jquery-1.10.2.js"></script>
+        <!-- Adott játékosnak minden játéktípusban(Ludóban) winrate -->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+            // Load the Visualization API and the piechart package.
+            google.charts.load('current', { packages: ['corechart'] });
 
-    <script>
-                var chartData; // globar variable for hold chart data
-                google.load("visualization", "1", { packages: ["corechart"] });
+            // Set a callback to run when the Google Visualization API is loaded.
+            google.charts.setOnLoadCallback(drawChart);
 
-                // Here We will fill chartData
+            // Callback that creates and populates a data table,
+            // instantiates the pie chart, passes in the data and
+            // draws it.
+            function drawChart() {
 
-                $(document).ready(function () {
+                var list = new[]
+                {
+                    new {Name = "Dogs", Count = 5},
+                    new {Name = "Cats", Count = 2}
+                };
 
-                    $.ajax({
-                        url: "Statistics.aspx/GameWinRateGetChartData",
-                        data: "",
-                        dataType: "json",
-                        type: "POST",
-                        contentType: "application/json; chartset=utf-8",
-                        success: function (data) {
-                            chartData = data.d;
-                        },
-                        error: function () {
-                            alert("Error loading data! Please try again.");
-                        }
-                    }).done(function () {
-                        // after complete loading data
-                        google.setOnLoadCallback(drawChart);
-                        drawChart();
-                    });
-                });
+                //Adott játékosnak minden játéktípusban(Ludóban) winrate (elég a win%-ot visszaadni sztem max 2 tizedesjegyig)
+                var data = list.ToGoogleDataTable()
+                               .NewColumn(new Column(ColumnType.String, "Name"), x => x.Name)
+                               .NewColumn(new Column(ColumnType.Number, "Count"), x => x.Count)
+                               .Build()
+                               .GetJson();
+
+                var view = new google.visualization.DataView(data);
+
+                var options = {
+                    title: "Győzelem-vereség aránya",
+                    isStacked: 'percent',
+                    //width: 900,
+                    //height: 150,
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                    backgroundColor: { fill: 'transparent' }
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+            chart.draw(view, options);
 
 
-                function drawChart() {
-                    var data = google.visualization.arrayToDataTable(chartData);
+            //Adott játékos adott játéktípusban adott játéktípushoz tartozó színekkel milyen arányban nyert
 
-                    var options = {
-                        title: "Company Revenue",
-                        pointSize: 5
-                    };
-
-                    var barChart = new google.visualization.BarChart(document.getElementById('barchart_values'));
-                    barChart.draw(data, options);
-
-                }
-
-    </script>
+        }
+        </script>
         <div>
-            <div id="barchart_values" style="width: 500px; height: 200px; float:left;"></div>
-        </div>
-        <div class="clearfix"></div>
+            <div id = "barchart_values" style = "width: 500px; height: 200px; float:left;" ></div >
+
+
+               <div id = "mood_chart" style = "width: 500px; height: 200px; float:left;" ></div >
+
+
+              </div >
+
+
+              <div class="clearfix"></div>
 }
 
 

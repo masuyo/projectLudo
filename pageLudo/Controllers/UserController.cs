@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Text.RegularExpressions;
 using SignalRServer.MVCData.MethodClasses;
+using Google.DataTable.Net.Wrapper.Extension;
+using Google.DataTable.Net.Wrapper;
 
 namespace pageLudo.Controllers
 {
@@ -18,8 +20,17 @@ namespace pageLudo.Controllers
         //}
         public ActionResult MyProfile()
         {
+            //UserStatistics us = new UserStatistics();
+            //var list = us.PlayerWinrate(Session["LogedEmailID"].ToString());
+
+            //var json = list.ToGoogleDataTable()
+            //               .NewColumn(new Column(ColumnType.String, "Name"), x => x.Name)
+            //               .NewColumn(new Column(ColumnType.Number, "Count"), x => x.Count)
+            //               .Build()
+            //               .GetJson();
+            //Console.WriteLine(json);
             //Statistics stc = new Statistics();
-            pageLudo.User.Statistics.GameWinRateGetChartData(Session["LogedEmailID"].ToString());
+            //pageLudo.User.Statistics.GameWinRateGetChartData(Session["LogedEmailID"].ToString());
 
             return View();
         }

@@ -12,7 +12,6 @@ namespace projectLudo
         static void Main(string[] args)
         {
             Console.WriteLine("Jó munkát. =)");
-            // báááááá
             Console.ReadLine();
         }
     }
