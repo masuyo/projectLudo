@@ -11,9 +11,6 @@ namespace Repository.TableRepositories
 {
     public class InvationDesktopRepository : EFRepository<InvationDesktop>
     {
-        public InvationDesktopRepository(DbContext newctx) : base(newctx)
-        {
-        }
 
         public override InvationDesktop GetById(int id)
         {

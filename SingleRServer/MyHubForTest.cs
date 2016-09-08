@@ -5,14 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Entities;
+using SignalRServer;
+
 namespace SignalRServer
 {
     public class MyHubForTest : Hub
     {
-
         public void Send(string message)
         {
-            Clients.All.clientmethod(message);
+            Clients.All.getMessage(message);
         }
 
         public override Task OnConnected()

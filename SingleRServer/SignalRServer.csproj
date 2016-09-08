@@ -7,7 +7,7 @@
     <ProjectGuid>{11E88559-CCC7-4CAA-A9B9-D274E2E9EC01}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SignalRService</RootNamespace>
+    <RootNamespace>SignalRServer</RootNamespace>
     <AssemblyName>SignalRService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -99,15 +99,11 @@
     <Compile Include="MVCData\MethodClasses\GameStatistics.cs" />
     <Compile Include="MVCData\MethodClasses\UserActions.cs" />
     <Compile Include="MVCData\MethodClasses\UserStatistics.cs" />
-    <Compile Include="Interfaces4MVC\Something.cs" />
-    <Compile Include="MVCService.cs" />
     <Compile Include="MyHubForTest.cs" />
-    <Compile Include="Interfaces4MVC\IGameStatisctics.cs" />
-    <Compile Include="Interfaces4MVC\IUserActions.cs" />
-    <Compile Include="Interfaces4MVC\IUserStatistics.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="WPFHub.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

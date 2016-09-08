@@ -1,9 +1,8 @@
 ﻿using SignalRServer.MVCData.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using SignalRServer.MVCData.DataClasses;
+
 using Entities;
 using Repository.TableRepositories;
 
@@ -11,36 +10,23 @@ namespace SignalRServer.MVCData.MethodClasses
 {
     public class UserActions : IUserActions
     {
-        List<UserData> ud = new List<UserData>();
-        List<UserData> searchResultList = new List<UserData>();
-
         public void Friend(string BeMyFriendEmailID, string IMightBecomeYourFriendEmailID)
         {
-            foreach (var u in searchResultList)
-            {
-                if (u.EmailID == BeMyFriendEmailID && u.FriendedYou != "true")
-                {
-                    u.FriendedYou = "true";
-                }
-            }
+          
         }
 
         public void FriendAccept(string IWillBeYourFriendEmailID, string ThanksForAcceptingMeAsYourFriendEmailID)
         {
-            foreach (var u in searchResultList)
-            {
-                if (u.EmailID == ThanksForAcceptingMeAsYourFriendEmailID)
-                {
-                    u.AreWeFriends = "true";
-                }
-            }
+
         }
 
         public bool Register(string Username, string Password, string EmailID)
         {
-            using (Repository.TableRepositories.UsersRepository repo = new Repository.TableRepositories.UsersRepository(new DatabaseEntities()))
+            using (UsersRepository repo = new UsersRepository())
             {
-                return repo.Register(Username, Password, EmailID);
+                if (repo.GetByEmailID(EmailID) != null) return false;
+                repo.Insert(new User() { Username = Username, Password = Password, EmailID = EmailID });
+                return true;
             }
         }
 
@@ -58,11 +44,11 @@ namespace SignalRServer.MVCData.MethodClasses
         {
             using (DatabaseEntities ED = new DatabaseEntities())
             {
-                UsersRepository userrepo = new UsersRepository(ED);
+                UsersRepository userrepo = new UsersRepository();
                 User searcher = userrepo.GetByEmailID(searcherEmailID);
                 User searched = userrepo.GetByEmailID(emailID);
 
-                FriendConnectionsRepository friendrepo = new FriendConnectionsRepository(ED);
+                FriendConnectionsRepository friendrepo = new FriendConnectionsRepository();
                 string arewefriends = "false";
                 string friendedyou = "false";
                 string friendedme = "false";
@@ -90,7 +76,7 @@ namespace SignalRServer.MVCData.MethodClasses
 
             using (DatabaseEntities ED = new DatabaseEntities())
             {
-                UsersRepository userrepo = new UsersRepository(ED);
+                UsersRepository userrepo = new UsersRepository();
                 foreach (var item in userrepo.GetByName(username))
                 {
                     searchResultList.Add(EmaildIDSearch(item.EmailID, searcherEmailID));

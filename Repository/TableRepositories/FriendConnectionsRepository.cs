@@ -11,9 +11,6 @@ namespace Repository.TableRepositories
 {
     public class FriendConnectionsRepository : EFRepository<FriendConnections>
     {
-        public FriendConnectionsRepository(DbContext newctx) : base(newctx)
-        {
-        }
 
         public override FriendConnections GetById(int id)
         {

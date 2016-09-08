@@ -5,15 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Entities;
+
 namespace Repository
 {
     abstract public class EFRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected DbContext context;
 
-        public EFRepository(DbContext newctx)
+        public EFRepository()
         {
-            context = newctx;
+            context = new DatabaseEntities();
         }
 
         public void Delete(TEntity entityToDelete)
