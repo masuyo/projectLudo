@@ -16,7 +16,7 @@ namespace BoardGame.Views
         private string passMessage;
         private string password;
         private int userID;
-        private string connectionID;
+        private string guID;
         private bool authenticationSuccess;
         private string selectedGameType;
 
@@ -44,11 +44,11 @@ namespace BoardGame.Views
 
             set { SetProperty(ref userID, value); }
         }
-        public string ConnectionID
+        public string GUID
         {
-            get { return connectionID; }
+            get { return guID; }
 
-            set { SetProperty(ref connectionID, value); }
+            set { SetProperty(ref guID, value); }
         }
         public bool AuthenticationSuccess
         {
