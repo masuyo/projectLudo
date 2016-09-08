@@ -27,15 +27,15 @@ namespace SignalRServer
                 User user = repo.GetByEmailID("erika@email.com");
                 if (user != null && user?.Password == "asd123")
                 {
-                    if (!connections.TryAdd(Context.ConnectionId, user.Guid)) {
-                        Clients.Caller.LoginError(); return;
-                        }
-                    LudoPlayer newplayer = new LudoPlayer() { Name = user.Username };
-                    players.AddOrUpdate("epicguid", newplayer,(key,oldvalue)=>newplayer);
+                    //if (!connections.TryAdd(Context.ConnectionId, user.Guid)) {
+                      //  Clients.Caller.LoginError(); return;
+                       // }
+                    //LudoPlayer newplayer = new LudoPlayer() { Name = user.Username };
+                    //players.AddOrUpdate("epicguid", newplayer,(key,oldvalue)=>newplayer);
 
                     //TODO: SetGuid method Hubproxy.ON<string>
                     //mentse el a hozzá tartozó Guidot, a szerver ezzel azonosítja ha esetleg (disconnect, recconect, valami történik)
-                    Clients.Caller.SetGuid(user.Guid);
+                    Clients.Caller.SetGuid("epicguid");
                 }
             }
 

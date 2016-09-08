@@ -39,7 +39,7 @@ namespace BoardGame
                 Connection = new HubConnection(connString);
                 HubProxy = Connection.CreateHubProxy("WPFHub");
                 HubProxy.On<string>("SetGuid", (guid) => this.Dispatcher.Invoke(() => { Login(guid); }));
-                HubProxy.On("LoginError", (x) => this.Dispatcher.Invoke(() => { LoginError(); }));
+                HubProxy.On("LoginError", (x) =>  LoginError());
                 try
                 {
                     Connection.Start();
@@ -61,7 +61,7 @@ namespace BoardGame
 
         private void LoginError()
         {
-            MessageBox.Show("Failed to login.");
+            Dispatcher.Invoke(()=>MessageBox.Show("Failed to login."));
         }
 
         private void Login(string guid)
