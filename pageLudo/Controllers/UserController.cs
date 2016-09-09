@@ -15,10 +15,32 @@ namespace pageLudo.Controllers
 {
     public class UserController : Controller
     {
-        //public ActionResult Friending()
-        //{
-        //  
-        //}
+        // itt kell megírnom a profil editet
+        public ActionResult Settings(ChangeUser u)
+        {
+            if (ModelState.IsValid)
+            {
+                UserActions ua = new UserActions();
+                if(ua.ProfileSetting(u.Username,u.Password,u.EmailID))
+                {
+                    ViewBag.Message = "User settings saved";
+                }
+                else
+                {
+                    ViewBag.Message = "User setting failed";
+                }
+                ModelState.Clear();
+                u = null;
+            }
+
+            return View(u);
+        }
+
+        public ActionResult Settings()
+        {
+            return View();
+        }
+
         public ActionResult MyProfile()
         {
             //UserStatistics us = new UserStatistics();

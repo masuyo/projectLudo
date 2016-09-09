@@ -202,6 +202,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChangeUser.cs" />
     <Compile Include="Models\LoginUser.cs" />
     <Compile Include="Models\RegisterUser.cs" />
     <Compile Include="Models\UserListingData.cs" />
@@ -228,6 +229,7 @@
     <Content Include="Views\Search\MSRList.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
     <Content Include="Views\Search\MSRView.cshtml" />
+    <Content Include="Views\User\Settings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -257,7 +259,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Crud\" />
     <Folder Include="Views\Friend\" />
   </ItemGroup>
   <PropertyGroup>
