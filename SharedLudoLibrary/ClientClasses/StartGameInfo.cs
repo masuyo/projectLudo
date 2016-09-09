@@ -1,19 +1,19 @@
-﻿using BoardGame.Interfaces;
+﻿using SharedLudoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.TestClasses
+namespace SharedLudoLibrary.ClientClasses
 {
-    class TestStartGameInfo : IStartGameInfo
+    class StartGameInfo : IStartGameInfo
     {
         public IGameInfo MsgFromServer
         {
             get
             {
-                TestGameInfo tmsg = new TestGameInfo();
+                GameInfo tmsg = new GameInfo();
                 return tmsg;
             }
         }
@@ -22,10 +22,10 @@ namespace BoardGame.TestClasses
         {
             get
             {
-                IPlayer[] ret = new TestPlayer[3] {
-                    new TestPlayer(1, PlayerColor.BLUE),
-                    new TestPlayer(2, PlayerColor.YELLOW),
-                    new TestPlayer(3, PlayerColor.GREEN)
+                IPlayer[] ret = new Player[3] {
+                    new Player(1, PlayerColor.BLUE),
+                    new Player(2, PlayerColor.YELLOW),
+                    new Player(3, PlayerColor.GREEN)
                 };
                 return ret;
             }
@@ -35,7 +35,7 @@ namespace BoardGame.TestClasses
         {
             get
             {
-                return new TestPlayer(0, PlayerColor.RED);
+                return new Player(0, PlayerColor.RED);
             }
         }
     }

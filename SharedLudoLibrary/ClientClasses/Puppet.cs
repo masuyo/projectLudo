@@ -1,18 +1,18 @@
-﻿using BoardGame.Interfaces;
+﻿using SharedLudoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.TestClasses
+namespace SharedLudoLibrary.ClientClasses
 {
-    class TestPuppet : IPuppet
+    class Puppet : IPuppet
     {
         private int id;
         private int poz;
-        private TestPlayer player;
-        public TestPuppet(int id, int poz, TestPlayer player)
+        private Player player;
+        public Puppet(int id, int poz, Player player)
         {
             this.id = id;
             this.poz = poz;
@@ -31,7 +31,7 @@ namespace BoardGame.TestClasses
                 id = value;
             }
         }
-        public TestPlayer Player
+        public Player Player
         {
             get
             {

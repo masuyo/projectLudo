@@ -63,24 +63,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Interfaces\Client\IChatClient.cs" />
-    <Compile Include="Interfaces\Client\ILudoClient.cs" />
-    <Compile Include="Interfaces\IGameInfo.cs" />
-    <Compile Include="Interfaces\IRoom.cs" />
-    <Compile Include="Interfaces\IStartGameInfo.cs" />
-    <Compile Include="Interfaces\IUser.cs" />
-    <Compile Include="Interfaces\Server\IChatServer.cs" />
-    <Compile Include="Interfaces\Server\ILudoServer.cs" />
     <Compile Include="TestClasses\TestChatClient.cs" />
-    <Compile Include="TestClasses\TestGameInfo.cs" />
     <Compile Include="TestClasses\TestLudoClient.cs" />
     <Compile Include="TestClasses\TestLudoServer.cs" />
-    <Compile Include="TestClasses\TestRoom.cs" />
     <Compile Include="TestClasses\TestLockedConverter.cs" />
-    <Compile Include="TestClasses\TestPuppet.cs" />
-    <Compile Include="TestClasses\TestPlayer.cs" />
-    <Compile Include="TestClasses\TestStartGameInfo.cs" />
-    <Compile Include="TestClasses\TestUser.cs" />
+    <Compile Include="Views\Bindable.cs" />
     <Compile Include="Views\LoginView.cs" />
     <Compile Include="Views\LudoView.cs" />
     <Compile Include="Views\RoomView.cs" />
@@ -100,13 +87,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Bindable.cs" />
-    <Compile Include="ChatMsg.cs" />
     <Compile Include="ConnectToGameWindow.xaml.cs">
       <DependentUpon>ConnectToGameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IPuppet.cs" />
-    <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="LudoFrameworkElement.cs" />
     <Compile Include="LudoWindow.xaml.cs">
       <DependentUpon>LudoWindow.xaml</DependentUpon>

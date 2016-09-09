@@ -1,5 +1,4 @@
-﻿using BoardGame.Interfaces;
-using BoardGame.TestClasses;
+﻿using BoardGame.TestClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;

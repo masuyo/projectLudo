@@ -1,5 +1,4 @@
-﻿using BoardGame.Interfaces.Client;
-using BoardGame.Views;
+﻿using BoardGame.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame
+namespace BoardGame.Views
 {
     class Bindable : INotifyPropertyChanged
     {

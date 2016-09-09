@@ -1,14 +1,14 @@
-﻿using BoardGame.Interfaces;
+﻿using SharedLudoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.TestClasses
+namespace SharedLudoLibrary.ClientClasses
 {
     enum PlayerColor { RED, GREEN, BLUE, YELLOW }
-    class TestPlayer : IPlayer
+    class Player : IPlayer
     {
         private string name;
         public string Name
@@ -36,7 +36,7 @@ namespace BoardGame.TestClasses
             get { return color; }
         }
 
-        public TestPlayer(int id, PlayerColor color)
+        public Player(int id, PlayerColor color)
         {
             this.id = id;
             this.color = color;

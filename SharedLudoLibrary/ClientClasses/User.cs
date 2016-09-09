@@ -1,17 +1,17 @@
-﻿using BoardGame.Interfaces;
+﻿using SharedLudoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.TestClasses
+namespace SharedLudoLibrary.ClientClasses
 {
-    class TestUser : IUser
+    class User : IUser
     {
         private int userID;
         private string userName;
-        public TestUser(int userID, string userName)
+        public User(int userID, string userName)
         {
             this.userID = userID;
             this.userName = userName;

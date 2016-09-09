@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.Interfaces
+namespace SharedLudoLibrary.Interfaces
 {
     interface IGameInfo
     {
@@ -17,6 +17,6 @@ namespace BoardGame.Interfaces
 
         int Dice1 { get; }
         int Dice2 { get; }
-        
+
     }
 }

@@ -1,13 +1,13 @@
-﻿using BoardGame.Interfaces;
+﻿using SharedLudoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.TestClasses
+namespace SharedLudoLibrary.ClientClasses
 {
-    class TestRoom : IRoom
+    class Room : IRoom
     {
         private int availablePlaces;
         private int id;
@@ -55,7 +55,7 @@ namespace BoardGame.TestClasses
         }
 
 
-        public TestRoom(int places, int id, string name, string password)
+        public Room(int places, int id, string name, string password)
         {
             this.availablePlaces = places;
             this.id = id;

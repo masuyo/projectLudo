@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.Interfaces.Client
+namespace SharedLudoLibrary.Interfaces.Client
 {
     interface IChatClient
     {
-        void BroadcastMessage(string playerName, string text);
+        void SendMessage(string playerName, string text);
     }
-
 }

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGame.Interfaces
+namespace SharedLudoLibrary.Interfaces
 {
     interface IUser
     {
-        int UserID { get;}
+        int UserID { get; }
         string UserName { get; set; }
     }
 }
