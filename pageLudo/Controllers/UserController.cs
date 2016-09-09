@@ -16,6 +16,8 @@ namespace pageLudo.Controllers
     public class UserController : Controller
     {
         // itt kell megírnom a profil editet
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Settings(ChangeUser u)
         {
             if (ModelState.IsValid)
@@ -94,6 +96,10 @@ namespace pageLudo.Controllers
                 //Session["LogedUserRole"] = ud.Role.ToString();
                 return RedirectToAction("AfterLogin");
                 //}
+            }
+            else
+            {
+                ModelState.AddModelError("", "Failed!");
             }
             return View(u);
         }

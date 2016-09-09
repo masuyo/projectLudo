@@ -90,8 +90,12 @@ namespace SignalRServer.MVCData.MethodClasses
             using (UsersRepository repo = new UsersRepository())
             {
                 User user = repo.GetByEmailID(emailID);
-                UserData userdata = new UserData() { UserID=user.UserID,Username=user.Username,EmailID=user.EmailID };
-                if (user.Password == password) return userdata;
+                if (user != null)
+                {
+                    UserData userdata = new UserData() { UserID = user.UserID, Username = user.Username, EmailID = user.EmailID };
+                    if (user.Password == password) return userdata;
+                    else return null;
+                }
                 else return null;
             }
         }
