@@ -1,4 +1,6 @@
 ﻿using BoardGame.TestClasses;
+using SharedLudoLibrary.ClientClasses;
+using SharedLudoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,7 @@ namespace BoardGame
         int X_offset = 0;
         int Y_offset = 0;
 
-        TestGameInfo tmsg;
+        GameInfo tmsg;
         List<IPuppet> newpuppetList;
 
         private void InitMap()
@@ -42,7 +44,7 @@ namespace BoardGame
         public LudoFrameworkElement()
         {
             puppetList = new List<IPuppet>();
-            tmsg = new TestGameInfo();
+            tmsg = new GameInfo();
             InitMap();
 
 

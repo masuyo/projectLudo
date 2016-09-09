@@ -8,7 +8,7 @@ using SharedLudoLibrary.ClientClasses;
 
 namespace BoardGame.TestClasses
 {
-    class TestLudoServer : ILudoServer
+    class TestLudoServer //: ILudoServer
     {
         Random rnd = new Random();
         public List<IRoom> GetAllRoomList()

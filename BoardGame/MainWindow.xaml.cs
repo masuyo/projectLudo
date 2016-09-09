@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,56 +26,49 @@ namespace BoardGame
     public partial class MainWindow : Window
     {
         LoginView VM;
-
-        IHubProxy HubProxy;
-        string connString = "http://localhost:8080/signalr";
-        HubConnection Connection;
-
         public MainWindow()
         {
             InitializeComponent();
             VM = LoginView.GetVM;
-            if (Connection == null)
+            if (HelperClass.Connection == null)
             {
-                Connection = new HubConnection(connString);
-                HubProxy = Connection.CreateHubProxy("WPFHub");
-                HubProxy.On<string>("SetGuid", (guid) => this.Dispatcher.Invoke(() => { Login(guid); }));
-                HubProxy.On("LoginError", (x) =>  LoginError());
+                HelperClass.Connection = new HubConnection((HelperClass.ConnString));
+                HelperClass.HubProxy = (HelperClass.Connection.CreateHubProxy("WPFHub"));
+                HelperClass.HubProxy.On<string>("SetGuid", (guid) => this.Dispatcher.Invoke(() => { Login(guid); }));
+                HelperClass.HubProxy.On("LoginError", (x) => LoginError());
                 try
                 {
-                    Connection.Start();
+                    HelperClass.Connection.Start();
                 }
                 catch (HttpClientException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
             }
-
-
             this.DataContext = VM;
-
-
-
+            HelperClass.Connection.StateChanged += (e) => { MessageBox.Show(e.OldState.ToString() + " " + e.NewState.ToString()); };
             // this.Background = LoginView.GetBG;
 
         }
 
         private void LoginError()
         {
-            Dispatcher.Invoke(()=>MessageBox.Show("Failed to login."));
+            Dispatcher.Invoke(() => MessageBox.Show("Failed to login. Try again."));
+            VM.UserName = String.Empty;
+            VM.Password = String.Empty;
+            VM.PassMessage = "Enter password";
         }
-
         private void Login(string guid)
         {
             VM.AuthenticationSuccess = true;
-            ConnectToGameWindow rooms = new ConnectToGameWindow(VM.UserName);
+            HelperClass.GUID = guid;
+            ConnectToGameWindow rooms = new ConnectToGameWindow();
             this.Close();
             rooms.ShowDialog();
         }
 
         private void Login_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine("Logging in...");
             if (sender is Label)
             {
                 if (!String.IsNullOrEmpty(VM.UserName) && VM.UserName.Length > 5 &&
@@ -84,31 +78,16 @@ namespace BoardGame
                     byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(VM.Password));
                     string hashedPassword = new ASCIIEncoding().GetString(sha1data);
 
-                    // TestLudoServer TLS = new TestLudoServer();
-                    //  VM.UserID = TLS.Login(VM.UserName, hashedPassword, VM.SelectedGameType);
-
-                    
-                    if(Connection?.State==ConnectionState.Connected) HubProxy.Invoke("Login", VM.UserName, hashedPassword, VM.SelectedGameType);
-
-                    //if (VM.UserID != -1)
-                    //{
-                    //    VM.AuthenticationSuccess = true;
-                    //    ConnectToGameWindow rooms = new ConnectToGameWindow(VM.UserName);
-                    //    this.Close();
-                    //    rooms.ShowDialog();
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("Failed to login.");
-                    //}
+                    if (HelperClass.Connection?.State == ConnectionState.Connected)
+                    {
+                        HelperClass.HubProxy.Invoke("Login", VM.UserName, hashedPassword, VM.SelectedGameType);
+                    }
                 }
                 else
                 {
                     Console.WriteLine(VM.UserName + "  " + VM.Password);
                     MessageBox.Show("Username and password must contain at least 6 characters. ");
                 }
-
-
             }
         }
         private void Txb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -122,29 +101,12 @@ namespace BoardGame
                 VM.PassMessage = String.Empty;
             }
         }
-        private void ForgotPswd_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Console.WriteLine("Forgot");
-        }
-
-        private void Pswd_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (sender is PasswordBox && String.IsNullOrEmpty((sender as PasswordBox).Password))
-            {
-                VM.PassMessage = "Enter password";
-            }
-
-        }
         private void Uname_MouseLeave(object sender, MouseEventArgs e)
         {
             if (sender is TextBox && !String.IsNullOrEmpty((sender as TextBox).Text))
             {
                 VM.UserName = (sender as TextBox).Text;
             }
-        }
-        private void LblExit_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            this.Close();
         }
 
         private void TXB_UserName_KeyDown(object sender, KeyEventArgs e)
@@ -154,15 +116,27 @@ namespace BoardGame
                 VM.PassMessage = String.Empty;
             }
         }
-
         private void PSWD_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (sender is PasswordBox && !String.IsNullOrEmpty((sender as PasswordBox).Password))
             {
                 VM.PassMessage = String.Empty;
                 VM.Password = (sender as PasswordBox).Password;
-                Console.WriteLine(VM.Password);
+            }
+            else if (sender is PasswordBox)
+            {
+                VM.PassMessage = "Enter password";
             }
         }
+        private void ForgotPswd_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //TODO
+            Console.WriteLine("Forgot");
+        }
+        private void LblExit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

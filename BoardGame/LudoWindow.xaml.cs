@@ -1,5 +1,4 @@
-﻿using BoardGame.Interfaces;
-using BoardGame.TestClasses;
+﻿using BoardGame.TestClasses;
 using BoardGame.Views;
 using Microsoft.AspNet.SignalR.Client;
 using System;
@@ -32,11 +31,11 @@ namespace BoardGame
         public HubConnection Connection { get; set; }
 
 
-        public LudoWindow(string username)
+        public LudoWindow()
         {
             InitializeComponent();
             VM = LudoView.GetVM;
-            VM.UserName = username;
+            VM.UserName = HelperClass.UserName;
             this.DataContext = VM;
 
             //connect to server with ConnectAsync(); display what's happening
@@ -53,7 +52,6 @@ namespace BoardGame
 
             ///WPF client defines its method
             //LudoView.GetVM.ChatMsgs.Add(playerName + ": " + text);
-            TestChatClient client = new TestChatClient();
             HubProxy.On<string>("addMessage", (msg) =>
                 this.Dispatcher.Invoke(() =>
                 VM.ChatMsgs.Add(msg)

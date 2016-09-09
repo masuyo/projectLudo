@@ -1,6 +1,7 @@
-﻿using BoardGame.Interfaces;
-using BoardGame.TestClasses;
+﻿using BoardGame.TestClasses;
 using BoardGame.Views;
+using SharedLudoLibrary.ClientClasses;
+using SharedLudoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,12 +25,12 @@ namespace BoardGame
     public partial class ConnectToGameWindow : Window
     {
         RoomView VM;
-        public ConnectToGameWindow(string username)
+        public ConnectToGameWindow()
         {
             InitializeComponent();
             VM = RoomView.GetVM;
             this.DataContext = VM;
-            VM.UserName = username;
+            VM.UserName = HelperClass.UserName;
 
             ImageBrush imgb = new ImageBrush();
             imgb.ImageSource = new BitmapImage(new Uri(@"Images\l3.png", UriKind.Relative));
@@ -63,7 +64,7 @@ namespace BoardGame
                     
                     if (true)//connD.ConectionSuccess)
                     {
-                        LudoWindow ludo = new LudoWindow(VM.UserName);
+                        LudoWindow ludo = new LudoWindow();
                         this.Close();
                         ludo.ShowDialog();
                     }
@@ -91,7 +92,7 @@ namespace BoardGame
                 if (String.IsNullOrEmpty(VM.SearchKeyWord))
                 {
                     VM.SearchRoomList.Clear();
-                    foreach (TestRoom r in VM.RoomList)
+                    foreach (Room r in VM.RoomList)
                     {
                         if (r.AvailablePlaces > 0)
                         {
@@ -108,7 +109,7 @@ namespace BoardGame
                     if (q.ToList() != null && q.ToList().Count > 0)
                     {
                         VM.SearchRoomList.Clear();
-                        foreach (TestRoom r in q)
+                        foreach (Room r in q)
                         {
                             if (r.AvailablePlaces > 0)
                             {
