@@ -52,9 +52,12 @@ namespace pageLudo.Controllers
 
             // fkin serialization
             ArrayList header = new ArrayList { "Game", "Wins", "Losses"};
-            ArrayList data1 = new ArrayList {"Ludo",673,6335};
-
-            ArrayList data = new ArrayList { header, data1 };
+            //ArrayList data1 = new ArrayList { gwrList[0].GameName, gwrList[0].NumberOfWins, gwrList[0].NumberOfLosses};
+            ArrayList data = new ArrayList {header};
+            foreach (var item in gwrList)
+            {
+                data.Add(new ArrayList { item.GameName, item.NumberOfWins, item.NumberOfLosses });
+            }
 
             string dataStr = JsonConvert.SerializeObject(data, Formatting.None);
             ViewBag.Data = new HtmlString(dataStr);
