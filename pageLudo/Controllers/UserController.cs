@@ -1,31 +1,60 @@
-﻿using Entities;
-using pageLudo.Models;
-using System;
+﻿using pageLudo.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Text.RegularExpressions;
-using pageLudo.FakeData.MethodClasses;
-using pageLudo.FakeData.DataClasses;
+using SignalRServer.MVCData.MethodClasses;
+using SignalRServer.MVCData.DataClasses;
+using System.Collections;
+using Newtonsoft.Json;
 
 namespace pageLudo.Controllers
 {
     public class UserController : Controller
     {
-        //public ActionResult Friending()
-        //{
-        //  
-        //}
+        // itt kell megírnom a profil editet
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Settings(ChangeUser u)
+        {
+            if (ModelState.IsValid)
+            {
+                UserActions ua = new UserActions();
+                if(ua.ProfileSetting(Session["LogedEmailID"].ToString(), u.Username,u.Password,u.EmailID))
+                {
+                    ViewBag.Message = "User settings saved";
+                }
+                else
+                {
+                    ViewBag.Message = "User setting failed";
+                }
+                ModelState.Clear();
+                u = null;
+            }
+
+            return View(u);
+        }
+
+        public ActionResult Settings()
+        {
+            return View();
+        }
 
         public ActionResult MyProfile()
         {
             UserStatistics us = new UserStatistics();
-            List<GameWinrate> gwr = new List<GameWinrate>();
-            gwr = us.PlayerWinrate(Session["LogedEmailID"].ToString());
-            TempData["GameName"] = gwr[0].GameName;
-            TempData["NumberOfWins"] = gwr[0].NumberOfWins;
-            TempData["NumberOfLosses"] = gwr[0].NumberOfLosses;
+            List<GameWinrate> gwrList = us.PlayerWinrate(Session["LogedEmailID"].ToString());
+
+            // fkin serialization
+            ArrayList header = new ArrayList { "Game", "Wins", "Losses"};
+            //ArrayList data1 = new ArrayList { gwrList[0].GameName, gwrList[0].NumberOfWins, gwrList[0].NumberOfLosses};
+            ArrayList data = new ArrayList {header};
+            foreach (var item in gwrList)
+            {
+                data.Add(new ArrayList { item.GameName, item.NumberOfWins, item.NumberOfLosses });
+            }
+
+            string dataStr = JsonConvert.SerializeObject(data, Formatting.None);
+            ViewBag.Data = new HtmlString(dataStr);
             return View();
         }
 
@@ -34,7 +63,7 @@ namespace pageLudo.Controllers
             System.Web.Security.FormsAuthentication.SignOut();
             Session.Clear();
             Session.RemoveAll();
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Login()
@@ -48,28 +77,26 @@ namespace pageLudo.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (DatabaseEntities DE = new DatabaseEntities())
+                UserActions ua = new UserActions();
+                UserData ud = ua.Login(u.EmailID, u.Password);
+                if (ud != null)
                 {
-
-                    //var repo = new Repository.TableRepositories.UsersRepository(DE);
-                    // kikeresi az adatbázisból a beadott adatok alapján a usert, ha megtalálja, Sessiont kap
-                    // TODO: repositoryba kell egy lekérdezés Email és Password alapján
-
-                    var obj = new LoginUser(){ UserID = 1, Username = "Cressida", Password = "123456", EmailID = "cressida@citromail.hu", Role = "admin"};
-                    //var obj = ude.Users.Where(a => a.Username.Equals(u.Username) && a.Password.Equals(u.Password)).FirstOrDefault();
-                    //if (obj != null)
-                    //{
-                    Session["LogedUserID"] = obj.UserID.ToString();
-                    Session["LogedUsername"] = obj.Username.ToString();
-                    Session["LogedEmailID"] = obj.EmailID.ToString();
-
-                    //adminhoz kell, ha a sessionrole admin, akkor mást fog megjeleníthetővé tenni a layout
-                    Session["LogedUserRole"] = obj.Role.ToString();
-                    return RedirectToAction("AfterLogin");
-                    //}
+                    Session["LogedUserID"] = ud.UserID.ToString();
+                    Session["LogedUsername"] = ud.Username.ToString();
+                    Session["LogedEmailID"] = ud.EmailID.ToString();
                 }
+                else
+                {
+                    ModelState.AddModelError("WrongUNorPW", "Incorrect username or password");
+                    return View();
+                }
+
+                //adminhoz kell, ha a sessionrole admin, akkor mást fog megjeleníthetővé tenni a layout
+                //Session["LogedUserRole"] = ud.Role.ToString();
+                return RedirectToAction("AfterLogin");
+                //}
             }
-            return View(u);
+            return View();
         }
 
         public ActionResult AfterLogin()
@@ -98,17 +125,19 @@ namespace pageLudo.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (DatabaseEntities DE = new DatabaseEntities())
+                UserActions ua = new UserActions();
+                if (ua.Register(u.Username, u.Password, u.EmailID))
                 {
-                    var useractioner = new UserActions();
-                    if (useractioner.Register(u.Username, u.Password, u.EmailID))
-                    {
-                        ViewBag.Message = "Registration successful";
-                    }
-                    ModelState.Clear();
-                    u = null;
+                    ViewBag.Message = "Registration successful";
                 }
+                else
+                {
+                    ViewBag.Message = "Registration failed: email already taken";
+                }
+                ModelState.Clear();
+                u = null;
             }
+
             return View(u);
         }
     }

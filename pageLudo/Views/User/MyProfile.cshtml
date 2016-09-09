@@ -3,7 +3,7 @@
 }
 
 @if (Session["LogedUsername"] != null)
-{ 
+{
     <br />
     <h4>Adatlap</h4>
     <br />
@@ -23,9 +23,14 @@
     <br />
     <h4>Statisztika</h4>
 
-
         <!-- Adott játékosnak minden játéktípusban(Ludóban) winrate -->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <h4>@ViewBag.Data</h4>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        var temp1 = '@ViewBag.Data';
+        var data = JSON.parse('@ViewBag.Data');
+    </script>
+   
         <script type="text/javascript">
             // Load the Visualization API and the piechart package.
             google.charts.load('current', { packages: ['corechart'] });
@@ -37,18 +42,14 @@
             // instantiates the pie chart, passes in the data and
             // draws it.
             function drawChart() {
+// global variable to fill chart data
+
 
                 // Create the data table.
                 //Adott játékosnak minden játéktípusban(Ludóban) winrate (elég a win%-ot visszaadni sztem max 2 tizedesjegyig)
-                var data = google.visualization.arrayToDataTable([
-                  ["Game", "Win", "Lose", { role: "style" }],
-                  ["Ludo", 20, 70, ""],
-                  ["Chess", 55, 45,""],
-                  ["Balderdash", 12, 88, ""],
-                  ["Tictactoe", 56, 44,""]
-                ]);
+                var chartData = google.visualization.arrayToDataTable(data);
 
-                var view = new google.visualization.DataView(data);
+                var view = new google.visualization.DataView(chartData);
 
                 var options = {
                     title: "Győzelem-vereség aránya",

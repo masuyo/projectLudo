@@ -6,16 +6,22 @@
 <br />
 
 
-<div align="center">
+<div>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
             <h4>Registration</h4>
-            @if (ViewBag.Message != null)
+            @if (ViewBag.Message == "Registration successful")
             {
                 <div style="border:solid 1px green">
+                    @ViewBag.Message
+                </div>
+            }
+            else if(ViewBag.Message == "Registration failed: email already taken")
+            {
+                <div style="border:solid 1px red">
                     @ViewBag.Message
                 </div>
             }

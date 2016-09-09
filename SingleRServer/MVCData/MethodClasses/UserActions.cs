@@ -74,16 +74,37 @@ namespace SignalRServer.MVCData.MethodClasses
         {
             List<UserData> searchResultList = new List<UserData>();
 
-            using (DatabaseEntities ED = new DatabaseEntities())
-            {
+           
                 UsersRepository userrepo = new UsersRepository();
                 foreach (var item in userrepo.GetByName(username))
                 {
                     searchResultList.Add(EmaildIDSearch(item.EmailID, searcherEmailID));
                 }
-            }
+            
 
             return searchResultList;
+        }
+
+        public UserData Login(string emailID, string password)
+        {
+            using (UsersRepository repo = new UsersRepository())
+            {
+                User user = repo.GetByEmailID(emailID);
+                if (user != null)
+                {
+                    UserData userdata = new UserData() { UserID = user.UserID, Username = user.Username, EmailID = user.EmailID };
+                    if (user.Password == password) return userdata;
+                    else return null;
+                }
+                else return null;
+            }
+        }
+
+        // hasonló a regisztrációhoz, de le kell csekkolni, hogy valami null-e, mert az nem mehet a db-be fel változásként
+        // ill a sessionemail alapján ki kell előtte keresni, h tudd, kit kell módosítani
+        public bool ProfileSetting(string sessionEmailID, string username, string password, string emailID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

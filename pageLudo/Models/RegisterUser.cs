@@ -10,11 +10,13 @@ namespace pageLudo.Models
     {
         public int UserID { get; set; }
 
+        [StringLength(50, MinimumLength = 6, ErrorMessage = "Username must be at least 6 char long")]
         [Required(ErrorMessage = "Missing username", AllowEmptyStrings = false)]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Missing password", AllowEmptyStrings = false)]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
+        [StringLength(50, MinimumLength = 6, ErrorMessage = "Password must be at least 6 char long")]
         public string Password { get; set; }
 
         // nincs benne az adatbázisban, csak a regisztrációhoz kell

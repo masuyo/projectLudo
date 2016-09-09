@@ -36,5 +36,9 @@ namespace SignalRServer.MVCData.Interfaces
         //Unfriend - egyik fél dönti el, mint a válásnál, és megtörténik xD
         bool Unfriend(string YouAreNotMyFriendAnymoreEmailID, string IDidntWantYouAnywayEmailID);
 
+        UserData Login(string emailID, string password);
+
+        bool ProfileSetting(string sessionEmailID, string username, string password, string emailID);
+
     }
 }
