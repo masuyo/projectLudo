@@ -1,14 +1,8 @@
-﻿using Entities;
-using pageLudo.Models;
-using System;
+﻿using pageLudo.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Text.RegularExpressions;
 using SignalRServer.MVCData.MethodClasses;
-using Google.DataTable.Net.Wrapper.Extension;
-using Google.DataTable.Net.Wrapper;
 using SignalRServer.MVCData.DataClasses;
 using System.Collections;
 using Newtonsoft.Json;
@@ -93,7 +87,8 @@ namespace pageLudo.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Failed!");
+                    ModelState.AddModelError("WrongUNorPW", "Incorrect username or password");
+                    return View();
                 }
 
                 //adminhoz kell, ha a sessionrole admin, akkor mást fog megjeleníthetővé tenni a layout
@@ -101,11 +96,7 @@ namespace pageLudo.Controllers
                 return RedirectToAction("AfterLogin");
                 //}
             }
-            else
-            {
-                ModelState.AddModelError("", "Failed!");
-            }
-            return View(u);
+            return View();
         }
 
         public ActionResult AfterLogin()

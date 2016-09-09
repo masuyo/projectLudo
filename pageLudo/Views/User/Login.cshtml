@@ -11,7 +11,6 @@
     @using (Html.BeginForm("Login", "User", FormMethod.Post))
     {
         @Html.AntiForgeryToken()          // CSRF attack
-        @Html.ValidationSummary(true)
         if (@ViewBag.Message != null)
         {
             <div style="border: 1px solid red">
@@ -30,6 +29,12 @@
                 @Html.PasswordFor(a => a.Password, new { @class = "form-control", @placeholder = "Password" })
             </div>
         </div>
+
+        <div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationMessage("WrongUNorPW", new { @class = "text-danger" })
+        </div>
+
         <div class="form-group">
             <div class="col-sm-12 col-xs-12">
                 <input type="submit" value="Login" class="btn btn-success btn-block"/>
