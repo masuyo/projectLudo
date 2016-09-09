@@ -18,9 +18,9 @@ namespace Repository.TableRepositories
             return Get(akt => akt.UserID == id).SingleOrDefault();
         }
 
-        public List<User> GetByName(string name)
+        public User GetByName(string name)
         {
-            return Get(akt => akt.Username == name).ToList();
+            return Get(akt => akt.Username == name).SingleOrDefault();
         }
 
         public User GetByEmailID(string emailid)
@@ -28,10 +28,49 @@ namespace Repository.TableRepositories
             return Get(akt => akt.EmailID == emailid).SingleOrDefault();
         }
 
+        public User GetByGuid(string guid)
+        {
+            return Get(akt => akt.Guid == guid).SingleOrDefault();
+        }
+
+        public void UpdateName(int userid,string newname)
+        {
+            var sql = @"update [User] set Username=@newname where UserID=@userid";
+            SqlParameter id = new SqlParameter("@userid", userid);
+            SqlParameter name = new SqlParameter("@newname", newname);
+            context.Database.ExecuteSqlCommand(sql, id,name);
+            context.SaveChanges();
+        }
+
+        public void UpdateEmailID(int userid, string newemailid)
+        {
+            var sql = @"update [User] set EmailID=@newemailid where UserID=@userid";
+            SqlParameter id = new SqlParameter("@userid", userid);
+            SqlParameter emailid = new SqlParameter("@newemailid", newemailid);
+            context.Database.ExecuteSqlCommand(sql, id, emailid);
+            context.SaveChanges();
+        }
+        public void UpdatePassword(int userid, string newpassword)
+        {
+            var sql = @"update [User] set Password=@newpassword where UserID=@userid";
+            SqlParameter id = new SqlParameter("@userid", userid);
+            SqlParameter password = new SqlParameter("@newpassword", newpassword);
+            context.Database.ExecuteSqlCommand(sql, id, password);
+            context.SaveChanges();
+        }
+
+
         public override void Insert(User newentity)
         {
-            var sql = @"insert into [User](Username,Password,EmailID,Status,Token,Guid) values(@username,@password,@email,'off','token','guid')";
-            context.Database.ExecuteSqlCommand(sql, new SqlParameter("@username", newentity.Username), new SqlParameter("@password", newentity.Password), new SqlParameter("@email", newentity.EmailID));
+            var sql = @"insert into [User](Username,Password,EmailID,Status,Token,Guid,Role) values(@username,@password,@email,@status,@token,@guid,@role)";
+            SqlParameter username = new SqlParameter("@username", newentity.Username);
+            SqlParameter password = new SqlParameter("@password", newentity.Password);
+            SqlParameter emailid = new SqlParameter("@email", newentity.EmailID);
+            SqlParameter status = new SqlParameter("@status", newentity.Status);
+            SqlParameter token = new SqlParameter("@token", newentity.Token);
+            SqlParameter guid = new SqlParameter("@guid", newentity.Guid);
+            SqlParameter role = new SqlParameter("@role", newentity.Role);
+            context.Database.ExecuteSqlCommand(sql,username,password,emailid,status,token,guid,role);
             context.SaveChanges();
         }
     }

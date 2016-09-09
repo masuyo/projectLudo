@@ -75,9 +75,10 @@
           <Property Name="EmailID" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="10" />
           <Property Name="Token" Type="varchar" MaxLength="10" />
-          <Property Name="Guid" Type="varchar" MaxLength="40" />
+          <Property Name="Role" Type="varchar" MaxLength="5" />
+          <Property Name="Guid" Type="varchar" MaxLength="40" Nullable="false" />
         </EntityType>
-        <Association Name="FK__FriendCon__Frien__5165187F">
+        <Association Name="FK__FriendCon__Frien__778AC167">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="FriendConnections" Type="Self.FriendConnections" Multiplicity="*" />
           <ReferentialConstraint>
@@ -89,7 +90,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FriendCon__UserI__5070F446">
+        <Association Name="FK__FriendCon__UserI__76969D2E">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="FriendConnections" Type="Self.FriendConnections" Multiplicity="*" />
           <ReferentialConstraint>
@@ -101,7 +102,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvationD__Admin__5535A963">
+        <Association Name="FK__InvationD__Admin__7B5B524B">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="InvationDesktop" Type="Self.InvationDesktop" Multiplicity="*" />
           <ReferentialConstraint>
@@ -113,7 +114,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvationD__User1__5629CD9C">
+        <Association Name="FK__InvationD__User1__7C4F7684">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="InvationDesktop" Type="Self.InvationDesktop" Multiplicity="*" />
           <ReferentialConstraint>
@@ -125,7 +126,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvationD__User2__571DF1D5">
+        <Association Name="FK__InvationD__User2__7D439ABD">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="InvationDesktop" Type="Self.InvationDesktop" Multiplicity="*" />
           <ReferentialConstraint>
@@ -137,7 +138,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvationD__User3__5812160E">
+        <Association Name="FK__InvationD__User3__7E37BEF6">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="InvationDesktop" Type="Self.InvationDesktop" Multiplicity="*" />
           <ReferentialConstraint>
@@ -149,7 +150,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Man__PlayerID__48CFD27E">
+        <Association Name="FK__Man__PlayerID__6EF57B66">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
           <End Role="Man" Type="Self.Man" Multiplicity="*" />
           <ReferentialConstraint>
@@ -161,7 +162,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Player__GameID__44FF419A">
+        <Association Name="FK__Player__GameID__6B24EA82">
           <End Role="Game" Type="Self.Game" Multiplicity="1" />
           <End Role="Player" Type="Self.Player" Multiplicity="*" />
           <ReferentialConstraint>
@@ -173,7 +174,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Player__UserID__440B1D61">
+        <Association Name="FK__Player__UserID__6A30C649">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Player" Type="Self.Player" Multiplicity="*" />
           <ReferentialConstraint>
@@ -185,7 +186,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Step__ManID__4CA06362">
+        <Association Name="FK__Step__ManID__72C60C4A">
           <End Role="Man" Type="Self.Man" Multiplicity="1" />
           <End Role="Step" Type="Self.Step" Multiplicity="*" />
           <ReferentialConstraint>
@@ -205,43 +206,43 @@
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Step" EntityType="Self.Step" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__FriendCon__Frien__5165187F" Association="Self.FK__FriendCon__Frien__5165187F">
+          <AssociationSet Name="FK__FriendCon__Frien__778AC167" Association="Self.FK__FriendCon__Frien__778AC167">
             <End Role="User" EntitySet="User" />
             <End Role="FriendConnections" EntitySet="FriendConnections" />
           </AssociationSet>
-          <AssociationSet Name="FK__FriendCon__UserI__5070F446" Association="Self.FK__FriendCon__UserI__5070F446">
+          <AssociationSet Name="FK__FriendCon__UserI__76969D2E" Association="Self.FK__FriendCon__UserI__76969D2E">
             <End Role="User" EntitySet="User" />
             <End Role="FriendConnections" EntitySet="FriendConnections" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvationD__Admin__5535A963" Association="Self.FK__InvationD__Admin__5535A963">
+          <AssociationSet Name="FK__InvationD__Admin__7B5B524B" Association="Self.FK__InvationD__Admin__7B5B524B">
             <End Role="User" EntitySet="User" />
             <End Role="InvationDesktop" EntitySet="InvationDesktop" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvationD__User1__5629CD9C" Association="Self.FK__InvationD__User1__5629CD9C">
+          <AssociationSet Name="FK__InvationD__User1__7C4F7684" Association="Self.FK__InvationD__User1__7C4F7684">
             <End Role="User" EntitySet="User" />
             <End Role="InvationDesktop" EntitySet="InvationDesktop" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvationD__User2__571DF1D5" Association="Self.FK__InvationD__User2__571DF1D5">
+          <AssociationSet Name="FK__InvationD__User2__7D439ABD" Association="Self.FK__InvationD__User2__7D439ABD">
             <End Role="User" EntitySet="User" />
             <End Role="InvationDesktop" EntitySet="InvationDesktop" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvationD__User3__5812160E" Association="Self.FK__InvationD__User3__5812160E">
+          <AssociationSet Name="FK__InvationD__User3__7E37BEF6" Association="Self.FK__InvationD__User3__7E37BEF6">
             <End Role="User" EntitySet="User" />
             <End Role="InvationDesktop" EntitySet="InvationDesktop" />
           </AssociationSet>
-          <AssociationSet Name="FK__Man__PlayerID__48CFD27E" Association="Self.FK__Man__PlayerID__48CFD27E">
+          <AssociationSet Name="FK__Man__PlayerID__6EF57B66" Association="Self.FK__Man__PlayerID__6EF57B66">
             <End Role="Player" EntitySet="Player" />
             <End Role="Man" EntitySet="Man" />
           </AssociationSet>
-          <AssociationSet Name="FK__Player__GameID__44FF419A" Association="Self.FK__Player__GameID__44FF419A">
+          <AssociationSet Name="FK__Player__GameID__6B24EA82" Association="Self.FK__Player__GameID__6B24EA82">
             <End Role="Game" EntitySet="Game" />
             <End Role="Player" EntitySet="Player" />
           </AssociationSet>
-          <AssociationSet Name="FK__Player__UserID__440B1D61" Association="Self.FK__Player__UserID__440B1D61">
+          <AssociationSet Name="FK__Player__UserID__6A30C649" Association="Self.FK__Player__UserID__6A30C649">
             <End Role="User" EntitySet="User" />
             <End Role="Player" EntitySet="Player" />
           </AssociationSet>
-          <AssociationSet Name="FK__Step__ManID__4CA06362" Association="Self.FK__Step__ManID__4CA06362">
+          <AssociationSet Name="FK__Step__ManID__72C60C4A" Association="Self.FK__Step__ManID__72C60C4A">
             <End Role="Man" EntitySet="Man" />
             <End Role="Step" EntitySet="Step" />
           </AssociationSet>
@@ -382,7 +383,7 @@
           <Property Name="EmailID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Token" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Guid" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Guid" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="FriendConnections" Relationship="DatabaseModel.FK__FriendCon__Frien__5165187F" FromRole="User" ToRole="FriendConnections" />
           <NavigationProperty Name="FriendConnections1" Relationship="DatabaseModel.FK__FriendCon__UserI__5070F446" FromRole="User" ToRole="FriendConnections" />
           <NavigationProperty Name="InvationDesktop" Relationship="DatabaseModel.FK__InvationD__Admin__5535A963" FromRole="User" ToRole="InvationDesktop" />
@@ -390,6 +391,7 @@
           <NavigationProperty Name="InvationDesktop2" Relationship="DatabaseModel.FK__InvationD__User2__571DF1D5" FromRole="User" ToRole="InvationDesktop" />
           <NavigationProperty Name="InvationDesktop3" Relationship="DatabaseModel.FK__InvationD__User3__5812160E" FromRole="User" ToRole="InvationDesktop" />
           <NavigationProperty Name="Player" Relationship="DatabaseModel.FK__Player__UserID__440B1D61" FromRole="User" ToRole="Player" />
+          <Property Name="Role" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__FriendCon__Frien__5165187F">
           <End Type="DatabaseModel.User" Role="User" Multiplicity="1" />
@@ -586,6 +588,7 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="DatabaseModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="Guid" ColumnName="Guid" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="Status" ColumnName="Status" />

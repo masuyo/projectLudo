@@ -4,10 +4,10 @@ using Game;
 using Game.LudoActions;
 using SignalRServer.MVCData.MethodClasses;
 using Repository.TableRepositories;
-
 using System.Net.Http;
 using Microsoft.AspNet.SignalR.Client;
 using SignalRServer;
+using SignalRServer.MVCData.DataClasses;
 
 namespace ZoliRepoTest
 {
@@ -15,11 +15,22 @@ namespace ZoliRepoTest
     {
         static void Main(string[] args)
         {
-            //Console.ReadLine();
-            //SignalRtest();
             Repotest();
-            //FriendOfMeTest();
-            //GameTestWithTables();
+
+            //UserActions ua = new UserActions();
+            //Console.WriteLine(ua.Register("Gabi","gabipw","gabi@mail.com"));
+            //Console.WriteLine(ua.Register("Erika","erikapw","erika@mail.com"));
+            //Console.WriteLine(ua.Register("Zoli","zolipw","zoli@mail.com"));
+
+            //ua.Friend("gabi@mail.com", "zoli@mail.com");
+            //ua.Friend("gabi@mail.com", "erika@mail.com");
+            //ua.FriendAccept("gabi@mail.com", "erika@mail.com");
+
+            //foreach (var item in ua.UsernameSearch("i","gabi@mail.com"))
+            //{
+            //    Console.WriteLine("{0}\t {1}\t {2}\t {3}",item.Username,item.FriendedMe,item.FriendedYou,item.AreWeFriends);
+            //}
+            //Repotest();
         }
 
         private static void SignalRtest()
@@ -27,12 +38,6 @@ namespace ZoliRepoTest
             IHubProxy HubProxy;
             HubConnection Connection = new HubConnection("http://localhost:8080/signalr");
             HubProxy = Connection.CreateHubProxy("WPFHub");
-
-            //HubProxy.On<int>("Valami", (integer) =>
-            //{
-            //    mit csinálsz vele
-            //});
-
             try
             {
                 Connection.Start();
@@ -64,7 +69,6 @@ namespace ZoliRepoTest
 
             } while (true);
         }
-
 
         private static void GameTestWithTables()
         {
@@ -212,15 +216,14 @@ namespace ZoliRepoTest
             return puppets;
         }
 
-
         private static void Repotest()
         {
-           
-            Repository.TableRepositories.UsersRepository userrepo = new Repository.TableRepositories.UsersRepository();
+
+            UsersRepository userrepo = new UsersRepository();
             Console.WriteLine("User:");
             foreach (var item in userrepo.GetAll())
             {
-                Console.WriteLine("{0}\t {1}\t {2}\t {3}\t {4}\t {5}\t", item.UserID, item.Username, item.Password, item.EmailID, item.Status, item.Token);
+                Console.WriteLine("{0}\t {1}\t {2}\t {3}\t {4}\t {5}\t {6}\t {7}", item.UserID, item.Username, item.Password, item.EmailID, item.Status, item.Token,item.Role,item.Guid);
             }
             Console.WriteLine("------------------------------------------");
 
