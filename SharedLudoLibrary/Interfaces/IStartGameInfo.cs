@@ -1,4 +1,4 @@
-﻿sing System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.Interfaces
 {
-    interface IStartGameInfo
+    public interface IStartGameInfo
     {
         IPlayer WPFPlayer { get; }
         IPlayer[] otherWPFPlayers { get; }

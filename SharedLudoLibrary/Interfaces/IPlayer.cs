@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.Interfaces
 {
-    interface IPlayer
+    public interface IPlayer
     {
         int ID { get; }
         string Name { get; } //from user table

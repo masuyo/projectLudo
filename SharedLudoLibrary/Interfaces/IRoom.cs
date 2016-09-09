@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.Interfaces
 {
-    interface IRoom
+    public interface IRoom
     {
         int ID { get; }
         string Name { get; }

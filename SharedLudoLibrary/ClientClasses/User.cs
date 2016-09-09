@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.ClientClasses
 {
-    class User : IUser
+    public class User : IUser
     {
         private int userID;
         private string userName;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.Interfaces
 {
-    interface IUser
+    public interface IUser
     {
         int UserID { get; }
         string UserName { get; set; }

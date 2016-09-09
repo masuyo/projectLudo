@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.ClientClasses
 {
-    enum PlayerColor { RED, GREEN, BLUE, YELLOW }
-    class Player : IPlayer
+    public enum PlayerColor { RED, GREEN, BLUE, YELLOW }
+    public class Player : IPlayer
     {
         private string name;
         public string Name

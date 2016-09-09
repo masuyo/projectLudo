@@ -63,8 +63,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="TestClasses\TestChatClient.cs" />
-    <Compile Include="TestClasses\TestLudoClient.cs" />
     <Compile Include="TestClasses\TestLudoServer.cs" />
     <Compile Include="TestClasses\TestLockedConverter.cs" />
     <Compile Include="Views\Bindable.cs" />
@@ -137,7 +135,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SharedLudoLibrary\SharedLudoLibrary.csproj">
+      <Project>{4676ad40-457c-4c3d-acda-d1d096ac12da}</Project>
+      <Name>SharedLudoLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
