@@ -8,6 +8,8 @@ using System.Net.Http;
 using Microsoft.AspNet.SignalR.Client;
 using SignalRServer;
 using SignalRServer.MVCData.DataClasses;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace ZoliRepoTest
 {
@@ -15,22 +17,26 @@ namespace ZoliRepoTest
     {
         static void Main(string[] args)
         {
+
             Repotest();
 
-            //UserActions ua = new UserActions();
-            //Console.WriteLine(ua.Register("Gabi","gabipw","gabi@mail.com"));
-            //Console.WriteLine(ua.Register("Erika","erikapw","erika@mail.com"));
-            //Console.WriteLine(ua.Register("Zoli","zolipw","zoli@mail.com"));
+            UserActions ua = new UserActions();
+            Console.WriteLine(ua.Register("Gabi", "gabipw", "gabi@mail.com"));
+            Console.WriteLine(ua.Register("Erika", "erikapw", "erika@mail.com"));
+            Console.WriteLine(ua.Register("Zoli", "zolipw", "zoli@mail.com"));
 
-            //ua.Friend("gabi@mail.com", "zoli@mail.com");
-            //ua.Friend("gabi@mail.com", "erika@mail.com");
-            //ua.FriendAccept("gabi@mail.com", "erika@mail.com");
+            Console.WriteLine(ua.Register("asdasd","asdasd","asd@mail.com"));
 
-            //foreach (var item in ua.UsernameSearch("i","gabi@mail.com"))
-            //{
-            //    Console.WriteLine("{0}\t {1}\t {2}\t {3}",item.Username,item.FriendedMe,item.FriendedYou,item.AreWeFriends);
-            //}
-            //Repotest();
+            ua.Friend("gabi@mail.com", "zoli@mail.com");
+            ua.Friend("gabi@mail.com", "erika@mail.com");
+            ua.FriendAccept("gabi@mail.com", "erika@mail.com");
+
+            Console.WriteLine("{0}",ua.Login("zoli@mail.com","zolipw").Username);
+
+            foreach (var item in ua.UsernameSearch("i", "gabi@mail.com"))
+            {
+                Console.WriteLine("{0}\t {1}\t {2}\t {3}", item.Username, item.FriendedMe, item.FriendedYou, item.AreWeFriends);
+            }
         }
 
         private static void SignalRtest()

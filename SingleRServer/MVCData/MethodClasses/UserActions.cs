@@ -5,6 +5,8 @@ using SignalRServer.MVCData.DataClasses;
 
 using Entities;
 using Repository.TableRepositories;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SignalRServer.MVCData.MethodClasses
 {
@@ -61,6 +63,7 @@ namespace SignalRServer.MVCData.MethodClasses
                     if (repo.GetByGuid(guid) == null) break;
                 } while (true);
 
+                //HASH
                 repo.Insert(new User() { Username = Username, Password = Password, EmailID = EmailID, Status = "offline", Token = "token", Role = "user", Guid = guid });
                 return true;
             }
@@ -176,6 +179,7 @@ namespace SignalRServer.MVCData.MethodClasses
                 User user = repo.GetByEmailID(emailID);
                 if (user != null)
                 {
+                    //HASH
                     UserData userdata = new UserData() { UserID = user.UserID, Username = user.Username, EmailID = user.EmailID };
                     if (user.Password == password) return userdata;
                     else return null;
@@ -193,7 +197,11 @@ namespace SignalRServer.MVCData.MethodClasses
                 User user = userrepo.GetByEmailID(sessionEmailID);
                 if (user == null) return false;
                 if (username != null) userrepo.UpdateName(user.UserID, username);
-                if (password != null) userrepo.UpdatePassword(user.UserID, password);
+                if (password != null)
+                {
+                    //HASH
+                    userrepo.UpdatePassword(user.UserID, password);
+                }
                 if (emailID != null) userrepo.UpdateEmailID(user.UserID, emailID);
 
                 return true;
