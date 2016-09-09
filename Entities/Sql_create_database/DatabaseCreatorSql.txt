@@ -29,9 +29,10 @@ create table [User](
 	Username	varchar(50) not null,
 	[Password]	varchar(20) not null,
 	EmailID		varchar(100) not null,
-	[Status]		varchar(10),
+	[Status]	varchar(10),
 	Token		varchar(10),
-	Guid		varchar(40)
+	Role		varchar(5),
+	Guid		varchar(40) not null,
 );
 
 create table [Game](
@@ -81,16 +82,3 @@ create table [InvationDesktop](
 	User2		int references [User](UserID),
 	User3		int references [User](UserID),
 );
-
-
-GO
-insert into [User](Username,Password,EmailID,Status,Token) values('Zoli','asd123','zoli@email.com','off','token');
-insert into [User](Username,Password,EmailID,Status,Token) values('Gabi','asd123','gabi@email.com','off','token');
-insert into [User](Username,Password,EmailID,Status,Token) values('Erika','asd123','erika@email.com','off','token');
-insert into [User](Username,Password,EmailID,Status,Token) values('Project','asd123','project@email.com','off','token');
-insert into [User](Username,Password,EmailID,Status,Token) values('Ludo','asd123','ludo@email.com','off','token');
-
-GO
-insert into [FriendConnections](UserID,FriendUserID) values(1,2);
-insert into [FriendConnections](UserID,FriendUserID) values(2,1);
-insert into [FriendConnections](UserID,FriendUserID) values(3,4);
