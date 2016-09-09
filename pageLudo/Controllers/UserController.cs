@@ -10,6 +10,8 @@ using SignalRServer.MVCData.MethodClasses;
 using Google.DataTable.Net.Wrapper.Extension;
 using Google.DataTable.Net.Wrapper;
 using SignalRServer.MVCData.DataClasses;
+using System.Collections;
+using Newtonsoft.Json;
 
 namespace pageLudo.Controllers
 {
@@ -45,18 +47,17 @@ namespace pageLudo.Controllers
 
         public ActionResult MyProfile()
         {
-            //UserStatistics us = new UserStatistics();
-            //var list = us.PlayerWinrate(Session["LogedEmailID"].ToString());
+            UserStatistics us = new UserStatistics();
+            List<GameWinrate> gwrList = us.PlayerWinrate(Session["LogedEmailID"].ToString());
 
-            //var json = list.ToGoogleDataTable()
-            //               .NewColumn(new Column(ColumnType.String, "Name"), x => x.Name)
-            //               .NewColumn(new Column(ColumnType.Number, "Count"), x => x.Count)
-            //               .Build()
-            //               .GetJson();
-            //Console.WriteLine(json);
-            //Statistics stc = new Statistics();
-            //pageLudo.User.Statistics.GameWinRateGetChartData(Session["LogedEmailID"].ToString());
+            // fkin serialization
+            ArrayList header = new ArrayList { "Game", "Wins", "Losses"};
+            ArrayList data1 = new ArrayList {"Ludo",673,6335};
 
+            ArrayList data = new ArrayList { header, data1 };
+
+            string dataStr = JsonConvert.SerializeObject(data, Formatting.None);
+            ViewBag.Data = new HtmlString(dataStr);
             return View();
         }
 
