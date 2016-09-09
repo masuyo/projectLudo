@@ -38,7 +38,7 @@ namespace SignalRServer.MVCData.Interfaces
 
         UserData Login(string emailID, string password);
 
-        bool ProfileSetting(string username, string password, string emailID);
+        bool ProfileSetting(string sessionEmailID, string username, string password, string emailID);
 
     }
 }

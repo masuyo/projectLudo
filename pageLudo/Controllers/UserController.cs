@@ -21,7 +21,7 @@ namespace pageLudo.Controllers
             if (ModelState.IsValid)
             {
                 UserActions ua = new UserActions();
-                if(ua.ProfileSetting(u.Username,u.Password,u.EmailID))
+                if(ua.ProfileSetting(Session["LogedEmailID"].ToString(), u.Username,u.Password,u.EmailID))
                 {
                     ViewBag.Message = "User settings saved";
                 }

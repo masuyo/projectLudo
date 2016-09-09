@@ -97,7 +97,8 @@ namespace SignalRServer.MVCData.MethodClasses
         }
 
         // hasonló a regisztrációhoz, de le kell csekkolni, hogy valami null-e, mert az nem mehet a db-be fel változásként
-        public bool ProfileSetting(string username, string password, string emailID)
+        // ill a sessionemail alapján ki kell előtte keresni, h tudd, kit kell módosítani
+        public bool ProfileSetting(string sessionEmailID, string username, string password, string emailID)
         {
             throw new NotImplementedException();
         }
