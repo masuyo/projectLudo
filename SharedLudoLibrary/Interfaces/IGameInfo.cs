@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.Interfaces
 {
-    interface IGameInfo
+    public interface IGameInfo
     {
         int ActivePlayerID { get; }
         string Msg { get; }

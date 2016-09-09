@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.Interfaces.Client
 {
-    interface ILudoClient
+    public interface ILudoClient
     {
         void SendGameTypes(List<string> gameTypesList);
         void SendLogin(int ID);

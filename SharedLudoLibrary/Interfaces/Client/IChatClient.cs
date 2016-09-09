@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.Interfaces.Client
 {
-    interface IChatClient
+    public interface IChatClient
     {
         void SendMessage(string playerName, string text);
     }

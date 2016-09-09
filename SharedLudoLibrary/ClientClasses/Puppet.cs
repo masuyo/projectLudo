@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.ClientClasses
 {
-    class Puppet : IPuppet
+    public class Puppet : IPuppet
     {
         private int id;
         private int poz;

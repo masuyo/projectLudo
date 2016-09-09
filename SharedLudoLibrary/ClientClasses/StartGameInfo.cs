@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.ClientClasses
 {
-    class StartGameInfo : IStartGameInfo
+    public class StartGameInfo : IStartGameInfo
     {
         public IGameInfo MsgFromServer
         {

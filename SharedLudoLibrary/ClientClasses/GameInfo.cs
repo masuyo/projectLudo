@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.ClientClasses
 {
-    class GameInfo : IGameInfo
+    public class GameInfo : IGameInfo
     {
         List<IPuppet> puppetList;
         Random rnd = new Random();

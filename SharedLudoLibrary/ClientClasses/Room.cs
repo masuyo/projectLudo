@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.ClientClasses
 {
-    class Room : IRoom
+    public class Room : IRoom
     {
         private int availablePlaces;
         private int id;

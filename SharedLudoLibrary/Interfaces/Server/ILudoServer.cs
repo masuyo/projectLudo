@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharedLudoLibrary.Interfaces.Server
 {
-    interface ILudoServer
+    public interface ILudoServer
     {
         void GetGameTypes();
         void GetLogin(string userName, string encryptedPassword, string selectedGameType = "LUDO");
