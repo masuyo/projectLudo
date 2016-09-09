@@ -35,7 +35,7 @@ namespace BoardGame
                 HelperClass.Connection = new HubConnection((HelperClass.ConnString));
                 HelperClass.HubProxy = (HelperClass.Connection.CreateHubProxy("WPFHub"));
                 HelperClass.HubProxy.On<string>("SetGuid", (guid) => this.Dispatcher.Invoke(() => { Login(guid); }));
-                HelperClass.HubProxy.On("LoginError", (x) => LoginError());
+                HelperClass.HubProxy.On("LoginError", () => this.Dispatcher.Invoke(() => { LoginError(); }));
                 try
                 {
                     HelperClass.Connection.Start();
@@ -56,6 +56,7 @@ namespace BoardGame
             Dispatcher.Invoke(() => MessageBox.Show("Failed to login. Try again."));
             VM.UserName = String.Empty;
             VM.Password = String.Empty;
+            //TODO :: pswd box pswd CLEAR  >>VM.Password = String.Empty; <<does not clears it 
             VM.PassMessage = "Enter password";
         }
         private void Login(string guid)
