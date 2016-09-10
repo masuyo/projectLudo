@@ -186,14 +186,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="FakeData\DataClasses\GameWinrate.cs" />
-    <Compile Include="FakeData\DataClasses\UserData.cs" />
-    <Compile Include="FakeData\Interfaces\IGameStatistics.cs" />
-    <Compile Include="FakeData\Interfaces\IUserActions.cs" />
-    <Compile Include="FakeData\Interfaces\IUserStatistics.cs" />
-    <Compile Include="FakeData\MethodClasses\GameStatistics.cs" />
-    <Compile Include="FakeData\MethodClasses\UserActions.cs" />
-    <Compile Include="FakeData\MethodClasses\UserStatistics.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

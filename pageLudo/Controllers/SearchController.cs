@@ -48,13 +48,13 @@ namespace pageLudo.Controllers
 
             UserActions ua = new UserActions();
             List<UserData> getUsers = new List<UserData>();
-            getUsers = ua.UsernameSearch(searchString, loginEmailID);
+     
             UserData resultUser = new UserData();
-            resultUser = ua.EmaildIDSearch(searchString, loginEmailID);
 
             //igaz esetén Username alapján keres
             if (!Regex.IsMatch(searchString, searchEmailRegEx))
             {
+                getUsers = ua.UsernameSearch(searchString, loginEmailID);
                 if (getUsers.Count() != 0)
                 {
                     if (getUsers.Count() == 1)
@@ -89,6 +89,7 @@ namespace pageLudo.Controllers
             {
                 if (resultUser != null)
                 {
+                    resultUser = ua.EmaildIDSearch(searchString, loginEmailID);
                     // visszakapott adatok
                     Session["AccessedUsername"] = resultUser.Username.ToString();
                     Session["AccessedEmailID"] = resultUser.EmailID.ToString();
