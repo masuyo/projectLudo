@@ -1,6 +1,6 @@
 ﻿@model pageLudo.Models.UserListingModel
 @{
-    ViewBag.Title = "MultipleSearchResultView";
+    ViewBag.Title = "MSRView";
 }
 
 @*@section head {
@@ -9,5 +9,5 @@
 
 <h2>MultipleSearchResultView</h2>
 <h2>Talált felhasználók</h2>
-@Html.Partial("MRSList", Model.List, new ViewDataDictionary<IEnumerable<pageLudo.Models.UserListingData>>(Model.List))
+@Html.Partial("MSRList", Model.List, new ViewDataDictionary<IEnumerable<pageLudo.Models.UserListingData>>(Model.List))
 

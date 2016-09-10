@@ -7,21 +7,7 @@
 @if (Session["AccessedUsername"] != null)
 {
     <br />
-    @*<div class="pull-left">
-        <h4>Adatlap</h4>
-        <br />
-        <table>
-            <tr>
-                <td>Username:</td>
-                <td>@Session["AccessedUsername"]</td>
-            </tr>
-            <tr>
-                <td>E-mail address:</td>
-                <td>@Session["AccessedEmailID"]</td>
-            </tr>
-        </table>
-        <br />
-    </div>*@
+    <h4>Adatlap</h4>
 
     <table border="1" class="pull-left">
         <tr>
@@ -29,7 +15,7 @@
             <td>@Session["AccessedUsername"].ToString()</td>
         </tr>
         <tr>
-            <td>@Html.DisplayNameFor(m => m.EmailID)</td>
+            <td>@Html.Display("Email address")</td>
             <td>@Session["AccessedEmailID"].ToString()</td>
         </tr>
     </table>

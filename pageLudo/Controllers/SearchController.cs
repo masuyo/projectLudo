@@ -14,11 +14,17 @@ namespace pageLudo.Controllers
     {
         // többtalálatos keresési eredmény kilistázásához
         UserListingModel ulm;
+        //public ActionResult UserDetails(string emailID)
+        //{
+
+        //}
 
         public ActionResult MultipleProfileSearchResult(List<UserListingData> sru)
         {
+            ulm = new UserListingModel();
             ulm.List = sru;
-            return View("MultipleProfileSearchResult",ulm);
+            ulm.EditObject = null;
+            return View("MSRView", ulm);
         }
 
         // a kilistázott userekből ezzel lehet egy adott user profiljára kattintani
