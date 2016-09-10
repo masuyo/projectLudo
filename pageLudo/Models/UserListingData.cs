@@ -15,6 +15,6 @@ namespace pageLudo.Models
         public string AreWeFriends { get; set; }
         public string FriendedYou { get; set; }
         public string FriendedMe { get; set; }
-        public string Role { get; set; }
+        //public string Role { get; set; }
     }
 }

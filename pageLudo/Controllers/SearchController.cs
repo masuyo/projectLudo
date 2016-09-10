@@ -23,7 +23,7 @@ namespace pageLudo.Controllers
         {
             ulm = new UserListingModel();
             ulm.List = sru;
-            ulm.EditObject = null;
+            //ulm.EditObject = null;
             return View("MSRView", ulm);
         }
 
@@ -81,8 +81,12 @@ namespace pageLudo.Controllers
                         {
                             luld.Add(new UserListingData { Username = user.Username, EmailID = user.EmailID });
                         }
-                        MultipleProfileSearchResult(luld);
-                        return RedirectToAction("MultipleProfileSearchResult", "Search");
+                        //MultipleProfileSearchResult(luld);
+                        ulm = new UserListingModel();
+                        ulm.List = luld;
+                        //ulm.EditObject = null;
+                        return View("MSRView", ulm);
+                        //return View("MultipleProfileSearchResult", "Search");
                     }
                 }
                 else

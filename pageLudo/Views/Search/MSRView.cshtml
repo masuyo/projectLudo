@@ -7,7 +7,6 @@
     @Scripts.Render("~/bundles/jquery")
 }*@
 
-<h2>MultipleSearchResultView</h2>
 <h2>Talált felhasználók</h2>
 @Html.Partial("MSRList", Model.List, new ViewDataDictionary<IEnumerable<pageLudo.Models.UserListingData>>(Model.List))
 
