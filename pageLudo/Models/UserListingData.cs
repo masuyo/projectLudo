@@ -5,6 +5,7 @@ using System.Web;
 
 namespace pageLudo.Models
 {
+    [Serializable]
     public class UserListingData
     {
         public int UserID { get; set; }

@@ -14,26 +14,21 @@ namespace pageLudo.Controllers
     {
         // többtalálatos keresési eredmény kilistázásához
         UserListingModel ulm;
-        //public ActionResult UserDetails(string emailID)
-        //{
 
-        //}
-
-        public ActionResult MultipleProfileSearchResult(List<UserListingData> sru)
+        public ActionResult Details(string emailID)
         {
-            ulm = new UserListingModel();
-            ulm.List = sru;
-            //ulm.EditObject = null;
-            return View("MSRView", ulm);
+            //List<UserListingData> userList = new List<UserListingData>();
+            var userList = Session["ResultList"] as List<UserListingData>;
+            UserListingData user = userList.SingleOrDefault(x => x.EmailID == emailID);
+            Session["AccessedUsername"] = user.Username;
+            Session["AccessedEmailID"] = user.EmailID.ToString();
+            Session["AccessedFriendState"] = "false";
+            Session["AccessedFriendedYou"] = "false";
+            Session["AccessedFriendedMe"] = "false";
+            return View("ProfileSearchResult", user);
         }
 
         // a kilistázott userekből ezzel lehet egy adott user profiljára kattintani
-        public ActionResult Details(string emailID)
-        {
-            // email alapján lekérdezett user ide kerül be
-            UserListingData u = null;
-            return View("ProfileSearchResult",u);
-        }
 
         public ActionResult ProfileSearchResult(string emailID)
         {
@@ -52,9 +47,9 @@ namespace pageLudo.Controllers
             string searchEmailRegEx = @"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$";
             string loginEmailID = (string)Session["LogedEmailID"];
 
+            // adatbázishoz kinyeréshez
             UserActions ua = new UserActions();
             List<UserData> getUsers = new List<UserData>();
-     
             UserData resultUser = new UserData();
 
             //igaz esetén Username alapján keres
@@ -66,13 +61,20 @@ namespace pageLudo.Controllers
                     if (getUsers.Count() == 1)
                     {
                         // visszakapott adatok
-                        Session["AccessedUsername"] = getUsers[0].Username.ToString();
-                        Session["AccessedEmailID"] = getUsers[0].EmailID.ToString();
-                        Session["AccessedFriendState"] = getUsers[0].AreWeFriends.ToString();
-                        Session["AccessedFriendedYou"] = getUsers[0].FriendedYou.ToString();
-                        Session["AccessedFriendedMe"] = getUsers[0].FriendedMe.ToString();
+                        UserListingData convResultUser = new UserListingData();
+                        convResultUser.Username = getUsers[0].Username;
+                        convResultUser.EmailID = getUsers[0].EmailID;
+                        convResultUser.AreWeFriends = getUsers[0].AreWeFriends;
+                        convResultUser.FriendedYou = getUsers[0].FriendedYou;
+                        convResultUser.FriendedMe = getUsers[0].FriendedMe;
 
-                        return RedirectToAction("ProfileSearchResult", "Search");
+                        Session["AccessedUsername"] = convResultUser.Username.ToString();
+                        Session["AccessedEmailID"] = convResultUser.EmailID.ToString();
+                        Session["AccessedFriendState"] = convResultUser.AreWeFriends.ToString();
+                        Session["AccessedFriendedYou"] = convResultUser.FriendedYou.ToString();
+                        Session["AccessedFriendedMe"] = convResultUser.FriendedMe.ToString();
+
+                        return View("ProfileSearchResult", convResultUser);
                     }
                     else
                     {
@@ -84,6 +86,7 @@ namespace pageLudo.Controllers
                         //MultipleProfileSearchResult(luld);
                         ulm = new UserListingModel();
                         ulm.List = luld;
+                        Session["ResultList"] = ulm.List;
                         //ulm.EditObject = null;
                         return View("MSRView", ulm);
                         //return View("MultipleProfileSearchResult", "Search");
@@ -99,16 +102,22 @@ namespace pageLudo.Controllers
             {
                 if (resultUser != null)
                 {
+                    UserListingData convResultUser = new UserListingData();
                     resultUser = ua.EmaildIDSearch(searchString, loginEmailID);
+                    convResultUser.Username = resultUser.Username;
+                    convResultUser.EmailID = resultUser.EmailID;
+                    convResultUser.AreWeFriends = resultUser.AreWeFriends;
+                    convResultUser.FriendedYou = resultUser.FriendedYou;
+                    convResultUser.FriendedMe = resultUser.FriendedMe;
                     // visszakapott adatok
-                    Session["AccessedUsername"] = resultUser.Username.ToString();
-                    Session["AccessedEmailID"] = resultUser.EmailID.ToString();
-                    Session["AccessedFriendState"] = resultUser.AreWeFriends.ToString();
-                    Session["AccessedFriendedYou"] = resultUser.FriendedYou.ToString();
-                    Session["AccessedFriendedMe"] = resultUser.FriendedMe.ToString();
+                    Session["AccessedUsername"] = convResultUser.Username.ToString();
+                    Session["AccessedEmailID"] = convResultUser.EmailID.ToString();
+                    Session["AccessedFriendState"] = convResultUser.AreWeFriends.ToString();
+                    Session["AccessedFriendedYou"] = convResultUser.FriendedYou.ToString();
+                    Session["AccessedFriendedMe"] = convResultUser.FriendedMe.ToString();
 
                     // keresett user profilja
-                    return RedirectToAction("ProfileSearchResult", "Search");
+                    return View("ProfileSearchResult", resultUser);
                 }
                 else
                 {
