@@ -1,98 +1,40 @@
-﻿@model      IEnumerable<pageLudo.Models.UserHandlingData>
+﻿@model  pageLudo.Models.UserHandlingModel
 
-@*@{          if (Model.Count() > 0)
+@{ Page.Title = "Users"; }
+
+@section head {
+    @Scripts.Render("~/bundles/jquery")
+}
+
+<h2>Manage Grades</h2>
+
+<fieldset>
+    <legend>Edit, delete users</legend>
+    @using (Html.BeginForm("Edit","Admin",FormMethod.Post))
     {
+        @Html.ValidationSummary()
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(m => m.EditObject.EmailID)
+        <div class="editor-label">@Html.LabelFor(m => m.EditObject.Username)</div>
+        <div class="editor-field">@Html.EditorFor(m => m.EditObject.Username)</div>
+
+        <div class="editor-label">@Html.LabelFor(m => m.EditObject.EmailID)</div>
+        <div class="editor-field">@Html.EditorFor(m => m.EditObject.EmailID)</div>
+
+        <div class="editor-label">@Html.LabelFor(m => m.EditObject.Password)</div>
+        <div class="editor-field">@Html.EditorFor(m => m.EditObject.Password)</div>
+
+        <div class="editor-label">@Html.LabelFor(m => m.EditObject.Role)</div>
+        <div class="editor-field">@Html.EditorFor(m => m.EditObject.Role)</div>
+
+        <input type="submit" value="GO" />
+    }
+</fieldset>
+
+<h2>List of Users</h2>
+@Html.Partial("UsersView", Model.List, new ViewDataDictionary<IEnumerable<pageLudo.Models.UserHandlingData>>(Model.List))
 
 
-#line default
-#line hidden
 
-#line 3 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-        __o = Html.DisplayNameFor(m => m.Username);
-
-
-#line default
-#line hidden
-
-#line 4 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-        __o = Html.DisplayNameFor(m => m.EmailID);
-
-
-#line default
-#line hidden
-
-#line 5 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-        __o = Html.DisplayNameFor(m => m.Role);
-
-
-#line default
-#line hidden
-
-#line 6 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-        foreach (var user in Model)
-        {
-
-
-#line default
-#line hidden
-
-#line 7 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-            __o = Html.DisplayFor(m => user.Username);
-
-
-#line default
-#line hidden
-
-#line 8 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-            __o = Html.DisplayFor(m => user.EmailID);
-
-
-#line default
-#line hidden
-
-#line 9 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-            __o = Html.DisplayFor(m => user.Role);
-
-
-#line default
-#line hidden
-
-#line 10 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-            __o = Html.ActionLink("Show", "Details",new { emailID = user.EmailID});
-
-
-#line default
-#line hidden
-
-#line 11 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-            __o = Html.ActionLink("Remove", "Remove",new { emailID = user.EmailID });
-
-
-#line default
-#line hidden
-
-#line 12 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-            __o = Html.ActionLink("Edit", "Edit",
-                     new { id = grade.ID });
-
-
-#line default
-#line hidden
-
-#line 13 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-
-        }
-
-#line default
-#line hidden
-
-#line 14 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-        {
-
-
-else
-
-#r    
-
-<h2>UsersView</h2>*@
 

@@ -9,6 +9,6 @@ namespace pageLudo.Models
     public class UserHandlingModel
     {
         public UserHandlingData EditObject { get; set; }
-        List<UserHandlingData> List { get; set; }
+        public List<UserHandlingData> List { get; set; }
     }
 }

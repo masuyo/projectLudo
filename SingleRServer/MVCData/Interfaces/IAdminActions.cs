@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SignalRServer.MVCData.Interfaces
 {
-    //interface IAdminActions
-    //{
-    //    // vissza kell kapnia: username, emailid, role; ill kéne egy admin user is admine role-lal a db-be *-*
-    //    List<UserData> GetAllUsers();
-    //}
+    interface IAdminActions
+    {
+        // vissza kell kapnia: username, emailid, role; ill kéne egy admin user is admine role-lal a db-be *-*
+        List<UserData> GetAllUsers();
+    }
 }
