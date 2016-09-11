@@ -11,6 +11,8 @@ namespace SignalRServer.MVCData.DataClasses
         public string Username { get; set; }
         public string EmailID { get; set; }
 
+        public string Password { get; set; }
+
         // Friend request kezeléséhez
         public string AreWeFriends { get; set; }
         public string FriendedYou { get; set; }

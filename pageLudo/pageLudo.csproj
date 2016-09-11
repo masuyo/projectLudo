@@ -221,6 +221,8 @@
     <Content Include="Views\Search\MSRView.cshtml" />
     <Content Include="Views\User\Settings.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\AdminView.cshtml" />
+    <Content Include="Views\Admin\UsersView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
