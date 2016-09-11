@@ -23,7 +23,7 @@ namespace Game
 
         public override void AddPlayer(LudoPlayer newplayer, string password)
         {
-            if (password == this._password)
+            if (password == this.Password)
             {
                 Players.Add(newplayer);
                 Cheks.Add(newplayer, false);

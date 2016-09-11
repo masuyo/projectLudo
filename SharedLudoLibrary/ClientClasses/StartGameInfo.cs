@@ -9,6 +9,11 @@ namespace SharedLudoLibrary.ClientClasses
 {
     public class StartGameInfo : IStartGameInfo
     {
+        public StartGameInfo()
+        {
+           
+        }
+
         public IGameInfo MsgFromServer
         {
             get

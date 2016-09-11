@@ -9,14 +9,11 @@ namespace SharedLudoLibrary.ClientClasses
 {
     public class User : IUser
     {
-        private int userID;
         private string userName;
-        public User(int userID, string userName)
+        public User(string userName)
         {
-            this.userID = userID;
             this.userName = userName;
         }
-        public int UserID { get { return userID; } }
         public string UserName
         {
             get { return userName; }

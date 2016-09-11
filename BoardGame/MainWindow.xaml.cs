@@ -46,7 +46,7 @@ namespace BoardGame
                 }
             }
             this.DataContext = VM;
-            HelperClass.Connection.StateChanged += (e) => { MessageBox.Show(e.OldState.ToString() + " " + e.NewState.ToString()); };
+            HelperClass.Connection.StateChanged += (e) => { if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); } };
             // this.Background = LoginView.GetBG;
 
         }
@@ -54,6 +54,7 @@ namespace BoardGame
         private void LoginError()
         {
             Dispatcher.Invoke(() => MessageBox.Show("Failed to login. Try again."));
+            HelperClass.UserName = String.Empty;
             VM.UserName = String.Empty;
             VM.Password = String.Empty;
             //TODO :: pswd box pswd CLEAR  >>VM.Password = String.Empty; <<does not clears it 
@@ -63,6 +64,7 @@ namespace BoardGame
         {
             VM.AuthenticationSuccess = true;
             HelperClass.GUID = guid;
+            HelperClass.UserName = VM.UserName;
             ConnectToGameWindow rooms = new ConnectToGameWindow();
             this.Close();
             rooms.ShowDialog();
@@ -86,8 +88,9 @@ namespace BoardGame
                 }
                 else
                 {
-                    Console.WriteLine(VM.UserName + "  " + VM.Password);
                     MessageBox.Show("Username and password must contain at least 6 characters. ");
+                    (sender as Label).Background = Brushes.Green;
+                    (sender as Label).Content = "Login";
                 }
             }
         }
@@ -139,5 +142,13 @@ namespace BoardGame
             this.Close();
         }
 
+        private void Login_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Label)
+            {
+                (sender as Label).Background = Brushes.LightYellow;
+                (sender as Label).Content = "Logging in";
+            }
+        }
     }
 }

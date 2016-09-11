@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace BoardGame.TestClasses
 {
-    class TestLockedConverter : IValueConverter
+    class LockedConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -35,6 +35,28 @@ namespace BoardGame.TestClasses
                 }             
              */
 
+            throw new NotImplementedException();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    class StartLudoConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string locker = value.ToString();
+            if (String.IsNullOrEmpty(locker))
+            {
+                return Brushes.Transparent;
+            }
+            else if (!String.IsNullOrEmpty(locker))
+            {
+                return Brushes.DodgerBlue;
+            }
+            return Binding.DoNothing;
             throw new NotImplementedException();
         }
 

@@ -10,13 +10,13 @@ namespace SharedLudoLibrary.Interfaces.Server
     {
         void GetGameTypes();
         void GetLogin(string userName, string encryptedPassword, string selectedGameType = "LUDO");
-        void GetAllRoomList();
-        void GetPlayersInRoom(IRoom room);
-        void GetCreateRoom(IRoom newRoom);
-        void GetConnectUserToRoom(IUser user, IRoom room);
-        void GetStart(int playerID);
-        void GetMove(int playerID, int actPoz, int destPoz);
-        void GetOverall(int playerID);
-        void Befriend(int playerID, int friendPlayerID);
+        void GetAllRoomList(string guid);
+        void GetUsersInRoom(string guid, IRoom room);
+        void GetCreateRoom(string guid, IRoom newRoom);
+        void GetConnectUserToRoom(string guid, IUser user, IRoom room);
+        void GetStart(string guid, int playerID);
+        void GetMove(string guid, int playerID, int actPoz, int destPoz);
+        void GetOverall(string guid, int playerID);
+        void Befriend(string guid, int playerID, int friendPlayerID);
     }
 }
