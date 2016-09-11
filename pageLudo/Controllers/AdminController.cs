@@ -15,7 +15,7 @@ namespace pageLudo.Controllers
         }
 
         // GET: Admin/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string emailID)
         {
             return View();
         }
@@ -43,14 +43,14 @@ namespace pageLudo.Controllers
         }
 
         // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string emailID)
         {
             return View();
         }
 
         // POST: Admin/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(string emailID, FormCollection collection)
         {
             try
             {
@@ -65,14 +65,14 @@ namespace pageLudo.Controllers
         }
 
         // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string emailID)
         {
             return View();
         }
 
         // POST: Admin/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(string emailID, FormCollection collection)
         {
             try
             {
