@@ -7,29 +7,15 @@
 @if (Session["AccessedUsername"] != null)
 {
     <br />
-    @*<div class="pull-left">
-        <h4>Adatlap</h4>
-        <br />
-        <table>
-            <tr>
-                <td>Username:</td>
-                <td>@Session["AccessedUsername"]</td>
-            </tr>
-            <tr>
-                <td>E-mail address:</td>
-                <td>@Session["AccessedEmailID"]</td>
-            </tr>
-        </table>
-        <br />
-    </div>*@
+    <h4>Adatlap</h4>
 
-    <table border="1">
+    <table border="0" class="pull-left">
         <tr>
             <td>@Html.DisplayNameFor(m => m.Username)</td>
             <td>@Html.DisplayFor(m => m.Username)</td>
         </tr>
         <tr>
-            <td>@Html.DisplayNameFor(m => m.EmailID)</td>
+            <td>Email address</td>
             <td>@Html.DisplayFor(m => m.EmailID)</td>
         </tr>
     </table>
@@ -66,7 +52,7 @@
         // barátnak jelöltél, de még nem jelöltelek vissza
         else /*if ((string)Session["AccessedFriendedYou"] == "false" && (string)Session["AccessedFriendedMe"] == "true")*/
         {
-            using (Html.BeginForm("FriendAccepting", "User", FormMethod.Post))
+            using (Html.BeginForm("FriendAccepting", "Friend", FormMethod.Post))
             {
                 <div class="form-group pull-right">
                     <div class="col-sm-12 col-xs-12" style="min-width:200px; color: red">

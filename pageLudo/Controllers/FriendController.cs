@@ -13,9 +13,8 @@ namespace pageLudo.Controllers
         public ActionResult FriendAccepting()
         {
             UserActions ua = new UserActions();
-            // metódus mindent true-ra állít
             ua.FriendAccept(Session["LogedEmailID"].ToString(), Session["AccessedEmailID"].ToString());
-            return View();
+            return View("~/Views/Search/ProfileSearchResult.cshtml");
         }
 
 
@@ -23,10 +22,9 @@ namespace pageLudo.Controllers
         [HttpPost]
         public ActionResult Friending()
         {
-            // a meghívott metódus true-ra állítja a FriendedYou propertyt
             UserActions ua = new UserActions();
             ua.Friend(Session["LogedEmailID"].ToString(), Session["AccessedEmailID"].ToString());
-            return View();
+            return View("~/Views/Search/ProfileSearchResult.cshtml");
         }
 
         // elég az egyik oldalnak kezdeményeznie
@@ -34,9 +32,8 @@ namespace pageLudo.Controllers
         public ActionResult Unfriending()
         {
             UserActions ua = new UserActions();
-            // a meghívott metódus false-ra állítja mindhárom változót
             ua.Unfriend(Session["LogedEmailID"].ToString(), Session["AccessedEmailID"].ToString());
-            return View();
+            return View("~/Views/Search/ProfileSearchResult.cshtml");
         }
     }
 }

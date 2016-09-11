@@ -5,6 +5,7 @@ using System.Web;
 
 namespace pageLudo.Models
 {
+    [Serializable]
     public class UserListingData
     {
         public int UserID { get; set; }
@@ -15,6 +16,6 @@ namespace pageLudo.Models
         public string AreWeFriends { get; set; }
         public string FriendedYou { get; set; }
         public string FriendedMe { get; set; }
-        public string Role { get; set; }
+        //public string Role { get; set; }
     }
 }
