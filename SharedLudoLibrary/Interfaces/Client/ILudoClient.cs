@@ -15,7 +15,7 @@ namespace SharedLudoLibrary.Interfaces.Client
         void SendLoginError();
 
         void SendAllRoomList(List<IRoom> allRoomList);
-        void SendPlayersInRoom(List<IUser> playersInRoom);
+        void SendUsersInRoom(List<IUser> usersInRoom);
         void SendCreateRoom(IRoom createdRoom);
         void SendConnectUserToRoom(bool connectedToRoom);
 

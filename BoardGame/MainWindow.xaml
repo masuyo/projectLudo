@@ -106,7 +106,7 @@
                 Foreground="Black" Background="Green" Opacity="0.8"
                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                 Margin="10,10,10,0"          
-                MouseDown="Login_MouseDown" />
+                MouseDown="Login_MouseDown" PreviewMouseDown="Login_PreviewMouseDown"/>
             <Label
                 Grid.Column="1" Grid.Row="4"
                 Content="Forgot password" 

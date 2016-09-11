@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="MVCData\DataClasses\GameWinrate.cs" />
     <Compile Include="MVCData\DataClasses\UserData.cs" />
+    <Compile Include="MVCData\Interfaces\IAdminActions.cs" />
     <Compile Include="MVCData\Interfaces\IGameStatistics.cs" />
     <Compile Include="MVCData\Interfaces\IUserActions.cs" />
     <Compile Include="MVCData\Interfaces\IUserStatistics.cs" />

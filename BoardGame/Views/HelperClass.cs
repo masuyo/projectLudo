@@ -15,6 +15,7 @@ namespace BoardGame.Views
 
         private static string guID;
         private static string userName;
+        
         public static string GUID
         {
             get { return guID; }

@@ -1,5 +1,6 @@
 ﻿using BoardGame.TestClasses;
 using BoardGame.Views;
+using Microsoft.AspNet.SignalR.Client;
 using SharedLudoLibrary.ClientClasses;
 using SharedLudoLibrary.Interfaces;
 using System;
@@ -30,38 +31,79 @@ namespace BoardGame
             InitializeComponent();
             VM = RoomView.GetVM;
             this.DataContext = VM;
-            VM.UserName = HelperClass.UserName;
+           // VM.UserName = HelperClass.UserName;
 
             ImageBrush imgb = new ImageBrush();
             imgb.ImageSource = new BitmapImage(new Uri(@"Images\l3.png", UriKind.Relative));
             imgb.Opacity = 0.4;
             // grid_bg.Background = imgb;
 
-            Init(AddListItems());
-        }
+            HelperClass.HubProxy.On<List<IRoom>>("SendAllRoomList", (allRoom) => this.Dispatcher.Invoke(() => { AllRoom(allRoom); }));
+            HelperClass.HubProxy.On<List<IUser>>("SendUsersInRoom", (allUserInRoom) => this.Dispatcher.Invoke(() => { AllUserInRoom(allUserInRoom); }));
+            HelperClass.HubProxy.On<IRoom>("SendCreateRoom", (createdRoom) => this.Dispatcher.Invoke(() => { SendCreateRoom(createdRoom); }));
+            HelperClass.HubProxy.On<bool>("SendConnectUserToRoom", (connectedToRoom) => this.Dispatcher.Invoke(() => { SendConnectUserToRoom(connectedToRoom); }));
 
-        private List<IRoom> AddListItems()
-        {
-            TestLudoServer TLS = new TestLudoServer();
-            return TLS.GetAllRoomList();
-        }
-        private void Init(List<IRoom> list)
-        {
-            foreach (IRoom r in list)
+
+
+
+            HelperClass.Connection.StateChanged += (e) => { if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); } };
+
+
+            if (HelperClass.Connection?.State == ConnectionState.Connected)
             {
-                VM.RoomList.Add(r);
+                HelperClass.HubProxy.Invoke("GetAllRoomList", HelperClass.GUID); //answer : call my "SendAllRoomList"
             }
-
-            VM.SelectedRoom = VM.RoomList[0];
         }
 
+        private void SendConnectUserToRoom(bool connectedToRoom)
+        {
+            if (connectedToRoom)
+            {
+                VM.UsersInRoom.Add(new User(HelperClass.UserName));
+            }
+        }
+
+        private void SendCreateRoom(IRoom createdRoom)
+        {
+            if (HelperClass.Connection?.State == ConnectionState.Connected)
+            {
+                HelperClass.HubProxy.Invoke("GetAllRoomList", HelperClass.GUID); //answer : call my "SendAllRoomList"
+            }
+            VM.SearchRoomList.Clear();
+            foreach (Room r in VM.RoomList)
+            {
+                if (r.AvailablePlaces > 0)
+                {
+                    VM.SearchRoomList.Add(r);
+                }
+            }
+        }
+
+        private void AllUserInRoom(List<IUser> allUserInRoom)
+        {
+            foreach (IUser u in allUserInRoom)
+            {
+                VM.UsersInRoom.Add(u);
+            }
+        }
+        private void AllRoom(List<IRoom> allRoom)
+        {
+            if (allRoom != null && allRoom.Count > 0)
+            {
+                foreach (IRoom r in allRoom)
+                {
+                    VM.RoomList.Add(r);
+                }
+            }
+        }
+              
         private void LBL_Start_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is Label)
             {
                 if (!String.IsNullOrEmpty(VM.SelectedRoom.Name) && VM.SelectedRoom.AvailablePlaces == 0)
                 {
-                    
+
                     if (true)//connD.ConectionSuccess)
                     {
                         LudoWindow ludo = new LudoWindow();
@@ -80,10 +122,6 @@ namespace BoardGame
             }
         }
 
-        private void TXB_Search_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            VM.SearchKeyWord = String.Empty;
-        }
 
         private void TXB_Search_KeyDown(object sender, KeyEventArgs e)
         {
@@ -98,7 +136,6 @@ namespace BoardGame
                         {
                             VM.SearchRoomList.Add(r);
                         }
-
                     }
                 }
                 else
@@ -125,23 +162,44 @@ namespace BoardGame
             }
         }
 
-        private void LBL_New_MouseDown(object sender, MouseButtonEventArgs e)
+        private void LBL_New_MouseDown(object sender, MouseButtonEventArgs e) 
         {
+            //if (VM.RoomList.Contains(VM.SelectedRoom))
+            //{
+
+            //}
+            if (HelperClass.Connection?.State == ConnectionState.Connected)
+            {
+                HelperClass.HubProxy.Invoke("GetConnectUserToRoom", HelperClass.GUID, new User(HelperClass.UserName), new Room(VM.SelectedRoom.AvailablePlaces, VM.SelectedRoom.ID, VM.SelectedRoom.Name, VM.SelectedRoom.Password));
+            }
+            VM.Start = "Start Ludo";
+
             MessageBox.Show(VM.SelectedRoom + "" + VM.SelectedRoomPassword);
         }
         private void LBL_Connect_MouseDown(object sender, MouseButtonEventArgs e)
-        {            
+        {
+            if (HelperClass.Connection?.State == ConnectionState.Connected)
+            {
+                HelperClass.HubProxy.Invoke("GetConnectUserToRoom", HelperClass.GUID, new User(HelperClass.UserName), new Room(VM.SelectedRoom.AvailablePlaces, VM.SelectedRoom.ID, VM.SelectedRoom.Name, VM.SelectedRoom.Password));
+            }
             foreach (IUser u in new TestLudoServer().GetPlayersInRoom((VM.SelectedRoom)))
-            {                
+            {
                 //VM.UsersInRoom = new ObservableCollection<IUser>();
                 VM.UsersInRoom.Add(u);
             }
             if (true)//connD.ConectionSuccess)
             {
-                Init(AddListItems()); // serversideListChanged
+                //Init(AddListItems()); // serversideListChanged
             }
         }
-
+        private void TXB_Search_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (HelperClass.Connection?.State == ConnectionState.Connected)
+            {
+                HelperClass.HubProxy.Invoke("GetAllRoomList", HelperClass.GUID);
+            }
+            VM.SearchKeyWord = String.Empty;
+        }
         private void LBL_Hover_MouseEnter(object sender, MouseEventArgs e)
         {
             if (sender is Label)
@@ -160,7 +218,6 @@ namespace BoardGame
 
         private void LBL_ExitRoom_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
             VM.UsersInRoom.Clear();
             VM.UsersInRoom = new ObservableCollection<IUser>();
         }

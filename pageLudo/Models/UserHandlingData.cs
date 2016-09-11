@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SignalRServer.MVCData.DataClasses
+namespace pageLudo.Models
 {
-    public class UserData
+    // admin számára
+    public class UserHandlingData
     {
         public int UserID { get; set; }
         public string Username { get; set; }
         public string EmailID { get; set; }
 
         public string Password { get; set; }
-
-        // Friend request kezeléséhez
-        public string AreWeFriends { get; set; }
-        public string FriendedYou { get; set; }
-        public string FriendedMe { get; set; }
+        
+        // adminjog kiosztásához
         public string Role { get; set; }
     }
 }

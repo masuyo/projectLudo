@@ -13,7 +13,6 @@ namespace BoardGame.Views
 {
     class RoomView : Bindable
     {
-        private string userName;
 
         ObservableCollection<IRoom> roomList;
         ObservableCollection<IRoom> searchRoomList;
@@ -21,15 +20,8 @@ namespace BoardGame.Views
         IRoom selectedRoom;
         string selectedRoomPassword;
         ObservableCollection<IUser> usersInRoom;
-
-
-        public string UserName
-        {
-            get { return userName; }
-
-            set { SetProperty(ref userName, value); }
-        }
-
+        string start;
+                
         public ObservableCollection<IRoom> SearchRoomList
         {
             get { return searchRoomList; }
@@ -66,6 +58,11 @@ namespace BoardGame.Views
 
             set { SetProperty(ref searchKeyWord, value); }
         }
+        public string Start
+        {
+            get { return selectedRoomPassword; }
+            set { SetProperty(ref start, value); }
+        }
         static RoomView VM;
         private RoomView()
         {
@@ -75,6 +72,7 @@ namespace BoardGame.Views
             selectedRoom = default(IRoom);
             selectedRoomPassword = String.Empty;
             SearchKeyWord = "Search room by name...";
+            start = String.Empty;
         }
         public static RoomView GetVM
         {
@@ -87,6 +85,7 @@ namespace BoardGame.Views
                 return VM;
             }
         }
+
 
     }
 }

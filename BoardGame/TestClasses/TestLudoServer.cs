@@ -37,7 +37,7 @@ namespace BoardGame.TestClasses
             List<IUser> users = new List<IUser>();
             while (i > 0)
             {
-                users.Add(new User(i, "user##" + i));
+                users.Add(new User( "user##" + i));
                 i--;
             }
             return users;

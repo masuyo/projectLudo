@@ -10,7 +10,8 @@
         Height="600" Width="800" 
         WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize">
     <Window.Resources>
-        <tlc:TestLockedConverter x:Key="TestLockedConverter" />
+        <tlc:LockedConverter x:Key="LockedConverter"/>
+        <tlc:StartLudoConverter x:Key="StartLudoConverter"/>
     </Window.Resources>
     <Grid Background="Black">
         <Grid.RowDefinitions>
@@ -28,12 +29,12 @@
             />
         <Label 
             Grid.Row="0" Grid.Column="1" 
-            Content="Start Ludo" 
-            Background="DodgerBlue" 
+            Content="{Binding Path=Start}" 
+            Background="{Binding Path=Start, Converter={StaticResource StartLudoConverter}}"
             Width="100" Margin="10" 
             HorizontalAlignment="Right" HorizontalContentAlignment="Center" 
             FontWeight="Bold" 
-            BorderBrush="AliceBlue" BorderThickness="1" 
+            BorderBrush="AliceBlue" BorderThickness="0" 
             MouseDown="LBL_Start_MouseDown"
             MouseEnter="LBL_Hover_MouseEnter"
             MouseLeave="LBL_Hover_MouseLeave" 
@@ -89,7 +90,7 @@
                             <Label 
                                 Grid.Row="2"
                                 HorizontalAlignment="Stretch" MinHeight="2" 
-                                Background="{Binding Path=Password, Converter={StaticResource TestLockedConverter}}"/>
+                                Background="{Binding Path=Password, Converter={StaticResource LockedConverter}}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
