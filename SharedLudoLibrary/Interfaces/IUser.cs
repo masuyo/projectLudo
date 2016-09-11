@@ -8,7 +8,6 @@ namespace SharedLudoLibrary.Interfaces
 {
     public interface IUser
     {
-        int UserID { get; }
         string UserName { get; set; }
     }
 }

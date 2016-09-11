@@ -11,8 +11,8 @@ namespace BoardGame.Views
     {
         ObservableCollection<string> serverMsgs;
         ObservableCollection<string> chatMsgs;
-        string userName;
         string chatMsg;
+        string userName;
         public ObservableCollection<string> ServerMsgs
         {
             get { return serverMsgs; }
@@ -26,14 +26,18 @@ namespace BoardGame.Views
             set { SetProperty(ref chatMsgs, value); }
         }
 
-        public string UserName { get { return userName; } set { SetProperty(ref userName, value); } }
         public string ChatMsg
         {
             get { return chatMsg; }
 
             set { SetProperty(ref chatMsg, value); }
         }
+        public string UserName
+        {
+            get { return userName; }
 
+            set { SetProperty(ref userName, value); }
+        }
         static LudoView VM;
         private LudoView()
         {
@@ -51,5 +55,7 @@ namespace BoardGame.Views
                 return VM;
             }
         }
+
+
     }
 }
