@@ -36,7 +36,7 @@ namespace SignalRServer
             return base.OnDisconnected(stopCalled);
         }
 
-        //private static ConcurrentDictionary<string, string> connections = new ConcurrentDictionary<string, string>();
+       
         private static ConcurrentDictionary<string, LudoPlayer> guid_player = new ConcurrentDictionary<string, LudoPlayer>();
         private static ConcurrentDictionary<string, string> connectionid_guid = new ConcurrentDictionary<string, string>();
         private static ConcurrentDictionary<string, LudoTable> name_table = new ConcurrentDictionary<string, LudoTable>();
@@ -83,7 +83,7 @@ namespace SignalRServer
             Clients.Caller.SendGameTypes(gameTypes);
         }
 
-        public void GetAllRoomList()
+        public void GetAllRoomList(string guid)
         {
             List<Room> rooms = new List<Room>();
             foreach (var item in name_table)
@@ -96,7 +96,7 @@ namespace SignalRServer
             Clients.Caller.SendAllRoomList(rooms);
         }
 
-        public void GetPlayersInRoom(IRoom room)
+        public void GetUsersInRoom(string guid,IRoom room)
         {
             LudoTable table = name_table[room.Name];
             if (table == null) return;
@@ -108,7 +108,7 @@ namespace SignalRServer
                 {
                     Entities.User user = userrepo.GetByName(item.Name);
                     //TODO 0 helyett mi? 
-                    SharedLudoLibrary.ClientClasses.User newuser = new SharedLudoLibrary.ClientClasses.User(user.UserID, item.Name);
+                    SharedLudoLibrary.ClientClasses.User newuser = new SharedLudoLibrary.ClientClasses.User(item.Name);
                     users.Add(newuser);
                 }
             }
@@ -116,10 +116,9 @@ namespace SignalRServer
             Clients.Caller.SendPlayersInRoom(users);
         }
 
-        public void GetCreateRoom(IRoom newRoom)
+        public void GetCreateRoom(string guid,IRoom newRoom)
         {
-            string guid = "";
-
+            
             LudoPlayer player;
             using (UsersRepository userrepo = new UsersRepository())
             {
@@ -141,9 +140,9 @@ namespace SignalRServer
             Clients.Caller.SendCreateRoom(new Room(newtable.Players.Count - 4, 0, newtable.Name, newtable.Password));
         }
 
-        public void GetConnectUserToRoom(IUser user, IRoom room)
+        public void GetConnectUserToRoom(string guid,IUser user, IRoom room)
         {
-            string guid = "";
+           
             bool connectedToRoom = false;
 
             LudoPlayer player;
@@ -172,22 +171,43 @@ namespace SignalRServer
             Clients.Caller.SendConnectUserToRoom(connectedToRoom);
         }
 
-        public void GetStart(int playerID)
+        public void GetStart(string guid,int playerID)
+        {
+            LudoPlayer caller = guid_player[guid];
+            LudoTable table = name_table.Where(akt => akt.Value.Creator.Name == caller.Name).SingleOrDefault().Value;
+
+            //set color, check everybody etc
+            table.SetCheck(table.Players[0], true);
+            table.SetColor(table.Players[0], puppetColor.Blue);
+            table.SetCheck(table.Players[1], true);
+            table.SetColor(table.Players[1], puppetColor.Green);
+            table.SetCheck(table.Players[2], true);
+            table.SetColor(table.Players[2], puppetColor.Yellow);
+            table.SetCheck(table.Players[3], true);
+            table.SetColor(table.Players[3], puppetColor.Red);
+            //set vége
+            table.Start();
+
+            StartGameInfo startgameinfo = new StartGameInfo();
+            GameInfo gameinfo = new GameInfo();
+            //fill game info
+           
+            //set startgameinfo
+
+            Clients.Group(table.Name).SendStart(gameinfo);
+        }
+
+        public void GetMove(string guid,int playerID, int actPoz, int destPoz)
         {
             throw new NotImplementedException();
         }
 
-        public void GetMove(int playerID, int actPoz, int destPoz)
+        public void GetOverall(string guid,int playerID)
         {
             throw new NotImplementedException();
         }
 
-        public void GetOverall(int playerID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Befriend(int playerID, int friendPlayerID)
+        public void Befriend(string guid,int playerID, int friendPlayerID)
         {
             throw new NotImplementedException();
         }

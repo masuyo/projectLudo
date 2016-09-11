@@ -10,7 +10,7 @@ namespace SharedLudoLibrary.Interfaces.Server
     {
         void GetGameTypes();
         void GetLogin(string userName, string encryptedPassword, string selectedGameType = "LUDO");
-        void GetAllRoomList(string giud);
+        void GetAllRoomList(string guid);
         void GetUsersInRoom(string guid, IRoom room);
         void GetCreateRoom(string guid, IRoom newRoom);
         void GetConnectUserToRoom(string guid, IUser user, IRoom room);
