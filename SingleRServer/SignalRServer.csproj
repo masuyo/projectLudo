@@ -122,6 +122,10 @@
       <Project>{c8f810fb-1072-4961-8b37-c1591b6bca49}</Project>
       <Name>Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharedLudoLibrary\SharedLudoLibrary.csproj">
+      <Project>{4676ad40-457c-4c3d-acda-d1d096ac12da}</Project>
+      <Name>SharedLudoLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

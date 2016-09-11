@@ -10,6 +10,9 @@ namespace SharedLudoLibrary.Interfaces.Client
     {
         void SendGameTypes(List<string> gameTypesList);
         void SendLogin(int ID);
+        
+        //Login Hiba esetén
+        void SendLoginError();
 
         void SendAllRoomList(List<IRoom> allRoomList);
         void SendPlayersInRoom(List<IUser> playersInRoom);

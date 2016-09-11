@@ -12,7 +12,7 @@ namespace Game
         public Table(TPlayer newcreator,string newname,string password="")
         {
             Name = newname;
-            _password = password;
+            Password = password;
             Creator = newcreator;
             Players = new List<TPlayer>();
             Players.Add(Creator);
@@ -20,13 +20,26 @@ namespace Game
 
         public string Name { get; private set; }
 
-        protected string _password;
+        private string password;
 
         public IGameManager<TGame, TAction> Gamemanager { get; protected set; }
 
         public TPlayer Creator { get; private set; }
 
         public List<TPlayer> Players { get; private set; }
+
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+
+            set
+            {
+                password = value;
+            }
+        }
 
         abstract public void Start();
 

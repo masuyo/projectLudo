@@ -9,58 +9,197 @@ using Repository.TableRepositories;
 using Entities;
 using Game;
 using System.Security.Cryptography;
+using SharedLudoLibrary.Interfaces.Server;
+using SharedLudoLibrary.ClientClasses;
+using SharedLudoLibrary.Interfaces;
 
 namespace SignalRServer
 {
-    public class WPFHub : Hub
+    public class WPFHub : Hub,ILudoServer,IChatServer
     {
-        //private static ConcurrentDictionary<string, string> connections = new ConcurrentDictionary<string, string>();
-        private static ConcurrentDictionary<string, LudoPlayer> guid_player = new ConcurrentDictionary<string, LudoPlayer>();
-        private static ConcurrentDictionary<string, string> connectionid_guid = new ConcurrentDictionary<string, string>();
-
-        //belépésnél ( Hupproxy.Invoke("Login",email,password) ) üzenet érkezik a szervernek, paraméterként a belogolandó emailje és jelszava
-        //ha sikerül minden akkor a kliens SetGuid metódusán keresztül visszaküld egy stringet, ez lesz az ehhez a kapcsolathoz tartozó azonosító
-        //ha nem sikerül akkor akkor a kliens LoginError metódusán keresztül jelez
-        public void Login(string username,string password,string selectedgametype)
-        { 
-            using (UsersRepository repo = new UsersRepository())
-            {
-                User user = repo.GetByName(username);
-
-                //TODO: HASH THE PW
-                if (user != null && user?.Password == user?.Password)
-                {
-                    LudoPlayer newplayer = new LudoPlayer() { Name = user.Username };
-                    if (guid_player.TryAdd(user.Guid, newplayer))
-                    {
-                        //TODO: SetGuid method Hubproxy.ON<string>
-                        //mentse el a hozzá tartozó Guidot, a szerver ezzel azonosítja ha esetleg (disconnect, recconect, valami történik)
-                        Clients.Caller.SetGuid(user.Guid);
-                    }
-                    else Clients.Caller.LoginError();              
-                }
-
-                //TODO: LoginError method Hubproxy.ON<string>
-                //Kezelje a Login hibát
-                else Clients.Caller.LoginError();
-            }
-        }
-
-
+        
         public override Task OnConnected()
         {
             Console.WriteLine("Client connected:" + Context.ConnectionId);
-            connectionid_guid.TryAdd(Context.ConnectionId, " + ");
+            connectionid_guid.TryAdd(Context.ConnectionId, "+");
             return base.OnConnected();
         }
 
         public override Task OnDisconnected(bool stopCalled)
         {
             string leaverguid;
-            if (!connectionid_guid.TryRemove(Context.ConnectionId, out leaverguid)) leaverguid = " - ";
+            connectionid_guid.TryRemove(Context.ConnectionId, out leaverguid);
             Console.WriteLine("Client disconnected\nConnectionId:\t" + Context.ConnectionId+"\nGuID:\t" + leaverguid);
+            
             //TODO do someting with the leaver!!
+
             return base.OnDisconnected(stopCalled);
+        }
+
+        //private static ConcurrentDictionary<string, string> connections = new ConcurrentDictionary<string, string>();
+        private static ConcurrentDictionary<string, LudoPlayer> guid_player = new ConcurrentDictionary<string, LudoPlayer>();
+        private static ConcurrentDictionary<string, string> connectionid_guid = new ConcurrentDictionary<string, string>();
+        private static ConcurrentDictionary<string, LudoTable> name_table = new ConcurrentDictionary<string, LudoTable>();
+
+        //belépésnél ( Hupproxy.Invoke("Login",email,password) ) üzenet érkezik a szervernek, paraméterként a belogolandó emailje és jelszava
+        //ha sikerül minden akkor a kliens SetGuid metódusán keresztül visszaküld egy stringet, ez lesz az ehhez a kapcsolathoz tartozó azonosító
+        //ha nem sikerül akkor akkor a kliens LoginError metódusán keresztül jelez
+        public void GetLogin(string username, string password, string selectedgametype = "LUDO")
+        {
+            using (UsersRepository repo = new UsersRepository())
+            {
+                Entities.User user = repo.GetByName(username);
+
+                //TODO: HASH THE PW
+                if (user != null && user?.Password == user?.Password)
+                {
+
+                    foreach (var item in connectionid_guid)
+                    {
+                        //ha van ilyen guid-dal bejelentkezve valaki
+                        if (item.Value == user.Guid)
+                        {
+                            Clients.Caller.SendLoginError();
+                            return;
+                        }
+                    }
+
+                    connectionid_guid.AddOrUpdate(Context.ConnectionId, user.Guid, (key, oldvalue) => user.Guid);
+                    //TODO: SetGuid method Hubproxy.ON<string>
+                    //mentse el a hozzá tartozó Guidot, a szerver ezzel azonosítja ha esetleg (disconnect, recconect, valami történik)
+                    Clients.Caller.SendLogin(user.Guid);
+                }
+
+                //TODO: LoginError method Hubproxy.ON<string>
+                //Kezelje a Login hibát
+                else Clients.Caller.SendLoginError();
+            }
+        }
+
+        public void GetGameTypes()
+        {
+            List<string> gameTypes = new List<string>();
+            gameTypes.Add("LUDO");
+            Clients.Caller.SendGameTypes(gameTypes);
+        }
+
+        public void GetAllRoomList()
+        {
+            List<Room> rooms = new List<Room>();
+            foreach (var item in name_table)
+            {
+                LudoTable room = item.Value;
+                //TODO 0 helyett mi? 
+                Room newroom = new Room(room.Players.Count-4,0, room.Name, room.Password);
+                rooms.Add(newroom);
+            }
+            Clients.Caller.SendAllRoomList(rooms);
+        }
+
+        public void GetPlayersInRoom(IRoom room)
+        {
+            LudoTable table = name_table[room.Name];
+            if (table == null) return;
+            List<SharedLudoLibrary.ClientClasses.User> users = new List<SharedLudoLibrary.ClientClasses.User>();
+
+            using (UsersRepository userrepo = new UsersRepository())
+            {
+                foreach (var item in table.Players)
+                {
+                    Entities.User user = userrepo.GetByName(item.Name);
+                    //TODO 0 helyett mi? 
+                    SharedLudoLibrary.ClientClasses.User newuser = new SharedLudoLibrary.ClientClasses.User(user.UserID, item.Name);
+                    users.Add(newuser);
+                }
+            }
+
+            Clients.Caller.SendPlayersInRoom(users);
+        }
+
+        public void GetCreateRoom(IRoom newRoom)
+        {
+            string guid = "";
+
+            LudoPlayer player;
+            using (UsersRepository userrepo = new UsersRepository())
+            {
+                Entities.User user = userrepo.GetByGuid(guid);
+                player= new LudoPlayer(user.Username);
+            }
+
+            LudoTable newtable = new LudoTable(player, newRoom.Name, newRoom.Password);
+            name_table.TryAdd(newRoom.Name, newtable);
+            guid_player.TryAdd(guid, player);
+
+            Groups.Add(Context.ConnectionId, newRoom.Name);
+     
+            using (InvationDesktopRepository tablerepo = new InvationDesktopRepository())
+            {
+                //adatbázishoz adás
+            }
+
+            Clients.Caller.SendCreateRoom(new Room(newtable.Players.Count - 4, 0, newtable.Name, newtable.Password));
+        }
+
+        public void GetConnectUserToRoom(IUser user, IRoom room)
+        {
+            string guid = "";
+            bool connectedToRoom = false;
+
+            LudoPlayer player;
+            using (UsersRepository userrepo = new UsersRepository())
+            {
+                Entities.User newuser = userrepo.GetByGuid(guid);
+                player = new LudoPlayer(newuser.Username);
+            }
+            try
+            {
+                name_table[room.Name].AddPlayer(player, room.Password);
+                Groups.Add(Context.ConnectionId, room.Name);
+
+                using (InvationDesktopRepository tablerepo = new InvationDesktopRepository())
+                {
+                    //adatbázishoz adás
+                }
+
+                connectedToRoom = true;
+            }
+            catch (Exception e)
+            {
+               
+            }
+
+            Clients.Caller.SendConnectUserToRoom(connectedToRoom);
+        }
+
+        public void GetStart(int playerID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetMove(int playerID, int actPoz, int destPoz)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetOverall(int playerID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Befriend(int playerID, int friendPlayerID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ConnectToRoom(int userID, IRoom room)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Message(int playerID, string text)
+        {
+            throw new NotImplementedException();
         }
     }
 }
