@@ -23,7 +23,7 @@ namespace pageLudo.Controllers
         public ActionResult Friending()
         {
             UserActions ua = new UserActions();
-            ua.Friend(Session["LogedEmailID"].ToString(), Session["AccessedEmailID"].ToString());
+            ua.Friend(Session["AccessedEmailID"].ToString(), Session["LogedEmailID"].ToString());
             return View("~/Views/Search/ProfileSearchResult.cshtml");
         }
 

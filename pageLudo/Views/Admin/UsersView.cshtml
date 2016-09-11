@@ -8,28 +8,22 @@
         <tr>
             <th>@Html.DisplayNameFor(m => m.Username)</th>
             <th>@Html.DisplayNameFor(m => m.EmailID)</th>
-            <th>@Html.DisplayNameFor(m => m.Password)</th>
+            @*<th>@Html.DisplayNameFor(m => m.Password)</th>*@
             <th>@Html.DisplayNameFor(m => m.Role)</th>
             <th>Delete</th>
             <th>Edit</th>
         </tr>
-        @foreach (var grade in Model)
+        @foreach (var user in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(m => grade.ID)</td>
-                <td>@Html.DisplayFor(m => grade.Name)</td>
-                <td>@Html.DisplayFor(m => grade.Grade)</td>
+                <td>@Html.DisplayFor(m => user.Username)</td>
+                <td>@Html.DisplayFor(m => user.EmailID)</td>
+                <td>@Html.DisplayFor(m => user.Role)</td>
                 <td>
-                    @Html.ActionLink("Show", "Details",
-                        new { id = grade.ID })
+                    @Html.ActionLink("Edit", "Edit",new { emailID = user.EmailID})
                 </td>
                 <td>
-                    @Html.ActionLink("Remove", "Remove",
-                        new { id = grade.ID })
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit",
-                        new { id = grade.ID })
+                    @Html.ActionLink("Delete", "Remove",new { emailID = user.EmailID })
                 </td>
             </tr>
         }

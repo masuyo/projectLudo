@@ -1,6 +1,6 @@
 ﻿@model      IEnumerable<pageLudo.Models.UserHandlingData>
 
-@{          if (Model.Count() > 0)
+@*@{          if (Model.Count() > 0)
     {
 
 
@@ -8,28 +8,28 @@
 #line hidden
 
 #line 3 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-        __o = Html.DisplayNameFor(m => m.First().ID);
+        __o = Html.DisplayNameFor(m => m.Username);
 
 
 #line default
 #line hidden
 
 #line 4 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-        __o = Html.DisplayNameFor(m => m.First().Name);
+        __o = Html.DisplayNameFor(m => m.EmailID);
 
 
 #line default
 #line hidden
 
 #line 5 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-        __o = Html.DisplayNameFor(m => m.First().Grade);
+        __o = Html.DisplayNameFor(m => m.Role);
 
 
 #line default
 #line hidden
 
 #line 6 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-        foreach (var grade in Model)
+        foreach (var user in Model)
         {
 
 
@@ -37,37 +37,35 @@
 #line hidden
 
 #line 7 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-            __o = Html.DisplayFor(m => grade.ID);
+            __o = Html.DisplayFor(m => user.Username);
 
 
 #line default
 #line hidden
 
 #line 8 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-            __o = Html.DisplayFor(m => grade.Name);
+            __o = Html.DisplayFor(m => user.EmailID);
 
 
 #line default
 #line hidden
 
 #line 9 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-            __o = Html.DisplayFor(m => grade.Grade);
+            __o = Html.DisplayFor(m => user.Role);
 
 
 #line default
 #line hidden
 
 #line 10 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-            __o = Html.ActionLink("Show", "Details",
-                         new { id = grade.ID });
+            __o = Html.ActionLink("Show", "Details",new { emailID = user.EmailID});
 
 
 #line default
 #line hidden
 
 #line 11 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-            __o = Html.ActionLink("Remove", "Remove",
-                         new { id = grade.ID });
+            __o = Html.ActionLink("Remove", "Remove",new { emailID = user.EmailID });
 
 
 #line default
@@ -75,7 +73,7 @@
 
 #line 12 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
             __o = Html.ActionLink("Edit", "Edit",
-                         new { id = grade.ID });
+                     new { id = grade.ID });
 
 
 #line default
@@ -89,18 +87,12 @@
 #line hidden
 
 #line 14 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
-
-    }
-    else
-    {
+        {
 
 
-#line default
-#line hidden
+else
 
-#line 15 "D:\GitHub\projectLudo\pageLudo\Views\Admin\UsersView.cshtml"
+#r    
 
-    }}
-
-<h2>UsersView</h2>
+<h2>UsersView</h2>*@
 
