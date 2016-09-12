@@ -16,8 +16,9 @@ namespace SignalRServer.MVCData.MethodClasses
         {
             using (UsersRepository repo = new UsersRepository())
             {
-
+                return true;
             }
+        }
 
         public List<UserData> GetAllUsers()
         {
