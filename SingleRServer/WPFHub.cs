@@ -46,6 +46,7 @@ namespace SignalRServer
         //ha nem sikerül akkor akkor a kliens LoginError metódusán keresztül jelez
         public void GetLogin(string username, string password, string selectedgametype = "LUDO")
         {
+            Console.WriteLine("Client with {0} connection try to login",Context.ConnectionId);
             using (UsersRepository repo = new UsersRepository())
             {
                 Entities.User user = repo.GetByName(username);
@@ -64,8 +65,30 @@ namespace SignalRServer
                         }
                     }
 
+                    LudoPlayer player;
+                    using (UsersRepository userrepo = new UsersRepository())
+                    {
+                        Entities.User userke = userrepo.GetByGuid(user.Guid);
+                        player = new LudoPlayer(user.Username);
+                    }
+
+                    LudoTable newtable = new LudoTable(player, user.UserID.ToString(), user.UserID.ToString());
+                    name_table.TryAdd(user.UserID.ToString(), newtable);
+                    guid_player.TryAdd(user.Guid, player);
+
+                    Groups.Add(Context.ConnectionId, newtable.Name);
+
+                    using (InvationDesktopRepository tablerepo = new InvationDesktopRepository())
+                    {
+                        //adatbázishoz adás
+                    }
+
+
+
+
                     connectionid_guid.AddOrUpdate(Context.ConnectionId, user.Guid, (key, oldvalue) => user.Guid);
-                    
+
+                    Console.WriteLine("Clien logged in with {0} guid",user.Guid);
                     //mentse el a hozzá tartozó Guidot, a szerver ezzel azonosítja ha esetleg (disconnect, recconect, valami történik)
                     Clients.Caller.SendLogin(user.Guid);
                 }
@@ -85,11 +108,14 @@ namespace SignalRServer
 
         public void GetAllRoomList(string guid)
         {
+            Console.WriteLine("Client with {0} guid asked allroomlist.",guid);
             List<Room> rooms = new List<Room>();
+            Console.WriteLine("Rooms:");
             foreach (var item in name_table)
             {
                 LudoTable room = item.Value;
-                //TODO 0 helyett mi? 
+                //TODO 0 helyett mi?
+                Console.WriteLine(room.Name);
                 Room newroom = new Room(room.Players.Count-4,0, room.Name, room.Password);
                 rooms.Add(newroom);
             }
@@ -98,6 +124,7 @@ namespace SignalRServer
 
         public void GetUsersInRoom(string guid,IRoom room)
         {
+            Console.WriteLine("Client with {0} guid asked usersinroom in {1} room",guid,room.Name);
             LudoTable table = name_table[room.Name];
             if (table == null) return;
             List<SharedLudoLibrary.ClientClasses.User> users = new List<SharedLudoLibrary.ClientClasses.User>();
@@ -118,7 +145,7 @@ namespace SignalRServer
 
         public void GetCreateRoom(string guid,IRoom newRoom)
         {
-            
+            Console.WriteLine("Client with {0} guid try to creatreroom with {1} name",guid,newRoom.Name);
             LudoPlayer player;
             using (UsersRepository userrepo = new UsersRepository())
             {
@@ -142,7 +169,7 @@ namespace SignalRServer
 
         public void GetConnectUserToRoom(string guid,IUser user, IRoom room)
         {
-           
+            Console.WriteLine("Client with {0} guid connectusertoroom to {1} room",guid,room.Name);
             bool connectedToRoom = false;
 
             LudoPlayer player;
@@ -173,6 +200,7 @@ namespace SignalRServer
 
         public void GetStart(string guid,int playerID)
         {
+            Console.WriteLine("Client with {0} guid try to start a game.",guid);
             LudoPlayer caller = guid_player[guid];
             LudoTable table = name_table.Where(akt => akt.Value.Creator.Name == caller.Name).SingleOrDefault().Value;
 
@@ -264,7 +292,7 @@ namespace SignalRServer
 
             LudoPlayer nextplayer = table.getGame().Nextplayer;
             gameinfo.ActivePlayerID = nextplayer.sequence;
-            gameinfo.Msg = "Game started";
+            gameinfo.Msg = "";
             gameinfo.OnManHit = false;
             gameinfo.Reroll = false;
             gameinfo.PuppetList = CreatePuppetList(table.Gamemanager);
@@ -349,6 +377,7 @@ namespace SignalRServer
 
         public void GetMove(string guid,int puppetID, int actPoz, int destPoz)
         {
+            Console.WriteLine("Client with {0} guid try to move.", guid);
             LudoPlayer caller = guid_player[guid];
             LudoTable table = name_table.Where(akt => akt.Value.Players.Contains(caller)).SingleOrDefault().Value;
             int amount = destPoz - actPoz;
