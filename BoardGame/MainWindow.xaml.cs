@@ -34,8 +34,8 @@ namespace BoardGame
             {
                 HelperClass.Connection = new HubConnection((HelperClass.ConnString));
                 HelperClass.HubProxy = (HelperClass.Connection.CreateHubProxy("WPFHub"));
-                HelperClass.HubProxy.On<string>("SetGuid", (guid) => this.Dispatcher.Invoke(() => { Login(guid); }));
-                HelperClass.HubProxy.On("LoginError", () => this.Dispatcher.Invoke(() => { LoginError(); }));
+                HelperClass.HubProxy.On<string>("SendLogin", (guid) => this.Dispatcher.Invoke(() => { Login(guid); }));
+                HelperClass.HubProxy.On("SendLoginError", () => this.Dispatcher.Invoke(() => { LoginError(); }));
                 try
                 {
                     HelperClass.Connection.Start();
@@ -83,7 +83,7 @@ namespace BoardGame
 
                     if (HelperClass.Connection?.State == ConnectionState.Connected)
                     {
-                        HelperClass.HubProxy.Invoke("Login", VM.UserName, hashedPassword, VM.SelectedGameType);
+                        HelperClass.HubProxy.Invoke("GetLogin", VM.UserName, hashedPassword, VM.SelectedGameType);
                     }
                 }
                 else

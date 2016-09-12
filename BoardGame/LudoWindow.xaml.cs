@@ -1,6 +1,7 @@
 ﻿using BoardGame.TestClasses;
 using BoardGame.Views;
 using Microsoft.AspNet.SignalR.Client;
+using SharedLudoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace BoardGame
         public HubConnection Connection { get; set; }
 
 
-        public LudoWindow()
+        public LudoWindow(IStartGameInfo startGameInfo)
         {
             InitializeComponent();
             VM = LudoView.GetVM;

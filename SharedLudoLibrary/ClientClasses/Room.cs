@@ -54,7 +54,11 @@ namespace SharedLudoLibrary.ClientClasses
             //}
         }
 
-
+        public Room(string name, string password)
+        {
+            this.name = name;
+            this.password = password;
+        }
         public Room(int places, int id, string name, string password)
         {
             this.availablePlaces = places;
