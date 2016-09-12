@@ -14,5 +14,6 @@ namespace SignalRServer.MVCData.Interfaces
 
         bool UserSetting(string userEmailID, string username, string password, string emailID, string role);
 
+        bool DeleteUser(string userEmailID);
     }
 }

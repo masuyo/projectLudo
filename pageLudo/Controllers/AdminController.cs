@@ -69,8 +69,8 @@ namespace pageLudo.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
+                aa = new AdminActions();
+                aa.DeleteUser(emailID);
                 return RedirectToAction("Index");
             }
             catch

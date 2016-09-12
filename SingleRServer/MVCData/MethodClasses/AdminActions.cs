@@ -12,6 +12,11 @@ namespace SignalRServer.MVCData.MethodClasses
 {
     public class AdminActions : IAdminActions
     {
+        public bool DeleteUser(string userEmailID)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<UserData> GetAllUsers()
         {
             List<UserData> allUsers = new List<UserData>();
