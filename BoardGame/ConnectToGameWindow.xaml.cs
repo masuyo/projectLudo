@@ -99,7 +99,7 @@ namespace BoardGame
             }
             if (HelperClass.Connection?.State == ConnectionState.Connected)
             {
-                HelperClass.HubProxy.Invoke("GetUsersInRoom", HelperClass.GUID); //answer : call my "SendAllRoomList"
+                HelperClass.HubProxy.Invoke("GetUsersInRoom", HelperClass.GUID); //answer : call my "AllUserInRoom"
             }
         }
 
