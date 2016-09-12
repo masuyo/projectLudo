@@ -9,7 +9,7 @@ namespace SharedLudoLibrary.Interfaces
     public interface IStartGameInfo
     {
         IPlayer WPFPlayer { get; }
-        IPlayer[] otherWPFPlayers { get; }
+        IPlayer[] OtherWPFPlayers { get; }
         IGameInfo MsgFromServer { get; }
     }
 }

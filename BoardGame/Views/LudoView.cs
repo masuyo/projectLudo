@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SharedLudoLibrary.ClientClasses;
+using SharedLudoLibrary.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -43,6 +45,8 @@ namespace BoardGame.Views
         {
             serverMsgs = new ObservableCollection<string>();
             chatMsgs = new ObservableCollection<string>();
+            //
+
         }
         public static LudoView GetVM
         {
@@ -56,6 +60,27 @@ namespace BoardGame.Views
             }
         }
 
+        //IStartGameInfo implementation
+        IPlayer wpfPlayer;
+        IPlayer[] otherPlayers;
+        IGameInfo msgFromServer;
+        public IPlayer WPFPlayer
+        {
+            get { return wpfPlayer; }
 
+            set { SetProperty(ref wpfPlayer, value); }
+        }
+        public IPlayer[] OtherWPFPlayers
+        {
+            get { return otherPlayers; }
+
+            set { SetProperty(ref otherPlayers, value); }
+        }
+        public IGameInfo MsgFromServer
+        {
+            get { return msgFromServer; }
+
+            set { SetProperty(ref msgFromServer, value); }
+        }
     }
 }
