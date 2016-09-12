@@ -16,32 +16,30 @@ namespace SharedLudoLibrary.ClientClasses
 
         public IGameInfo MsgFromServer
         {
-            get
-            {
-                GameInfo tmsg = new GameInfo();
-                return tmsg;
-            }
+            get; set;
         }
 
         public IPlayer[] OtherWPFPlayers
         {
-            get
-            {
-                IPlayer[] ret = new Player[3] {
-                    new Player(1, PlayerColor.BLUE),
-                    new Player(2, PlayerColor.YELLOW),
-                    new Player(3, PlayerColor.GREEN)
-                };
-                return ret;
-            }
+            get;set;
+            //get
+            //{
+            //    IPlayer[] ret = new Player[3] {
+            //        new Player(1, PlayerColor.BLUE),
+            //        new Player(2, PlayerColor.YELLOW),
+            //        new Player(3, PlayerColor.GREEN)
+            //    };
+            //    return ret;
+            //}
         }
 
         public IPlayer WPFPlayer
         {
-            get
-            {
-                return new Player(0, PlayerColor.RED);
-            }
+            get;set;
+            //get
+            //{
+            //    return new Player(0, PlayerColor.RED);
+            //}
         }
     }
 }
