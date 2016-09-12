@@ -73,7 +73,7 @@ namespace pageLudo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginUser u) // Username helyett emaillel lép be
+        public ActionResult Login(LoginUser u) // emaillel lép be
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace pageLudo.Controllers
                     Session["LogedUserID"] = ud.UserID.ToString();
                     Session["LogedUsername"] = ud.Username.ToString();
                     Session["LogedEmailID"] = ud.EmailID.ToString();
-                    Session["Role"] = "admin";
+                    Session["Role"] = ud.Role.ToString();
                 }
                 else
                 {

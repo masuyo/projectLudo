@@ -8,15 +8,15 @@ namespace SharedLudoLibrary.Interfaces
 {
     public interface IGameInfo
     {
-        int ActivePlayerID { get; }
-        string Msg { get; }
-        List<IPuppet> PuppetList { get; }
-        bool End { get; }
-        bool OnManHit { get; } //redraw full visual
-        bool Reroll { get; }
+        int ActivePlayerID { get; set; }
+        string Msg { get; set; }
+        List<IPuppet> PuppetList { get; set; }
+        bool End { get; set; }
+        bool OnManHit { get; set; } //redraw full visual
+        bool Reroll { get; set; }
 
-        int Dice1 { get; }
-        int Dice2 { get; }
+        int Dice1 { get; set; }
+        int Dice2 { get; set; }
 
     }
 }

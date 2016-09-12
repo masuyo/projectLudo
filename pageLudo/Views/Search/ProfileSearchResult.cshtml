@@ -4,7 +4,7 @@
     ViewBag.Title = "ProfileSearchResult";
 }
 
-@if (Session["AccessedUsername"] != null)
+@if (Model.Username != null)
 {
     <br />
     <h4>Adatlap</h4>
@@ -24,7 +24,7 @@
     //Session["AccessedFriendedYou"]
     //Session["AccessedFriendedMe"]
     // ha egyikünk sem barátja a másiknak
-    if (Session["AccessedFriendedYou"].ToString() == "false" && Session["AccessedFriendedMe"].ToString() == "false")
+    if (Model.FriendedYou.ToString() == "false" && Model.FriendedMe.ToString() == "false")
     {
         using (Html.BeginForm("Friending", "Friend", FormMethod.Post))
         {
@@ -38,7 +38,7 @@
     else
     {
         // ha én barátnak jelöltelek, mindegy, hogy elfogadtad-e, unfriendelhetlek
-        if (Session["AccessedFriendedYou"].ToString() == "true")
+        if (Model.FriendedYou.ToString() == "true")
         {
             using (Html.BeginForm("Unfriending", "Friend", FormMethod.Post))
             {

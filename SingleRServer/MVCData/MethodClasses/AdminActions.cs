@@ -6,11 +6,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Repository.TableRepositories;
+using Entities;
 
 namespace SignalRServer.MVCData.MethodClasses
 {
     public class AdminActions : IAdminActions
     {
+        public bool DeleteUser(string userEmailID)
+        {
+            using (UsersRepository userrepo = new UsersRepository())
+            {
+                try
+                {
+                    User usertodelete = userrepo.GetByEmailID(userEmailID);
+                    userrepo.Delete(usertodelete.UserID);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
         public List<UserData> GetAllUsers()
         {
             List<UserData> allUsers = new List<UserData>();
@@ -22,6 +40,25 @@ namespace SignalRServer.MVCData.MethodClasses
                 }
             }
             return allUsers;
+        }
+
+        public bool UserSetting(string userEmailID, string username, string password, string emailID, string role)
+        {
+            using (UsersRepository userrepo = new UsersRepository())
+            {
+                User user = userrepo.GetByEmailID(userEmailID);
+                if (user == null) return false;
+                if (username != null) userrepo.UpdateName(user.UserID, username);
+                if (password != null)
+                {
+                    //HASH
+                    userrepo.UpdatePassword(user.UserID, password);
+                }
+                if (emailID != null) userrepo.UpdateEmailID(user.UserID, emailID);
+                if (role != null) userrepo.UpdateRole(user.UserID, role);
+                // role update goes here
+                return true;
+            }
         }
     }
 }

@@ -7,24 +7,29 @@
 
 @if (Model.Count() > 0)
 {
-    <table border="0">
-        <tr>
-            <th>Username</th>
-            <th>Email address</th>
-        </tr> 
-        @foreach (var user in Model)
-        {
+    int ID = 0;
+    <table class="table">
+        <thead>
             <tr>
-                <td>@Html.DisplayFor(m => user.Username)</td>
-                <td>@Html.DisplayFor(m => user.EmailID)</td>
-                <td>@Html.DisplayFor(m => user.AreWeFriends)</td>
-                <td>@Html.DisplayFor(m => user.FriendedMe)</td>
-                <td>@Html.DisplayFor(m => user.FriendedYou)</td>
+                <th>#</th>
+                <th>Username</th>
+                <th>Email address</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                ID++;
+                <tr>
+                    <td>@ID</td>
+                    <td>@Html.DisplayFor(m => user.Username)</td>
+                    <td>@Html.DisplayFor(m => user.EmailID)</td>
 
-                <td>
-                    @Html.ActionLink("Profile", "Details", new { emailID = user.EmailID })
-                </td>
-                @*
+                    <td>
+                        @Html.ActionLink("Profile", "Details", new { emailID = user.EmailID })
+                    </td>
+                    @*
                 <td>
                     @Html.ActionLink("Remove", "Remove",
                         new { id = grade.ID })
@@ -33,9 +38,10 @@
                     @Html.ActionLink("Edit", "Edit",
                         new { id = grade.ID })
                 </td>*@
-            </tr>
-        }
-    </table>
+                </tr>
+            }
+        </tbody>
+</table>
 }
 else
 {

@@ -15,6 +15,7 @@ namespace pageLudo.Controllers
         AdminActions aa;
         List<UserData> udList;
 
+        // kilistázza az összes usert
         public ActionResult AllUsersPage()
         {
             aa = new AdminActions();
@@ -29,55 +30,29 @@ namespace pageLudo.Controllers
             return View("AdminView", uhdm);
         }
 
-        // GET: Admin
+        // admin főoldal
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Admin/Details/5
-        public ActionResult Details(string emailID)
+        // user edit view
+        public ActionResult EditUser(string emailID)
         {
-            return View();
-        }
-
-        // GET: Admin/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Admin/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Admin/Edit/5
-        public ActionResult Edit(string emailID)
-        {
-            return View();
+            HttpContext.Session["EditUserEmailID"] = emailID.ToString();
+            return View("EditView");
         }
 
         // POST: Admin/Edit/5
         [HttpPost]
-        public ActionResult Edit(string emailID, FormCollection collection)
+        public ActionResult Edit(UserHandlingData u)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                aa = new AdminActions();
+                string editUserEmailID = HttpContext.Session["EditUserEmailID"].ToString();
+                aa.UserSetting(editUserEmailID, u.Username, u.Password, u.EmailID, u.Role);
+                return RedirectToAction("AllUsersPage");
             }
             catch
             {
@@ -85,21 +60,13 @@ namespace pageLudo.Controllers
             }
         }
 
-        // GET: Admin/Delete/5
-        public ActionResult Delete(string emailID)
-        {
-            return View();
-        }
-
-        // POST: Admin/Delete/5
-        [HttpPost]
-        public ActionResult Delete(string emailID, FormCollection collection)
+        public ActionResult DeleteUser(string emailID)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                aa = new AdminActions();
+                aa.DeleteUser(emailID);
+                return RedirectToAction("AllUsersPage");
             }
             catch
             {

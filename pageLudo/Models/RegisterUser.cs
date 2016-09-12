@@ -8,8 +8,6 @@ namespace pageLudo.Models
 {
     public class RegisterUser
     {
-        public int UserID { get; set; }
-
         [StringLength(50, MinimumLength = 6, ErrorMessage = "Username must be at least 6 char long")]
         [Required(ErrorMessage = "Missing username", AllowEmptyStrings = false)]
         public string Username { get; set; }
@@ -29,7 +27,7 @@ ErrorMessage = "Wrong e-mail")]
         [Required(ErrorMessage = "Missing email", AllowEmptyStrings = false)]
         public string EmailID { get; set; }
 
-        public string Status { get; set; }
-        public string Token { get; set; }
+        //public string Status { get; set; }
+        //public string Token { get; set; }
     }
 }

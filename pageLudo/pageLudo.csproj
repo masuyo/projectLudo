@@ -223,6 +223,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\AdminView.cshtml" />
     <Content Include="Views\Admin\UsersView.cshtml" />
+    <Content Include="Views\Admin\EditView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
