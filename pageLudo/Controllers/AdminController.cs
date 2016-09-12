@@ -15,6 +15,7 @@ namespace pageLudo.Controllers
         AdminActions aa;
         List<UserData> udList;
 
+        // kilistázza az összes usert
         public ActionResult AllUsersPage()
         {
             aa = new AdminActions();
@@ -29,13 +30,13 @@ namespace pageLudo.Controllers
             return View("AdminView", uhdm);
         }
 
-        // GET: Admin
+        // admin főoldal
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Admin/Edit/5
+        // user edit view
         public ActionResult Edit(string emailID)
         {
             return View("EditView",emailID);

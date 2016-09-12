@@ -15,7 +15,7 @@ namespace pageLudo.Controllers
         {
             UserActions ua = new UserActions();
             ua.FriendAccept(Session["LogedEmailID"].ToString(), u.EmailID);
-            return View("~/Views/Search/ProfileSearchResult.cshtml");
+            return View("~/Views/Search/ProfileSearchResult.cshtml",u);
         }
 
 
@@ -25,7 +25,7 @@ namespace pageLudo.Controllers
         {
             UserActions ua = new UserActions();
             ua.Friend(u.EmailID, Session["LogedEmailID"].ToString());
-            return View("~/Views/Search/ProfileSearchResult.cshtml");
+            return View("~/Views/Search/ProfileSearchResult.cshtml",u);
         }
 
         // elég az egyik oldalnak kezdeményeznie
@@ -34,7 +34,7 @@ namespace pageLudo.Controllers
         {
             UserActions ua = new UserActions();
             ua.Unfriend(Session["LogedEmailID"].ToString(), u.EmailID);
-            return View("~/Views/Search/ProfileSearchResult.cshtml");
+            return View("~/Views/Search/ProfileSearchResult.cshtml",u);
         }
     }
 }
