@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErikaTestSignalRWPFServer",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLudoLibrary", "SharedLudoLibrary\SharedLudoLibrary.csproj", "{4676AD40-457C-4C3D-ACDA-D1D096AC12DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFDice", "WPFDice\WPFDice.csproj", "{089D5623-A7DC-4CD0-908B-CCA20C53FC45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{4676AD40-457C-4C3D-ACDA-D1D096AC12DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4676AD40-457C-4C3D-ACDA-D1D096AC12DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4676AD40-457C-4C3D-ACDA-D1D096AC12DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{089D5623-A7DC-4CD0-908B-CCA20C53FC45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{089D5623-A7DC-4CD0-908B-CCA20C53FC45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{089D5623-A7DC-4CD0-908B-CCA20C53FC45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{089D5623-A7DC-4CD0-908B-CCA20C53FC45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

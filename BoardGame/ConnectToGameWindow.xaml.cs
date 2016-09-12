@@ -37,7 +37,7 @@ namespace BoardGame
             imgb.ImageSource = new BitmapImage(new Uri(@"Images\l3.png", UriKind.Relative));
             imgb.Opacity = 0.4;
             // grid_bg.Background = imgb;
-
+            
             HelperClass.HubProxy.On<List<IRoom>>("SendAllRoomList", (allRoom) => this.Dispatcher.Invoke(() => { AllRoom(allRoom); }));
             HelperClass.HubProxy.On<List<IUser>>("SendUsersInRoom", (allUserInRoom) => this.Dispatcher.Invoke(() => { AllUserInRoom(allUserInRoom); }));
             HelperClass.HubProxy.On<IRoom>("SendCreateRoom", (createdRoom) => this.Dispatcher.Invoke(() => { CreateRoom(createdRoom); }));
@@ -59,6 +59,7 @@ namespace BoardGame
 
         private void Start(IStartGameInfo startGameInfo)
         {
+            Console.WriteLine("start");
             if (startGameInfo != null)
             {
                 LudoWindow ludo = new LudoWindow(startGameInfo);
@@ -73,6 +74,7 @@ namespace BoardGame
 
         private void ConnectUserToRoom(bool connectedToRoom)
         {
+            Console.WriteLine("connect");
             if (connectedToRoom && HelperClass.Connection?.State == ConnectionState.Connected)
             {
                 HelperClass.HubProxy.Invoke("GetUsersInRoom", HelperClass.GUID, VM.SelectedRoom); //answer : call my "SendAllRoomList"
@@ -85,15 +87,7 @@ namespace BoardGame
 
         private void CreateRoom(IRoom createdRoom)
         {
-            //VM.SearchRoomList.Clear();
-            //foreach (Room r in VM.RoomList)
-            //{
-            //    if (r.AvailablePlaces > 0)
-            //    {
-            //        VM.SearchRoomList.Add(r);
-            //    }
-            //}
-
+            Console.WriteLine("create");
             if (createdRoom == null)
             {
                 MessageBox.Show("Cannot create a room that already exists. Try again with a different name.");
@@ -112,6 +106,7 @@ namespace BoardGame
         }
         private void AllUserInRoom(List<IUser> allUserInRoom)
         {
+            Console.WriteLine("usersinroom");
             VM.UsersInRoom.Clear();
             foreach (IUser u in allUserInRoom)
             {
@@ -121,11 +116,18 @@ namespace BoardGame
 
         private void AllRoom(List<IRoom> allRoom)
         {
+            Console.WriteLine("sendallroom");
+            foreach (IRoom ir in allRoom)
+            {
+                Console.WriteLine(ir.Name + " - " +ir.Password + " " +ir.AvailablePlaces);
+            }
+
             VM.RoomList.Clear();
             if (allRoom != null && allRoom.Count > 0)
             {
                 foreach (IRoom r in allRoom)
                 {
+                    Console.WriteLine(r.Name);
                     VM.RoomList.Add(r);
                 }
             }
