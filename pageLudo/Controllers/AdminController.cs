@@ -39,17 +39,18 @@ namespace pageLudo.Controllers
         // user edit view
         public ActionResult Edit(string emailID)
         {
+            Session["EditUserEmailID"] = emailID;
             return View("EditView",emailID);
         }
 
         // POST: Admin/Edit/5
         [HttpPost]
-        public ActionResult Edit(string emailID, UserHandlingData u)
+        public ActionResult Edit(UserHandlingData u)
         {
             try
             {
                 aa = new AdminActions();
-                aa.UserSetting(emailID, u.Username, u.Password, u.EmailID, u.Role);
+                aa.UserSetting(Session["EditUserEmailID"].ToString(), u.Username, u.Password, u.EmailID, u.Role);
                 return RedirectToAction("Index");
             }
             catch

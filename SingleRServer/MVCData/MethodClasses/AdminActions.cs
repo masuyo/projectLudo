@@ -14,8 +14,10 @@ namespace SignalRServer.MVCData.MethodClasses
     {
         public bool DeleteUser(string userEmailID)
         {
-            throw new NotImplementedException();
-        }
+            using (UsersRepository repo = new UsersRepository())
+            {
+
+            }
 
         public List<UserData> GetAllUsers()
         {
