@@ -7,7 +7,6 @@ namespace pageLudo.Models
 {
     public class UserListingModel
     {
-        //public UserListingData EditObject { get; set; }
         public List<UserListingData> List { get; set; }
     }
 }

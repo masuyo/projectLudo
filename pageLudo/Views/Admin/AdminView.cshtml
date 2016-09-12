@@ -6,32 +6,6 @@
     @Scripts.Render("~/bundles/jquery")
 }
 
-<h2>Manage Grades</h2>
-
-<fieldset>
-    <legend>Edit, delete users</legend>
-    @using (Html.BeginForm("Edit","Admin",FormMethod.Post))
-    {
-        @Html.ValidationSummary()
-        @Html.AntiForgeryToken()
-
-        @Html.HiddenFor(m => m.EditObject.EmailID)
-        <div class="editor-label">@Html.LabelFor(m => m.EditObject.Username)</div>
-        <div class="editor-field">@Html.EditorFor(m => m.EditObject.Username)</div>
-
-        <div class="editor-label">@Html.LabelFor(m => m.EditObject.EmailID)</div>
-        <div class="editor-field">@Html.EditorFor(m => m.EditObject.EmailID)</div>
-
-        <div class="editor-label">@Html.LabelFor(m => m.EditObject.Password)</div>
-        <div class="editor-field">@Html.EditorFor(m => m.EditObject.Password)</div>
-
-        <div class="editor-label">@Html.LabelFor(m => m.EditObject.Role)</div>
-        <div class="editor-field">@Html.EditorFor(m => m.EditObject.Role)</div>
-
-        <input type="submit" value="GO" />
-    }
-</fieldset>
-
 <h2>List of Users</h2>
 @Html.Partial("UsersView", Model.List, new ViewDataDictionary<IEnumerable<pageLudo.Models.UserHandlingData>>(Model.List))
 

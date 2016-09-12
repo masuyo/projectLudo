@@ -180,7 +180,7 @@ namespace SignalRServer.MVCData.MethodClasses
                 if (user != null)
                 {
                     //HASH
-                    UserData userdata = new UserData() { UserID = user.UserID, Username = user.Username, EmailID = user.EmailID };
+                    UserData userdata = new UserData() { UserID = user.UserID, Username = user.Username, EmailID = user.EmailID , Role = user.Role};
                     if (user.Password == password) return userdata;
                     else return null;
                 }
