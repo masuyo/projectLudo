@@ -6,62 +6,70 @@
 
 @if (Model.Username != null)
 {
-    <br />
-    <h4>Adatlap</h4>
 
-    <table border="0" class="pull-left">
-        <tr>
-            <td>@Html.DisplayNameFor(m => m.Username)</td>
-            <td>@Html.DisplayFor(m => m.Username)</td>
-        </tr>
-        <tr>
-            <td>Email address</td>
-            <td>@Html.DisplayFor(m => m.EmailID)</td>
-        </tr>
+    <table class="table pull-left">
+        <thead>
+            <tr>
+                <td>Adatlap</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">@Html.DisplayNameFor(m => m.Username)</th>
+                <td>@Html.DisplayFor(m => m.Username)</td>
+                <td>
+                    @if (Model.FriendedYou.ToString() == "false" && Model.FriendedMe.ToString() == "false")
+                    {
+                        using (Html.BeginForm("Friending", "Friend", FormMethod.Post))
+                        {
+                            <div class="form-group pull-right">
+                                <div class="col-sm-12 col-xs-12" style="min-width:200px;">
+                                    <button id="Friend" class="btn btn-success btn-block" property="EmailID">Friend</button>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        // ha én barátnak jelöltelek, mindegy, hogy elfogadtad-e, unfriendelhetlek
+                        if (Model.FriendedYou.ToString() == "true")
+                        {
+                            using (Html.BeginForm("Unfriending", "Friend", FormMethod.Post))
+                            {
+                                <div class="form-group pull-right">
+                                    <div class="col-sm-12 col-xs-12" style="min-width:200px; color: red">
+                                        <button id="Unfriend" class="btn btn-warning btn-block" property="EmailID">Unfriend</button>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        // barátnak jelöltél, de még nem jelöltelek vissza
+                        else /*if ((string)Session["AccessedFriendedYou"] == "false" && (string)Session["AccessedFriendedMe"] == "true")*/
+                        {
+                            using (Html.BeginForm("FriendAccepting", "Friend", FormMethod.Post))
+                            {
+                                <div class="form-group pull-right">
+                                    <div class="col-sm-12 col-xs-12" style="min-width:200px; color: red">
+                                        <button id="FriendAccept" class="btn btn-success btn-block" property="EmailID">Friend back</button>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Email address</th>
+                <td>@Html.DisplayFor(m => m.EmailID)</td>
+            </tr>
+        </tbody>
     </table>
 
     //Session["AccessedFriendState"]
     //Session["AccessedFriendedYou"]
     //Session["AccessedFriendedMe"]
     // ha egyikünk sem barátja a másiknak
-    if (Model.FriendedYou.ToString() == "false" && Model.FriendedMe.ToString() == "false")
-    {
-        using (Html.BeginForm("Friending", "Friend", FormMethod.Post))
-        {
-            <div class="form-group pull-right">
-                <div class="col-sm-12 col-xs-12" style="min-width:200px;">
-                    <button id="Friend" class="btn btn-success btn-block">Friend</button>
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        // ha én barátnak jelöltelek, mindegy, hogy elfogadtad-e, unfriendelhetlek
-        if (Model.FriendedYou.ToString() == "true")
-        {
-            using (Html.BeginForm("Unfriending", "Friend", FormMethod.Post))
-            {
-                <div class="form-group pull-right">
-                    <div class="col-sm-12 col-xs-12" style="min-width:200px; color: red">
-                        <button id="Unfriend" class="btn btn-warning btn-block">Unfriend</button>
-                    </div>
-                </div>
-            }
-        }
-        // barátnak jelöltél, de még nem jelöltelek vissza
-        else /*if ((string)Session["AccessedFriendedYou"] == "false" && (string)Session["AccessedFriendedMe"] == "true")*/
-        {
-            using (Html.BeginForm("FriendAccepting", "Friend", FormMethod.Post))
-            {
-                <div class="form-group pull-right">
-                    <div class="col-sm-12 col-xs-12" style="min-width:200px; color: red">
-                        <button id="FriendAccept" class="btn btn-success btn-block">Friend back</button>
-                    </div>
-                </div>
-            }
-        }
-    }
+
 
 }
 

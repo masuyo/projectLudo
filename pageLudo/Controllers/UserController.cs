@@ -44,9 +44,7 @@ namespace pageLudo.Controllers
             UserStatistics us = new UserStatistics();
             List<GameWinrate> gwrList = us.PlayerWinrate(Session["LogedEmailID"].ToString());
 
-            // fkin serialization
             ArrayList header = new ArrayList { "Game", "Wins", "Losses"};
-            //ArrayList data1 = new ArrayList { gwrList[0].GameName, gwrList[0].NumberOfWins, gwrList[0].NumberOfLosses};
             ArrayList data = new ArrayList {header};
             foreach (var item in gwrList)
             {

@@ -78,7 +78,9 @@
                 </footer>
             </div>
 
+            @Scripts.Render("~/bundles/RequiredBundles")
             @RenderSection("scripts", required: false)
+
 
             <script src="~/Scripts/jquery-1.10.2.min.js"></script>
             <script src="~/Scripts/bootstrap.min.js"></script>
@@ -160,7 +162,10 @@
                 </footer>
             </div>
 
+            @Scripts.Render("~/bundles/RequiredBundles")
             @RenderSection("scripts", required: false)
+
+            
 
             <script src="~/Scripts/jquery-1.10.2.min.js"></script>
             <script src="~/Scripts/bootstrap.min.js"></script>
@@ -233,7 +238,11 @@ else
         </footer>
     </div>
 
+    @Scripts.Render("~/bundles/RequiredBundles")
     @RenderSection("scripts", required: false)
+
+
+    
 
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
