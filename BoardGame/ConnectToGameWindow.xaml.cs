@@ -40,9 +40,9 @@ namespace BoardGame
 
             HelperClass.HubProxy.On<List<IRoom>>("SendAllRoomList", (allRoom) => this.Dispatcher.Invoke(() => { AllRoom(allRoom); }));
             HelperClass.HubProxy.On<List<IUser>>("SendUsersInRoom", (allUserInRoom) => this.Dispatcher.Invoke(() => { AllUserInRoom(allUserInRoom); }));
-            HelperClass.HubProxy.On<IRoom>("SendCreateRoom", (createdRoom) => this.Dispatcher.Invoke(() => { SendCreateRoom(createdRoom); }));
-            HelperClass.HubProxy.On<bool>("SendConnectUserToRoom", (connectedToRoom) => this.Dispatcher.Invoke(() => { SendConnectUserToRoom(connectedToRoom); }));
-            HelperClass.HubProxy.On<IStartGameInfo>("SendStart", (startGameInfo) => this.Dispatcher.Invoke(() => { SendStart(startGameInfo); }));
+            HelperClass.HubProxy.On<IRoom>("SendCreateRoom", (createdRoom) => this.Dispatcher.Invoke(() => { CreateRoom(createdRoom); }));
+            HelperClass.HubProxy.On<bool>("SendConnectUserToRoom", (connectedToRoom) => this.Dispatcher.Invoke(() => { ConnectUserToRoom(connectedToRoom); }));
+            HelperClass.HubProxy.On<IStartGameInfo>("SendStart", (startGameInfo) => this.Dispatcher.Invoke(() => { Start(startGameInfo); }));
 
 
 
@@ -57,7 +57,7 @@ namespace BoardGame
             }
         }
 
-        private void SendStart(IStartGameInfo startGameInfo)
+        private void Start(IStartGameInfo startGameInfo)
         {
             if (startGameInfo != null)
             {
@@ -71,7 +71,7 @@ namespace BoardGame
             }
         }
 
-        private void SendConnectUserToRoom(bool connectedToRoom)
+        private void ConnectUserToRoom(bool connectedToRoom)
         {
             if (connectedToRoom && HelperClass.Connection?.State == ConnectionState.Connected)
             {
@@ -83,34 +83,42 @@ namespace BoardGame
             }
         }
 
-        private void SendCreateRoom(IRoom createdRoom)
+        private void CreateRoom(IRoom createdRoom)
         {
-            if (HelperClass.Connection?.State == ConnectionState.Connected)
+            //VM.SearchRoomList.Clear();
+            //foreach (Room r in VM.RoomList)
+            //{
+            //    if (r.AvailablePlaces > 0)
+            //    {
+            //        VM.SearchRoomList.Add(r);
+            //    }
+            //}
+
+            if (createdRoom == null)
             {
-                HelperClass.HubProxy.Invoke("GetAllRoomList", HelperClass.GUID); //answer : call my "SendAllRoomList"
+                MessageBox.Show("Cannot create a room that already exists. Try again with a different name.");
             }
-            VM.SearchRoomList.Clear();
-            foreach (Room r in VM.RoomList)
+            else
             {
-                if (r.AvailablePlaces > 0)
+                VM.SelectedRoom = new Room(createdRoom.Name, createdRoom.Password);
+                VM.Start = "Start Ludo";
+
+                if (HelperClass.Connection?.State == ConnectionState.Connected)
                 {
-                    VM.SearchRoomList.Add(r);
+                    HelperClass.HubProxy.Invoke("GetUsersInRoom", HelperClass.GUID, createdRoom); //answer : call my "AllUserInRoom"
                 }
             }
-            if (HelperClass.Connection?.State == ConnectionState.Connected)
-            {
-                HelperClass.HubProxy.Invoke("GetUsersInRoom", HelperClass.GUID); //answer : call my "AllUserInRoom"
-            }
-        }
 
+        }
         private void AllUserInRoom(List<IUser> allUserInRoom)
         {
             VM.UsersInRoom.Clear();
             foreach (IUser u in allUserInRoom)
             {
                 VM.UsersInRoom.Add(u);
-            }
+            }           
         }
+
         private void AllRoom(List<IRoom> allRoom)
         {
             VM.RoomList.Clear();
@@ -129,10 +137,10 @@ namespace BoardGame
             {
                 //if (!String.IsNullOrEmpty(VM.SelectedRoom.Name) && VM.SelectedRoom.AvailablePlaces == 0)
                 //{
-                    if (HelperClass.Connection?.State == ConnectionState.Connected)
-                    {
-                        HelperClass.HubProxy.Invoke("GetStart", HelperClass.GUID, HelperClass.UserName); //answer : call my "SendStart(IStartGameInfo startGameInfo);"
-                    }
+                if (HelperClass.Connection?.State == ConnectionState.Connected)
+                {
+                    HelperClass.HubProxy.Invoke("GetStart", HelperClass.GUID, HelperClass.UserName); //answer : call my "SendStart(IStartGameInfo startGameInfo);"
+                }
                 //}
                 //else
                 //{
@@ -185,30 +193,7 @@ namespace BoardGame
         {
             if (HelperClass.Connection?.State == ConnectionState.Connected)
             {
-                HelperClass.HubProxy.Invoke("GetAllRoomList", HelperClass.GUID); //answer : call my "SendAllRoomList"
-            }
-            bool contains = false; int i = 0;
-            while (!contains && VM.RoomList.Count > i)
-            {
-                if (VM.RoomList[i].Name == VM.SelectedRoom.Name)
-                {
-                    contains = true;
-                }
-                i++;
-            }
-
-            if (!contains)
-            {
-                if (HelperClass.Connection?.State == ConnectionState.Connected)
-                {
-                    HelperClass.HubProxy.Invoke("GetCreateRoom", HelperClass.GUID, new User(HelperClass.UserName), new Room(VM.SelectedRoomName, VM.SelectedRoomPassword));
-                }
-                VM.SelectedRoom = new Room(VM.SelectedRoomName, VM.SelectedRoomPassword);
-                VM.Start = "Start Ludo";
-            }
-            else
-            {
-                MessageBox.Show("Cannot create a room that already exists. Try again with a different name.");
+                HelperClass.HubProxy.Invoke("GetCreateRoom", HelperClass.GUID, new User(HelperClass.UserName), new Room(VM.SelectedRoomName, VM.SelectedRoomPassword)); //answer : call my "SendAllRoomList"
             }
         }
         private void LBL_Connect_MouseDown(object sender, MouseButtonEventArgs e)
