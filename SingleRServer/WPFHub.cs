@@ -221,5 +221,10 @@ namespace SignalRServer
         {
             throw new NotImplementedException();
         }
+
+        public void GetMessage(string guid, string username, string text)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
