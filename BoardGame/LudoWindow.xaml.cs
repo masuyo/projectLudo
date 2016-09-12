@@ -1,6 +1,7 @@
 ﻿using BoardGame.TestClasses;
 using BoardGame.Views;
 using Microsoft.AspNet.SignalR.Client;
+using SharedLudoLibrary.ClientClasses;
 using SharedLudoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -26,81 +27,82 @@ namespace BoardGame
     {
         LudoView VM;
 
-        //ezen keresztül fogod elérni a hubomat, amit a szerver oldalon osztályt csináltam, lásd lentebb
-        public IHubProxy HubProxy { get; set; }
-        const string ServerURI = "http://localhost:8080/signalr";
-        public HubConnection Connection { get; set; }
-
-
         public LudoWindow(IStartGameInfo startGameInfo)
         {
             InitializeComponent();
             VM = LudoView.GetVM;
-            VM.UserName = HelperClass.UserName;
+
+            VM.WPFPlayer = new Player(startGameInfo.WPFPlayer.ID, startGameInfo.WPFPlayer.Color);
+            VM.UserName = startGameInfo.WPFPlayer.Name;
+            VM.OtherWPFPlayers = new Player[] {
+                new Player(startGameInfo.OtherWPFPlayers[0].ID, startGameInfo.OtherWPFPlayers[0].Color),
+                new Player(startGameInfo.OtherWPFPlayers[1].ID, startGameInfo.OtherWPFPlayers[1].Color),
+                new Player(startGameInfo.OtherWPFPlayers[2].ID, startGameInfo.OtherWPFPlayers[2].Color)
+            };
+            VM.MsgFromServer = new GameInfo(); //startGameInfo.MsgFromServer
+
             this.DataContext = VM;
 
-            //connect to server with ConnectAsync(); display what's happening
-            VM.ServerMsgs.Add(VM.UserName + ":: Connecting to server...");
-            ConnectAsync();
-        }
-        private async void ConnectAsync()
-        {
-            Connection = new HubConnection(ServerURI);
-            Connection.Closed += Connection_Closed;
-            Connection.StateChanged += (e) => { Console.WriteLine(e.NewState); };
+            HelperClass.HubProxy.On<string, string, DateTime>("SendMessage", (uname, text, time) => this.Dispatcher.Invoke(() => { SendMessage(uname, text, time); }));
+            HelperClass.HubProxy.On<IGameInfo>("SendMove", (gameinfo) => this.Dispatcher.Invoke(() => { SendMove(gameinfo); }));
+            HelperClass.HubProxy.On<string>("SendOverall", (linkToPage) => this.Dispatcher.Invoke(() => { SendOverall(linkToPage); }));
 
-            HubProxy = Connection.CreateHubProxy("MyHub");
+            
+            HelperClass.Connection.StateChanged += (e) => { if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); } };
 
-            ///WPF client defines its method
-            //LudoView.GetVM.ChatMsgs.Add(playerName + ": " + text);
-            HubProxy.On<string>("addMessage", (msg) =>
-                this.Dispatcher.Invoke(() =>
-                VM.ChatMsgs.Add(msg)
-                )
-           //this.Dispatcher.Invoke(() =>  )
-           );
+            this.Dispatcher.Invoke(() => VM.ServerMsgs.Add("Connected to server."));
+            this.Dispatcher.Invoke(() => VM.ServerMsgs.Add(VM.UserName + ":: Connecting to server..."));
 
-            try
+            if (!String.IsNullOrEmpty(VM.MsgFromServer.Msg))
             {
-                await Connection.Start();
+                VM.ServerMsgs.Add(VM.MsgFromServer.Msg);
             }
-            catch (HttpRequestException)
-            {
-                this.Dispatcher.Invoke(() =>
-                VM.ServerMsgs.Add("Unable to connect to server.")
-                );
-                return;
-            }
-            this.Dispatcher.Invoke(() =>
-           VM.ServerMsgs.Add("Connected to server.")
-           );
+            HelperClass.Connection.Closed += Connection_Closed;
         }
 
-
-        void Connection_Closed()
+        private void SendOverall(string linkToPage)
         {
-            this.Dispatcher.Invoke(() =>
-           VM.ServerMsgs.Add("Disconnected from server.")
-           );
+            throw new NotImplementedException();
         }
 
-        private void WPFClient_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void SendMove(IGameInfo gameinfo)
         {
-            if (Connection != null)
-            {
-                Connection.Stop();
-                Connection.Dispose();
-            }
+            throw new NotImplementedException();
+        }
+
+        private void SendMessage(string uname, string text, DateTime date)
+        {
+            Dispatcher.Invoke(() => VM.ChatMsgs.Add(date.ToShortDateString() + " - " + date.ToShortTimeString() + ":\n" + uname + ": " + text));
         }
 
         private void TXB_Enter_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                ///WPF client defines method call on server side
-                HubProxy.Invoke("Send", VM.UserName +": "+ VM.ChatMsg);
+                HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.ChatMsg); // call my senmessage()
                 VM.ChatMsg = String.Empty;
             }
         }
+
+        private void LBL_Friend_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            HelperClass.HubProxy.Invoke("Befriend", HelperClass.GUID, HelperClass.UserName, VM.UserName);
+            Dispatcher.Invoke(() => MessageBox.Show("Added"));
+        }
+        void Connection_Closed()
+        {
+            this.Dispatcher.Invoke(() =>
+            VM.ServerMsgs.Add("Disconnected from server.")
+            );
+        }
+        private void WPFClient_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (HelperClass.Connection != null)
+            {
+                HelperClass.Connection.Stop();
+                HelperClass.Connection.Dispose();
+            }
+        }
+
     }
 }

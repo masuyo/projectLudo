@@ -48,7 +48,7 @@ namespace BoardGame
             this.DataContext = VM;
             HelperClass.Connection.StateChanged += (e) => { if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); } };
             // this.Background = LoginView.GetBG;
-
+            
         }
 
         private void LoginError()
