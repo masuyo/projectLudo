@@ -199,6 +199,7 @@ namespace SignalRServer
 
         public void GetMove(string guid,int playerID, int actPoz, int destPoz)
         {
+            GameInfo gameinfo = new GameInfo();
             throw new NotImplementedException();
         }
 
