@@ -60,15 +60,7 @@ namespace pageLudo.Controllers
             }
         }
 
-        // GET: Admin/Delete/5
-        //public ActionResult Delete(string emailID)
-        //{
-        //    return View();
-        //}
-
-        // POST: Admin/Delete/5
-        [HttpPost]
-        public ActionResult Delete(string emailID)
+        public ActionResult DeleteUser(string emailID)
         {
             try
             {
