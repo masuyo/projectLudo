@@ -1,0 +1,27 @@
+﻿@model  pageLudo.Models.UserHandlingData
+
+@{
+    ViewBag.Title = "Edit User";
+}
+
+<h2>Edit User</h2>
+@using (Html.BeginForm("Edit", "Admin", FormMethod.Post))
+{
+    @Html.ValidationSummary()
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.EmailID)
+    <div class="editor-label">@Html.LabelFor(m => m.Username)</div>
+        <div class="editor-field">@Html.EditorFor(m => m.Username)</div>
+
+        <div class="editor-label">@Html.LabelFor(m => m.EmailID)</div>
+        <div class="editor-field">@Html.EditorFor(m => m.EmailID)</div>
+
+        <div class="editor-label">@Html.LabelFor(m => m.Password)</div>
+        <div class="editor-field">@Html.EditorFor(m => m.Password)</div>
+
+        <div class="editor-label">@Html.LabelFor(m => m.Role)</div>
+        <div class="editor-field">@Html.EditorFor(m => m.Role)</div>
+
+        <input type="submit" value="Save" />
+}

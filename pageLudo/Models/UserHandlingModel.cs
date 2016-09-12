@@ -8,7 +8,7 @@ namespace pageLudo.Models
     // admin számára
     public class UserHandlingModel
     {
-        public UserHandlingData EditObject { get; set; }
+        //public UserHandlingData EditObject { get; set; }
         public List<UserHandlingData> List { get; set; }
     }
 }

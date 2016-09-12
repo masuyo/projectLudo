@@ -15,6 +15,7 @@ namespace pageLudo.Controllers
         AdminActions aa;
         List<UserData> udList;
 
+        // kilistázza az összes usert
         public ActionResult AllUsersPage()
         {
             aa = new AdminActions();
@@ -29,54 +30,26 @@ namespace pageLudo.Controllers
             return View("AdminView", uhdm);
         }
 
-        // GET: Admin
+        // admin főoldal
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Admin/Details/5
-        public ActionResult Details(string emailID)
-        {
-            return View();
-        }
-
-        // GET: Admin/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Admin/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Admin/Edit/5
+        // user edit view
         public ActionResult Edit(string emailID)
         {
-            return View();
+            return View("EditView",emailID);
         }
 
         // POST: Admin/Edit/5
         [HttpPost]
-        public ActionResult Edit(string emailID, FormCollection collection)
+        public ActionResult Edit(string emailID, UserHandlingData u)
         {
             try
             {
-                // TODO: Add update logic here
-
+                aa = new AdminActions();
+                aa.UserSetting(emailID, u.Username, u.Password, u.EmailID, u.Role);
                 return RedirectToAction("Index");
             }
             catch
@@ -97,8 +70,8 @@ namespace pageLudo.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
+                aa = new AdminActions();
+                aa.DeleteUser(emailID);
                 return RedirectToAction("Index");
             }
             catch

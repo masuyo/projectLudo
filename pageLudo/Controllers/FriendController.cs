@@ -1,4 +1,5 @@
-﻿using SignalRServer.MVCData.MethodClasses;
+﻿using pageLudo.Models;
+using SignalRServer.MVCData.MethodClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,30 +11,30 @@ namespace pageLudo.Controllers
     public class FriendController : Controller
     {
         [HttpPost]
-        public ActionResult FriendAccepting()
+        public ActionResult FriendAccepting(UserListingData u)
         {
             UserActions ua = new UserActions();
-            ua.FriendAccept(Session["LogedEmailID"].ToString(), Session["AccessedEmailID"].ToString());
-            return View("~/Views/Search/ProfileSearchResult.cshtml");
+            ua.FriendAccept(Session["LogedEmailID"].ToString(), u.EmailID);
+            return View("~/Views/Search/ProfileSearchResult.cshtml",u);
         }
 
 
         // initiate friend request
         [HttpPost]
-        public ActionResult Friending()
+        public ActionResult Friending(UserListingData u)
         {
             UserActions ua = new UserActions();
-            ua.Friend(Session["AccessedEmailID"].ToString(), Session["LogedEmailID"].ToString());
-            return View("~/Views/Search/ProfileSearchResult.cshtml");
+            ua.Friend(u.EmailID, Session["LogedEmailID"].ToString());
+            return View("~/Views/Search/ProfileSearchResult.cshtml",u);
         }
 
         // elég az egyik oldalnak kezdeményeznie
         [HttpPost]
-        public ActionResult Unfriending()
+        public ActionResult Unfriending(UserListingData u)
         {
             UserActions ua = new UserActions();
-            ua.Unfriend(Session["LogedEmailID"].ToString(), Session["AccessedEmailID"].ToString());
-            return View("~/Views/Search/ProfileSearchResult.cshtml");
+            ua.Unfriend(Session["LogedEmailID"].ToString(), u.EmailID);
+            return View("~/Views/Search/ProfileSearchResult.cshtml",u);
         }
     }
 }

@@ -20,11 +20,11 @@ namespace pageLudo.Controllers
             //List<UserListingData> userList = new List<UserListingData>();
             var userList = Session["ResultList"] as List<UserListingData>;
             UserListingData user = userList.SingleOrDefault(x => x.EmailID == emailID);
-            Session["AccessedUsername"] = user.Username;
-            Session["AccessedEmailID"] = user.EmailID.ToString();
-            Session["AccessedFriendState"] = user.AreWeFriends.ToString();
-            Session["AccessedFriendedYou"] = user.FriendedYou.ToString();
-            Session["AccessedFriendedMe"] = user.FriendedMe.ToString();
+            //Session["AccessedUsername"] = user.Username;
+            //Session["AccessedEmailID"] = user.EmailID.ToString();
+            //Session["AccessedFriendState"] = user.AreWeFriends.ToString();
+            //Session["AccessedFriendedYou"] = user.FriendedYou.ToString();
+            //Session["AccessedFriendedMe"] = user.FriendedMe.ToString();
             return View("ProfileSearchResult", user);
         }
 
@@ -68,11 +68,11 @@ namespace pageLudo.Controllers
                         convResultUser.FriendedYou = getUsers[0].FriendedYou;
                         convResultUser.FriendedMe = getUsers[0].FriendedMe;
 
-                        Session["AccessedUsername"] = convResultUser.Username.ToString();
-                        Session["AccessedEmailID"] = convResultUser.EmailID.ToString();
-                        Session["AccessedFriendState"] = convResultUser.AreWeFriends.ToString();
-                        Session["AccessedFriendedYou"] = convResultUser.FriendedYou.ToString();
-                        Session["AccessedFriendedMe"] = convResultUser.FriendedMe.ToString();
+                        //Session["AccessedUsername"] = convResultUser.Username.ToString();
+                        //Session["AccessedEmailID"] = convResultUser.EmailID.ToString();
+                        //Session["AccessedFriendState"] = convResultUser.AreWeFriends.ToString();
+                        //Session["AccessedFriendedYou"] = convResultUser.FriendedYou.ToString();
+                        //Session["AccessedFriendedMe"] = convResultUser.FriendedMe.ToString();
 
                         return View("ProfileSearchResult", convResultUser);
                     }
