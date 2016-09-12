@@ -52,7 +52,7 @@ namespace pageLudo.Controllers
                 aa = new AdminActions();
                 string editUserEmailID = HttpContext.Session["EditUserEmailID"].ToString();
                 aa.UserSetting(editUserEmailID, u.Username, u.Password, u.EmailID, u.Role);
-                return RedirectToAction("Index");
+                return RedirectToAction("AllUsersPage");
             }
             catch
             {
@@ -66,7 +66,7 @@ namespace pageLudo.Controllers
             {
                 aa = new AdminActions();
                 aa.DeleteUser(emailID);
-                return RedirectToAction("Index");
+                return RedirectToAction("AllUsersPage");
             }
             catch
             {
