@@ -43,6 +43,7 @@ namespace SignalRServer.MVCData.MethodClasses
                     userrepo.UpdatePassword(user.UserID, password);
                 }
                 if (emailID != null) userrepo.UpdateEmailID(user.UserID, emailID);
+                if (role != null) userrepo.UpdateRole(user.UserID, role);
                 // role update goes here
                 return true;
             }
