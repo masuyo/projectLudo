@@ -65,6 +65,27 @@ namespace SignalRServer
                         }
                     }
 
+                    LudoPlayer player;
+                    using (UsersRepository userrepo = new UsersRepository())
+                    {
+                        Entities.User userke = userrepo.GetByGuid(user.Guid);
+                        player = new LudoPlayer(user.Username);
+                    }
+
+                    LudoTable newtable = new LudoTable(player, user.UserID.ToString(), user.UserID.ToString());
+                    name_table.TryAdd(user.UserID.ToString(), newtable);
+                    guid_player.TryAdd(user.Guid, player);
+
+                    Groups.Add(Context.ConnectionId, newtable.Name);
+
+                    using (InvationDesktopRepository tablerepo = new InvationDesktopRepository())
+                    {
+                        //adatbázishoz adás
+                    }
+
+
+
+
                     connectionid_guid.AddOrUpdate(Context.ConnectionId, user.Guid, (key, oldvalue) => user.Guid);
 
                     Console.WriteLine("Clien logged in with {0} guid",user.Guid);
@@ -271,7 +292,7 @@ namespace SignalRServer
 
             LudoPlayer nextplayer = table.getGame().Nextplayer;
             gameinfo.ActivePlayerID = nextplayer.sequence;
-            gameinfo.Msg = "Game started";
+            gameinfo.Msg = "";
             gameinfo.OnManHit = false;
             gameinfo.Reroll = false;
             gameinfo.PuppetList = CreatePuppetList(table.Gamemanager);
