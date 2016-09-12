@@ -20,7 +20,7 @@
                 <td>@Html.DisplayFor(m => user.EmailID)</td>
                 <td>@Html.DisplayFor(m => user.Role)</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit",new { emailID = user.EmailID})
+                    @Html.ActionLink("Edit", "EditUser", new { emailID = user.EmailID})
                 </td>
                 <td>
                     @Html.ActionLink("Delete", "Delete",new { emailID = user.EmailID })

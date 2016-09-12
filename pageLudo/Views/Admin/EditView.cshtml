@@ -10,7 +10,6 @@
     @Html.ValidationSummary()
     @Html.AntiForgeryToken()
 
-    @Html.HiddenFor(m => m.EmailID)
     <div class="editor-label">@Html.LabelFor(m => m.Username)</div>
         <div class="editor-field">@Html.EditorFor(m => m.Username)</div>
 

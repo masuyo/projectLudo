@@ -37,10 +37,10 @@ namespace pageLudo.Controllers
         }
 
         // user edit view
-        public ActionResult Edit(string emailID)
+        public ActionResult EditUser(string emailID)
         {
-            Session["EditUserEmailID"] = emailID;
-            return View("EditView",emailID);
+            HttpContext.Session["EditUserEmailID"] = emailID.ToString();
+            return View("EditView");
         }
 
         // POST: Admin/Edit/5
@@ -50,7 +50,8 @@ namespace pageLudo.Controllers
             try
             {
                 aa = new AdminActions();
-                aa.UserSetting(Session["EditUserEmailID"].ToString(), u.Username, u.Password, u.EmailID, u.Role);
+                string editUserEmailID = HttpContext.Session["EditUserEmailID"].ToString();
+                aa.UserSetting(editUserEmailID, u.Username, u.Password, u.EmailID, u.Role);
                 return RedirectToAction("Index");
             }
             catch
@@ -60,14 +61,14 @@ namespace pageLudo.Controllers
         }
 
         // GET: Admin/Delete/5
-        public ActionResult Delete(string emailID)
-        {
-            return View();
-        }
+        //public ActionResult Delete(string emailID)
+        //{
+        //    return View();
+        //}
 
         // POST: Admin/Delete/5
         [HttpPost]
-        public ActionResult Delete(string emailID, FormCollection collection)
+        public ActionResult Delete(string emailID)
         {
             try
             {

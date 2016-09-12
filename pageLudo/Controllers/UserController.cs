@@ -73,7 +73,7 @@ namespace pageLudo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginUser u) // Username helyett emaillel lép be
+        public ActionResult Login(LoginUser u) // emaillel lép be
         {
             if (ModelState.IsValid)
             {
