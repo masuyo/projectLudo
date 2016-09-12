@@ -146,27 +146,27 @@ namespace SignalRServer
             bool connectedToRoom = false;
 
             LudoPlayer player;
-            using (UsersRepository userrepo = new UsersRepository())
-            {
-                Entities.User newuser = userrepo.GetByGuid(guid);
-                player = new LudoPlayer(newuser.Username);
-            }
-            try
-            {
-                name_table[room.Name].AddPlayer(player, room.Password);
-                Groups.Add(Context.ConnectionId, room.Name);
+            //using (UsersRepository userrepo = new UsersRepository())
+            //{
+            //    Entities.User newuser = userrepo.GetByGuid(guid);
+            //    player = new LudoPlayer(newuser.Username);
+            //}
+            //try
+            //{
+            //    name_table[room.Name].AddPlayer(player, room.Password);
+            //    Groups.Add(Context.ConnectionId, room.Name);
 
-                using (InvationDesktopRepository tablerepo = new InvationDesktopRepository())
-                {
-                    //adatbázishoz adás
-                }
+            //    using (InvationDesktopRepository tablerepo = new InvationDesktopRepository())
+            //    {
+            //        //adatbázishoz adás
+            //    }
 
-                connectedToRoom = true;
-            }
-            catch (Exception e)
-            {
+            //    connectedToRoom = true;
+            //}
+            //catch (Exception e)
+            //{
                
-            }
+            //}
 
             Clients.Caller.SendConnectUserToRoom(connectedToRoom);
         }

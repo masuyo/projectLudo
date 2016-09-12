@@ -84,6 +84,7 @@ namespace pageLudo.Controllers
                     Session["LogedUserID"] = ud.UserID.ToString();
                     Session["LogedUsername"] = ud.Username.ToString();
                     Session["LogedEmailID"] = ud.EmailID.ToString();
+                    Session["Role"] = "admin";
                 }
                 else
                 {

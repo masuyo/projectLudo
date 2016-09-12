@@ -22,9 +22,9 @@ namespace pageLudo.Controllers
             UserListingData user = userList.SingleOrDefault(x => x.EmailID == emailID);
             Session["AccessedUsername"] = user.Username;
             Session["AccessedEmailID"] = user.EmailID.ToString();
-            Session["AccessedFriendState"] = "false";
-            Session["AccessedFriendedYou"] = "false";
-            Session["AccessedFriendedMe"] = "false";
+            Session["AccessedFriendState"] = user.AreWeFriends.ToString();
+            Session["AccessedFriendedYou"] = user.FriendedYou.ToString();
+            Session["AccessedFriendedMe"] = user.FriendedMe.ToString();
             return View("ProfileSearchResult", user);
         }
 
@@ -81,7 +81,7 @@ namespace pageLudo.Controllers
                         List<UserListingData> luld = new List<UserListingData>();
                         foreach (var user in getUsers)
                         {
-                            luld.Add(new UserListingData { Username = user.Username, EmailID = user.EmailID });
+                            luld.Add(new UserListingData { Username = user.Username, EmailID = user.EmailID, AreWeFriends = user.AreWeFriends, FriendedMe = user.FriendedMe,FriendedYou = user.FriendedYou });
                         }
                         //MultipleProfileSearchResult(luld);
                         ulm = new UserListingModel();

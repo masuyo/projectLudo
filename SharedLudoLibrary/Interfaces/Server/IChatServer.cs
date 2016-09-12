@@ -8,7 +8,6 @@ namespace SharedLudoLibrary.Interfaces.Server
 {
     public interface IChatServer
     {
-        void ConnectToRoom(int userID, IRoom room); //csak egy groupban levoknek kuldi le a msg t
-        void Message(int playerID, string text);
+        void GetMessage(string guid, string username, string text);
     }
 }

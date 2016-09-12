@@ -17,6 +17,9 @@
             <tr>
                 <td>@Html.DisplayFor(m => user.Username)</td>
                 <td>@Html.DisplayFor(m => user.EmailID)</td>
+                <td>@Html.DisplayFor(m => user.AreWeFriends)</td>
+                <td>@Html.DisplayFor(m => user.FriendedMe)</td>
+                <td>@Html.DisplayFor(m => user.FriendedYou)</td>
 
                 <td>
                     @Html.ActionLink("Profile", "Details", new { emailID = user.EmailID })

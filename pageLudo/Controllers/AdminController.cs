@@ -1,4 +1,7 @@
-﻿using System;
+﻿using pageLudo.Models;
+using SignalRServer.MVCData.DataClasses;
+using SignalRServer.MVCData.MethodClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +11,24 @@ namespace pageLudo.Controllers
 {
     public class AdminController : Controller
     {
+        UserHandlingModel uhdm;
+        AdminActions aa;
+        List<UserData> udList;
+
+        public ActionResult AllUsersPage()
+        {
+            aa = new AdminActions();
+            udList = aa.GetAllUsers();
+            uhdm = new UserHandlingModel();
+            List<UserHandlingData> luhd = new List<UserHandlingData>();
+            foreach (var u in udList)
+            {
+                luhd.Add(new UserHandlingData { Username = u.Username,EmailID = u.EmailID,Role = u.Role });
+            }
+            uhdm.List = luhd;
+            return View("AdminView", uhdm);
+        }
+
         // GET: Admin
         public ActionResult Index()
         {

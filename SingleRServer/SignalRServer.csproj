@@ -97,6 +97,7 @@
     <Compile Include="MVCData\Interfaces\IGameStatistics.cs" />
     <Compile Include="MVCData\Interfaces\IUserActions.cs" />
     <Compile Include="MVCData\Interfaces\IUserStatistics.cs" />
+    <Compile Include="MVCData\MethodClasses\AdminActions.cs" />
     <Compile Include="MVCData\MethodClasses\GameStatistics.cs" />
     <Compile Include="MVCData\MethodClasses\UserActions.cs" />
     <Compile Include="MVCData\MethodClasses\UserStatistics.cs" />

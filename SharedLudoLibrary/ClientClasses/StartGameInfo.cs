@@ -23,7 +23,7 @@ namespace SharedLudoLibrary.ClientClasses
             }
         }
 
-        public IPlayer[] otherWPFPlayers
+        public IPlayer[] OtherWPFPlayers
         {
             get
             {
