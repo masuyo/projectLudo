@@ -75,7 +75,7 @@ namespace BoardGame
         {
             if (connectedToRoom && HelperClass.Connection?.State == ConnectionState.Connected)
             {
-                HelperClass.HubProxy.Invoke("GetUsersInRoom", HelperClass.GUID); //answer : call my "SendAllRoomList"
+                HelperClass.HubProxy.Invoke("GetUsersInRoom", HelperClass.GUID, VM.SelectedRoom); //answer : call my "SendAllRoomList"
             }
             else
             {
@@ -135,17 +135,10 @@ namespace BoardGame
         {
             if (sender is Label)
             {
-                //if (!String.IsNullOrEmpty(VM.SelectedRoom.Name) && VM.SelectedRoom.AvailablePlaces == 0)
-                //{
                 if (HelperClass.Connection?.State == ConnectionState.Connected)
                 {
                     HelperClass.HubProxy.Invoke("GetStart", HelperClass.GUID, HelperClass.UserName); //answer : call my "SendStart(IStartGameInfo startGameInfo);"
                 }
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Add player to start Ludo.");
-                //}
             }
         }
 
@@ -201,16 +194,7 @@ namespace BoardGame
             if (HelperClass.Connection?.State == ConnectionState.Connected)
             {
                 HelperClass.HubProxy.Invoke("GetConnectUserToRoom", HelperClass.GUID, new User(HelperClass.UserName), new Room(VM.SelectedRoom.AvailablePlaces, VM.SelectedRoom.ID, VM.SelectedRoom.Name, VM.SelectedRoom.Password));
-            }
-            foreach (IUser u in new TestLudoServer().GetPlayersInRoom((VM.SelectedRoom)))
-            {
-                //VM.UsersInRoom = new ObservableCollection<IUser>();
-                VM.UsersInRoom.Add(u);
-            }
-            if (true)//connD.ConectionSuccess)
-            {
-                //Init(AddListItems()); // serversideListChanged
-            }
+            }            
         }
         private void TXB_Search_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
