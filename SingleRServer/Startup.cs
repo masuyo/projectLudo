@@ -24,6 +24,7 @@ namespace SignalRServer
                     // EnableJSONP = true
                 };
 
+                hubConfiguration.EnableDetailedErrors = true;
                 // Run the SignalR pipeline. We're not using MapSignalR
                 // since this branch is already runs under the "/signalr"
                 // path.
