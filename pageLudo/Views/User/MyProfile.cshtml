@@ -8,15 +8,22 @@
     <h4>Adatlap</h4>
     <br />
     <div>
-        <table>
-            <tr>
-                <td>Username:</td>
-                <td>@Session["LogedUsername"].ToString()</td>
-            </tr>
-            <tr>
-                <td>E-mail address:</td>
-                <td>@Session["LogedEmailID"].ToString()</td>
-            </tr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Adatlap</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Username</th>
+                    <td>@Session["LogedUsername"].ToString()</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email address</th>
+                    <td>@Session["LogedEmailID"].ToString()</td>
+                </tr>
+            </tbody>
         </table>
         <br />
     </div>
@@ -24,7 +31,7 @@
     <h4>Statisztika</h4>
 
         <!-- Adott játékosnak minden játéktípusban(Ludóban) winrate -->
-    <h4>@ViewBag.Data</h4>
+    @*<h4>@ViewBag.Data</h4>*@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
         var temp1 = '@ViewBag.Data';
@@ -32,21 +39,12 @@
     </script>
    
         <script type="text/javascript">
-            // Load the Visualization API and the piechart package.
             google.charts.load('current', { packages: ['corechart'] });
 
-            // Set a callback to run when the Google Visualization API is loaded.
             google.charts.setOnLoadCallback(drawChart);
 
-            // Callback that creates and populates a data table,
-            // instantiates the pie chart, passes in the data and
-            // draws it.
             function drawChart() {
-// global variable to fill chart data
 
-
-                // Create the data table.
-                //Adott játékosnak minden játéktípusban(Ludóban) winrate (elég a win%-ot visszaadni sztem max 2 tizedesjegyig)
                 var chartData = google.visualization.arrayToDataTable(data);
 
                 var view = new google.visualization.DataView(chartData);
@@ -66,7 +64,7 @@
                 chart.draw(view, options);
 
 
-                //Adott játékos adott játéktípusban adott játéktípushoz tartozó színekkel milyen arányban nyert
+
                 var data2 = google.visualization.arrayToDataTable([
                   ['', 'Blue', { role: 'annotation' }, 'Red', { role: 'annotation' }, 'Yellow', { role: 'annotation' }, 'Green', { role: 'annotation' }, 'Black', {
                     role: 'annotation'}, 'White', { role: 'annotation'},{ role: 'style' }],
