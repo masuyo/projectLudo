@@ -8,10 +8,24 @@ namespace SignalRServer.MVCData.Interfaces
 {
     interface IGameStatistics
     {
-        ////játéktípusok sorrendben, legtöbbet játszott-tól a legkevesebbig
-        //List<GameNumber> GamePopularity(); //Gamenumbernek gondoltam egy név meg egy indított játékok száma propertyt, aztán sorbarendezés stb., de lehet százalékos eloszlás is, ahogy gondolod
+        /// <summary>
+        /// játéktípusok sorrendben, legtöbbet játszott-tól a legkevesebbig
+        /// </summary>
+        /// <returns>
+        /// Propertyk: GameName (pl. Ludo), NumberOfGames
+        /// </returns>
+        //List<GameNumber> GamePopularity();
 
-        ////Adott játéktípusban melyik színnel milyen százalékos eloszlással nyertek
+        /// <summary>
+        /// Adott játéktípusban melyik színnel milyen százalékos eloszlással nyertek
+        /// </summary>
+        /// <returns>
+        /// Propertyk: 
+        /// Ludo esetében pl 4 elemű lista a 4 szín miatt: 
+        /// ColorName, NumberOfWins
+        /// Sakk esetében 2 elemű lenne
+        /// stb.
+        /// </returns>
         //List<Something> ColorPieChartData(string gametype);
 
         //Esetleg egy olyan, hogy aktuálisan hány Online játékos van a WPF kliensben?
