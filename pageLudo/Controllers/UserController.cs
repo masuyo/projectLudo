@@ -75,20 +75,24 @@ namespace pageLudo.Controllers
         {
             if (ModelState.IsValid)
             {
-                UserActions ua = new UserActions();
-                UserData ud = ua.Login(u.EmailID, u.Password);
-                if (ud != null)
-                {
-                    Session["LogedUserID"] = ud.UserID.ToString();
-                    Session["LogedUsername"] = ud.Username.ToString();
-                    Session["LogedEmailID"] = ud.EmailID.ToString();
-                    Session["Role"] = ud.Role.ToString();
-                }
-                else
-                {
-                    ModelState.AddModelError("WrongUNorPW", "Incorrect username or password");
-                    return View();
-                }
+                Session["LogedUserID"] = 5;
+                Session["LogedUsername"] = "Gabi";
+                Session["LogedEmailID"] = "gabi@gabi.com";
+                Session["Role"] = "user";
+                //UserActions ua = new UserActions();
+                //UserData ud = ua.Login(u.EmailID, u.Password);
+                //if (ud != null)
+                //{
+                //    Session["LogedUserID"] = ud.UserID.ToString();
+                //    Session["LogedUsername"] = ud.Username.ToString();
+                //    Session["LogedEmailID"] = ud.EmailID.ToString();
+                //    Session["Role"] = ud.Role.ToString();
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError("WrongUNorPW", "Incorrect username or password");
+                //    return View();
+                //}
 
                 //adminhoz kell, ha a sessionrole admin, akkor mást fog megjeleníthetővé tenni a layout
                 //Session["LogedUserRole"] = ud.Role.ToString();
