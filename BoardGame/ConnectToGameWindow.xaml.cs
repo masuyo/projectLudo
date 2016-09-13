@@ -37,7 +37,7 @@ namespace BoardGame
             imgb.ImageSource = new BitmapImage(new Uri(@"Images\l3.png", UriKind.Relative));
             imgb.Opacity = 0.4;
             // grid_bg.Background = imgb;
-            
+
             HelperClass.HubProxy.On<List<IRoom>>("SendAllRoomList", (allRoom) => this.Dispatcher.Invoke(() => { AllRoom(allRoom); }));
             HelperClass.HubProxy.On<List<IUser>>("SendUsersInRoom", (allUserInRoom) => this.Dispatcher.Invoke(() => { AllUserInRoom(allUserInRoom); }));
             HelperClass.HubProxy.On<IRoom>("SendCreateRoom", (createdRoom) => this.Dispatcher.Invoke(() => { CreateRoom(createdRoom); }));
@@ -45,7 +45,7 @@ namespace BoardGame
             HelperClass.HubProxy.On<IStartGameInfo>("SendStart", (startGameInfo) => this.Dispatcher.Invoke(() => { Start(startGameInfo); }));
 
 
-
+            AllRoom(new List<IRoom>());
 
 
             HelperClass.Connection.StateChanged += (e) => { if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); } };
@@ -64,7 +64,7 @@ namespace BoardGame
             {
                 LudoWindow ludo = new LudoWindow(startGameInfo);
                 this.Close();
-                ludo.ShowDialog();
+                ludo.Show();
             }
             else
             {
@@ -111,7 +111,7 @@ namespace BoardGame
             foreach (IUser u in allUserInRoom)
             {
                 VM.UsersInRoom.Add(u);
-            }           
+            }
         }
 
         private void AllRoom(List<IRoom> allRoom)
@@ -119,7 +119,7 @@ namespace BoardGame
             Console.WriteLine("sendallroom");
             foreach (IRoom ir in allRoom)
             {
-                Console.WriteLine(ir.Name + " - " +ir.Password + " " +ir.AvailablePlaces);
+                Console.WriteLine(ir.Name + " - " + ir.Password + " " + ir.AvailablePlaces);
             }
 
             VM.RoomList.Clear();
@@ -131,6 +131,13 @@ namespace BoardGame
                     VM.RoomList.Add(r);
                 }
             }
+
+            //kamu
+            for (int i = 0; i < 10; i++)
+            {
+                VM.SearchRoomList.Add(new Room("jfshfdsdhio", (i * 1231).ToString()));
+            }
+
         }
 
         private void LBL_Start_MouseDown(object sender, MouseButtonEventArgs e)
