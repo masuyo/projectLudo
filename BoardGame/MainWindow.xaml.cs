@@ -71,7 +71,7 @@ namespace BoardGame
             {
                 LudoWindow ludo = new LudoWindow(startGameInfo);
                 this.Close();
-                ludo.ShowDialog();
+                ludo.Show();
             }
             else
             {

@@ -64,7 +64,7 @@ namespace BoardGame
             {
                 LudoWindow ludo = new LudoWindow(startGameInfo);
                 this.Close();
-                ludo.ShowDialog();
+                ludo.Show();
             }
             else
             {
@@ -117,20 +117,20 @@ namespace BoardGame
         private void AllRoom(List<IRoom> allRoom)
         {
             Console.WriteLine("sendallroom");
-            //foreach (IRoom ir in allRoom)
-            //{
-            //    Console.WriteLine(ir.Name + " - " + ir.Password + " " + ir.AvailablePlaces);
-            //}
+            foreach (IRoom ir in allRoom)
+            {
+                Console.WriteLine(ir.Name + " - " + ir.Password + " " + ir.AvailablePlaces);
+            }
 
-            //VM.RoomList.Clear();
-            //if (allRoom != null && allRoom.Count > 0)
-            //{
-            //    foreach (IRoom r in allRoom)
-            //    {
-            //        Console.WriteLine(r.Name);
-            //        VM.RoomList.Add(r);
-            //    }
-            //}
+            VM.RoomList.Clear();
+            if (allRoom != null && allRoom.Count > 0)
+            {
+                foreach (IRoom r in allRoom)
+                {
+                    Console.WriteLine(r.Name);
+                    VM.RoomList.Add(r);
+                }
+            }
 
             //kamu
             for (int i = 0; i < 10; i++)
