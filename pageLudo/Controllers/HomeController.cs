@@ -1,4 +1,5 @@
-﻿using System;
+﻿using pageLudo.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,9 @@ namespace pageLudo.Controllers
     {
         public ActionResult Chat()
         {
-            return View();
+            LoginUser lu = new LoginUser();
+            lu.Username = Session["LogedUsername"].ToString();
+            return View("Chat",lu);
         }
         public ActionResult Index()
         {
