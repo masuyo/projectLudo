@@ -11,9 +11,7 @@ namespace pageLudo.Controllers
     {
         public ActionResult Chat()
         {
-            LoginUser lu = new LoginUser();
-            lu.Username = Session["LogedUsername"].ToString();
-            return View("Chat",lu);
+            return View();
         }
         public ActionResult Index()
         {

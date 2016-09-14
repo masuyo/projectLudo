@@ -1,5 +1,4 @@
-﻿@model pageLudo.Models.LoginUser
-@{
+﻿@{
     ViewBag.Title = "Chat";
 }
 <h2>Chat</h2>
@@ -22,7 +21,7 @@
             // Reference the auto-generated proxy for the hub.
             var chat = $.connection.chatHub;
 
-            var logInName = @Html.Raw(Json.Encode(Model.Username));
+            var logInName = @Html.Raw(Json.Encode(Session["LogedUsername"]));
             // Create a function that the hub can call back to display messages.
             chat.client.addNewMessageToPage = function (name, message) {
                 // Add the message to the page.
