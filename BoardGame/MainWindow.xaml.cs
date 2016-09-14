@@ -35,6 +35,10 @@ namespace BoardGame
             if (HelperClass.Connection == null)
             {
                 HelperClass.Connection = new HubConnection((HelperClass.ConnString));
+
+                HelperClass.Connection.TraceLevel = TraceLevels.All;
+                HelperClass.Connection.TraceWriter = Console.Out;
+
                 HelperClass.HubProxy = (HelperClass.Connection.CreateHubProxy("WPFHub"));
                 HelperClass.HubProxy.On<string>("SendLogin", (guid) => this.Dispatcher.Invoke(() => { Login(guid); }));
                 HelperClass.HubProxy.On("SendLoginError", () => this.Dispatcher.Invoke(() => { LoginError(); }));
