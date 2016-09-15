@@ -28,7 +28,7 @@ namespace SignalRServer.MVCData.Interfaces
         /// mert ez halmozott chart lesz (= beleférnek a lossok is), az meg pie chart
         /// ColorName, NumberOfWins, NumberOfLosses
         /// </returns>
-        //  List<Something> PlayerColorWinrate(string emailID, string gametype);
+        List<GameWinrate> PlayerColorWinrate(string emailID, string gametype);
 
         /// <summary>
         /// Adott játékos minden játékkal külön-külön mennyit játszott
@@ -37,7 +37,7 @@ namespace SignalRServer.MVCData.Interfaces
         /// Propertyk:
         /// GameName, NumberOfGames
         /// </returns>
-        //  List<Something> NumberOfPlayedGamesInEachTypeOfGame(string emailID);
+        List<GameWinrate> NumberOfPlayedGamesInEachTypeOfGame(string emailID);
 
         /// <summary>
         /// Adott játékos átlagosan mennyi időt tölt az egyes játéktípusokban (játékkal : D)
@@ -46,7 +46,7 @@ namespace SignalRServer.MVCData.Interfaces
         /// <returns>
         /// GameName, AverageNumberOfTurns
         /// </returns> 
-        //  List<Something> UserAverageTimeSpent(string emailID);
+        List<GameWinrate> UserAverageTimeSpent(string emailID);
 
         /// <summary>
         /// Adott játékos leghosszabb játéka az egyes játéktípusokban
@@ -54,7 +54,7 @@ namespace SignalRServer.MVCData.Interfaces
         /// <returns>
         /// GameName, NumberOfTurnsOfTheLongestGame
         /// </returns>
-        //    List<Something> UserLongestGame(string emailID);
+        List<GameWinrate> UserLongestGame(string emailID);
 
         /// <summary>
         /// Adott játékos legrövidebb játéka az egyes játéktípusokban
@@ -62,6 +62,6 @@ namespace SignalRServer.MVCData.Interfaces
         /// <returns>
         /// GameName, NumberOfTurnsOfTheShortestGame
         /// </returns>
-        //    List<Something> UserShortestGame(string emailID);
+        List<GameWinrate> UserShortestGame(string emailID);
     }
 }

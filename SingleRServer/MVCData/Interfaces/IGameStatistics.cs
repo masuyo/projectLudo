@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SignalRServer.MVCData.DataClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace SignalRServer.MVCData.Interfaces
         /// <returns>
         /// Propertyk: GameName (pl. Ludo), NumberOfGames
         /// </returns>
-        //List<GameNumber> GamePopularity();
+        List<GameWinrate> GamePopularity();
 
         /// <summary>
         /// Adott játéktípusban melyik színnel milyen százalékos eloszlással nyertek
@@ -26,7 +27,7 @@ namespace SignalRServer.MVCData.Interfaces
         /// Sakk esetében 2 elemű lenne
         /// stb.
         /// </returns>
-        //List<Something> ColorPieChartData(string gametype);
+        List<GameWinrate> ColorPieChartData(string gametype);
 
         //Esetleg egy olyan, hogy aktuálisan hány Online játékos van a WPF kliensben?
         int NumberOfOnlineWPFUsers();
