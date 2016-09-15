@@ -57,7 +57,15 @@ namespace BoardGame
             {
                 VM.ServerMsgs.Add(VM.MsgFromServer.Msg);
             }
+
             HelperClass.Connection.Closed += Connection_Closed;
+            HelperClass.Connection.StateChanged += Connection_StateChanged;
+           
+        }
+
+        private void Connection_StateChanged(StateChange e)
+        {
+            if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); }
         }
 
         private void SendOverall(string linkToPage)

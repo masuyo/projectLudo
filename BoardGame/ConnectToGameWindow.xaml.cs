@@ -48,13 +48,17 @@ namespace BoardGame
             AllRoom(new List<IRoom>());
 
 
-            HelperClass.Connection.StateChanged += (e) => { if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); } };
-
+            HelperClass.Connection.StateChanged += Connection_StateChanged;
 
             if (HelperClass.Connection?.State == ConnectionState.Connected)
             {
                 HelperClass.HubProxy.Invoke("GetAllRoomList", HelperClass.GUID); //answer : call my "SendAllRoomList"
             }
+        }
+
+        private void Connection_StateChanged(StateChange e)
+        {
+            if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); }
         }
 
         private void Start(IStartGameInfo startGameInfo)
@@ -63,7 +67,9 @@ namespace BoardGame
             if (startGameInfo != null)
             {
                 LudoWindow ludo = new LudoWindow(startGameInfo);
-                this.Close();
+                Hide();
+                ShowInTaskbar = false;
+
                 ludo.Show();
             }
             else
@@ -195,7 +201,7 @@ namespace BoardGame
         {
             if (HelperClass.Connection?.State == ConnectionState.Connected)
             {
-                HelperClass.HubProxy.Invoke("GetCreateRoom", HelperClass.GUID, new User(HelperClass.UserName), new Room(VM.SelectedRoomName, VM.SelectedRoomPassword)); //answer : call my "SendAllRoomList"
+                HelperClass.HubProxy.Invoke("GetCreateRoom", HelperClass.GUID, new Room(VM.SelectedRoomName, VM.SelectedRoomPassword)); //answer : call my "SendAllRoomList"
             }
         }
         private void LBL_Connect_MouseDown(object sender, MouseButtonEventArgs e)
