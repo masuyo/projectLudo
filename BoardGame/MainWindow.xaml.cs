@@ -42,7 +42,6 @@ namespace BoardGame
                 HelperClass.HubProxy = (HelperClass.Connection.CreateHubProxy("WPFHub"));
                 HelperClass.HubProxy.On<string>("SendLogin", (guid) => this.Dispatcher.Invoke(() => { Login(guid); }));
                 HelperClass.HubProxy.On("SendLoginError", () => this.Dispatcher.Invoke(() => { LoginError(); }));
-
                 //HelperClass.HubProxy.On<List<IRoom>>("SendAllRoomList", (allRoom) => this.Dispatcher.Invoke(() => { AllRoom(allRoom); }));
                 //HelperClass.HubProxy.On<List<IUser>>("SendUsersInRoom", (allUserInRoom) => this.Dispatcher.Invoke(() => { AllUserInRoom(allUserInRoom); }));
                 //HelperClass.HubProxy.On<IRoom>("SendCreateRoom", (createdRoom) => this.Dispatcher.Invoke(() => { CreateRoom(createdRoom); }));
@@ -62,11 +61,15 @@ namespace BoardGame
                 }
             }
             this.DataContext = VM;
-            HelperClass.Connection.StateChanged += (e) => { if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); } };
+            HelperClass.Connection.StateChanged += Connection_StateChanged;
             // this.Background = LoginView.GetBG;
             
         }
 
+        private void Connection_StateChanged(StateChange e)
+        {
+            if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); }
+        }
 
         private void Start(IStartGameInfo startGameInfo)
         {
@@ -163,8 +166,11 @@ namespace BoardGame
             HelperClass.GUID = guid;
             HelperClass.UserName = VM.UserName;
             ConnectToGameWindow rooms = new ConnectToGameWindow();
-            this.Close();
-            rooms.ShowDialog();
+            // this.Close();
+            Hide();
+            ShowInTaskbar = false;
+
+            rooms.Show();
         }
 
         private void Login_MouseDown(object sender, MouseButtonEventArgs e)

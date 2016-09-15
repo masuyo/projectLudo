@@ -38,14 +38,14 @@ namespace BoardGame
             imgb.Opacity = 0.4;
             // grid_bg.Background = imgb;
 
-            HelperClass.HubProxy.On<List<IRoom>>("SendAllRoomList", (allRoom) => this.Dispatcher.Invoke(() => { AllRoom(allRoom); }));
+            HelperClass.HubProxy.On<List<Room>>("SendAllRoomList", (allRoom) => this.Dispatcher.Invoke(() => { AllRoom(allRoom); }));
             HelperClass.HubProxy.On<List<IUser>>("SendUsersInRoom", (allUserInRoom) => this.Dispatcher.Invoke(() => { AllUserInRoom(allUserInRoom); }));
             HelperClass.HubProxy.On<IRoom>("SendCreateRoom", (createdRoom) => this.Dispatcher.Invoke(() => { CreateRoom(createdRoom); }));
             HelperClass.HubProxy.On<bool>("SendConnectUserToRoom", (connectedToRoom) => this.Dispatcher.Invoke(() => { ConnectUserToRoom(connectedToRoom); }));
             HelperClass.HubProxy.On<IStartGameInfo>("SendStart", (startGameInfo) => this.Dispatcher.Invoke(() => { Start(startGameInfo); }));
 
 
-            AllRoom(new List<IRoom>());
+            AllRoom(new List<Room>());
 
 
             HelperClass.Connection.StateChanged += (e) => { if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); } };
@@ -114,10 +114,10 @@ namespace BoardGame
             }
         }
 
-        private void AllRoom(List<IRoom> allRoom)
+        private void AllRoom(List<Room> allRoom)
         {
             Console.WriteLine("sendallroom");
-            foreach (IRoom ir in allRoom)
+            foreach (Room ir in allRoom)
             {
                 Console.WriteLine(ir.Name + " - " + ir.Password + " " + ir.AvailablePlaces);
             }
@@ -125,8 +125,9 @@ namespace BoardGame
             VM.RoomList.Clear();
             if (allRoom != null && allRoom.Count > 0)
             {
-                foreach (IRoom r in allRoom)
+                foreach (Room r in allRoom)
                 {
+                    
                     Console.WriteLine(r.Name);
                     VM.RoomList.Add(r);
                 }
