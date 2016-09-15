@@ -58,12 +58,12 @@ namespace BoardGame
 
         }
         bool onHover = false;
-        List<IPuppet> onHoverPuppets;
+        List<Puppet> onHoverPuppets;
         private void LudoFrameworkElement_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            onHoverPuppets = new List<IPuppet>();
+            onHoverPuppets = new List<Puppet>();
             RectangleGeometry temp = new RectangleGeometry(new Rect(e.GetPosition(this).X, e.GetPosition(this).Y, 1, 1), 1, 1);
-            foreach (IPuppet p in puppetList)
+            foreach (Puppet p in puppetList)
             {
                 if (!onHover && Geometry.Combine(DrawManGraphics(p.Poz, 2), temp, GeometryCombineMode.Intersect, null).GetArea() > 0)
                 {
@@ -261,6 +261,22 @@ namespace BoardGame
 
         protected override void OnRender(DrawingContext drawingContext)
         {
+            if (puppetList == null)
+            {
+                puppetList = new List<Puppet>();
+                tmsg = new GameInfo();
+                InitMap();
+
+
+                this.Loaded += LudoFrameworkElement_Loaded;
+                this.MouseDown += LudoFrameworkElement_MouseDown;
+
+                this.MouseMove += LudoFrameworkElement_MouseMove;
+
+
+                puppetList = tmsg.PuppetList;
+            }
+
             Init(drawingContext);
 
             //if (newpuppetList != null)
