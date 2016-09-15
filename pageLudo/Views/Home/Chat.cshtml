@@ -2,9 +2,9 @@
     ViewBag.Title = "Chat";
 }
 <h2>Chat</h2>
-<div class="container">
-    <input type="text" id="message" />
-    <input type="button" id="sendmessage" value="Send" />
+<div class="input-group">
+    <input class="form-control" type="text" id="message" style="width:inherit;"/>
+    <input class="btn btn-secondary" type="button" id="sendmessage" value="Send" />
     <input type="hidden" id="displayname" />
     <ul id="discussion"></ul>
 </div>
@@ -17,16 +17,25 @@
     <script src="~/signalr/hubs"></script>
     <!--SignalR script to update the chat page and send messages.-->
     <script>
+        function addZero(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+
         $(function () {
             // Reference the auto-generated proxy for the hub.
             var chat = $.connection.chatHub;
 
             var logInName = @Html.Raw(Json.Encode(Session["LogedUsername"]));
+            var dateTime = new Date();
+            var actTime = addZero(dateTime.getHours()) + ":" + addZero(dateTime.getMinutes()) + ":" + addZero(dateTime.getSeconds());
             // Create a function that the hub can call back to display messages.
             chat.client.addNewMessageToPage = function (name, message) {
                 // Add the message to the page.
-                $('#discussion').append('<li><strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
+                $('#discussion').append('<hr><strong>' + actTime + " " + htmlEncode(name)
+                    + '</strong>: ' + htmlEncode(message) + '</hr>');
             };
             // Get the user name and store it to prepend to messages.
             $('#displayname').val(logInName);
