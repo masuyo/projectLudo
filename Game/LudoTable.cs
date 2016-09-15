@@ -23,6 +23,12 @@ namespace Game
 
         public override void AddPlayer(LudoPlayer newplayer, string password)
         {
+            foreach (var item in Players)
+            {
+                if (item.Name == newplayer.Name) return;
+            }
+
+
             if (password == this.Password)
             {
                 Players.Add(newplayer);
