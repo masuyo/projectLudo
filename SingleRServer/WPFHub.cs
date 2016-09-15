@@ -116,7 +116,7 @@ namespace SignalRServer
                 LudoTable room = item.Value;
                 //TODO 0 helyett mi?
                 Console.WriteLine(room.Name);
-                Room newroom = new Room(room.Players.Count-4,0, room.Name, room.Password);
+                Room newroom = new Room() {Name=room.Name,ID=0,AvailablePlaces=4-room.Players.Count,Password=room.Password};
                 rooms.Add(newroom);
             }
             Clients.Caller.SendAllRoomList(rooms);
