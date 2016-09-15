@@ -32,6 +32,9 @@
                         </GeometryModel3D.Geometry>
                         <GeometryModel3D.Material>
                             <DiffuseMaterial x:Name="matDiffuseMain">
+                                <!--<DiffuseMaterial.Brush>
+                                    <VisualBrush Visual="" />
+                                </DiffuseMaterial.Brush>-->
                                 <DiffuseMaterial.Brush>
                                     <SolidColorBrush Color="White"/>
                                 </DiffuseMaterial.Brush>

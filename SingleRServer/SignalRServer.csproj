@@ -91,6 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatHub.cs" />
     <Compile Include="MVCData\DataClasses\GameWinrate.cs" />
     <Compile Include="MVCData\DataClasses\UserData.cs" />
     <Compile Include="MVCData\Interfaces\IAdminActions.cs" />

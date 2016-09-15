@@ -9,62 +9,44 @@ namespace SharedLudoLibrary.ClientClasses
 {
     public class Room : IRoom
     {
-        private int availablePlaces;
-        private int id;
-        private string name;
-        private string password;
+        
+
+        public Room()
+        {
+                
+        }
 
         public int AvailablePlaces
         {
-            get
-            {
-                return availablePlaces;
-            }
+            get;set;
         }
 
         public int ID
         {
-            get
-            {
-                return id;
-            }
+            get;set;
         }
 
         public string Name
         {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
+            get;set;
         }
 
         public string Password
         {
-            get
-            {
-                return password;
-            }
-            //set
-            //{
-            //    password = value;
-            //}
+            get;set;
         }
 
         public Room(string name, string password)
         {
-            this.name = name;
-            this.password = password;
+            Name = name;
+            Password = password;
         }
         public Room(int places, int id, string name, string password)
         {
-            this.availablePlaces = places;
-            this.id = id;
-            this.name = name;
-            this.password = password;
+            AvailablePlaces = places;
+            ID = id;
+            Name = name;
+            Password = password;
         }
     }
 }
