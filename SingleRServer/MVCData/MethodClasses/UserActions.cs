@@ -84,13 +84,21 @@ namespace SignalRServer.MVCData.MethodClasses
                         FriendConnections friendconnection2 = new FriendConnections() { UserID = ididntwantyouanywayuser.UserID, FriendUserID = youarenotmyfriendanymoreuser.UserID };
 
                         friendconnection1 = friendrepo.GetByUserIDs(friendconnection1.UserID, friendconnection1.FriendUserID);
-                        if (friendconnection1 == null) return false;
                         friendconnection2 = friendrepo.GetByUserIDs(friendconnection2.UserID, friendconnection2.FriendUserID);
-                        if (friendconnection2 == null) return false;
 
-                        friendrepo.Delete(friendconnection1);
-                        friendrepo.Delete(friendconnection2);
-                        return true;
+                        bool foundConnection = friendconnection1 != null || friendconnection2 != null;
+
+                        if (friendconnection1 != null)
+                        {
+                            friendrepo.Delete(friendconnection1);
+                        }
+
+                        if (friendconnection2 != null)
+                        {
+                            friendrepo.Delete(friendconnection2);
+                        }
+
+                        return foundConnection;
                     }
                     else return false;
                 }

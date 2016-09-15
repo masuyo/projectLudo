@@ -4,14 +4,13 @@
     ViewBag.Title = "ProfileSearchResult";
 }
 
+<h4>Adatlap</h4>
 @if (Model.Username != null)
 {
 
     <table class="table pull-left">
         <thead>
-            <tr>
-                <td>Adatlap</td>
-            </tr>
+            <tr></tr>
         </thead>
         <tbody>
             <tr>
@@ -24,7 +23,10 @@
                         {
                             <div class="form-group pull-right">
                                 <div class="col-sm-12 col-xs-12" style="min-width:200px;">
-                                    <button id="Friend" class="btn btn-success btn-block" property="EmailID">Friend</button>
+                                    <input type="hidden" name="clickedEmailID" value='@Model.EmailID' />
+                                    <button type="submit" class="btn btn-success btn-block">
+                                    Friend
+                                    </button>
                                 </div>
                             </div>
                         }
@@ -37,8 +39,11 @@
                             using (Html.BeginForm("Unfriending", "Friend", FormMethod.Post))
                             {
                                 <div class="form-group pull-right">
-                                    <div class="col-sm-12 col-xs-12" style="min-width:200px; color: red">
-                                        <button id="Unfriend" class="btn btn-warning btn-block" property="EmailID">Unfriend</button>
+                                    <div class="col-sm-12 col-xs-12" style="min-width:200px;">
+                                        <input type="hidden" name="clickedEmailID" value='@Model.EmailID' />
+                                        <button type="submit" class="btn btn-warning btn-block">
+                                            Unfriend
+                                        </button>
                                     </div>
                                 </div>
                             }
@@ -49,8 +54,11 @@
                             using (Html.BeginForm("FriendAccepting", "Friend", FormMethod.Post))
                             {
                                 <div class="form-group pull-right">
-                                    <div class="col-sm-12 col-xs-12" style="min-width:200px; color: red">
-                                        <button id="FriendAccept" class="btn btn-success btn-block" property="EmailID">Friend back</button>
+                                    <div class="col-sm-12 col-xs-12" style="min-width:200px;">
+                                        <input type="hidden" name="clickedEmailID" value='@Model.EmailID' />
+                                        <button type="submit" class="btn btn-success btn-block">
+                                            Friend Accept
+                                        </button>
                                     </div>
                                 </div>
                             }
