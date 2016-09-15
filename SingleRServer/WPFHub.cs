@@ -275,7 +275,7 @@ namespace SignalRServer
                     default:
                         break;
                 }
-                SharedLudoLibrary.ClientClasses.Player otherwpfplayer = new SharedLudoLibrary.ClientClasses.Player(otherplayers[i].sequence, othercolor) { Name = nextplayer.Name };
+                SharedLudoLibrary.ClientClasses.Player otherwpfplayer = new SharedLudoLibrary.ClientClasses.Player(otherplayers[i].sequence, othercolor) { Name = otherplayers[i].Name };
                 otherwpfplayers[i] = otherwpfplayer;
             }
             startgameinfo.OtherWPFPlayers = otherwpfplayers;
@@ -332,7 +332,7 @@ namespace SignalRServer
                         break;
                 }
 
-                SharedLudoLibrary.ClientClasses.Player newplayer = new SharedLudoLibrary.ClientClasses.Player(player.sequence, color);
+                SharedLudoLibrary.ClientClasses.Player newplayer = new SharedLudoLibrary.ClientClasses.Player(player.sequence, color) { Name = player.Name };
 
                 for (int i = 0; i < player.Puppets.Length; i++)
                 {
