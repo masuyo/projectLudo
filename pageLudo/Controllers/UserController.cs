@@ -81,12 +81,12 @@ namespace pageLudo.Controllers
                 //Session["LogedUsername"] = "Gabi";
                 //Session["LogedEmailID"] = "gabi@gabi.com";
                 //Session["Role"] = "user";
-                var sha1 = new SHA1CryptoServiceProvider();
-                byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
-                string hashedPassword = new ASCIIEncoding().GetString(sha1data);
+                //var sha1 = new SHA1CryptoServiceProvider();
+                //byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
+                //string hashedPassword = new ASCIIEncoding().GetString(sha1data);
 
                 UserActions ua = new UserActions();
-                UserData ud = ua.Login(u.EmailID, hashedPassword);
+                UserData ud = ua.Login(u.EmailID, u.Password);
                 if (ud != null)
                 {
                     Session["LogedUserID"] = ud.UserID.ToString();

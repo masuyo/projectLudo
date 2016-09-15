@@ -56,7 +56,7 @@ namespace pageLudo.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("AllUsersPage");
             }
         }
 

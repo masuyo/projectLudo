@@ -53,9 +53,9 @@ namespace Repository.TableRepositories
 
         public void UpdateRole(int userID, string role)
         {
-            var sql = @"update [User] set Username=@newname where UserID=@userid";
+            var sql = @"update [User] set Role=@role where UserID=@userID";
             SqlParameter id = new SqlParameter("@userid", userID);
-            SqlParameter newrole = new SqlParameter("@newrole", role);
+            SqlParameter newrole = new SqlParameter("@role", role);
             context.Database.ExecuteSqlCommand(sql, id, newrole);
             context.SaveChanges();
         }
