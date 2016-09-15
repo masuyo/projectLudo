@@ -2,12 +2,29 @@
     ViewBag.Title = "Chat";
 }
 <h2>Chat</h2>
-<div class="input-group">
-    <input class="form-control" type="text" id="message" style="width:inherit;"/>
-    <input class="btn btn-secondary" type="button" id="sendmessage" value="Send" />
-    <input type="hidden" id="displayname" />
-    <ul id="discussion"></ul>
+
+<div class="container">
+    <div class="panel-footer">
+        <div class="input-group">
+            <input id="message" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+            <span class="input-group-btn">
+                <button class="btn btn-warning btn-sm" id="sendmessage">
+                    Send
+                </button>
+                <input type="hidden" id="displayname" />
+            </span>
+        </div>
+    </div>
 </div>
+<div class="chat-body clearfix" style="overflow-y:scroll;height:350px;">
+    <div class="header">
+        <strong class="primary-font" id="displayname"></strong>
+    </div>
+    <hr />
+    <p id="discussion"></p>
+</div>
+
+
 @section scripts {
     <!--Script references. -->
     <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
@@ -30,13 +47,12 @@
             var chat = $.connection.chatHub;
 
             var logInName = @Html.Raw(Json.Encode(Session["LogedUsername"]));
-            var dateTime = new Date();
-            var actTime = addZero(dateTime.getHours()) + ":" + addZero(dateTime.getMinutes()) + ":" + addZero(dateTime.getSeconds());
+
             // Create a function that the hub can call back to display messages.
             chat.client.addNewMessageToPage = function (name, message) {
                 // Add the message to the page.
-                $('#discussion').append('<hr><strong>' + actTime + " " + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</hr>');
+                $('#discussion').append('<strong>' + htmlEncode(name)
+                    + '</strong>: ' + htmlEncode(message) + '<hr />');
             };
             // Get the user name and store it to prepend to messages.
             $('#displayname').val(logInName);

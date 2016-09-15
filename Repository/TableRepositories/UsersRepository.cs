@@ -30,7 +30,7 @@ namespace Repository.TableRepositories
 
         public User GetByGuid(string guid)
         {
-            return Get(akt => akt.Guid == guid).SingleOrDefault().
+            return Get(akt => akt.Guid == guid).SingleOrDefault();
         }
 
         public void UpdateName(int userid,string newname)
