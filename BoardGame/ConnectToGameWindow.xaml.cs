@@ -39,10 +39,10 @@ namespace BoardGame
             // grid_bg.Background = imgb;
 
             HelperClass.HubProxy.On<List<Room>>("SendAllRoomList", (allRoom) => this.Dispatcher.Invoke(() => { AllRoom(allRoom); }));
-            HelperClass.HubProxy.On<List<IUser>>("SendUsersInRoom", (allUserInRoom) => this.Dispatcher.Invoke(() => { AllUserInRoom(allUserInRoom); }));
-            HelperClass.HubProxy.On<IRoom>("SendCreateRoom", (createdRoom) => this.Dispatcher.Invoke(() => { CreateRoom(createdRoom); }));
+            HelperClass.HubProxy.On<List<User>>("SendUsersInRoom", (allUserInRoom) => this.Dispatcher.Invoke(() => { AllUserInRoom(allUserInRoom); }));
+            HelperClass.HubProxy.On<Room>("SendCreateRoom", (createdRoom) => this.Dispatcher.Invoke(() => { CreateRoom(createdRoom); }));
             HelperClass.HubProxy.On<bool>("SendConnectUserToRoom", (connectedToRoom) => this.Dispatcher.Invoke(() => { ConnectUserToRoom(connectedToRoom); }));
-            HelperClass.HubProxy.On<IStartGameInfo>("SendStart", (startGameInfo) => this.Dispatcher.Invoke(() => { Start(startGameInfo); }));
+            HelperClass.HubProxy.On<StartGameInfo>("SendStart", (startGameInfo) => this.Dispatcher.Invoke(() => { Start(startGameInfo); }));
 
 
             AllRoom(new List<Room>());
@@ -61,7 +61,7 @@ namespace BoardGame
             if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); }
         }
 
-        private void Start(IStartGameInfo startGameInfo)
+        private void Start(StartGameInfo startGameInfo)
         {
             Console.WriteLine("start");
             if (startGameInfo != null)
@@ -91,7 +91,7 @@ namespace BoardGame
             }
         }
 
-        private void CreateRoom(IRoom createdRoom)
+        private void CreateRoom(Room createdRoom)
         {
             Console.WriteLine("create");
             if (createdRoom == null)
@@ -110,7 +110,7 @@ namespace BoardGame
             }
 
         }
-        private void AllUserInRoom(List<IUser> allUserInRoom)
+        private void AllUserInRoom(List<User> allUserInRoom)
         {
             Console.WriteLine("usersinroom");
             VM.UsersInRoom.Clear();

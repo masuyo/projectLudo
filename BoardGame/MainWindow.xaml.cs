@@ -69,7 +69,7 @@ namespace BoardGame
             HelperClass.UserName = String.Empty;
             VM.UserName = String.Empty;
             VM.Password = String.Empty;
-            //TODO :: pswd box pswd CLEAR  >>VM.Password = String.Empty; <<does not clears it 
+            //TODO :: pswd box pswd CLEAR  >>get children from window set pswd to empty 
             VM.PassMessage = "Enter password";
         }
         private void Login(string guid)

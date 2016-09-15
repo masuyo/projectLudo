@@ -44,12 +44,10 @@ namespace BoardGame
             this.DataContext = VM;
 
             HelperClass.HubProxy.On<string, string, DateTime>("SendMessage", (uname, text, time) => this.Dispatcher.Invoke(() => { SendMessage(uname, text, time); }));
-            HelperClass.HubProxy.On<IGameInfo>("SendMove", (gameinfo) => this.Dispatcher.Invoke(() => { SendMove(gameinfo); }));
+            HelperClass.HubProxy.On<GameInfo>("SendMove", (gameinfo) => this.Dispatcher.Invoke(() => { SendMove(gameinfo); }));
             HelperClass.HubProxy.On<string>("SendOverall", (linkToPage) => this.Dispatcher.Invoke(() => { SendOverall(linkToPage); }));
 
             
-            HelperClass.Connection.StateChanged += (e) => { if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); } };
-
             this.Dispatcher.Invoke(() => VM.ServerMsgs.Add("Connected to server."));
             this.Dispatcher.Invoke(() => VM.ServerMsgs.Add(VM.UserName + ":: Connecting to server..."));
 
@@ -73,7 +71,7 @@ namespace BoardGame
             throw new NotImplementedException();
         }
 
-        private void SendMove(IGameInfo gameinfo)
+        private void SendMove(GameInfo gameinfo)
         {
             throw new NotImplementedException();
         }
