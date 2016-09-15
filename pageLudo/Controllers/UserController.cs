@@ -6,6 +6,8 @@ using SignalRServer.MVCData.MethodClasses;
 using SignalRServer.MVCData.DataClasses;
 using System.Collections;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace pageLudo.Controllers
 {
@@ -79,8 +81,12 @@ namespace pageLudo.Controllers
                 //Session["LogedUsername"] = "Gabi";
                 //Session["LogedEmailID"] = "gabi@gabi.com";
                 //Session["Role"] = "user";
+                var sha1 = new SHA1CryptoServiceProvider();
+                byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
+                string hashedPassword = new ASCIIEncoding().GetString(sha1data);
+
                 UserActions ua = new UserActions();
-                UserData ud = ua.Login(u.EmailID, u.Password);
+                UserData ud = ua.Login(u.EmailID, hashedPassword);
                 if (ud != null)
                 {
                     Session["LogedUserID"] = ud.UserID.ToString();
@@ -129,7 +135,12 @@ namespace pageLudo.Controllers
             if (ModelState.IsValid)
             {
                 UserActions ua = new UserActions();
-                if (ua.Register(u.Username, u.Password, u.EmailID))
+                // pw hash
+                var sha1 = new SHA1CryptoServiceProvider();
+                byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
+                string hashedPassword = new ASCIIEncoding().GetString(sha1data);
+
+                if (ua.Register(u.Username, hashedPassword, u.EmailID))
                 {
                     ViewBag.Message = "Registration successful";
                 }
