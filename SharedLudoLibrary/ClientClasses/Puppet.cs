@@ -12,6 +12,11 @@ namespace SharedLudoLibrary.ClientClasses
         private int id;
         private int poz;
         private Player player;
+
+        public Puppet()
+        {
+
+        }
         public Puppet(int id, int poz, Player player)
         {
             this.id = id;

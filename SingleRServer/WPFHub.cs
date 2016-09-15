@@ -15,9 +15,9 @@ using SharedLudoLibrary.Interfaces;
 
 namespace SignalRServer
 {
-    public class WPFHub : Hub,ILudoServer,IChatServer
+    public class WPFHub : Hub, ILudoServer, IChatServer
     {
-        
+
         public override Task OnConnected()
         {
             Console.WriteLine("Client connected:" + Context.ConnectionId);
@@ -29,14 +29,14 @@ namespace SignalRServer
         {
             string leaverguid;
             connectionid_guid.TryRemove(Context.ConnectionId, out leaverguid);
-            Console.WriteLine("Client disconnected\nConnectionId:\t" + Context.ConnectionId+"\nGuID:\t" + leaverguid);
-            
+            Console.WriteLine("Client disconnected\nConnectionId:\t" + Context.ConnectionId + "\nGuID:\t" + leaverguid);
+
             //TODO do someting with the leaver!!
 
             return base.OnDisconnected(stopCalled);
         }
 
-       
+
         private static ConcurrentDictionary<string, LudoPlayer> guid_player = new ConcurrentDictionary<string, LudoPlayer>();
         private static ConcurrentDictionary<string, string> connectionid_guid = new ConcurrentDictionary<string, string>();
         private static ConcurrentDictionary<string, LudoTable> name_table = new ConcurrentDictionary<string, LudoTable>();
@@ -46,12 +46,12 @@ namespace SignalRServer
         //ha nem sikerül akkor akkor a kliens LoginError metódusán keresztül jelez
         public void GetLogin(string username, string password, string selectedgametype = "LUDO")
         {
-            Console.WriteLine("Client with {0} connection try to login",Context.ConnectionId);
+            Console.WriteLine("Client with {0} connection try to login", Context.ConnectionId);
             using (UsersRepository repo = new UsersRepository())
             {
                 Entities.User user = repo.GetByName(username);
 
-                //TODO: HASH THE PW
+
                 if (user != null && user?.Password == user?.Password)
                 {
 
@@ -72,29 +72,26 @@ namespace SignalRServer
                         player = new LudoPlayer(user.Username);
                     }
 
-                    LudoTable newtable = new LudoTable(player, user.UserID.ToString(), user.UserID.ToString());
-                    name_table.TryAdd(user.UserID.ToString(), newtable);
+
+                    //LudoTable newtable = new LudoTable(player, user.UserID.ToString(), user.UserID.ToString());
+                    //name_table.TryAdd(user.UserID.ToString(), newtable);
                     guid_player.TryAdd(user.Guid, player);
 
-                    Groups.Add(Context.ConnectionId, newtable.Name);
+                    //Groups.Add(Context.ConnectionId, newtable.Name);
 
                     using (InvationDesktopRepository tablerepo = new InvationDesktopRepository())
                     {
                         //adatbázishoz adás
                     }
 
-
-
-
                     connectionid_guid.AddOrUpdate(Context.ConnectionId, user.Guid, (key, oldvalue) => user.Guid);
 
-                    Console.WriteLine("Clien logged in with {0} guid",user.Guid);
-                    //mentse el a hozzá tartozó Guidot, a szerver ezzel azonosítja ha esetleg (disconnect, recconect, valami történik)
+                    Console.WriteLine("Clien logged in with {0} guid", user.Guid);
+
                     Clients.Caller.SendLogin(user.Guid);
                 }
 
-                //TODO: LoginError method Hubproxy.ON<string>
-                //Kezelje a Login hibát
+
                 else Clients.Caller.SendLoginError();
             }
         }
@@ -108,44 +105,44 @@ namespace SignalRServer
 
         public void GetAllRoomList(string guid)
         {
-            Console.WriteLine("Client with {0} guid asked allroomlist.",guid);
+            Console.WriteLine("Client with {0} guid asked allroomlist.", guid);
             List<Room> rooms = new List<Room>();
-            Console.WriteLine("Rooms:");
+
             foreach (var item in name_table)
             {
                 LudoTable room = item.Value;
-                //TODO 0 helyett mi?
-                Console.WriteLine(room.Name);
-                Room newroom = new Room() {Name=room.Name,ID=0,AvailablePlaces=4-room.Players.Count,Password=room.Password};
+
+                Room newroom = new Room() { Name = room.Name, ID = 0, AvailablePlaces = 4 - room.Players.Count, Password = room.Password };
                 rooms.Add(newroom);
             }
             Clients.Caller.SendAllRoomList(rooms);
         }
 
-        public void GetUsersInRoom(string guid,IRoom room)
+        public void GetUsersInRoom(string guid, Room room)
         {
-            Console.WriteLine("Client with {0} guid asked usersinroom in {1} room",guid,room.Name);
+            Console.WriteLine("Client with {0} guid asked usersinroom in {1} room", guid, room.Name);
             LudoTable table = name_table[room.Name];
-            if (table == null) return;
+            if (table == null)
+            {
+                Console.WriteLine("Did not found the table");
+                return;
+            }
             List<SharedLudoLibrary.ClientClasses.User> users = new List<SharedLudoLibrary.ClientClasses.User>();
 
-            using (UsersRepository userrepo = new UsersRepository())
+            foreach (var item in table.Players)
             {
-                foreach (var item in table.Players)
-                {
-                    Entities.User user = userrepo.GetByName(item.Name);
-                    //TODO 0 helyett mi? 
-                    SharedLudoLibrary.ClientClasses.User newuser = new SharedLudoLibrary.ClientClasses.User(item.Name);
-                    users.Add(newuser);
-                }
+                users.Add(new SharedLudoLibrary.ClientClasses.User() { UserName = item.Name });
             }
 
-            Clients.Caller.SendPlayersInRoom(users);
+
+            Clients.Group(table.Name).SendUsersInRoom(users);
         }
 
-        public void GetCreateRoom(string guid,IRoom newRoom)
+        public void GetCreateRoom(string guid, Room newRoom)
         {
-            Console.WriteLine("Client with {0} guid try to creatreroom with {1} name",guid,newRoom.Name);
+            Console.WriteLine("Client with {0} guid try to creatreroom with {1} name", guid, newRoom.Name);
+            if (newRoom.Name == null) return;
+
             LudoPlayer player;
             using (UsersRepository userrepo = new UsersRepository())
             {
@@ -158,7 +155,7 @@ namespace SignalRServer
             guid_player.TryAdd(guid, player);
 
             Groups.Add(Context.ConnectionId, newRoom.Name);
-     
+
             using (InvationDesktopRepository tablerepo = new InvationDesktopRepository())
             {
                 //adatbázishoz adás
@@ -167,17 +164,14 @@ namespace SignalRServer
             Clients.Caller.SendCreateRoom(new Room(newtable.Players.Count - 4, 0, newtable.Name, newtable.Password));
         }
 
-        public void GetConnectUserToRoom(string guid,IUser user, IRoom room)
+        public void GetConnectUserToRoom(string guid, SharedLudoLibrary.ClientClasses.User user, Room room)
         {
-            Console.WriteLine("Client with {0} guid connectusertoroom to {1} room",guid,room.Name);
+            Console.WriteLine("Client with {0} guid connectusertoroom to {1} room", guid, room.Name);
             bool connectedToRoom = false;
 
             LudoPlayer player;
-            using (UsersRepository userrepo = new UsersRepository())
-            {
-                Entities.User newuser = userrepo.GetByGuid(guid);
-                player = new LudoPlayer(newuser.Username);
-            }
+            player = guid_player[guid];
+
             try
             {
                 name_table[room.Name].AddPlayer(player, room.Password);
@@ -198,22 +192,25 @@ namespace SignalRServer
             Clients.Caller.SendConnectUserToRoom(connectedToRoom);
         }
 
-        public void GetStart(string guid,int playerID)
+        public void GetStart(string guid, string playerID)
         {
-            Console.WriteLine("Client with {0} guid try to start a game.",guid);
+            Console.WriteLine("Client with {0} guid try to start a game.", guid);
             LudoPlayer caller = guid_player[guid];
             LudoTable table = name_table.Where(akt => akt.Value.Creator.Name == caller.Name).SingleOrDefault().Value;
 
             //set color, check everybody etc
-            table.SetCheck(table.Players[0], true);
-            table.SetColor(table.Players[0], puppetColor.Blue);
-            table.SetCheck(table.Players[1], true);
-            table.SetColor(table.Players[1], puppetColor.Green);
-            table.SetCheck(table.Players[2], true);
-            table.SetColor(table.Players[2], puppetColor.Yellow);
-            table.SetCheck(table.Players[3], true);
             table.SetColor(table.Players[3], puppetColor.Red);
+            table.SetColor(table.Players[0], puppetColor.Blue);
+            table.SetColor(table.Players[1], puppetColor.Green);
+            table.SetColor(table.Players[2], puppetColor.Yellow);
+
+            table.SetCheck(table.Players[0], true);
+            table.SetCheck(table.Players[1], true);
+            table.SetCheck(table.Players[2], true);
+            table.SetCheck(table.Players[3], true);
+           
             //set vége
+            Console.WriteLine("{0} table is startable : {1}",table.Name,table.Startable);
             table.Start();
 
             StartGameInfo startgameinfo = MakeStartGameInfo(table);
@@ -296,19 +293,19 @@ namespace SignalRServer
             gameinfo.OnManHit = false;
             gameinfo.Reroll = false;
             gameinfo.PuppetList = CreatePuppetList(table.Gamemanager);
-            if((table.Gamemanager as LudoGameManager).Dice1==0 && (table.Gamemanager as LudoGameManager).Dice2 == 0)
+            if ((table.Gamemanager as LudoGameManager).Dice1 == 0 && (table.Gamemanager as LudoGameManager).Dice2 == 0)
             {
-                table.Gamemanager.DoAction(new ThrowLudoAction(table.getGame().Nextplayer));   
+                table.Gamemanager.DoAction(new ThrowLudoAction(table.getGame().Nextplayer));
             }
             gameinfo.Dice1 = (table.Gamemanager as LudoGameManager).Dice1;
             gameinfo.Dice2 = (table.Gamemanager as LudoGameManager).Dice2;
-                        
+
             return gameinfo;
         }
 
-        private List<IPuppet> CreatePuppetList(IGameManager<LudoGame, LudoAction> gamemanager)
+        private List<Puppet> CreatePuppetList(IGameManager<LudoGame, LudoAction> gamemanager)
         {
-            List<IPuppet> puppetlist = new List<IPuppet>();
+            List<Puppet> puppetlist = new List<Puppet>();
 
             LudoGameManager gm = (LudoGameManager)gamemanager;
 
@@ -337,7 +334,7 @@ namespace SignalRServer
 
                 SharedLudoLibrary.ClientClasses.Player newplayer = new SharedLudoLibrary.ClientClasses.Player(player.sequence, color);
 
-                for (int i=0;i<player.Puppets.Length;i++)
+                for (int i = 0; i < player.Puppets.Length; i++)
                 {
                     int puppet = player.Puppets[i];
                     int pozition = 0;
@@ -368,14 +365,14 @@ namespace SignalRServer
                         default:
                             break;
                     }
-                    puppetlist.Add(new Puppet(i+1, pozition, newplayer));
+                    puppetlist.Add(new Puppet(i + 1, pozition, newplayer));
                 }
             }
 
             return puppetlist;
         }
 
-        public void GetMove(string guid,int puppetID, int actPoz, int destPoz)
+        public void GetMove(string guid, int puppetID, int actPoz, int destPoz)
         {
             Console.WriteLine("Client with {0} guid try to move.", guid);
             LudoPlayer caller = guid_player[guid];
@@ -387,12 +384,12 @@ namespace SignalRServer
             Clients.Group(table.Name).SendMove(gameinfo);
         }
 
-        public void GetOverall(string guid,int playerID)
+        public void GetOverall(string guid, int playerID)
         {
             throw new NotImplementedException();
         }
 
-        public void Befriend(string guid,int playerID, int friendPlayerID)
+        public void Befriend(string guid, int playerID, int friendPlayerID)
         {
             throw new NotImplementedException();
         }

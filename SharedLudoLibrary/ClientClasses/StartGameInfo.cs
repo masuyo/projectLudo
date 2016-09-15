@@ -14,12 +14,12 @@ namespace SharedLudoLibrary.ClientClasses
            
         }
 
-        public IGameInfo MsgFromServer
+        public GameInfo MsgFromServer
         {
             get; set;
         }
 
-        public IPlayer[] OtherWPFPlayers
+        public Player[] OtherWPFPlayers
         {
             get;set;
             //get
@@ -33,7 +33,7 @@ namespace SharedLudoLibrary.ClientClasses
             //}
         }
 
-        public IPlayer WPFPlayer
+        public Player WPFPlayer
         {
             get;set;
             //get

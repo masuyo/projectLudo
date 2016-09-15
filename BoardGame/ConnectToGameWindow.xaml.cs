@@ -114,7 +114,7 @@ namespace BoardGame
         {
             Console.WriteLine("usersinroom");
             VM.UsersInRoom.Clear();
-            foreach (IUser u in allUserInRoom)
+            foreach (User u in allUserInRoom)
             {
                 VM.UsersInRoom.Add(u);
             }

@@ -9,31 +9,13 @@ namespace SharedLudoLibrary.ClientClasses
 {
     public class GameInfo : IGameInfo
     {
-        List<IPuppet> puppetList;
+        List<Puppet> puppetList;
         Random rnd = new Random();
 
         public GameInfo()
         {
-            puppetList = new List<IPuppet>();
-            //puppetList.Add(new Puppet(11, 11, new Player(0, PlayerColor.RED)));
-            //puppetList.Add(new Puppet(12, 12, new Player(0, PlayerColor.RED)));
-            //puppetList.Add(new Puppet(12, 13, new Player(0, PlayerColor.RED)));
-            //puppetList.Add(new Puppet(13, 14, new Player(0, PlayerColor.RED)));
-
-            //puppetList.Add(new Puppet(21, 21, new Player(1, PlayerColor.BLUE)));
-            //puppetList.Add(new Puppet(22, 22, new Player(1, PlayerColor.BLUE)));
-            //puppetList.Add(new Puppet(23, 23, new Player(1, PlayerColor.BLUE)));
-            //puppetList.Add(new Puppet(24, 24, new Player(1, PlayerColor.BLUE)));
-
-            //puppetList.Add(new Puppet(31, 31, new Player(2, PlayerColor.YELLOW)));
-            //puppetList.Add(new Puppet(32, 32, new Player(2, PlayerColor.YELLOW)));
-            //puppetList.Add(new Puppet(33, 33, new Player(2, PlayerColor.YELLOW)));
-            //puppetList.Add(new Puppet(34, 34, new Player(2, PlayerColor.YELLOW)));
-
-            //puppetList.Add(new Puppet(41, 41, new Player(3, PlayerColor.GREEN)));
-            //puppetList.Add(new Puppet(42, 42, new Player(3, PlayerColor.GREEN)));
-            //puppetList.Add(new Puppet(43, 43, new Player(3, PlayerColor.GREEN)));
-            //puppetList.Add(new Puppet(44, 44, new Player(3, PlayerColor.GREEN)));
+            puppetList = new List<Puppet>();
+           
         }
 
         public void ChangePoz()
@@ -63,7 +45,7 @@ namespace SharedLudoLibrary.ClientClasses
             get;set;
         }
 
-        public List<IPuppet> PuppetList
+        public List<Puppet> PuppetList
         {
             get;set;
         }

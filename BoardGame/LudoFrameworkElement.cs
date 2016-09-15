@@ -13,7 +13,7 @@ namespace BoardGame
 {
     class LudoFrameworkElement : FrameworkElement
     {
-        List<IPuppet> puppetList;
+        List<Puppet> puppetList;
         int[,] fieldIDMatrix;
         const int DIM = 11;
         int width = 600;
@@ -22,7 +22,7 @@ namespace BoardGame
         int Y_offset = 0;
 
         GameInfo tmsg;
-        List<IPuppet> newpuppetList;
+        List<Puppet> newpuppetList;
 
         private void InitMap()
         {
@@ -43,7 +43,7 @@ namespace BoardGame
         }
         public LudoFrameworkElement()
         {
-            puppetList = new List<IPuppet>();
+            puppetList = new List<Puppet>();
             tmsg = new GameInfo();
             InitMap();
 
@@ -253,7 +253,7 @@ namespace BoardGame
                     }
                 }
             }
-            foreach (IPuppet m in puppetList) //drawing men
+            foreach (Puppet m in puppetList) //drawing men
             {
                 MoveMan(drawingContext, 0, m.Poz, m.Player.Color, false);
             }
@@ -278,7 +278,7 @@ namespace BoardGame
 
             if (onHover)
             {
-                foreach (IPuppet p in onHoverPuppets)
+                foreach (Puppet p in onHoverPuppets)
                 {
                     MoveMan(drawingContext, 0, p.Poz + 1, p.Player.Color, onHover);
                 }

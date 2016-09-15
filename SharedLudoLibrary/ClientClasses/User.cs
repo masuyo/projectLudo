@@ -10,6 +10,10 @@ namespace SharedLudoLibrary.ClientClasses
     public class User : IUser
     {
         private string userName;
+        public User()
+        {
+
+        }
         public User(string userName)
         {
             this.userName = userName;

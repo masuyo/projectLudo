@@ -10,6 +10,11 @@ namespace SharedLudoLibrary.ClientClasses
     public enum PlayerColor { RED, GREEN, BLUE, YELLOW }
     public class Player : IPlayer
     {
+        public Player()
+        {
+                
+        }
+
         private string name;
         public string Name
         {
