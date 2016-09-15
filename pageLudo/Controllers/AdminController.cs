@@ -4,6 +4,8 @@ using SignalRServer.MVCData.MethodClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -51,7 +53,12 @@ namespace pageLudo.Controllers
             {
                 aa = new AdminActions();
                 string editUserEmailID = HttpContext.Session["EditUserEmailID"].ToString();
-                aa.UserSetting(editUserEmailID, u.Username, u.Password, u.EmailID, u.Role);
+
+                var sha1 = new SHA1CryptoServiceProvider();
+                byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
+                string hashedPassword = new ASCIIEncoding().GetString(sha1data);
+
+                aa.UserSetting(editUserEmailID, u.Username, hashedPassword, u.EmailID, u.Role);
                 return RedirectToAction("AllUsersPage");
             }
             catch

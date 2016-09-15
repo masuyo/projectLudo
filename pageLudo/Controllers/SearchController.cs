@@ -109,12 +109,12 @@ namespace pageLudo.Controllers
                     convResultUser.AreWeFriends = resultUser.AreWeFriends;
                     convResultUser.FriendedYou = resultUser.FriendedYou;
                     convResultUser.FriendedMe = resultUser.FriendedMe;
-                    // visszakapott adatok
-                    Session["AccessedUsername"] = convResultUser.Username.ToString();
-                    Session["AccessedEmailID"] = convResultUser.EmailID.ToString();
-                    Session["AccessedFriendState"] = convResultUser.AreWeFriends.ToString();
-                    Session["AccessedFriendedYou"] = convResultUser.FriendedYou.ToString();
-                    Session["AccessedFriendedMe"] = convResultUser.FriendedMe.ToString();
+
+                    //Session["AccessedUsername"] = convResultUser.Username.ToString();
+                    //Session["AccessedEmailID"] = convResultUser.EmailID.ToString();
+                    //Session["AccessedFriendState"] = convResultUser.AreWeFriends.ToString();
+                    //Session["AccessedFriendedYou"] = convResultUser.FriendedYou.ToString();
+                    //Session["AccessedFriendedMe"] = convResultUser.FriendedMe.ToString();
 
                     // keresett user profilja
                     return View("ProfileSearchResult", resultUser);

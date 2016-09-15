@@ -21,7 +21,12 @@ namespace pageLudo.Controllers
             if (ModelState.IsValid)
             {
                 UserActions ua = new UserActions();
-                if(ua.ProfileSetting(Session["LogedEmailID"].ToString(), u.Username,u.Password,u.EmailID))
+
+                var sha1 = new SHA1CryptoServiceProvider();
+                byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
+                string hashedPassword = new ASCIIEncoding().GetString(sha1data);
+
+                if (ua.ProfileSetting(Session["LogedEmailID"].ToString(), u.Username,u.Password,hashedPassword))
                 {
                     ViewBag.Message = "User settings saved";
                 }
@@ -77,16 +82,12 @@ namespace pageLudo.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Session["LogedUserID"] = 5;
-                //Session["LogedUsername"] = "Gabi";
-                //Session["LogedEmailID"] = "gabi@gabi.com";
-                //Session["Role"] = "user";
-                //var sha1 = new SHA1CryptoServiceProvider();
-                //byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
-                //string hashedPassword = new ASCIIEncoding().GetString(sha1data);
+                var sha1 = new SHA1CryptoServiceProvider();
+                byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
+                string hashedPassword = new ASCIIEncoding().GetString(sha1data);
 
                 UserActions ua = new UserActions();
-                UserData ud = ua.Login(u.EmailID, u.Password);
+                UserData ud = ua.Login(u.EmailID, hashedPassword);
                 if (ud != null)
                 {
                     Session["LogedUserID"] = ud.UserID.ToString();
