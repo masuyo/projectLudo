@@ -245,7 +245,7 @@ namespace SignalRServer
                 default:
                     break;
             }
-            startgameinfo.WPFPlayer = new SharedLudoLibrary.ClientClasses.Player(nextplayer.sequence, color);
+            startgameinfo.WPFPlayer = new SharedLudoLibrary.ClientClasses.Player(nextplayer.sequence, color) { Name=nextplayer.Name};
 
             SharedLudoLibrary.ClientClasses.Player[] otherwpfplayers = new SharedLudoLibrary.ClientClasses.Player[3];
             LudoPlayer[] otherplayers = new LudoPlayer[3];
@@ -275,7 +275,7 @@ namespace SignalRServer
                     default:
                         break;
                 }
-                SharedLudoLibrary.ClientClasses.Player otherwpfplayer = new SharedLudoLibrary.ClientClasses.Player(otherplayers[i].sequence, othercolor);
+                SharedLudoLibrary.ClientClasses.Player otherwpfplayer = new SharedLudoLibrary.ClientClasses.Player(otherplayers[i].sequence, othercolor) { Name = nextplayer.Name };
                 otherwpfplayers[i] = otherwpfplayer;
             }
             startgameinfo.OtherWPFPlayers = otherwpfplayers;
