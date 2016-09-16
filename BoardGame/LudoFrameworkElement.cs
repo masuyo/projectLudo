@@ -57,7 +57,6 @@ namespace BoardGame
         }
         public void Init(IStartGameInfo startGameInfo)
         {
-
             puppetList = new List<IPuppet>(startGameInfo.MsgFromServer.PuppetList);
 
             InitMap();
@@ -132,7 +131,9 @@ namespace BoardGame
             RectangleGeometry temp = new RectangleGeometry(new Rect(e.GetPosition(this).X, e.GetPosition(this).Y, 1, 1), 1, 1);
             foreach (Puppet p in puppetList)
             {
-                if (!onHover && Geometry.Combine(DrawManGraphics(p.Poz, 2), temp, GeometryCombineMode.Intersect, null).GetArea() > 0)
+                if (!onHover 
+                    && LudoView.GetVM.WPFPlayer.Color == p.Player.Color 
+                    && Geometry.Combine(DrawManGraphics(p.Poz, 2), temp, GeometryCombineMode.Intersect, null).GetArea() > 0)
                 {
                     Console.WriteLine(onHover + p.ID.ToString());
                     onHover = true;
@@ -146,24 +147,23 @@ namespace BoardGame
                 if (LudoView.GetVM.GameSateInfo.ActivePlayerID == LudoView.GetVM.WPFPlayer.ID)
                 {
                     Console.WriteLine("ID");
-                    int dest1 = 0;
-                    int dest2 = 0;
-                    int step1 = onHoverPuppet.Poz + LudoView.GetVM.GameSateInfo.Dice1;
-                    int step2 = onHoverPuppet.Poz + LudoView.GetVM.GameSateInfo.Dice2;
-                    switch (LudoView.GetVM.WPFPlayer.Color)
+                    int dest1 = onHoverPuppet.Poz;
+                    int dest2 = onHoverPuppet.Poz;
+                    int d1 = LudoView.GetVM.GameSateInfo.Dice1;
+                    int d2 = LudoView.GetVM.GameSateInfo.Dice2;
+                    //LudoView.GetVM.GameSateInfo.ActivePlayerID
+                    while (d1 > 0)
                     {
-                        case PlayerColor.RED:
-                            break;
-                        case PlayerColor.GREEN:
-                            break;
-                        case PlayerColor.BLUE:
-                            break;
-                        case PlayerColor.YELLOW:
-                            break;
-                        default:
-                            break;
+                        dest1 = MoveOne(dest1, LudoView.GetVM.WPFPlayer.Color);
+                        d1--;
                     }
-
+                    while (d2 > 0)
+                    {
+                        dest2 = MoveOne(dest2, LudoView.GetVM.WPFPlayer.Color);
+                        d2--;
+                    }
+                    targretFields.Add(dest1);
+                    targretFields.Add(dest2);
                 }
 
                 InvalidateVisual();

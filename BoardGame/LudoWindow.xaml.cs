@@ -31,6 +31,9 @@ namespace BoardGame
         public LudoWindow(IStartGameInfo startGameInfo)
         {
             InitializeComponent();
+
+            Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID;
+
             Ludo.Init(startGameInfo);
 
             VM = LudoView.GetVM;
@@ -84,7 +87,7 @@ namespace BoardGame
 
         private void SendMove(GameInfo gameinfo)
         {
-            Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID;            
+            Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID;
 
             VM.GameSateInfo.Dice1 = gameinfo.Dice1;
             VM.GameSateInfo.Dice2 = gameinfo.Dice2;
