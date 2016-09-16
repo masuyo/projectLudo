@@ -76,7 +76,7 @@ namespace BoardGame.Views
 
             set { SetProperty(ref otherPlayers, value); }
         }
-        public IGameInfo MsgFromServer
+        public IGameInfo GameSateInfo
         {
             get { return msgFromServer; }
 

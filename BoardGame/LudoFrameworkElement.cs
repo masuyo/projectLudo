@@ -1,4 +1,5 @@
 ﻿using BoardGame.TestClasses;
+using BoardGame.Views;
 using SharedLudoLibrary.ClientClasses;
 using SharedLudoLibrary.Interfaces;
 using System;
@@ -58,10 +59,7 @@ namespace BoardGame
         {
 
             puppetList = new List<IPuppet>(startGameInfo.MsgFromServer.PuppetList);
-            foreach (IPuppet p in startGameInfo.MsgFromServer.PuppetList)
-            {
-                Console.WriteLine(p.Player.Color.ToString());
-            }
+         
             InitMap();
 
             this.Loaded += LudoFrameworkElement_Loaded;
@@ -89,6 +87,7 @@ namespace BoardGame
             {
                 if (!onHover && Geometry.Combine(DrawManGraphics(p.Poz, 2), temp, GeometryCombineMode.Intersect, null).GetArea() > 0)
                 {
+                    Console.WriteLine(onHover + p.ID.ToString());
                     onHover = true;
                     onHoverPuppet = p;
                     targretFields.Clear();
@@ -97,9 +96,63 @@ namespace BoardGame
             //MessageBox.Show(e.GetPosition(this).ToString());
             if (onHover)
             {
-                //todo calculate bl
-                targretFields.Add(onHoverPuppet.Poz + 1);
-                targretFields.Add(onHoverPuppet.Poz + 5);
+                if (LudoView.GetVM.GameSateInfo.ActivePlayerID == LudoView.GetVM.WPFPlayer.ID)
+                {
+                    Console.WriteLine("ID");
+                    switch (LudoView.GetVM.WPFPlayer.Color)
+                    {
+                        case PlayerColor.RED:
+                            int dest1 = 0;
+                            int dest2 = 0;
+                            int step1 = onHoverPuppet.Poz + LudoView.GetVM.GameSateInfo.Dice1;
+                            int step2 = onHoverPuppet.Poz + LudoView.GetVM.GameSateInfo.Dice2;
+                            if (onHoverPuppet.Poz > 10 && onHoverPuppet.Poz < 15)
+                            {
+                                dest1 = 110;
+                            }
+                            else if (onHoverPuppet.Poz >= 110 && step1 < 150)
+                            {
+                                dest1 = step1;
+                            }
+                            
+                            else if (step1 > 149 && step1 < 155)
+                            {
+                                dest1 = 98 + LudoView.GetVM.GameSateInfo.Dice1;
+                            }
+
+                            else if (onHoverPuppet.Poz >= 110 && step2 < 150)
+                            {
+                                dest2 = step2;
+                            }
+
+                            else if (step2 > 149 && step2 < 155)
+                            {
+                                dest2 = 98 + LudoView.GetVM.GameSateInfo.Dice2;
+                            }
+
+                            else if(step1 > 153)
+                            {
+                                dest1 = onHoverPuppet.Poz;
+                            }
+                            else if (step2 > 153)
+                            {
+                                dest2 = onHoverPuppet.Poz;
+                            }
+                            targretFields.Add(dest1);
+                            targretFields.Add(dest2);
+                            Console.WriteLine(dest1 +" - "+dest2);
+                            break;
+                        case PlayerColor.GREEN:
+                            break;
+                        case PlayerColor.BLUE:
+                            break;
+                        case PlayerColor.YELLOW:
+                            break;
+                        default:
+                            break;
+                    }
+
+                }               
 
                 InvalidateVisual();
             }

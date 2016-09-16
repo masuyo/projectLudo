@@ -58,10 +58,10 @@
             </Grid.RowDefinitions>
 
             <!--<Button Grid.Row="0" Grid.Column="0" Content="TEST" VerticalAlignment="Top" Click="Button_Click"/>-->
-            <Label Content="{Binding Path=MsgFromServer.Dice1}"
+            <Label Content="{Binding Path=GameSateInfo.Dice1}"
                    Grid.Row="0"
                    Width="100" Height="100" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="ExtraBold" FontSize="30"  />
-            <Label Content="{Binding Path=MsgFromServer.Dice2}"
+            <Label Content="{Binding Path=GameSateInfo.Dice2}"
                    Grid.Row="1"
                    Width="100" Height="100" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="ExtraBold" FontSize="30"  />
         </Grid>

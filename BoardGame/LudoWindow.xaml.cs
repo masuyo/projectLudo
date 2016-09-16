@@ -34,7 +34,6 @@ namespace BoardGame
             Ludo.Init(startGameInfo);
 
             VM = LudoView.GetVM;
-
             VM.WPFPlayer = new Player(startGameInfo.WPFPlayer.ID, startGameInfo.WPFPlayer.Color);
             VM.UserName = startGameInfo.WPFPlayer.Name;
             VM.OtherWPFPlayers = new Player[] {
@@ -42,7 +41,7 @@ namespace BoardGame
                 new Player(startGameInfo.OtherWPFPlayers[1].ID, startGameInfo.OtherWPFPlayers[1].Color),
                 new Player(startGameInfo.OtherWPFPlayers[2].ID, startGameInfo.OtherWPFPlayers[2].Color)
             };
-            VM.MsgFromServer = startGameInfo.MsgFromServer; //startGameInfo.MsgFromServer
+            VM.GameSateInfo = startGameInfo.MsgFromServer; //startGameInfo.MsgFromServer
 
             this.DataContext = VM;
 
@@ -56,7 +55,7 @@ namespace BoardGame
 
             this.Dispatcher.Invoke(() => VM.ServerMsgs.Add("Connected to server."));
             this.Dispatcher.Invoke(() => VM.ServerMsgs.Add(VM.UserName + ":: Connecting to server..."));
-            if (!String.IsNullOrEmpty(VM.MsgFromServer.Msg)) { VM.ServerMsgs.Add(startGameInfo.MsgFromServer.Msg); }
+            if (!String.IsNullOrEmpty(VM.GameSateInfo.Msg)) { VM.ServerMsgs.Add(startGameInfo.MsgFromServer.Msg); }
 
 
             HelperClass.Connection.Closed += Connection_Closed;
@@ -66,7 +65,7 @@ namespace BoardGame
 
         private void Ludo_PuppetMove(int from, int to)
         {
-            HelperClass.HubProxy.Invoke("GetMove", HelperClass.GUID, VM.MsgFromServer.ActivePlayerID, from, to);
+            HelperClass.HubProxy.Invoke("GetMove", HelperClass.GUID, VM.GameSateInfo.ActivePlayerID, from, to);
         }
 
         private void Connection_StateChanged(StateChange e)
@@ -87,8 +86,12 @@ namespace BoardGame
         {
             Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID;            
 
-            VM.MsgFromServer.Dice1 = gameinfo.Dice1;
-            VM.MsgFromServer.Dice2 = gameinfo.Dice2;
+            VM.GameSateInfo.Dice1 = gameinfo.Dice1;
+            VM.GameSateInfo.Dice2 = gameinfo.Dice2;
+
+            //test only
+            VM.GameSateInfo.Dice1 = 6;
+            VM.GameSateInfo.Dice2 = 6;
 
             if (!String.IsNullOrEmpty(gameinfo.Msg) && (gameinfo.Msg.ToLower().Contains("server"))) { VM.ServerMsgs.Add(gameinfo.Msg); }
             if (gameinfo.OnManHit && !String.IsNullOrEmpty(gameinfo.Msg))
