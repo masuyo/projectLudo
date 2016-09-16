@@ -10,5 +10,7 @@ namespace SignalRServer.MVCData.DataClasses
         public string GameName { get; set; }
         public int NumberOfWins { get; set; }
         public int NumberOfLosses { get; set; }
+        public int NumberOfGames { get; set; }
+        public string ColorName { get; set; }
     }
 }
