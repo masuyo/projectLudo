@@ -20,12 +20,13 @@ namespace BoardGame
         int height = 600;
         int X_offset = 0;
         int Y_offset = 0;
-        
+
 
 
         public event Action<int, int> PuppetMove; //event
-        
-        private void OnPuppetMove(int from, int to) {
+
+        private void OnPuppetMove(int from, int to)
+        {
             PuppetMove?.Invoke(from, to);
         }
 
@@ -47,19 +48,30 @@ namespace BoardGame
             };
 
         }
-        public LudoFrameworkElement(IStartGameInfo startGameInfo)
+
+        public LudoFrameworkElement()
         {
-            puppetList = new List<IPuppet>(startGameInfo.MsgFromServer.PuppetList);
-            
             InitMap();
 
+        }
+        public void Init(IStartGameInfo startGameInfo)
+        {
+
+            puppetList = new List<IPuppet>(startGameInfo.MsgFromServer.PuppetList);
+            foreach (IPuppet p in startGameInfo.MsgFromServer.PuppetList)
+            {
+                Console.WriteLine(p.Player.Color.ToString());
+            }
+            InitMap();
 
             this.Loaded += LudoFrameworkElement_Loaded;
             this.MouseDown += LudoFrameworkElement_MouseDown;
             this.MouseMove += LudoFrameworkElement_MouseMove;
+            InvalidateVisual();
         }
 
-        public void MovePuppets(List<Puppet> newpuppets) {
+        public void MovePuppets(List<Puppet> newpuppets)
+        {
             puppetList = new List<IPuppet>(newpuppets);
             InvalidateVisual();
         }
@@ -71,7 +83,7 @@ namespace BoardGame
 
         //todo business logic
         private void LudoFrameworkElement_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {            
+        {
             RectangleGeometry temp = new RectangleGeometry(new Rect(e.GetPosition(this).X, e.GetPosition(this).Y, 1, 1), 1, 1);
             foreach (Puppet p in puppetList)
             {
@@ -92,7 +104,7 @@ namespace BoardGame
                 InvalidateVisual();
             }
         }
-        
+
         private void LudoFrameworkElement_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             RectangleGeometry temp = new RectangleGeometry(new Rect(e.GetPosition(this).X, e.GetPosition(this).Y, 1, 1), 1, 1);
@@ -105,7 +117,7 @@ namespace BoardGame
                     toFieldID = fieldID;
                 }
             }
-            if (toFieldID!=-1)
+            if (toFieldID != -1)
             {
                 PuppetMove(onHoverPuppet.Poz, toFieldID);
             }
@@ -258,34 +270,39 @@ namespace BoardGame
         }
         private void Draw(DrawingContext drawingContext)
         {
-            foreach (int item in fieldIDMatrix) //drawing fields
+            if (puppetList != null && fieldIDMatrix != null)
             {
-                if (item != 0)
+                foreach (int item in fieldIDMatrix) //drawing fields
                 {
-                    if (item / 10 < 5)
+                    if (item != 0)
                     {
-                        //EllipseGeometry tmp = (EllipseGeometry)DrawManGraphics(item,2);
-                        //drawingContext.DrawGeometry(Brushes.Transparent, new Pen(IDToColor(item), 1), new RectangleGeometry(new Rect(tmp.Bounds.Left, tmp.Bounds.Top, tmp.Bounds.Width, tmp.Bounds.Height)));
+                        if (item / 10 < 5)
+                        {
+                            //EllipseGeometry tmp = (EllipseGeometry)DrawManGraphics(item,2);
+                            //drawingContext.DrawGeometry(Brushes.Transparent, new Pen(IDToColor(item), 1), new RectangleGeometry(new Rect(tmp.Bounds.Left, tmp.Bounds.Top, tmp.Bounds.Width, tmp.Bounds.Height)));
 
-                        drawingContext.DrawGeometry(Brushes.Black, new Pen(IDToColor(item), 1), DrawField(item));
-                    }
-                    else
-                    {
-                        drawingContext.DrawGeometry(IDToColor(item) == Brushes.DimGray ? Brushes.Transparent : IDToColor(item), new Pen(IDToColor(item), 1), DrawField(item));
+                            drawingContext.DrawGeometry(Brushes.Black, new Pen(IDToColor(item), 1), DrawField(item));
+                        }
+                        else
+                        {
+                            drawingContext.DrawGeometry(IDToColor(item) == Brushes.DimGray ? Brushes.Transparent : IDToColor(item), new Pen(IDToColor(item), 1), DrawField(item));
+                        }
                     }
                 }
+
+                foreach (Puppet m in puppetList) //drawing men
+                {
+                    MoveMan(drawingContext, 0, m.Poz, m.Player.Color, false);
+                }
             }
-            foreach (Puppet m in puppetList) //drawing men
-            {
-                MoveMan(drawingContext, 0, m.Poz, m.Player.Color, false);
-            }
+
         }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
             Draw(drawingContext);
 
-        
+
             if (onHover)
             {
                 foreach (int fieldID in targretFields)

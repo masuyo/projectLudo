@@ -68,7 +68,7 @@
         <!--Dices-->
         <Grid Grid.Row="1" Grid.Column="1" Height="600" Width="600" Grid.ColumnSpan="3">
             <local:LudoFrameworkElement x:Name="Ludo" />
-        </Grid >
+        </Grid>
         <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical" Background="DimGray" Opacity="0.7" Margin="5,10,0,10">
             <ListBox ItemsSource="{Binding Path=ChatMsgs}" Height="550" BorderThickness="0" Background="Transparent" Foreground="AliceBlue">
                 <!--<ListBox.ItemTemplate>

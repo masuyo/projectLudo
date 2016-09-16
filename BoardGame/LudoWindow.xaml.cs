@@ -31,6 +31,8 @@ namespace BoardGame
         public LudoWindow(IStartGameInfo startGameInfo)
         {
             InitializeComponent();
+            Ludo.Init(startGameInfo);
+
             VM = LudoView.GetVM;
 
             VM.WPFPlayer = new Player(startGameInfo.WPFPlayer.ID, startGameInfo.WPFPlayer.Color);
@@ -41,7 +43,7 @@ namespace BoardGame
                 new Player(startGameInfo.OtherWPFPlayers[2].ID, startGameInfo.OtherWPFPlayers[2].Color)
             };
             VM.MsgFromServer = startGameInfo.MsgFromServer; //startGameInfo.MsgFromServer
-            
+
             this.DataContext = VM;
 
             Ludo.PuppetMove += Ludo_PuppetMove;
@@ -83,10 +85,11 @@ namespace BoardGame
 
         private void SendMove(GameInfo gameinfo)
         {
-            Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID;
+            Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID;            
+
             VM.MsgFromServer.Dice1 = gameinfo.Dice1;
             VM.MsgFromServer.Dice2 = gameinfo.Dice2;
-            
+
             if (!String.IsNullOrEmpty(gameinfo.Msg) && (gameinfo.Msg.ToLower().Contains("server"))) { VM.ServerMsgs.Add(gameinfo.Msg); }
             if (gameinfo.OnManHit && !String.IsNullOrEmpty(gameinfo.Msg))
             {

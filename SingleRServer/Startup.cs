@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Owin;
 
 namespace SignalRServer
@@ -8,6 +10,14 @@ namespace SignalRServer
     {
         public void Configuration(IAppBuilder app)
         {
+
+            // Create JsonSerializer with StringEnumConverter.
+            var serializer = new JsonSerializer();
+            serializer.Converters.Add(new StringEnumConverter());
+
+            // Register the serializer.
+            GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => serializer);
+
             app.Map("/signalr", map =>
             {
                 // Setup the cors middleware to run before SignalR.

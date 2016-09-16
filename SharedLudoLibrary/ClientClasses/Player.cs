@@ -12,7 +12,7 @@ namespace SharedLudoLibrary.ClientClasses
     {
         public Player()
         {
-                
+
         }
 
         private string name;
@@ -29,22 +29,20 @@ namespace SharedLudoLibrary.ClientClasses
             }
         }
 
-        private int id;
+       
         public int ID
         {
-            get { return id; }
+            get;set;
         }
 
-        private PlayerColor color;
         public PlayerColor Color
         {
-            get { return color; }
+            get; set;
         }
-
         public Player(int id, PlayerColor color)
         {
-            this.id = id;
-            this.color = color;
+            ID = id;
+            Color = color;
         }
 
     }
