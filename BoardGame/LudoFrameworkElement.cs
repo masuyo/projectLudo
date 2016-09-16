@@ -59,7 +59,7 @@ namespace BoardGame
         {
 
             puppetList = new List<IPuppet>(startGameInfo.MsgFromServer.PuppetList);
-         
+
             InitMap();
 
             this.Loaded += LudoFrameworkElement_Loaded;
@@ -78,6 +78,53 @@ namespace BoardGame
         bool onHover = false;
         IPuppet onHoverPuppet;
         List<int> targretFields = new List<int>();
+        private int MoveOne(int poz, PlayerColor color)
+        {
+            for (int i = 1; i < 5; i++)
+            {
+                if (poz > i * 10 && poz < i * 10 + 5)
+                {
+                    return 100 + i * 10;
+                }
+                if (poz == i * 100 + 4 || poz == 500)
+                {
+                    poz = 500;
+                }
+            }
+            if (color == PlayerColor.RED)
+            {
+                if (poz == 149)
+                {
+                    return 101;
+                }
+            }
+            if (color == PlayerColor.BLUE)
+            {
+                if (poz == 119)
+                {
+                    return 201;
+                }
+            }
+            if (color == PlayerColor.YELLOW)
+            {
+                if (poz == 129)
+                {
+                    return 301;
+                }
+            }
+            if (color == PlayerColor.GREEN)
+            {
+                if (poz == 139)
+                {
+                    return 401;
+                }
+            }
+            if (color != PlayerColor.RED && poz == 149)
+            {
+                return 110;
+            }
+            return poz + 1;
+        }
 
         //todo business logic
         private void LudoFrameworkElement_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
@@ -99,48 +146,13 @@ namespace BoardGame
                 if (LudoView.GetVM.GameSateInfo.ActivePlayerID == LudoView.GetVM.WPFPlayer.ID)
                 {
                     Console.WriteLine("ID");
+                    int dest1 = 0;
+                    int dest2 = 0;
+                    int step1 = onHoverPuppet.Poz + LudoView.GetVM.GameSateInfo.Dice1;
+                    int step2 = onHoverPuppet.Poz + LudoView.GetVM.GameSateInfo.Dice2;
                     switch (LudoView.GetVM.WPFPlayer.Color)
                     {
                         case PlayerColor.RED:
-                            int dest1 = 0;
-                            int dest2 = 0;
-                            int step1 = onHoverPuppet.Poz + LudoView.GetVM.GameSateInfo.Dice1;
-                            int step2 = onHoverPuppet.Poz + LudoView.GetVM.GameSateInfo.Dice2;
-                            if (onHoverPuppet.Poz > 10 && onHoverPuppet.Poz < 15)
-                            {
-                                dest1 = 110;
-                            }
-                            else if (onHoverPuppet.Poz >= 110 && step1 < 150)
-                            {
-                                dest1 = step1;
-                            }
-                            
-                            else if (step1 > 149 && step1 < 155)
-                            {
-                                dest1 = 98 + LudoView.GetVM.GameSateInfo.Dice1;
-                            }
-
-                            else if (onHoverPuppet.Poz >= 110 && step2 < 150)
-                            {
-                                dest2 = step2;
-                            }
-
-                            else if (step2 > 149 && step2 < 155)
-                            {
-                                dest2 = 98 + LudoView.GetVM.GameSateInfo.Dice2;
-                            }
-
-                            else if(step1 > 153)
-                            {
-                                dest1 = onHoverPuppet.Poz;
-                            }
-                            else if (step2 > 153)
-                            {
-                                dest2 = onHoverPuppet.Poz;
-                            }
-                            targretFields.Add(dest1);
-                            targretFields.Add(dest2);
-                            Console.WriteLine(dest1 +" - "+dest2);
                             break;
                         case PlayerColor.GREEN:
                             break;
@@ -152,7 +164,7 @@ namespace BoardGame
                             break;
                     }
 
-                }               
+                }
 
                 InvalidateVisual();
             }
