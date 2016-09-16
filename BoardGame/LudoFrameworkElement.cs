@@ -13,16 +13,22 @@ namespace BoardGame
 {
     class LudoFrameworkElement : FrameworkElement
     {
-        List<Puppet> puppetList;
+        List<IPuppet> puppetList;
         int[,] fieldIDMatrix;
         const int DIM = 11;
         int width = 600;
         int height = 600;
         int X_offset = 0;
         int Y_offset = 0;
+        
 
-        GameInfo tmsg;
-        List<Puppet> newpuppetList;
+
+        public event Action<int, int> PuppetMove; //event
+        
+        private void OnPuppetMove(int from, int to) {
+            PuppetMove?.Invoke(from, to);
+        }
+
 
         private void InitMap()
         {
@@ -41,53 +47,69 @@ namespace BoardGame
             };
 
         }
-        public LudoFrameworkElement()
+        public LudoFrameworkElement(IStartGameInfo startGameInfo)
         {
-            puppetList = new List<Puppet>();
-            tmsg = new GameInfo();
+            puppetList = new List<IPuppet>(startGameInfo.MsgFromServer.PuppetList);
+            
             InitMap();
 
 
             this.Loaded += LudoFrameworkElement_Loaded;
             this.MouseDown += LudoFrameworkElement_MouseDown;
-
             this.MouseMove += LudoFrameworkElement_MouseMove;
-
-
-            puppetList = tmsg.PuppetList;
-
         }
+
+        public void MovePuppets(List<Puppet> newpuppets) {
+            puppetList = new List<IPuppet>(newpuppets);
+            InvalidateVisual();
+        }
+
+
         bool onHover = false;
-        List<Puppet> onHoverPuppets;
+        IPuppet onHoverPuppet;
+        List<int> targretFields = new List<int>();
+
+        //todo business logic
         private void LudoFrameworkElement_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            onHoverPuppets = new List<Puppet>();
+        {            
             RectangleGeometry temp = new RectangleGeometry(new Rect(e.GetPosition(this).X, e.GetPosition(this).Y, 1, 1), 1, 1);
             foreach (Puppet p in puppetList)
             {
                 if (!onHover && Geometry.Combine(DrawManGraphics(p.Poz, 2), temp, GeometryCombineMode.Intersect, null).GetArea() > 0)
                 {
                     onHover = true;
-                    onHoverPuppets.Add(p);
+                    onHoverPuppet = p;
+                    targretFields.Clear();
                 }
             }
             //MessageBox.Show(e.GetPosition(this).ToString());
             if (onHover)
             {
+                //todo calculate bl
+                targretFields.Add(onHoverPuppet.Poz + 1);
+                targretFields.Add(onHoverPuppet.Poz + 5);
+
                 InvalidateVisual();
             }
         }
-
+        
         private void LudoFrameworkElement_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            tmsg.ChangePoz();
-            newpuppetList = tmsg.PuppetList;
-            if (tmsg.OnManHit)
+            RectangleGeometry temp = new RectangleGeometry(new Rect(e.GetPosition(this).X, e.GetPosition(this).Y, 1, 1), 1, 1);
+            int toFieldID = -1;
+            foreach (int fieldID in targretFields)
             {
-                Console.WriteLine("FULL");
+                Geometry field = DrawField(fieldID);
+                if (Geometry.Combine(field, temp, GeometryCombineMode.Intersect, null).GetArea() > 0)
+                {
+                    toFieldID = fieldID;
+                }
+            }
+            if (toFieldID!=-1)
+            {
+                PuppetMove(onHoverPuppet.Poz, toFieldID);
             }
 
-            InvalidateVisual();
         }
         private void LudoFrameworkElement_Loaded(object sender, RoutedEventArgs e)
         {
@@ -234,7 +256,7 @@ namespace BoardGame
             drawingContext.DrawGeometry(drawingBrush, new Pen(Brushes.Black, 1), DrawManGraphics(where, 6.5));
             drawingContext.DrawGeometry(drawingBrush, new Pen(Brushes.Black, 1), DrawManGraphics(where, 7));
         }
-        private void Init(DrawingContext drawingContext)
+        private void Draw(DrawingContext drawingContext)
         {
             foreach (int item in fieldIDMatrix) //drawing fields
             {
@@ -261,42 +283,14 @@ namespace BoardGame
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            if (puppetList == null)
-            {
-                puppetList = new List<Puppet>();
-                tmsg = new GameInfo();
-                InitMap();
+            Draw(drawingContext);
 
-
-                this.Loaded += LudoFrameworkElement_Loaded;
-                this.MouseDown += LudoFrameworkElement_MouseDown;
-
-                this.MouseMove += LudoFrameworkElement_MouseMove;
-
-
-                puppetList = tmsg.PuppetList;
-            }
-
-            Init(drawingContext);
-
-            //if (newpuppetList != null)
-            //{
-            //    for (int i = 0; i < puppetList.Count; i++)
-            //    {
-            //        //if (menList[i].Poz != newmenList[i].Poz) ///TODO: find bug ALWAYS a match -.-
-            //        //{
-            //        //    Console.WriteLine("TODO");
-            //        Console.WriteLine("moved from {0} moved to {1} ", puppetList[i].Poz, newpuppetList[i].Poz);
-            //        MoveMan(drawingContext, puppetList[i].Poz, newpuppetList[i].Poz, puppetList[i].Player.Color);
-            //        //}
-            //    }
-            //}
-
+        
             if (onHover)
             {
-                foreach (Puppet p in onHoverPuppets)
+                foreach (int fieldID in targretFields)
                 {
-                    MoveMan(drawingContext, 0, p.Poz + 1, p.Player.Color, onHover);
+                    MoveMan(drawingContext, 0, fieldID, onHoverPuppet.Player.Color, true);
                 }
                 onHover = false;
             }

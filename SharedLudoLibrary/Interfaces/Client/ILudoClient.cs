@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedLudoLibrary.ClientClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,13 @@ namespace SharedLudoLibrary.Interfaces.Client
         //Login Hiba esetén
         void SendLoginError();
 
-        void SendAllRoomList(List<IRoom> allRoomList);
-        void SendUsersInRoom(List<IUser> usersInRoom);
-        void SendCreateRoom(IRoom createdRoom);
+        void SendAllRoomList(List<Room> allRoomList);
+        void SendUsersInRoom(List<User> usersInRoom);
+        void SendCreateRoom(Room createdRoom);
         void SendConnectUserToRoom(bool connectedToRoom);
 
-        void SendStart(IStartGameInfo startGameInfo);
-        void SendMove(IGameInfo gameInfo);
+        void SendStart(StartGameInfo startGameInfo);
+        void SendMove(GameInfo gameInfo);
         void SendOverall(string linkToPage);
     }
 }

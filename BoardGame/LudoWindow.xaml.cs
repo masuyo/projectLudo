@@ -5,6 +5,7 @@ using SharedLudoLibrary.ClientClasses;
 using SharedLudoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -39,26 +40,31 @@ namespace BoardGame
                 new Player(startGameInfo.OtherWPFPlayers[1].ID, startGameInfo.OtherWPFPlayers[1].Color),
                 new Player(startGameInfo.OtherWPFPlayers[2].ID, startGameInfo.OtherWPFPlayers[2].Color)
             };
-            VM.MsgFromServer = new GameInfo(); //startGameInfo.MsgFromServer
+            VM.MsgFromServer = startGameInfo.MsgFromServer; //startGameInfo.MsgFromServer
 
             this.DataContext = VM;
+
+            Ludo.PuppetMove += Ludo_PuppetMove;
 
             HelperClass.HubProxy.On<string, string, DateTime>("SendMessage", (uname, text, time) => this.Dispatcher.Invoke(() => { SendMessage(uname, text, time); }));
             HelperClass.HubProxy.On<GameInfo>("SendMove", (gameinfo) => this.Dispatcher.Invoke(() => { SendMove(gameinfo); }));
             HelperClass.HubProxy.On<string>("SendOverall", (linkToPage) => this.Dispatcher.Invoke(() => { SendOverall(linkToPage); }));
 
-            
+
+
             this.Dispatcher.Invoke(() => VM.ServerMsgs.Add("Connected to server."));
             this.Dispatcher.Invoke(() => VM.ServerMsgs.Add(VM.UserName + ":: Connecting to server..."));
+            if (!String.IsNullOrEmpty(VM.MsgFromServer.Msg)) { VM.ServerMsgs.Add(startGameInfo.MsgFromServer.Msg); }
 
-            if (!String.IsNullOrEmpty(VM.MsgFromServer.Msg))
-            {
-                VM.ServerMsgs.Add(VM.MsgFromServer.Msg);
-            }
 
             HelperClass.Connection.Closed += Connection_Closed;
             HelperClass.Connection.StateChanged += Connection_StateChanged;
-           
+
+        }
+
+        private void Ludo_PuppetMove(int from, int to)
+        {
+            HelperClass.HubProxy.Invoke("GetMove", HelperClass.GUID, VM.MsgFromServer.ActivePlayerID, from, to);
         }
 
         private void Connection_StateChanged(StateChange e)
@@ -68,12 +74,16 @@ namespace BoardGame
 
         private void SendOverall(string linkToPage)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrEmpty(linkToPage))
+            {
+                Process.Start(linkToPage);
+                Environment.Exit(0); //other hidden windows ? 
+            }
         }
 
         private void SendMove(GameInfo gameinfo)
         {
-            throw new NotImplementedException();
+            Ludo.MovePuppets(gameinfo.PuppetList);
         }
 
         private void SendMessage(string uname, string text, DateTime date)
@@ -95,6 +105,7 @@ namespace BoardGame
             HelperClass.HubProxy.Invoke("Befriend", HelperClass.GUID, HelperClass.UserName, VM.UserName);
             Dispatcher.Invoke(() => MessageBox.Show("Added"));
         }
+
         void Connection_Closed()
         {
             this.Dispatcher.Invoke(() =>

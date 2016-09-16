@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoardGame"
-         mc:Ignorable="d"
+        mc:Ignorable="d"
         Title="LudoClassicWindow" Width="1024" Height="768"
         WindowState="Maximized" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
         Background="Black"     
@@ -43,8 +43,10 @@
             <!--<ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        --><!--<Label Content="{Binding Path=Time}" Foreground="Aqua" FontSize="10"/>-->
-                        <!--<TextBlock MaxWidth="200" TextWrapping="Wrap" Background="Transparent" Foreground="AliceBlue"/>--><!--
+                        -->
+            <!--<Label Content="{Binding Path=Time}" Foreground="Aqua" FontSize="10"/>-->
+            <!--<TextBlock MaxWidth="200" TextWrapping="Wrap" Background="Transparent" Foreground="AliceBlue"/>-->
+            <!--
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>-->
@@ -56,28 +58,31 @@
             </Grid.RowDefinitions>
 
             <!--<Button Grid.Row="0" Grid.Column="0" Content="TEST" VerticalAlignment="Top" Click="Button_Click"/>-->
-            <Label Content="4"
+            <Label Content="{Binding Path=MsgFromServer.Dice1}"
                    Grid.Row="0"
                    Width="100" Height="100" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="ExtraBold" FontSize="30"  />
-            <Label Content="1"
+            <Label Content="{Binding Path=MsgFromServer.Dice2}"
                    Grid.Row="1"
                    Width="100" Height="100" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="ExtraBold" FontSize="30"  />
         </Grid>
         <!--Dices-->
-
         <Grid Grid.Row="1" Grid.Column="1" Height="600" Width="600" Grid.ColumnSpan="3">
-            <local:LudoFrameworkElement x:Name="Ludo"/>
+            <local:LudoFrameworkElement x:Name="Ludo" />
         </Grid >
         <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical" Background="DimGray" Opacity="0.7" Margin="5,10,0,10">
-            <ListBox ItemsSource="{Binding Path=ChatMsgs}" Height="550" BorderThickness="0" Background="Transparent" Foreground="AliceBlue">                
+            <ListBox ItemsSource="{Binding Path=ChatMsgs}" Height="550" BorderThickness="0" Background="Transparent" Foreground="AliceBlue">
                 <!--<ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                --><!--<Label Content="{Binding Path=SentBy}" Foreground="Aqua"/>
-                                <Label Content="{Binding Path=Time}" Foreground="Aqua" FontSize="10"/>--><!--
+                                -->
+                <!--<Label Content="{Binding Path=SentBy}" Foreground="Aqua"/>
+                                <Label Content="{Binding Path=Time}" Foreground="Aqua" FontSize="10"/>-->
+                <!--
                             </StackPanel>
-                            --><!--<TextBlock MaxWidth="140" TextWrapping="Wrap" Text="{Binding Path=ChatMsg}" Background="Transparent" Foreground="AliceBlue"/>--><!--
+                            -->
+                <!--<TextBlock MaxWidth="140" TextWrapping="Wrap" Text="{Binding Path=ChatMsg}" Background="Transparent" Foreground="AliceBlue"/>-->
+                <!--
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>-->

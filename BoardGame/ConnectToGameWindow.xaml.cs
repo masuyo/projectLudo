@@ -140,10 +140,10 @@ namespace BoardGame
             }
 
             //kamu
-            for (int i = 0; i < 10; i++)
-            {
-                VM.SearchRoomList.Add(new Room("jfshfdsdhio", (i * 1231).ToString()));
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    VM.SearchRoomList.Add(new Room("jfshfdsdhio", (i * 1231).ToString()));
+            //}
 
         }
 
