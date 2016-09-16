@@ -93,8 +93,8 @@ namespace BoardGame
             VM.GameSateInfo.Dice2 = gameinfo.Dice2;
 
             //test only
-            VM.GameSateInfo.Dice1 = 6;
-            VM.GameSateInfo.Dice2 = 6;
+            //VM.GameSateInfo.Dice1 = 6;
+            //VM.GameSateInfo.Dice2 = 6;
 
             if (!String.IsNullOrEmpty(gameinfo.Msg) && (gameinfo.Msg.ToLower().Contains("server"))) { VM.ServerMsgs.Add(gameinfo.Msg); }
             if (gameinfo.OnManHit && !String.IsNullOrEmpty(gameinfo.Msg))
