@@ -87,8 +87,7 @@
                     BorderBrush="Blue"
                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center"               
                 />
-                <!--Password="{Binding Path=Password}"-->
-                <PasswordBox                     
+                <PasswordBox   x:Name="pswb_bx"                   
                     Grid.Row="1"
                     ToolTip="Password must contain at least 6 characters."                    
                     Background="Transparent" Foreground="White" 
@@ -101,7 +100,7 @@
             <Label
                 Tag="XY_Binding_UnameLbl"
                 Grid.Column="1" Grid.Row="3"
-                Content="Login" 
+                Content="{Binding Path=LoginMSG}" 
                 FontWeight="Bold" 
                 Foreground="Black" Background="Green" Opacity="0.8"
                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"

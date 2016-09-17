@@ -5,6 +5,7 @@ using SharedLudoLibrary.ClientClasses;
 using SharedLudoLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -42,7 +43,8 @@ namespace BoardGame
                 HelperClass.HubProxy = (HelperClass.Connection.CreateHubProxy("WPFHub"));
                 HelperClass.HubProxy.On<string>("SendLogin", (guid) => this.Dispatcher.Invoke(() => { Login(guid); }));
                 HelperClass.HubProxy.On("SendLoginError", () => this.Dispatcher.Invoke(() => { LoginError(); }));
-          
+                HelperClass.HubProxy.On<string>("SendForgot", (linkToPage) => this.Dispatcher.Invoke(() => { Forgot(linkToPage); }));
+
                 try
                 {
                     HelperClass.Connection.Start();
@@ -58,18 +60,28 @@ namespace BoardGame
 
         }
 
+        private void Forgot(string linkToPage)
+        {
+            if (!String.IsNullOrEmpty(linkToPage))
+            {
+                Process.Start(linkToPage);
+                Environment.Exit(0);
+            }
+        }
+
         private void Connection_StateChanged(StateChange e)
         {
             if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); }
-        }        
+        }
 
         private void LoginError()
         {
+            VM.AuthenticationSuccess = false;
             Dispatcher.Invoke(() => MessageBox.Show("Failed to login. Try again."));
             HelperClass.UserName = String.Empty;
             VM.UserName = String.Empty;
             VM.Password = String.Empty;
-            //TODO :: pswd box pswd CLEAR  >>get children from window set pswd to empty 
+            pswb_bx.Clear();
             VM.PassMessage = "Enter password";
         }
         private void Login(string guid)
@@ -78,7 +90,6 @@ namespace BoardGame
             HelperClass.GUID = guid;
             HelperClass.UserName = VM.UserName;
             ConnectToGameWindow rooms = new ConnectToGameWindow();
-            // this.Close();
             Hide();
             ShowInTaskbar = false;
 
@@ -97,16 +108,15 @@ namespace BoardGame
                     string hashedPassword = new ASCIIEncoding().GetString(sha1data);
 
                     if (HelperClass.Connection?.State == ConnectionState.Connected)
-                    {
+                    {                        
                         HelperClass.HubProxy.Invoke("GetLogin", VM.UserName, hashedPassword, VM.SelectedGameType);
                     }
                 }
                 else
                 {
                     MessageBox.Show("Username and password must contain at least 6 characters. ");
-                    (sender as Label).Background = Brushes.Green;
-                    (sender as Label).Content = "Login";
                 }
+                
             }
         }
         private void Txb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -150,20 +160,21 @@ namespace BoardGame
         private void ForgotPswd_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //TODO
+            HelperClass.HubProxy.Invoke("GetForgot");
             Console.WriteLine("Forgot");
         }
         private void LblExit_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.Close();
         }
-
         private void Login_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is Label)
             {
-                (sender as Label).Background = Brushes.LightYellow;
-                (sender as Label).Content = "Logging in";
+                VM.AuthenticationSuccess = true;
             }
         }
+
+        
     }
 }
