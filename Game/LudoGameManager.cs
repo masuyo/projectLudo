@@ -11,8 +11,11 @@ namespace Game
     {
         private LudoGame _game;
         private Random randomgenerator;
+
+        public bool OnManHit { get; set; }
         public int Dice1 { get; private set; }
         public int Dice2 { get; private set; }
+        public bool Reroll { get; private set; }
 
         public LudoGameManager(LudoPlayer player1, LudoPlayer player2, LudoPlayer player3, LudoPlayer player4)
         {
@@ -23,6 +26,8 @@ namespace Game
             randomgenerator = new Random();
             Dice1 = 0;
             Dice2 = 0;
+            OnManHit = false;
+            Reroll = false;
         }
 
         public LudoGameManager(LudoGame newgame)
@@ -35,6 +40,9 @@ namespace Game
 
         public void DoAction(LudoAction action)
         {
+
+            OnManHit = false;
+            Reroll = false;
             if (_game.Winner != null) throw new InvalidOperationException("Game Already Over");
             if (action.doer != _game.Nextplayer) return;
 
@@ -74,8 +82,9 @@ namespace Game
             {
                 if ((Dice1 == 6 && Dice2 == 6) || (Dice1 == 1 && Dice2 == 1))
                 {
-                    doer.Puppets[action.Puppet] = 1;
+                    doer.Puppets[action.Puppet] = action.Amount;
                     Dice1 = 0; Dice2 = 0;
+                    Reroll = true;
                 }
                 else throw new ArgumentException("Can not move from the start without two 6 or 1 dices");
             }else
@@ -161,7 +170,7 @@ namespace Game
                             default:
                                 break;
                         }
-                        if (i == otherpuppetposition && color!=player.color) player.Puppets[j] = 0;
+                        if (i == otherpuppetposition && color != player.color) { OnManHit = true; player.Puppets[j] = 0; }
                     }
                 }
             }

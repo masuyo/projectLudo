@@ -314,72 +314,7 @@ namespace SignalRServer
             return startgameinfo;
         }
 
-        private StartGameInfo MakeStartGameInfo(LudoTable table)
-        {
-            StartGameInfo startgameinfo = new StartGameInfo();
-            GameInfo gameinfo = MakeGameInfo(table);
-
-            startgameinfo.MsgFromServer = gameinfo;
-
-            LudoPlayer nextplayer = table.getGame().Nextplayer;
-            PlayerColor color = PlayerColor.RED;
-            switch (nextplayer.color)
-            {
-                case puppetColor.Red:
-                    color = PlayerColor.RED;
-                    break;
-                case puppetColor.Yellow:
-                    color = PlayerColor.YELLOW;
-                    break;
-                case puppetColor.Blue:
-                    color = PlayerColor.BLUE;
-                    break;
-                case puppetColor.Green:
-                    color = PlayerColor.GREEN;
-                    break;
-                case puppetColor.Default:
-                    break;
-                default:
-                    break;
-            }
-            startgameinfo.WPFPlayer = new SharedLudoLibrary.ClientClasses.Player(nextplayer.sequence, color) { Name=nextplayer.Name};
-
-            SharedLudoLibrary.ClientClasses.Player[] otherwpfplayers = new SharedLudoLibrary.ClientClasses.Player[3];
-            LudoPlayer[] otherplayers = new LudoPlayer[3];
-            List<LudoPlayer> except = new List<LudoPlayer>();
-            except.Add(nextplayer);
-            otherplayers = table.getGame().Players.Except(except).ToArray();
-
-            for (int i = 0; i < 3; i++)
-            {
-                PlayerColor othercolor = PlayerColor.RED;
-                switch (otherplayers[i].color)
-                {
-                    case puppetColor.Red:
-                        color = PlayerColor.RED;
-                        break;
-                    case puppetColor.Yellow:
-                        color = PlayerColor.YELLOW;
-                        break;
-                    case puppetColor.Blue:
-                        color = PlayerColor.BLUE;
-                        break;
-                    case puppetColor.Green:
-                        color = PlayerColor.GREEN;
-                        break;
-                    case puppetColor.Default:
-                        break;
-                    default:
-                        break;
-                }
-                SharedLudoLibrary.ClientClasses.Player otherwpfplayer = new SharedLudoLibrary.ClientClasses.Player(otherplayers[i].sequence, othercolor) { Name = otherplayers[i].Name };
-                otherwpfplayers[i] = otherwpfplayer;
-            }
-            startgameinfo.OtherWPFPlayers = otherwpfplayers;
-
-            return startgameinfo;
-        }
-
+        
         private GameInfo MakeGameInfo(LudoTable table)
         {
             GameInfo gameinfo = new GameInfo();
@@ -387,8 +322,8 @@ namespace SignalRServer
             LudoPlayer nextplayer = table.getGame().Nextplayer;
             gameinfo.ActivePlayerID = nextplayer.sequence;
             gameinfo.Msg = "";
-            gameinfo.OnManHit = false;
-            gameinfo.Reroll = false;
+            gameinfo.OnManHit = (table.Gamemanager as LudoGameManager).OnManHit;
+            gameinfo.Reroll = (table.Gamemanager as LudoGameManager).Reroll;
             gameinfo.PuppetList = CreatePuppetList(table.Gamemanager);
             if ((table.Gamemanager as LudoGameManager).Dice1 == 0 && (table.Gamemanager as LudoGameManager).Dice2 == 0)
             {
@@ -489,9 +424,13 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                gameinfo = MakeGameInfo(table);
+                Clients.OthersInGroup(table.Name).SendMove(gameinfo);
+        
+                gameinfo.Msg = e.Message;
+                Clients.Caller.SendMove(gameinfo);
             }
-            gameinfo = MakeGameInfo(table);
-            Clients.Group(table.Name).SendMove(gameinfo);
+            
         }
 
         private int CountAmount(int actPoz, int destPoz, puppetColor color)
@@ -587,22 +526,25 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
 
         public void GetOverall(string guid, int playerID)
         {
-            throw new NotImplementedException();
+            Clients.Caller.SendOverall(@"http://localhost:22046/");
+        }
+
+        public void Forget()
+        {
+            Clients.Caller.SendForget(@"http://localhost:22046/");
         }
 
         public void Befriend(string guid, int playerID, int friendPlayerID)
         {
-            throw new NotImplementedException();
-        }
-
-        public void ConnectToRoom(int userID, IRoom room)
-        {
-            throw new NotImplementedException();
+            return;
         }
 
         public void GetMessage(string guid, string username, string text)
         {
-            throw new NotImplementedException();
+            LudoPlayer caller = guid_player[guid];
+            LudoTable table = name_table.Where(akt => akt.Value.Players.Where(pakt => pakt.Name == caller.Name).SingleOrDefault() != null).SingleOrDefault().Value;
+
+            Clients.Group(table.Name).SendMessage(username, text, DateTime.Now);
         }
 
     }
