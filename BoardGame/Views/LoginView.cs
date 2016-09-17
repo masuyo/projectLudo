@@ -17,6 +17,17 @@ namespace BoardGame.Views
         private string password;
         private bool authenticationSuccess;
         private string selectedGameType;
+        public string LoginMSG
+        {
+            get
+            {
+                if (authenticationSuccess)
+                {
+                    return "Logging in";
+                }
+                return "Login";
+            }
+        }
 
         public string UserName
         {
@@ -41,7 +52,7 @@ namespace BoardGame.Views
         {
             get { return authenticationSuccess; }
 
-            set { SetProperty(ref authenticationSuccess, value); }
+            set { SetProperty(ref authenticationSuccess, value); OnPropertyChanged("LoginMSG"); }
         }
 
         public List<string> GameTypeList
@@ -79,6 +90,7 @@ namespace BoardGame.Views
             userName = "Enter username";
             passMessage = "Enter password";
             password = String.Empty;
+            authenticationSuccess = false;
         }
         public static LoginView GetVM
         {

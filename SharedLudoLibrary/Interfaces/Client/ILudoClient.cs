@@ -23,5 +23,6 @@ namespace SharedLudoLibrary.Interfaces.Client
         void SendStart(StartGameInfo startGameInfo);
         void SendMove(GameInfo gameInfo);
         void SendOverall(string linkToPage);
+        void SendForgot(string linkToPage);
     }
 }

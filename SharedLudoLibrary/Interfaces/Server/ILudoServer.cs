@@ -18,6 +18,7 @@ namespace SharedLudoLibrary.Interfaces.Server
         void GetStart(string guid, string userID);
         void GetMove(string guid, int playerID, int actPoz, int destPoz);
         void GetOverall(string guid, int playerID);
+        void GetForgot();
         void Befriend(string guid, int playerID, int friendPlayerID);
     }
 }
