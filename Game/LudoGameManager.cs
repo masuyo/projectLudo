@@ -174,9 +174,6 @@ namespace Game
             if (_game.Nextplayer.sequence == 4) _game.Nextplayer = _game.Players.Where(akt => akt.sequence == 1).SingleOrDefault();
             else _game.Nextplayer = _game.Players.Where(akt => akt.sequence == _game.Nextplayer.sequence + 1).SingleOrDefault();
             _game.Rounds++;
-        }
-
-        
-
+        }     
     }
 }

@@ -213,8 +213,105 @@ namespace SignalRServer
             Console.WriteLine("{0} table is startable : {1}",table.Name,table.Startable);
             table.Start();
 
-            StartGameInfo startgameinfo = MakeStartGameInfo(table);
-            Clients.Group(table.Name).SendStart(startgameinfo);
+            StartGameInfo startgameinfo1 = MakeStartGameInfo(table, table.Players[0]);
+            string g1 = guid_player.Where(akt => akt.Value.Name == table.Players[0].Name).SingleOrDefault().Key;
+            guid_player.AddOrUpdate(g1, table.Players[0], (key,old) => table.Players[0]);
+            string c1 = connectionid_guid.Where(akt => akt.Value == g1).SingleOrDefault().Key;
+            Console.WriteLine(c1);
+            Clients.Client(c1).SendStart(startgameinfo1);
+
+
+            StartGameInfo startgameinfo2 = MakeStartGameInfo(table, table.Players[1]);
+            string g2 = guid_player.Where(akt => akt.Value.Name == table.Players[1].Name).SingleOrDefault().Key;
+            guid_player.AddOrUpdate(g2, table.Players[1], (key, old) => table.Players[1]);
+            string c2 = connectionid_guid.Where(akt => akt.Value == g2).SingleOrDefault().Key;
+            Console.WriteLine(c2);
+            Clients.Client(c2).SendStart(startgameinfo2);
+
+
+            StartGameInfo startgameinfo3 = MakeStartGameInfo(table, table.Players[2]);
+            string g3 = guid_player.Where(akt => akt.Value.Name == table.Players[2].Name).SingleOrDefault().Key;
+            guid_player.AddOrUpdate(g3, table.Players[2], (key, old) => table.Players[2]);
+            string c3 = connectionid_guid.Where(akt => akt.Value == g3).SingleOrDefault().Key;
+            Console.WriteLine(c3);
+            Clients.Client(c3).SendStart(startgameinfo3);
+
+
+            StartGameInfo startgameinfo4 = MakeStartGameInfo(table, table.Players[3]);
+            string g4 = guid_player.Where(akt => akt.Value.Name == table.Players[3].Name).SingleOrDefault().Key;
+            guid_player.AddOrUpdate(g4, table.Players[3], (key, old) => table.Players[3]);
+            string c4 = connectionid_guid.Where(akt => akt.Value == g4).SingleOrDefault().Key;
+            Console.WriteLine(c4);
+            Clients.Client(c4).SendStart(startgameinfo4);
+        }
+
+        private StartGameInfo MakeStartGameInfo(LudoTable table, LudoPlayer player)
+        {
+            StartGameInfo startgameinfo = new StartGameInfo();
+            GameInfo gameinfo = MakeGameInfo(table);
+
+            startgameinfo.MsgFromServer = gameinfo;
+
+            PlayerColor color = PlayerColor.RED;
+            switch (player.color)
+            {
+                case puppetColor.Red:
+                    color = PlayerColor.RED;
+                    break;
+                case puppetColor.Yellow:
+                    color = PlayerColor.YELLOW;
+                    break;
+                case puppetColor.Blue:
+                    color = PlayerColor.BLUE;
+                    break;
+                case puppetColor.Green:
+                    color = PlayerColor.GREEN;
+                    break;
+                case puppetColor.Default:
+                    break;
+                default:
+                    break;
+            }
+
+
+            startgameinfo.WPFPlayer = new SharedLudoLibrary.ClientClasses.Player(player.sequence, color) { Name = player.Name };
+            SharedLudoLibrary.ClientClasses.Player[] otherwpfplayers = new SharedLudoLibrary.ClientClasses.Player[3];
+            LudoPlayer[] otherplayers = new LudoPlayer[3];
+            List<LudoPlayer> except = new List<LudoPlayer>();
+            except.Add(player);
+            otherplayers = table.getGame().Players.Except(except).ToArray();
+
+            for (int i = 0; i < 3; i++)
+            {
+                PlayerColor othercolor = PlayerColor.RED;
+                switch (otherplayers[i].color)
+                {
+                    case puppetColor.Red:
+                        color = PlayerColor.RED;
+                        break;
+                    case puppetColor.Yellow:
+                        color = PlayerColor.YELLOW;
+                        break;
+                    case puppetColor.Blue:
+                        color = PlayerColor.BLUE;
+                        break;
+                    case puppetColor.Green:
+                        color = PlayerColor.GREEN;
+                        break;
+                    case puppetColor.Default:
+                        break;
+                    default:
+                        break;
+                }
+
+                SharedLudoLibrary.ClientClasses.Player otherwpfplayer = new SharedLudoLibrary.ClientClasses.Player(otherplayers[i].sequence, othercolor) { Name = otherplayers[i].Name };
+                otherwpfplayers[i] = otherwpfplayer;
+            }
+            startgameinfo.OtherWPFPlayers = otherwpfplayers;
+
+            Console.WriteLine("Startgameinfo for {0} user done.",startgameinfo.WPFPlayer.Name);
+
+            return startgameinfo;
         }
 
         private StartGameInfo MakeStartGameInfo(LudoTable table)
@@ -374,14 +471,118 @@ namespace SignalRServer
 
         public void GetMove(string guid, int puppetID, int actPoz, int destPoz)
         {
-            Console.WriteLine("Client with {0} guid try to move.", guid);
             LudoPlayer caller = guid_player[guid];
-            LudoTable table = name_table.Where(akt => akt.Value.Players.Contains(caller)).SingleOrDefault().Value;
-            int amount = destPoz - actPoz;
-            table.Gamemanager.DoAction(new MoveLudoAction(table.getGame().Nextplayer, puppetID, amount));
-            GameInfo gameinfo = MakeGameInfo(table);
+            LudoTable table = name_table.Where(akt => akt.Value.Players.Where(pakt => pakt.Name==caller.Name).SingleOrDefault()!=null).SingleOrDefault().Value;
+            int amount = CountAmount(actPoz, destPoz, caller.color);
+            Console.WriteLine("Player with {0} guid and {1} name {2} color moved from {3} to {4} with amount {5}",
+guid,caller.Name,caller.color,actPoz,destPoz,amount);
 
+            GameInfo gameinfo;
+            try
+            {
+                if (amount == 0) table.Gamemanager.DoAction(new Game.LudoActions.CheckLudoAction(table.getGame().Nextplayer));
+                else table.Gamemanager.DoAction(new MoveLudoAction(table.getGame().Nextplayer, puppetID, amount));
+
+                gameinfo = MakeGameInfo(table);
+                Clients.Group(table.Name).SendMove(gameinfo);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            gameinfo = MakeGameInfo(table);
             Clients.Group(table.Name).SendMove(gameinfo);
+        }
+
+        private int CountAmount(int actPoz, int destPoz, puppetColor color)
+        {
+            int amount = destPoz - actPoz;
+
+            switch (color)
+            {
+                case puppetColor.Red:
+                    if (actPoz > 10 && actPoz < 15)
+                    {
+                        actPoz = 109;
+                        amount = destPoz - actPoz;
+
+                    }
+                    else
+                    if (destPoz > 100 && destPoz < 105)
+                    {
+                        destPoz = destPoz + 49;
+                        amount = destPoz - actPoz;
+
+                    }
+                    else amount = destPoz - actPoz;
+                    break;
+                case puppetColor.Yellow:
+                    if (actPoz > 30 && actPoz < 35)
+                    {
+                        actPoz = 129;
+                        amount = destPoz - actPoz;
+                    }else
+                    if (destPoz>300 && destPoz<305)
+                    {
+                        destPoz = destPoz - 171;
+                        amount = destPoz - actPoz;
+                    }else
+                    if (actPoz<150 && destPoz <116)
+                    {
+                        actPoz = actPoz - 40;
+                        amount = destPoz - actPoz;
+                    }else
+                    amount = destPoz - actPoz;
+                    break;
+                case puppetColor.Blue:
+                    if (actPoz > 21 && actPoz < 25)
+                    {
+                        actPoz = 119;
+                        amount = destPoz - actPoz;
+                    }
+                    else
+                   if (destPoz > 200 && destPoz < 205)
+                    {
+                        destPoz = destPoz - 81;
+                        amount = destPoz - actPoz;
+                    }
+                    else
+                   if (actPoz < 150 && destPoz < 116)
+                    {
+                        actPoz = actPoz - 40;
+                        amount = destPoz - actPoz;
+                    }
+                    else
+                        amount = destPoz - actPoz;
+                    break;
+                case puppetColor.Green:
+                    if (actPoz > 40 && actPoz < 45)
+                    {
+                        actPoz = 139;
+                        amount = destPoz - actPoz;
+                    }
+                    else
+                    if (destPoz > 400 && destPoz < 405)
+                    {
+                        destPoz = destPoz - 261;
+                        amount = destPoz - actPoz;
+                    }
+                    else
+                    if (actPoz < 150 && destPoz < 116)
+                    {
+                        actPoz = actPoz - 40;
+                        amount = destPoz - actPoz;
+                    }
+                    else
+                        amount = destPoz - actPoz;
+                    break;
+                case puppetColor.Default:
+                    break;
+                default:
+                    break;
+            }
+
+            return amount;
         }
 
         public void GetOverall(string guid, int playerID)
