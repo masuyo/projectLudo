@@ -81,13 +81,13 @@ namespace BoardGame
         {
             for (int i = 1; i < 5; i++)
             {
-                if (poz > i * 10 && poz < i * 10 + 5)
-                {
-                    return 100 + i * 10;
-                }
+                //if (poz > i * 10 && poz < i * 10 + 5)
+                //{
+                //    return 100 + i * 10;
+                //}
                 if (poz == i * 100 + 4 || poz == 500)
                 {
-                    poz = 500;
+                    return 500;
                 }
             }
             if (color == PlayerColor.RED)
@@ -131,8 +131,8 @@ namespace BoardGame
             RectangleGeometry temp = new RectangleGeometry(new Rect(e.GetPosition(this).X, e.GetPosition(this).Y, 1, 1), 1, 1);
             foreach (Puppet p in puppetList)
             {
-                if (!onHover 
-                    && LudoView.GetVM.WPFPlayer.Color == p.Player.Color 
+                if (!onHover
+                    && LudoView.GetVM.WPFPlayer.Color == p.Player.Color
                     && Geometry.Combine(DrawManGraphics(p.Poz, 2), temp, GeometryCombineMode.Intersect, null).GetArea() > 0)
                 {
                     Console.WriteLine(onHover + p.ID.ToString());
@@ -151,16 +151,33 @@ namespace BoardGame
                     int dest2 = onHoverPuppet.Poz;
                     int d1 = LudoView.GetVM.GameSateInfo.Dice1;
                     int d2 = LudoView.GetVM.GameSateInfo.Dice2;
-                    //LudoView.GetVM.GameSateInfo.ActivePlayerID
-                    while (d1 > 0)
+                    if (d1 == 6 && d2 == 6)
                     {
-                        dest1 = MoveOne(dest1, LudoView.GetVM.WPFPlayer.Color);
-                        d1--;
+                        for (int i = 1; i < 5; i++)
+                        {
+                            if (dest1 > i * 10 && dest1 < i * 10 + 5)
+                            {
+                                dest1 = 100 + i * 10;
+                            }
+                            if (dest2 > i * 10 && dest2 < i * 10 + 5)
+                            {
+                                dest2 = 100 + i * 10;
+                            }
+                        }
                     }
-                    while (d2 > 0)
+                    //LudoView.GetVM.GameSateInfo.ActivePlayerID
+                    else
                     {
-                        dest2 = MoveOne(dest2, LudoView.GetVM.WPFPlayer.Color);
-                        d2--;
+                        while (d1 > 0)
+                        {
+                            dest1 = MoveOne(dest1, LudoView.GetVM.WPFPlayer.Color);
+                            d1--;
+                        }
+                        while (d2 > 0)
+                        {
+                            dest2 = MoveOne(dest2, LudoView.GetVM.WPFPlayer.Color);
+                            d2--;
+                        }
                     }
                     targretFields.Add(dest1);
                     targretFields.Add(dest2);
