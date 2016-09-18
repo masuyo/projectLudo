@@ -175,6 +175,12 @@ namespace BoardGame
             }
         }
 
-        
+        private void pswb_bx_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ( e.Key == Key.Enter)
+            {
+                Login_MouseDown(new Label(), null);
+            }
+        }
     }
 }
