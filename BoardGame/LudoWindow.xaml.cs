@@ -32,7 +32,7 @@ namespace BoardGame
         List<IPlayer> players;
         private void Init(IStartGameInfo startGameInfo)
         {
-            this.Dispatcher.Invoke(() => Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
+            //this.Dispatcher.Invoke(() => Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
 
             HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
 
@@ -191,8 +191,8 @@ namespace BoardGame
 
         private void SendMove(GameInfo gameinfo)
         {
-            this.Dispatcher.Invoke(() => Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
-            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
+            //this.Dispatcher.Invoke(() => Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
+            //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
 
             VM.UserName = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Name;
             VM.ActiveColor = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Color;
@@ -246,11 +246,11 @@ namespace BoardGame
 
         private void Dice_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (VM.WPFPlayer.ID == VM.GameSateInfo.ActivePlayerID)
-            {
+            //if (VM.WPFPlayer.ID == VM.GameSateInfo.ActivePlayerID)
+            //{
                 HelperClass.HubProxy.Invoke("GetDice", HelperClass.GUID);
                 //Ludo.IsEnabled = false;
-            }
+            //}
         }
     }
 }

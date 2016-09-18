@@ -144,8 +144,8 @@ namespace BoardGame
             //MessageBox.Show(e.GetPosition(this).ToString());
             if (onHover)
             {
-                if (LudoView.GetVM.GameSateInfo.ActivePlayerID == LudoView.GetVM.WPFPlayer.ID)
-                {
+                //if (LudoView.GetVM.GameSateInfo.ActivePlayerID == LudoView.GetVM.WPFPlayer.ID)
+                //{
                     Console.WriteLine("ID");
                     int dest1 = onHoverPuppet.Poz;
                     int dest2 = onHoverPuppet.Poz;
@@ -167,8 +167,6 @@ namespace BoardGame
                             }
                         }
                     }
-
-                    //LudoView.GetVM.GameSateInfo.ActivePlayerID
                     if (!started)
                     {
                         while (d1 > 0)
@@ -211,7 +209,7 @@ namespace BoardGame
                     {
                         targretFields.Add(500);
                     }
-                }
+                //}
 
                 InvalidateVisual();
             }
