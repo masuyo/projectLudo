@@ -34,7 +34,7 @@ namespace BoardGame
             Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID;
 
             Ludo.Init(startGameInfo);
-           
+
             VM.WPFPlayer = new Player(startGameInfo.WPFPlayer.ID, startGameInfo.WPFPlayer.Color);
             VM.UserName = startGameInfo.WPFPlayer.Name;
             VM.OtherWPFPlayers = new Player[] {
@@ -42,10 +42,7 @@ namespace BoardGame
                 new Player(startGameInfo.OtherWPFPlayers[1].ID, startGameInfo.OtherWPFPlayers[1].Color),
                 new Player(startGameInfo.OtherWPFPlayers[2].ID, startGameInfo.OtherWPFPlayers[2].Color)
             };
-            VM.GameSateInfo = startGameInfo.MsgFromServer; //startGameInfo.MsgFromServer
-
-            
-
+            VM.GameSateInfo = startGameInfo.MsgFromServer;
         }
         public LudoWindow(IStartGameInfo startGameInfo)
         {
@@ -79,15 +76,7 @@ namespace BoardGame
 
         }
         int time = 0;
-        private void Dt_Tick(object sender, EventArgs e)
-        {
-            while (time < 3000)
-            {
-                rotateX.Angle = new Random().Next(360);
-                rotateY.Angle = new Random().Next(360);
-                time++;
-            }
-            dt.Stop();
+        private void RotateDice1() {
             if (VM.GameSateInfo.Dice1 == 1)
             {
                 rotateX.Angle = 270; rotateY.Angle = 90; rotateZ.Angle = 0;//1
@@ -112,6 +101,46 @@ namespace BoardGame
             {
                 rotateX.Angle = 0; rotateY.Angle = 0; rotateZ.Angle = 0;//6
             }
+        }
+        private void RotateDice2()
+        {
+            if (VM.GameSateInfo.Dice1 == 2)
+            {
+                rotate2X.Angle = 270; rotate2Y.Angle = 90; rotate2Z.Angle = 0;//1
+            }
+            else if (VM.GameSateInfo.Dice2 == 2)
+            {
+                rotate2X.Angle = 90; rotate2Y.Angle = 0; rotate2Z.Angle = 90;//2
+            }
+            else if (VM.GameSateInfo.Dice2 == 3)
+            {
+                rotate2X.Angle = 180; rotate2Y.Angle = 0; rotate2Z.Angle = 90;//3
+            }
+            else if (VM.GameSateInfo.Dice2 == 4)
+            {
+                rotate2X.Angle = 270; rotate2Y.Angle = 270; rotate2Z.Angle = 90;//4
+            }
+            else if (VM.GameSateInfo.Dice2 == 5)
+            {
+                rotate2X.Angle = 270; rotate2Y.Angle = 0; rotate2Z.Angle = 90;//5
+            }
+            else
+            {
+                rotate2X.Angle = 0; rotate2Y.Angle = 0; rotate2Z.Angle = 0;//6
+            }
+        }
+        private void Dt_Tick(object sender, EventArgs e)
+        {
+            while (time < 3000)
+            {
+                this.Dispatcher.Invoke(() => rotateX.Angle = new Random().Next(360));
+                this.Dispatcher.Invoke(() => rotateY.Angle = new Random().Next(360));
+                this.Dispatcher.Invoke(() => rotate2X.Angle = new Random().Next(360));
+                this.Dispatcher.Invoke(() => rotate2Y.Angle = new Random().Next(360));
+                time++;
+            }
+            dt.Stop();
+            RotateDice1(); RotateDice2();
             time = 0;
             Ludo.IsEnabled = true;
         }
@@ -200,8 +229,11 @@ namespace BoardGame
 
         private void Dice_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            HelperClass.HubProxy.Invoke("GetDice", HelperClass.GUID);
-            Ludo.IsEnabled = false;
+            if (VM.WPFPlayer.ID == VM.GameSateInfo.ActivePlayerID)
+            {
+                HelperClass.HubProxy.Invoke("GetDice", HelperClass.GUID);
+                Ludo.IsEnabled = false;
+            }
         }
     }
 }
