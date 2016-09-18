@@ -135,18 +135,20 @@ namespace BoardGame
         }
         private void Dt_Tick(object sender, EventArgs e)
         {
-            while (time < 30000)
+            this.Dispatcher.Invoke(() => rotateX.Angle = new Random().Next(360));
+            this.Dispatcher.Invoke(() => rotateY.Angle = new Random().Next(360));
+            this.Dispatcher.Invoke(() => rotate2X.Angle = new Random().Next(360));
+            this.Dispatcher.Invoke(() => rotate2Y.Angle = new Random().Next(360));
+            time++;
+
+            if (time > 30)
             {
-                this.Dispatcher.Invoke(() => rotateX.Angle = new Random().Next(360));
-                this.Dispatcher.Invoke(() => rotateY.Angle = new Random().Next(360));
-                this.Dispatcher.Invoke(() => rotate2X.Angle = new Random().Next(360));
-                this.Dispatcher.Invoke(() => rotate2Y.Angle = new Random().Next(360));
-                time++;
+                dt.Stop();
+                RotateDice1(); RotateDice2();
+                time = 0;
+                Ludo.IsEnabled = true;
             }
-            dt.Stop();
-            RotateDice1(); RotateDice2();
-            time = 0;
-            Ludo.IsEnabled = true;
+            
         }
 
         private void Dice(bool roll)
