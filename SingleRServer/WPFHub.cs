@@ -408,6 +408,7 @@ namespace SignalRServer
 
         public void GetMove(string guid, int puppetID, int actPoz, int destPoz)
         {
+            
             LudoPlayer caller = guid_player[guid];
             LudoTable table = name_table.Where(akt => akt.Value.Players.Where(pakt => pakt.Name==caller.Name).SingleOrDefault()!=null).SingleOrDefault().Value;
             int amount = CountAmount(actPoz, destPoz, caller.color);
@@ -426,6 +427,7 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                table.Gamemanager.DoAction(new Game.LudoActions.CheckLudoAction(table.getGame().Nextplayer));
                 gameinfo = MakeGameInfo(table);
                 Clients.OthersInGroup(table.Name).SendMove(gameinfo);
         
