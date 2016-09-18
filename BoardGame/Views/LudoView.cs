@@ -11,6 +11,7 @@ namespace BoardGame.Views
 {
     class LudoView : Bindable
     {
+        DiceView diceVM;
         ObservableCollection<string> serverMsgs;
         ObservableCollection<string> chatMsgs;
         string chatMsg;
@@ -45,7 +46,7 @@ namespace BoardGame.Views
         {
             serverMsgs = new ObservableCollection<string>();
             chatMsgs = new ObservableCollection<string>();
-            //
+            diceVM = new DiceView();
 
         }
         public static LudoView GetVM
@@ -81,6 +82,13 @@ namespace BoardGame.Views
             get { return msgFromServer; }
 
             set { SetProperty(ref msgFromServer, value); }
+        }
+
+        public DiceView DVM
+        {
+            get { return diceVM; }
+
+            set { SetProperty(ref diceVM, value); }
         }
     }
 }

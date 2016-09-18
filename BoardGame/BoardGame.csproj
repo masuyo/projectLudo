@@ -63,9 +63,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="TestClasses\MyCamera.cs" />
     <Compile Include="TestClasses\SignalRControl.cs" />
     <Compile Include="TestClasses\TestLudoServer.cs" />
     <Compile Include="TestClasses\Converters.cs" />
+    <Compile Include="Views\DiceView.cs" />
     <Compile Include="Views\HelperClass.cs" />
     <Compile Include="Views\Bindable.cs" />
     <Compile Include="Views\LoginView.cs" />
