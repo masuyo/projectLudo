@@ -52,7 +52,7 @@ namespace Game
 
         public void SetColor(LudoPlayer player, puppetColor color)
         {
-            Players.Find(akt => player == akt).color = color;
+            Players.Find(akt => player.Name == akt.Name).color = color;
             Cheks[player] = false;
             Startable = false;
         }

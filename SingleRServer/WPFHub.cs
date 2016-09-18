@@ -213,34 +213,34 @@ namespace SignalRServer
             Console.WriteLine("{0} table is startable : {1}",table.Name,table.Startable);
             table.Start();
 
-            StartGameInfo startgameinfo1 = MakeStartGameInfo(table, table.Players[0]);
             string g1 = guid_player.Where(akt => akt.Value.Name == table.Players[0].Name).SingleOrDefault().Key;
             guid_player.AddOrUpdate(g1, table.Players[0], (key,old) => table.Players[0]);
             string c1 = connectionid_guid.Where(akt => akt.Value == g1).SingleOrDefault().Key;
+            StartGameInfo startgameinfo1 = MakeStartGameInfo(table, table.Players[0]);
             Console.WriteLine(c1);
             Clients.Client(c1).SendStart(startgameinfo1);
 
 
-            StartGameInfo startgameinfo2 = MakeStartGameInfo(table, table.Players[1]);
             string g2 = guid_player.Where(akt => akt.Value.Name == table.Players[1].Name).SingleOrDefault().Key;
             guid_player.AddOrUpdate(g2, table.Players[1], (key, old) => table.Players[1]);
             string c2 = connectionid_guid.Where(akt => akt.Value == g2).SingleOrDefault().Key;
+            StartGameInfo startgameinfo2 = MakeStartGameInfo(table, table.Players[1]);
             Console.WriteLine(c2);
             Clients.Client(c2).SendStart(startgameinfo2);
 
 
-            StartGameInfo startgameinfo3 = MakeStartGameInfo(table, table.Players[2]);
             string g3 = guid_player.Where(akt => akt.Value.Name == table.Players[2].Name).SingleOrDefault().Key;
             guid_player.AddOrUpdate(g3, table.Players[2], (key, old) => table.Players[2]);
             string c3 = connectionid_guid.Where(akt => akt.Value == g3).SingleOrDefault().Key;
+            StartGameInfo startgameinfo3 = MakeStartGameInfo(table, table.Players[2]);
             Console.WriteLine(c3);
             Clients.Client(c3).SendStart(startgameinfo3);
 
 
-            StartGameInfo startgameinfo4 = MakeStartGameInfo(table, table.Players[3]);
             string g4 = guid_player.Where(akt => akt.Value.Name == table.Players[3].Name).SingleOrDefault().Key;
             guid_player.AddOrUpdate(g4, table.Players[3], (key, old) => table.Players[3]);
             string c4 = connectionid_guid.Where(akt => akt.Value == g4).SingleOrDefault().Key;
+            StartGameInfo startgameinfo4 = MakeStartGameInfo(table, table.Players[3]);
             Console.WriteLine(c4);
             Clients.Client(c4).SendStart(startgameinfo4);
         }
@@ -253,11 +253,12 @@ namespace SignalRServer
             startgameinfo.MsgFromServer = gameinfo;
 
             PlayerColor color = PlayerColor.RED;
+            Console.WriteLine(player.color);
             switch (player.color)
             {
                 case puppetColor.Red:
                     color = PlayerColor.RED;
-                    break;
+                     break;
                 case puppetColor.Yellow:
                     color = PlayerColor.YELLOW;
                     break;
@@ -273,7 +274,6 @@ namespace SignalRServer
                     break;
             }
 
-
             startgameinfo.WPFPlayer = new SharedLudoLibrary.ClientClasses.Player(player.sequence, color) { Name = player.Name };
             SharedLudoLibrary.ClientClasses.Player[] otherwpfplayers = new SharedLudoLibrary.ClientClasses.Player[3];
             LudoPlayer[] otherplayers = new LudoPlayer[3];
@@ -283,20 +283,22 @@ namespace SignalRServer
 
             for (int i = 0; i < 3; i++)
             {
+                Console.WriteLine(otherplayers[i].color);
+
                 PlayerColor othercolor = PlayerColor.RED;
                 switch (otherplayers[i].color)
                 {
                     case puppetColor.Red:
-                        color = PlayerColor.RED;
+                        othercolor = PlayerColor.RED;
                         break;
                     case puppetColor.Yellow:
-                        color = PlayerColor.YELLOW;
+                        othercolor = PlayerColor.YELLOW;
                         break;
                     case puppetColor.Blue:
-                        color = PlayerColor.BLUE;
+                        othercolor = PlayerColor.BLUE;
                         break;
                     case puppetColor.Green:
-                        color = PlayerColor.GREEN;
+                        othercolor = PlayerColor.GREEN;
                         break;
                     case puppetColor.Default:
                         break;
