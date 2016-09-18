@@ -12,6 +12,19 @@
     
     <div class="form-horizontal">
         <h4></h4>
+        @if (ViewBag.Message == "User settings saved")
+        {
+            <div style="border:solid 1px green">
+                @ViewBag.Message
+            </div>
+        }
+        else if (ViewBag.Message == "User setting failed")
+        {
+            <div style="border:solid 1px red">
+                @ViewBag.Message
+            </div>
+        }
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
