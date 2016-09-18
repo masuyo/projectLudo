@@ -529,9 +529,9 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
             Clients.Caller.SendOverall(@"http://localhost:22046/");
         }
 
-        public void Forget()
+        public void GetForgot()
         {
-            Clients.Caller.SendForget(@"http://localhost:22046/");
+            Clients.Caller.SendForgot(@"http://localhost:22046/");
         }
 
         public void Befriend(string guid, int playerID, int friendPlayerID)
