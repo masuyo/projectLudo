@@ -137,8 +137,10 @@ namespace BoardGame
         {
             this.Dispatcher.Invoke(() => rotateX.Angle = new Random().Next(360));
             this.Dispatcher.Invoke(() => rotateY.Angle = new Random().Next(360));
+            this.Dispatcher.Invoke(() => rotateZ.Angle = new Random().Next(360));
             this.Dispatcher.Invoke(() => rotate2X.Angle = new Random().Next(360));
             this.Dispatcher.Invoke(() => rotate2Y.Angle = new Random().Next(360));
+            this.Dispatcher.Invoke(() => rotate2Z.Angle = new Random().Next(360));
             time++;
 
             if (time > 30)
