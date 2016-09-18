@@ -210,7 +210,15 @@ namespace BoardGame
             if (HelperClass.Connection?.State == ConnectionState.Connected)
             {
                 HelperClass.HubProxy.Invoke("GetConnectUserToRoom", HelperClass.GUID, new User(HelperClass.UserName), new Room(VM.SelectedRoom.AvailablePlaces, VM.SelectedRoom.ID, VM.SelectedRoom.Name, VM.SelectedRoom.Password));
-            }            
+            }
+            //test
+            //if (HelperClass.Connection?.State == ConnectionState.Connected)
+            //{
+            //    for (int i = 0; i < 3; i++)
+            //    {
+            //        HelperClass.HubProxy.Invoke("GetConnectUserToRoom", HelperClass.GUID, new User(HelperClass.UserName.Replace((i+1).ToString(),(i+2).ToString())), new Room(VM.SelectedRoom.AvailablePlaces, VM.SelectedRoom.ID, VM.SelectedRoom.Name, VM.SelectedRoom.Password));
+            //    }
+            //}
         }
         private void TXB_Search_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
