@@ -435,6 +435,7 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
 
         private int CountAmount(int actPoz, int destPoz, puppetColor color)
         {
+            if (destPoz == 500) return 0;
             int amount = destPoz - actPoz;
 
             switch (color)
