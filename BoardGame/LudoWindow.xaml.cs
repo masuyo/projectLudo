@@ -32,7 +32,7 @@ namespace BoardGame
         List<IPlayer> players;
         private void Init(IStartGameInfo startGameInfo)
         {
-            Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID;
+            this.Dispatcher.Invoke(() => Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
 
             Ludo.Init(startGameInfo);
 
@@ -73,7 +73,7 @@ namespace BoardGame
             HelperClass.HubProxy.On<GameInfo>("SendMove", (gameinfo) => this.Dispatcher.Invoke(() => { SendMove(gameinfo); }));
             HelperClass.HubProxy.On<string>("SendOverall", (linkToPage) => this.Dispatcher.Invoke(() => { SendOverall(linkToPage); }));
             HelperClass.HubProxy.On<bool>("SendDice", (roll) => this.Dispatcher.Invoke(() => { Dice(roll); }));
-            
+
 
             this.Dispatcher.Invoke(() => VM.ServerMsgs.Add(VM.WPFPlayer.Name + ":: Connecting to server..."));
             this.Dispatcher.Invoke(() => VM.ServerMsgs.Add("Connected to server."));
@@ -85,7 +85,8 @@ namespace BoardGame
 
         }
         int time = 0;
-        private void RotateDice1() {
+        private void RotateDice1()
+        {
             if (VM.GameSateInfo.Dice1 == 1)
             {
                 rotateX.Angle = 270; rotateY.Angle = 90; rotateZ.Angle = 0;//1
@@ -153,8 +154,8 @@ namespace BoardGame
                 dt.Stop();
                 RotateDice1(); RotateDice2();
                 time = 0;
-                Ludo.IsEnabled = true;
-            }            
+                //Ludo.IsEnabled = true;
+            }
         }
 
         private void Dice(bool roll)
@@ -168,6 +169,8 @@ namespace BoardGame
         private void Ludo_PuppetMove(int from, int to)
         {
             HelperClass.HubProxy.Invoke("GetMove", HelperClass.GUID, VM.GameSateInfo.ActivePlayerID, from, to);
+            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, from + ">> " + to);
+            //Console.WriteLine(from + ">> " + to);
         }
 
         private void Connection_StateChanged(StateChange e)
@@ -186,18 +189,14 @@ namespace BoardGame
 
         private void SendMove(GameInfo gameinfo)
         {
-            Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID;
+            this.Dispatcher.Invoke(() => Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
 
             VM.UserName = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Name;
             VM.ActiveColor = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Color;
 
             VM.GameSateInfo.Dice1 = gameinfo.Dice1;
             VM.GameSateInfo.Dice2 = gameinfo.Dice2;
-
-            //test only
-            //VM.GameSateInfo.Dice1 = 6;
-            //VM.GameSateInfo.Dice2 = 6;
-
+            
             if (!String.IsNullOrEmpty(gameinfo.Msg) && (gameinfo.Msg.ToLower().Contains("server"))) { VM.ServerMsgs.Add(gameinfo.Msg); }
             if (gameinfo.OnManHit && !String.IsNullOrEmpty(gameinfo.Msg))
             {
@@ -247,7 +246,7 @@ namespace BoardGame
             if (VM.WPFPlayer.ID == VM.GameSateInfo.ActivePlayerID)
             {
                 HelperClass.HubProxy.Invoke("GetDice", HelperClass.GUID);
-                Ludo.IsEnabled = false;
+                //Ludo.IsEnabled = false;
             }
         }
     }

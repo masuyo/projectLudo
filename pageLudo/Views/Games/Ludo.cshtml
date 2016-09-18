@@ -39,7 +39,9 @@
 
 <script>
     var temp1 = '@ViewBag.GameData';
+    var temp2 = '@ViewBag.GameData2';
     var gameData = JSON.parse('@ViewBag.GameData');
+    var gameData2 = JSON.parse('@ViewBag.GameData2');
 </script>
 
 <!-- Google Pie Chart -->
@@ -48,12 +50,12 @@
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
-
+          // melyik színnel milyen arányban nyernek
         var data = google.visualization.arrayToDataTable(gameData);
 
         var options = {
             title: 'Győzelmi eloszlás színenként',
-            chartArea: { left: 50, top: 50, width: "50%", height: "50%" },
+            chartArea: { left: 50, top: 50, width: "80%", height: "80%" },
             colors: ['blue', 'red', 'yellow', 'green'],
             backgroundColor: { fill: 'transparent' }
         };
@@ -62,8 +64,25 @@
         
 
         chart.draw(data, options);
+
+        // játékok popularitáseloszlása
+        var data2 = google.visualization.arrayToDataTable(gameData2);
+
+        var options2 = {
+            title: 'Játékok popularitása',
+            chartArea: { left: 50, top: 50, width: "80%", height: "80%" },
+            colors: ['blue', 'red', 'yellow', 'green'],
+            backgroundColor: { fill: 'transparent' }
+        };
+
+        var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+
+
+        chart2.draw(data2, options2);
       }
 </script>
-<div id="piechart" style="width: 900px; height: 500px;"></div>
+<div id="piechart" style="width: 500px; height: 500px; float:left;"></div>
+<div id="piechart2" style="width: 500px; height: 500px; float:left;"></div>
+<div class="clearfix"></div>
 
 

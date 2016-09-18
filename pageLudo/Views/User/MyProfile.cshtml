@@ -36,6 +36,15 @@
     <script>
         var temp1 = '@ViewBag.Data';
         var data = JSON.parse('@ViewBag.Data');
+        var temp2 = '@ViewBag.Data2';
+        var data2 = JSON.parse('@ViewBag.Data2');
+        var temp3 = '@ViewBag.Data3';
+        var data3 = JSON.parse('@ViewBag.Data3');
+        var temp4 = '@ViewBag.Data4';
+        var data4 = JSON.parse('@ViewBag.Data4');
+        var temp5 = '@ViewBag.Data5';
+        var data5 = JSON.parse('@ViewBag.Data5');
+        var data6 = JSON.parse('@ViewBag.Data6');
     </script>
    
         <script type="text/javascript">
@@ -64,39 +73,144 @@
                 chart.draw(view, options);
 
 
+                // NumberOfPlayedGamesInEachTypeOfGame
+                var chartData2 = google.visualization.arrayToDataTable(data2);
 
-                var data2 = google.visualization.arrayToDataTable([
-                  ['', 'Blue', { role: 'annotation' }, 'Red', { role: 'annotation' }, 'Yellow', { role: 'annotation' }, 'Green', { role: 'annotation' }, 'Black', {
-                    role: 'annotation'}, 'White', { role: 'annotation'},{ role: 'style' }],
-                  ['Ludo', 112, '', 82, '', 47, '', 55, '', 0, '', 0, '', ''],
-                  ['Chess', 0, '', 0, '', 0, '', 0, '', 102, '', 110, '', '']
-                ]);
+                var view2 = new google.visualization.DataView(chartData2);
 
                 var options2 = {
-                    title: "Győzelem színek szerinti eloszlása",
-                    isStacked: 'percent',
-                    hAxis: {
-                        minValue: 0
-                    },
-                    series: {
-                        0: { color: 'blue' },
-                        1: { color: 'red' },
-                        2: { color: 'yellow' },
-                        3: { color: 'green' },
-                        4: { color: 'black' },
-                        5: { color: '#fff7e3' },
-                    },
+                    title: "Játékok száma",
+                    isStacked: true,
+                    //width: 900,
+                    //height: 150,
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
                     backgroundColor: { fill: 'transparent' }
                 };
 
-                var chart2 = new google.visualization.BarChart(document.getElementById('mood_chart'));
-                chart2.draw(data2, options2);
+                // Instantiate and draw our chart, passing in some options.
+                var chart2 = new google.visualization.BarChart(document.getElementById("barchart_values2"));
+                chart2.draw(view2, options2);
+
+
+                // UserAverageTimeSpent
+                var chartData3 = google.visualization.arrayToDataTable(data3);
+
+                var view3 = new google.visualization.DataView(chartData3);
+
+                var options3 = {
+                    title: "Átlagos játékhossz körökben",
+                    isStacked: true,
+                    //width: 900,
+                    //height: 150,
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                    backgroundColor: { fill: 'transparent' }
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart3 = new google.visualization.BarChart(document.getElementById("barchart_values3"));
+                chart3.draw(view3, options3);
+
+
+                // Longest game
+                var chartData4 = google.visualization.arrayToDataTable(data4);
+
+                var view4 = new google.visualization.DataView(chartData4);
+
+                var options4 = {
+                    title: "Körök szerint leghosszabb játék",
+                    isStacked: true,
+                    //width: 900,
+                    //height: 150,
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                    backgroundColor: { fill: 'transparent' }
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart4 = new google.visualization.BarChart(document.getElementById("barchart_values4"));
+                chart4.draw(view4, options4);
+
+
+                // Shortest game
+                var chartData5 = google.visualization.arrayToDataTable(data5);
+
+                var view5 = new google.visualization.DataView(chartData5);
+
+                var options5 = {
+                    title: "Körök szerint legrövidebb játék",
+                    isStacked: true,
+                    //width: 900,
+                    //height: 150,
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                    backgroundColor: { fill: 'transparent' }
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart5 = new google.visualization.BarChart(document.getElementById("barchart_values5"));
+                chart5.draw(view5, options5);
+
+
+                // Ludo color win-loss
+                var chartData6 = google.visualization.arrayToDataTable(data6);
+
+                var view6 = new google.visualization.DataView(chartData6);
+
+                var options6 = {
+                    title: "Ki nevet a végén: Győzelem-vereség színek szerint",
+                    isStacked: true,
+                    //width: 900,
+                    //height: 150,
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                    backgroundColor: { fill: 'transparent' }
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart6 = new google.visualization.BarChart(document.getElementById("barchart_values6"));
+                chart6.draw(view6, options6);
+
+
+
+                //var data2 = google.visualization.arrayToDataTable([
+                //  ['', 'Blue', { role: 'annotation' }, 'Red', { role: 'annotation' }, 'Yellow', { role: 'annotation' }, 'Green', { role: 'annotation' }, 'Black', {
+                //    role: 'annotation'}, 'White', { role: 'annotation'},{ role: 'style' }],
+                //  ['Ludo', 112, '', 82, '', 47, '', 55, '', 0, '', 0, '', ''],
+                //  ['Chess', 0, '', 0, '', 0, '', 0, '', 102, '', 110, '', '']
+                //]);
+
+                //var options2 = {
+                //    title: "Győzelem színek szerinti eloszlása",
+                //    isStacked: 'percent',
+                //    hAxis: {
+                //        minValue: 0
+                //    },
+                //    series: {
+                //        0: { color: 'blue' },
+                //        1: { color: 'red' },
+                //        2: { color: 'yellow' },
+                //        3: { color: 'green' },
+                //        4: { color: 'black' },
+                //        5: { color: '#fff7e3' },
+                //    },
+                //    backgroundColor: { fill: 'transparent' }
+                //};
+
+                //var chart2 = new google.visualization.BarChart(document.getElementById('mood_chart'));
+                //chart2.draw(data2, options2);
 
             }
         </script>
         <div>
             <div id="barchart_values" style="width: 500px; height: 200px; float:left;"></div>
-            <div id="mood_chart" style="width: 500px; height: 200px; float:left;"></div>
+            <div id="barchart_values6" style="width: 500px; height: 200px; float:left;"></div>
+            <div id="barchart_values2" style="width: 500px; height: 200px; float:left;"></div>
+            <div id="barchart_values3" style="width: 500px; height: 200px; float:left;"></div>
+            <div id="barchart_values4" style="width: 500px; height: 200px; float:left;"></div>
+            <div id="barchart_values5" style="width: 500px; height: 200px; float:left;"></div>
+            @*<div id="mood_chart" style="width: 500px; height: 200px; float:left;"></div>*@
         </div>
         <div class="clearfix"></div>
 }
