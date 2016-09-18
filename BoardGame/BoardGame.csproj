@@ -135,9 +135,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\l3.png">
+    <Content Include="Images\l3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharedLudoLibrary\SharedLudoLibrary.csproj">
