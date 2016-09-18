@@ -105,7 +105,7 @@
                    Background="Transparent" Foreground="Transparent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="ExtraBold" FontSize="30"  />
             <Viewport3D DataContext="{Binding Path=DVM}" Grid.Row="1">
                 <Viewport3D.Camera>
-                    <PerspectiveCamera Position="1 2 5" LookDirection="-1 -2 -5">
+                    <PerspectiveCamera Position="1 2 4" LookDirection="-1 -2 -4">
                     </PerspectiveCamera>
                 </Viewport3D.Camera>
                 <ModelVisual3D>
