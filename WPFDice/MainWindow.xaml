@@ -9,7 +9,7 @@
     <Grid Background="BurlyWood">
         <Viewport3D Name="viewport3D1">
             <Viewport3D.Camera>
-                <PerspectiveCamera x:Name="camMain" Position="1 2 9" LookDirection="-1 -1 -9">
+                <PerspectiveCamera x:Name="camMain" Position="1 2 4" LookDirection="-1 -2 -4">
                 </PerspectiveCamera>
             </Viewport3D.Camera>
             <ModelVisual3D>

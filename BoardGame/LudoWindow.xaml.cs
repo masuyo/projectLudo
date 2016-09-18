@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace BoardGame
 {
@@ -27,25 +28,38 @@ namespace BoardGame
     public partial class LudoWindow : Window
     {
         LudoView VM;
-
-        public LudoWindow(IStartGameInfo startGameInfo)
+        DispatcherTimer dt;
+        private void Init(IStartGameInfo startGameInfo)
         {
-            InitializeComponent();
-
             Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID;
 
             Ludo.Init(startGameInfo);
 
-            VM = LudoView.GetVM;
-            VM.WPFPlayer = new Player(startGameInfo.WPFPlayer.ID, startGameInfo.WPFPlayer.Color);
-            VM.UserName = startGameInfo.WPFPlayer.Name;
+            VM.WPFPlayer = new Player(startGameInfo.WPFPlayer.ID, startGameInfo.WPFPlayer.Name, startGameInfo.WPFPlayer.Color);
+            List<IPlayer> players = new List<IPlayer>();
+            foreach (IPlayer p in startGameInfo.OtherWPFPlayers)
+            {
+                players.Add(p);
+            }
+            players.Add(startGameInfo.WPFPlayer);
+            VM.UserName = players.Where(p => p.ID == startGameInfo.MsgFromServer.ActivePlayerID).First().Name;
             VM.OtherWPFPlayers = new Player[] {
                 new Player(startGameInfo.OtherWPFPlayers[0].ID, startGameInfo.OtherWPFPlayers[0].Color),
                 new Player(startGameInfo.OtherWPFPlayers[1].ID, startGameInfo.OtherWPFPlayers[1].Color),
                 new Player(startGameInfo.OtherWPFPlayers[2].ID, startGameInfo.OtherWPFPlayers[2].Color)
             };
-            VM.GameSateInfo = startGameInfo.MsgFromServer; //startGameInfo.MsgFromServer
+            VM.GameSateInfo = startGameInfo.MsgFromServer;
+        }
+        public LudoWindow(IStartGameInfo startGameInfo)
+        {
+            InitializeComponent();
+            dt = new DispatcherTimer();
+            dt.Interval = TimeSpan.FromMilliseconds(100);
+            dt.Tick += Dt_Tick;
 
+
+            VM = LudoView.GetVM;
+            Init(startGameInfo);
             this.DataContext = VM;
 
             Ludo.PuppetMove += Ludo_PuppetMove;
@@ -53,17 +67,98 @@ namespace BoardGame
             HelperClass.HubProxy.On<string, string, DateTime>("SendMessage", (uname, text, time) => this.Dispatcher.Invoke(() => { SendMessage(uname, text, time); }));
             HelperClass.HubProxy.On<GameInfo>("SendMove", (gameinfo) => this.Dispatcher.Invoke(() => { SendMove(gameinfo); }));
             HelperClass.HubProxy.On<string>("SendOverall", (linkToPage) => this.Dispatcher.Invoke(() => { SendOverall(linkToPage); }));
+            HelperClass.HubProxy.On<bool>("SendDice", (roll) => this.Dispatcher.Invoke(() => { Dice(roll); }));
+            
 
-
-
+            this.Dispatcher.Invoke(() => VM.ServerMsgs.Add(VM.WPFPlayer.Name + ":: Connecting to server..."));
             this.Dispatcher.Invoke(() => VM.ServerMsgs.Add("Connected to server."));
-            this.Dispatcher.Invoke(() => VM.ServerMsgs.Add(VM.UserName + ":: Connecting to server..."));
             if (!String.IsNullOrEmpty(VM.GameSateInfo.Msg)) { VM.ServerMsgs.Add(startGameInfo.MsgFromServer.Msg); }
 
 
             HelperClass.Connection.Closed += Connection_Closed;
             HelperClass.Connection.StateChanged += Connection_StateChanged;
 
+        }
+        int time = 0;
+        private void RotateDice1() {
+            if (VM.GameSateInfo.Dice1 == 1)
+            {
+                rotateX.Angle = 270; rotateY.Angle = 90; rotateZ.Angle = 0;//1
+            }
+            else if (VM.GameSateInfo.Dice1 == 2)
+            {
+                rotateX.Angle = 90; rotateY.Angle = 0; rotateZ.Angle = 90;//2
+            }
+            else if (VM.GameSateInfo.Dice1 == 3)
+            {
+                rotateX.Angle = 180; rotateY.Angle = 0; rotateZ.Angle = 90;//3
+            }
+            else if (VM.GameSateInfo.Dice1 == 4)
+            {
+                rotateX.Angle = 270; rotateY.Angle = 270; rotateZ.Angle = 90;//4
+            }
+            else if (VM.GameSateInfo.Dice1 == 5)
+            {
+                rotateX.Angle = 270; rotateY.Angle = 0; rotateZ.Angle = 90;//5
+            }
+            else
+            {
+                rotateX.Angle = 0; rotateY.Angle = 0; rotateZ.Angle = 0;//6
+            }
+        }
+        private void RotateDice2()
+        {
+            if (VM.GameSateInfo.Dice1 == 2)
+            {
+                rotate2X.Angle = 270; rotate2Y.Angle = 90; rotate2Z.Angle = 0;//1
+            }
+            else if (VM.GameSateInfo.Dice2 == 2)
+            {
+                rotate2X.Angle = 90; rotate2Y.Angle = 0; rotate2Z.Angle = 90;//2
+            }
+            else if (VM.GameSateInfo.Dice2 == 3)
+            {
+                rotate2X.Angle = 180; rotate2Y.Angle = 0; rotate2Z.Angle = 90;//3
+            }
+            else if (VM.GameSateInfo.Dice2 == 4)
+            {
+                rotate2X.Angle = 270; rotate2Y.Angle = 270; rotate2Z.Angle = 90;//4
+            }
+            else if (VM.GameSateInfo.Dice2 == 5)
+            {
+                rotate2X.Angle = 270; rotate2Y.Angle = 0; rotate2Z.Angle = 90;//5
+            }
+            else
+            {
+                rotate2X.Angle = 0; rotate2Y.Angle = 0; rotate2Z.Angle = 0;//6
+            }
+        }
+        private void Dt_Tick(object sender, EventArgs e)
+        {
+            this.Dispatcher.Invoke(() => rotateX.Angle = new Random().Next(360));
+            this.Dispatcher.Invoke(() => rotateY.Angle = new Random().Next(360));
+            this.Dispatcher.Invoke(() => rotateZ.Angle = new Random().Next(360));
+            this.Dispatcher.Invoke(() => rotate2X.Angle = new Random().Next(360));
+            this.Dispatcher.Invoke(() => rotate2Y.Angle = new Random().Next(360));
+            this.Dispatcher.Invoke(() => rotate2Z.Angle = new Random().Next(360));
+            time++;
+
+            if (time > 30)
+            {
+                dt.Stop();
+                RotateDice1(); RotateDice2();
+                time = 0;
+                Ludo.IsEnabled = true;
+            }
+            
+        }
+
+        private void Dice(bool roll)
+        {
+            if (roll)
+            {
+                dt.Start();
+            }
         }
 
         private void Ludo_PuppetMove(int from, int to)
@@ -140,5 +235,13 @@ namespace BoardGame
             }
         }
 
+        private void Dice_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (VM.WPFPlayer.ID == VM.GameSateInfo.ActivePlayerID)
+            {
+                HelperClass.HubProxy.Invoke("GetDice", HelperClass.GUID);
+                Ludo.IsEnabled = false;
+            }
+        }
     }
 }

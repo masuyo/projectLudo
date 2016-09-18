@@ -44,6 +44,11 @@ namespace SharedLudoLibrary.ClientClasses
             ID = id;
             Color = color;
         }
-
+        public Player(int id, string name, PlayerColor color)
+        {
+            ID = id;
+            Color = color;
+            Name = name;
+        }
     }
 }

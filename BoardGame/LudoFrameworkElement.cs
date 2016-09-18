@@ -40,7 +40,7 @@ namespace BoardGame
                 {  0 , 0 , 0 , 0 ,116,202,122, 0 , 0 , 0 , 0 },
                 {  0 , 0 , 0 , 0 ,115,203,123, 0 , 0 , 0 , 0 },
                 { 110,111,112,113,114,204,124,125,126,127,128},
-                { 149,101,102,103,104, 0 ,304,303,302,301,129},
+                { 149,101,102,103,104,500,304,303,302,301,129},
                 { 148,147,146,145,144,404,134,133,132,131,130},
                 {  0 , 0 , 0 , 0 ,143,403,135, 0 , 0 , 0 , 0 },
                 {  0 , 0 , 0 , 0 ,142,402,136, 0 , 0 , 0 , 0 },
@@ -81,10 +81,10 @@ namespace BoardGame
         {
             for (int i = 1; i < 5; i++)
             {
-                //if (poz > i * 10 && poz < i * 10 + 5)
-                //{
-                //    return 100 + i * 10;
-                //}
+                if (LudoView.GetVM.GameSateInfo.Dice1 !=6 && LudoView.GetVM.GameSateInfo.Dice2 !=6)
+                {
+                    return 500;
+                }
                 if (poz == i * 100 + 4 || poz == 500)
                 {
                     return 500;
@@ -273,6 +273,8 @@ namespace BoardGame
                 case 404:
                 case 140:
                     return Brushes.Green;
+                case 500:
+                    return Brushes.Violet;
                 case 0:
                     return null;
                 default: return Brushes.DimGray;
@@ -367,7 +369,10 @@ namespace BoardGame
                         }
                         else
                         {
-                            drawingContext.DrawGeometry(IDToColor(item) == Brushes.DimGray ? Brushes.Transparent : IDToColor(item), new Pen(IDToColor(item), 1), DrawField(item));
+                            drawingContext.DrawGeometry(
+                                IDToColor(item) == Brushes.DimGray ? Brushes.Transparent : IDToColor(item),
+                                new Pen(IDToColor(item), 1),
+                                DrawField(item));
                         }
                     }
                 }
@@ -383,8 +388,7 @@ namespace BoardGame
         protected override void OnRender(DrawingContext drawingContext)
         {
             Draw(drawingContext);
-
-
+           
             if (onHover)
             {
                 foreach (int fieldID in targretFields)
