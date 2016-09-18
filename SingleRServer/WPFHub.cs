@@ -529,11 +529,6 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
             Clients.Caller.SendOverall(@"http://localhost:22046/");
         }
 
-        public void Forget()
-        {
-            Clients.Caller.SendForget(@"http://localhost:22046/");
-        }
-
         public void Befriend(string guid, int playerID, int friendPlayerID)
         {
             return;
@@ -547,5 +542,9 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
             Clients.Group(table.Name).SendMessage(username, text, DateTime.Now);
         }
 
+        public void GetForgot()
+        {
+            Clients.Caller.SendForget(@"http://localhost:22046/");
+        }
     }
 }
