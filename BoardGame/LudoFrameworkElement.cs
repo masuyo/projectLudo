@@ -151,22 +151,25 @@ namespace BoardGame
                     int dest2 = onHoverPuppet.Poz;
                     int d1 = LudoView.GetVM.GameSateInfo.Dice1;
                     int d2 = LudoView.GetVM.GameSateInfo.Dice2;
-                    if (d1 == 6 && d2 == 6)
+                    bool started = false;
+
+                    for (int i = 1; i < 5; i++)
                     {
-                        for (int i = 1; i < 5; i++)
+                        if (d1 == 6 && d2 == 6)
                         {
                             if (dest1 > i * 10 && dest1 < i * 10 + 5)
                             {
-                                dest1 = 100 + i * 10;
+                                dest1 = 100 + i * 10; started = true;
                             }
                             if (dest2 > i * 10 && dest2 < i * 10 + 5)
                             {
-                                dest2 = 100 + i * 10;
+                                dest2 = 100 + i * 10; started = true;
                             }
                         }
                     }
+
                     //LudoView.GetVM.GameSateInfo.ActivePlayerID
-                    else
+                    if (!started)
                     {
                         while (d1 > 0)
                         {
@@ -181,7 +184,7 @@ namespace BoardGame
                     }
                     bool p1 = true; bool p2 = true;
                     foreach (IPuppet p in puppetList.Where(p => p.Player.ID == LudoView.GetVM.GameSateInfo.ActivePlayerID))
-                    {                       
+                    {
                         if (p.Poz == dest1)
                         {
                             p1 = false;
