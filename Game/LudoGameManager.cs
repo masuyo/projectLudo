@@ -56,6 +56,9 @@ namespace Game
                     break;
                 case LudoActionType.Check:
                     NextPlayer();
+                    Dice1 = 0;
+                    Dice2 = 0;
+                    Throw();
                     break;
                 default:
                     break;
@@ -70,11 +73,9 @@ namespace Game
         private void Throw()
         {
             if (Dice1 != 0 & Dice2 != 0) throw new InvalidOperationException("Player has already throw with the dices");
-            Dice1 = 6;
-            Dice2 = 6;
-
-            //Dice1 = randomgenerator.Next(1, 6);
-            //Dice2 = randomgenerator.Next(1, 6);
+            
+            Dice1 = randomgenerator.Next(5, 6);
+            Dice2 = randomgenerator.Next(5, 6);
         }
 
         private void Move(MoveLudoAction action)
