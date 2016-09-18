@@ -434,6 +434,8 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
                 gameinfo.Msg = e.Message;
                 Clients.Caller.SendMove(gameinfo);
             }
+
+            WriteOutGame(table.getGame());
             
         }
 
@@ -557,6 +559,55 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
             LudoTable table = name_table.Where(akt => akt.Value.Players.Where(pakt => pakt.Name == caller.Name).SingleOrDefault() != null).SingleOrDefault().Value;
 
             Clients.Group(table.Name).SendDice(true);////////////////////////////////
+        }
+
+        private static void WriteOutGame(LudoGame ludoGame)
+        {
+            Console.WriteLine("---------------------------------------");
+            foreach (var players in ludoGame.Players)
+            {
+                Console.WriteLine(players.Name + "    " + players.color);
+                foreach (var item in CountPuppets(players))
+                {
+                    Console.Write(item + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("nextplayer: " + ludoGame.Nextplayer.Name);
+            Console.WriteLine("rounds: " + ludoGame.Rounds);
+        }
+
+        private static List<int> CountPuppets(LudoPlayer player)
+        {
+            List<int> puppets = new List<int>();
+
+            for (int i = 0; i < 4; i++)
+            {
+                switch (player.color)
+                {
+                    case puppetColor.Red:
+                        if (player.Puppets[i] > 0 && player.Puppets[i] < 41) puppets.Add((player.Puppets[i] + 0) % 40);
+                        else puppets.Add(player.Puppets[i]);
+                        break;
+                    case puppetColor.Yellow:
+                        if (player.Puppets[i] > 0 && player.Puppets[i] < 41) puppets.Add((player.Puppets[i] + 20) % 40);
+                        else puppets.Add(player.Puppets[i]);
+                        break;
+                    case puppetColor.Blue:
+                        if (player.Puppets[i] > 0 && player.Puppets[i] < 41) puppets.Add((player.Puppets[i] + 10) % 40);
+                        else puppets.Add(player.Puppets[i]);
+                        break;
+                    case puppetColor.Green:
+                        if (player.Puppets[i] > 0 && player.Puppets[i] < 41) puppets.Add((player.Puppets[i] + 30) % 40);
+                        else puppets.Add(player.Puppets[i]);
+                        break;
+                    case puppetColor.Default:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return puppets;
         }
 
     }
