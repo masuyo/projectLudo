@@ -12,5 +12,8 @@ namespace SignalRServer.MVCData.DataClasses
         public int NumberOfLosses { get; set; }
         public int NumberOfGames { get; set; }
         public string ColorName { get; set; }
+        public int AverageNumberOfTurns { get; set; }
+        public int NumberOfTurnsOfTheLongestGame { get; set; }
+        public int NumberOfTurnsOfTheShortestGame { get; set; }
     }
 }
