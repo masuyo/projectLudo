@@ -81,7 +81,7 @@ namespace BoardGame
         {
             for (int i = 1; i < 5; i++)
             {
-                if (LudoView.GetVM.GameSateInfo.Dice1 !=6 && LudoView.GetVM.GameSateInfo.Dice2 !=6)
+                if (LudoView.GetVM.GameSateInfo.Dice1 != 6 && LudoView.GetVM.GameSateInfo.Dice2 != 6)
                 {
                     return 500;
                 }
@@ -179,8 +179,35 @@ namespace BoardGame
                             d2--;
                         }
                     }
-                    targretFields.Add(dest1);
-                    targretFields.Add(dest2);
+                    bool p1 = true; bool p2 = true;
+                    foreach (IPuppet p in puppetList.Where(p => p.Player.ID == LudoView.GetVM.GameSateInfo.ActivePlayerID))
+                    {                       
+                        if (p.Poz == dest1)
+                        {
+                            p1 = false;
+                        }
+                        if (p.Poz == dest2)
+                        {
+                            p2 = false;
+                        }
+                    }
+                    if (p1 && p2)
+                    {
+                        targretFields.Add(dest1);
+                        targretFields.Add(dest2);
+                    }
+                    else if (p1)
+                    {
+                        targretFields.Add(dest1);
+                    }
+                    else if (p2)
+                    {
+                        targretFields.Add(dest2);
+                    }
+                    else
+                    {
+                        targretFields.Add(500);
+                    }
                 }
 
                 InvalidateVisual();
@@ -388,7 +415,7 @@ namespace BoardGame
         protected override void OnRender(DrawingContext drawingContext)
         {
             Draw(drawingContext);
-           
+
             if (onHover)
             {
                 foreach (int fieldID in targretFields)
