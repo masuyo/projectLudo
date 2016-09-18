@@ -34,6 +34,8 @@ namespace BoardGame
         {
             this.Dispatcher.Invoke(() => Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
 
+            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
+
             Ludo.Init(startGameInfo);
 
             VM.WPFPlayer = new Player(startGameInfo.WPFPlayer.ID, startGameInfo.WPFPlayer.Name, startGameInfo.WPFPlayer.Color);
@@ -190,6 +192,7 @@ namespace BoardGame
         private void SendMove(GameInfo gameinfo)
         {
             this.Dispatcher.Invoke(() => Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
+            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
 
             VM.UserName = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Name;
             VM.ActiveColor = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Color;
