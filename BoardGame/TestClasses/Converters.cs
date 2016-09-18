@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedLudoLibrary.ClientClasses;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -58,6 +59,31 @@ namespace BoardGame.TestClasses
             }
             return Binding.DoNothing;
             throw new NotImplementedException();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    class PlayerBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            PlayerColor color = (PlayerColor)value;
+            switch (color)
+            {
+                case PlayerColor.RED:
+                    return Brushes.Red;
+                case PlayerColor.GREEN:
+                    return Brushes.Green;
+                case PlayerColor.BLUE:
+                    return Brushes.Blue;
+                case PlayerColor.YELLOW:
+                    return Brushes.Yellow;
+                default:
+                    return Binding.DoNothing;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

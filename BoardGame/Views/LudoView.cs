@@ -16,6 +16,7 @@ namespace BoardGame.Views
         ObservableCollection<string> chatMsgs;
         string chatMsg;
         string userName;
+        PlayerColor activeColor;
         public ObservableCollection<string> ServerMsgs
         {
             get { return serverMsgs; }
@@ -89,6 +90,13 @@ namespace BoardGame.Views
             get { return diceVM; }
 
             set { SetProperty(ref diceVM, value); }
+        }
+
+        public PlayerColor ActiveColor
+        {
+            get { return activeColor; }
+
+            set { SetProperty(ref activeColor, value); }
         }
     }
 }

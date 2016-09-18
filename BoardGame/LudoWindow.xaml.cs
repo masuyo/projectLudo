@@ -29,6 +29,7 @@ namespace BoardGame
     {
         LudoView VM;
         DispatcherTimer dt;
+        List<IPlayer> players;
         private void Init(IStartGameInfo startGameInfo)
         {
             Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID;
@@ -36,17 +37,21 @@ namespace BoardGame
             Ludo.Init(startGameInfo);
 
             VM.WPFPlayer = new Player(startGameInfo.WPFPlayer.ID, startGameInfo.WPFPlayer.Name, startGameInfo.WPFPlayer.Color);
-            List<IPlayer> players = new List<IPlayer>();
+            players = new List<IPlayer>();
             foreach (IPlayer p in startGameInfo.OtherWPFPlayers)
             {
                 players.Add(p);
+                Console.WriteLine(p.Color);
             }
             players.Add(startGameInfo.WPFPlayer);
+            Console.WriteLine(startGameInfo.WPFPlayer.Color);
+
             VM.UserName = players.Where(p => p.ID == startGameInfo.MsgFromServer.ActivePlayerID).First().Name;
+            VM.ActiveColor = players.Where(p => p.ID == startGameInfo.MsgFromServer.ActivePlayerID).First().Color;
             VM.OtherWPFPlayers = new Player[] {
-                new Player(startGameInfo.OtherWPFPlayers[0].ID, startGameInfo.OtherWPFPlayers[0].Color),
-                new Player(startGameInfo.OtherWPFPlayers[1].ID, startGameInfo.OtherWPFPlayers[1].Color),
-                new Player(startGameInfo.OtherWPFPlayers[2].ID, startGameInfo.OtherWPFPlayers[2].Color)
+                new Player(startGameInfo.OtherWPFPlayers[0].ID, startGameInfo.OtherWPFPlayers[0].Name, startGameInfo.OtherWPFPlayers[0].Color),
+                new Player(startGameInfo.OtherWPFPlayers[1].ID, startGameInfo.OtherWPFPlayers[1].Name, startGameInfo.OtherWPFPlayers[1].Color),
+                new Player(startGameInfo.OtherWPFPlayers[2].ID, startGameInfo.OtherWPFPlayers[2].Name, startGameInfo.OtherWPFPlayers[2].Color)
             };
             VM.GameSateInfo = startGameInfo.MsgFromServer;
         }
@@ -149,8 +154,7 @@ namespace BoardGame
                 RotateDice1(); RotateDice2();
                 time = 0;
                 Ludo.IsEnabled = true;
-            }
-            
+            }            
         }
 
         private void Dice(bool roll)
@@ -183,6 +187,9 @@ namespace BoardGame
         private void SendMove(GameInfo gameinfo)
         {
             Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID;
+
+            VM.UserName = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Name;
+            VM.ActiveColor = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Color;
 
             VM.GameSateInfo.Dice1 = gameinfo.Dice1;
             VM.GameSateInfo.Dice2 = gameinfo.Dice2;

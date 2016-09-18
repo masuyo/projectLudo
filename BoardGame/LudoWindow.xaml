@@ -3,13 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BoardGame"
+        xmlns:local="clr-namespace:BoardGame"        
+        xmlns:tlc="clr-namespace:BoardGame.TestClasses"
         mc:Ignorable="d"
         Title="LudoClassicWindow" Width="1024" Height="768"
         WindowState="Maximized" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
         Background="Black"     
         Closing="WPFClient_Closing"
         >
+    <Window.Resources>
+        <tlc:PlayerBrushConverter x:Key="PlayerBrushConverter"/>
+    </Window.Resources>
     <!--WindowStyle="None"-->
     <Grid>
         <Grid.RowDefinitions>
@@ -27,14 +31,16 @@
         <Label 
             Content="{Binding Path=UserName}" ContentStringFormat="{}{0}'s turn."
             Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-            Background="DodgerBlue" Foreground="Black" Margin="0,0,0,620" Grid.RowSpan="2" FontSize="24"   />
+            Background="{Binding Path=ActiveColor, Converter={StaticResource PlayerBrushConverter}}" 
+            Foreground="Black" Margin="0,0,0,620" Grid.RowSpan="2" FontSize="24"   />
         <Label 
             Content="Add to friends"
             Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" VerticalContentAlignment="Center"
-            Background="DodgerBlue" Foreground="Black" Padding="400,0,0,0" Margin="0,0,0,620" Grid.RowSpan="2" FontSize="24"   />
+            Background="{Binding Path=ActiveColor, Converter={StaticResource PlayerBrushConverter}}" 
+            Foreground="White" Padding="400,0,0,0" Margin="0,0,0,620" Grid.RowSpan="2" FontSize="24" />
         <Label             
-            Grid.Column="2" Grid.Row="0"  VerticalContentAlignment="Center" Width="250" HorizontalAlignment="Left" Margin="340,20,0,40"
-            Background="Transparent" BorderBrush="Black" BorderThickness="2" Foreground="Black" MouseDown="LBL_Friend_MouseDown"/>
+            Grid.Column="2" Grid.Row="0"  VerticalContentAlignment="Center" Height="40" Width="200" HorizontalAlignment="Left" Margin="375,20,0,40"
+            Background="Transparent" BorderBrush="Black" Foreground="Black" BorderThickness="2" MouseDown="LBL_Friend_MouseDown"/>
         <ListBox Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" 
                  MinHeight="100" 
                  ItemsSource="{Binding Path=ServerMsgs}" 
