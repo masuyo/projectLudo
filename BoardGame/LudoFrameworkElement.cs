@@ -81,10 +81,10 @@ namespace BoardGame
         {
             for (int i = 1; i < 5; i++)
             {
-                //if (poz > i * 10 && poz < i * 10 + 5)
-                //{
-                //    return 100 + i * 10;
-                //}
+                if (LudoView.GetVM.GameSateInfo.Dice1 !=6 && LudoView.GetVM.GameSateInfo.Dice2 !=6)
+                {
+                    return 500;
+                }
                 if (poz == i * 100 + 4 || poz == 500)
                 {
                     return 500;

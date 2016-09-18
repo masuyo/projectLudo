@@ -61,7 +61,7 @@
             <Label Content="{Binding Path=GameSateInfo.Dice1}"
                    Grid.Row="0"
                    Background="Transparent" Foreground="Transparent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="ExtraBold" FontSize="30"  />
-            <Viewport3D DataContext="{Binding Path=DVM}"  Grid.Row="0" Width="100" Height="100">
+            <Viewport3D DataContext="{Binding Path=DVM}"  Grid.Row="0">
                 <Viewport3D.Camera>
                     <PerspectiveCamera Position="1 2 9" LookDirection="-1 -1 -9">
                     </PerspectiveCamera>

@@ -35,8 +35,14 @@ namespace BoardGame
 
             Ludo.Init(startGameInfo);
 
-            VM.WPFPlayer = new Player(startGameInfo.WPFPlayer.ID, startGameInfo.WPFPlayer.Color);
-            VM.UserName = startGameInfo.WPFPlayer.Name;
+            VM.WPFPlayer = new Player(startGameInfo.WPFPlayer.ID, startGameInfo.WPFPlayer.Name, startGameInfo.WPFPlayer.Color);
+            List<IPlayer> players = new List<IPlayer>();
+            foreach (IPlayer p in startGameInfo.OtherWPFPlayers)
+            {
+                players.Add(p);
+            }
+            players.Add(startGameInfo.WPFPlayer);
+            VM.UserName = players.Where(p => p.ID == startGameInfo.MsgFromServer.ActivePlayerID).First().Name;
             VM.OtherWPFPlayers = new Player[] {
                 new Player(startGameInfo.OtherWPFPlayers[0].ID, startGameInfo.OtherWPFPlayers[0].Color),
                 new Player(startGameInfo.OtherWPFPlayers[1].ID, startGameInfo.OtherWPFPlayers[1].Color),
@@ -62,12 +68,10 @@ namespace BoardGame
             HelperClass.HubProxy.On<GameInfo>("SendMove", (gameinfo) => this.Dispatcher.Invoke(() => { SendMove(gameinfo); }));
             HelperClass.HubProxy.On<string>("SendOverall", (linkToPage) => this.Dispatcher.Invoke(() => { SendOverall(linkToPage); }));
             HelperClass.HubProxy.On<bool>("SendDice", (roll) => this.Dispatcher.Invoke(() => { Dice(roll); }));
+            
 
-
-
-
+            this.Dispatcher.Invoke(() => VM.ServerMsgs.Add(VM.WPFPlayer.Name + ":: Connecting to server..."));
             this.Dispatcher.Invoke(() => VM.ServerMsgs.Add("Connected to server."));
-            this.Dispatcher.Invoke(() => VM.ServerMsgs.Add(VM.UserName + ":: Connecting to server..."));
             if (!String.IsNullOrEmpty(VM.GameSateInfo.Msg)) { VM.ServerMsgs.Add(startGameInfo.MsgFromServer.Msg); }
 
 
@@ -131,7 +135,7 @@ namespace BoardGame
         }
         private void Dt_Tick(object sender, EventArgs e)
         {
-            while (time < 3000)
+            while (time < 30000)
             {
                 this.Dispatcher.Invoke(() => rotateX.Angle = new Random().Next(360));
                 this.Dispatcher.Invoke(() => rotateY.Angle = new Random().Next(360));
