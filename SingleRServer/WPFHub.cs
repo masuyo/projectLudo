@@ -376,22 +376,22 @@ namespace SignalRServer
                     {
                         case puppetColor.Red:
                             if (puppet == 0) pozition = 10 + i + 1;
-                            else if (puppet < 41) pozition = puppet - 1 + 110;
+                            else if (puppet < 41) pozition = (puppet+0)%40 + 109;
                             else pozition = puppet + 60;
                             break;
                         case puppetColor.Yellow:
                             if (puppet == 0) pozition = 30 + i + 1;
-                            else if (puppet < 41) pozition = puppet - 1 + 130;
+                            else if (puppet < 41) pozition = (puppet+20)%40 + 109;
                             else pozition = puppet + 260;
                             break;
                         case puppetColor.Blue:
                             if (puppet == 0) pozition = 20 + i + 1;
-                            else if (puppet < 41) pozition = puppet - 1 + 120;
+                            else if (puppet < 41) pozition = (puppet+10)%40 + 109;
                             else pozition = puppet + 160;
                             break;
                         case puppetColor.Green:
                             if (puppet == 0) pozition = 40 + i + 1;
-                            else if (puppet < 41) pozition = puppet - 1 + 140;
+                            else if (puppet < 41) pozition = (puppet+30)%40 + 109;
                             else pozition = puppet + 360;
                             break;
                         case puppetColor.Default:
@@ -442,10 +442,16 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
                 Clients.Caller.SendMove(gameinfo);
             }
 
-            
+            Console.WriteLine("All puppets:");
+            foreach (var item in gameinfo.PuppetList)
+            {
+                Console.WriteLine(item.Player.Name + "   " + item.ID + "   " + item.Poz);
+            }
             WriteOutGame(table.getGame());
             Console.WriteLine("Dice1 {0} \n Dice2 {1}",(table.Gamemanager as LudoGameManager).Dice1, (table.Gamemanager as LudoGameManager).Dice2);
             Console.WriteLine("aktív player ID:"+gameinfo.ActivePlayerID);
+            
+
         }
 
         private int CountAmount(int actPoz, int destPoz, puppetColor color)
