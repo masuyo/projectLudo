@@ -124,10 +124,12 @@ namespace Game
         }
 
         private void MoveTo(int puppet, int nextposition, LudoPlayer doer)
-        { 
-            for (int i=doer.Puppets[puppet]+1; i < nextposition+1; i++) {
-                Step(i, doer.color);
-            }
+        {
+
+            Step(nextposition, doer.color);
+            //for (int i=doer.Puppets[puppet]+1; i < nextposition+1; i++) {
+            //    Step(i, doer.color);
+            //}
             doer.Puppets[puppet] = nextposition;
         }
 
