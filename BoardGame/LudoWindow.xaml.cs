@@ -107,14 +107,18 @@ namespace BoardGame
             {
                 rotateX.Angle = 270; rotateY.Angle = 0; rotateZ.Angle = 90;//5
             }
-            else
+            else if (VM.GameSateInfo.Dice1 == 6)
             {
                 rotateX.Angle = 0; rotateY.Angle = 0; rotateZ.Angle = 0;//6
+            }
+            else
+            {
+                rotateX.Angle = 30; rotateY.Angle = 30; rotateZ.Angle = 30;
             }
         }
         private void RotateDice2()
         {
-            if (VM.GameSateInfo.Dice1 == 2)
+            if (VM.GameSateInfo.Dice1 == 1)
             {
                 rotate2X.Angle = 270; rotate2Y.Angle = 90; rotate2Z.Angle = 0;//1
             }
@@ -134,9 +138,13 @@ namespace BoardGame
             {
                 rotate2X.Angle = 270; rotate2Y.Angle = 0; rotate2Z.Angle = 90;//5
             }
-            else
+            else if (VM.GameSateInfo.Dice2 == 6)
             {
                 rotate2X.Angle = 0; rotate2Y.Angle = 0; rotate2Z.Angle = 0;//6
+            }
+            else
+            {
+                rotate2X.Angle = 30; rotate2Y.Angle = 30; rotate2Z.Angle = 30;
             }
         }
         private void Dt_Tick(object sender, EventArgs e)
@@ -169,7 +177,6 @@ namespace BoardGame
         private void Ludo_PuppetMove(int from, int to, int puppetID)
         {
             HelperClass.HubProxy.Invoke("GetMove", HelperClass.GUID, puppetID, from, to);
-
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.ActivePlayerID + "::");
             HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, puppetID +"::"+ from + ">> " + to);
             //Console.WriteLine(from + ">> " + to);
@@ -194,15 +201,24 @@ namespace BoardGame
             //this.Dispatcher.Invoke(() => Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.PuppetList.Where(p =>p.Player.Color == VM.WPFPlayer.Color).ToString());
-            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.ActivePlayerID + "**");
 
+            Dispatcher.Invoke(() => VM.GameSateInfo.ActivePlayerID = gameinfo.ActivePlayerID);
+           
             Dispatcher.Invoke(() => VM.UserName = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Name);
             Dispatcher.Invoke(() => VM.ActiveColor = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Color);
 
             Dispatcher.Invoke(() => VM.GameSateInfo.Dice1 = gameinfo.Dice1);
             Dispatcher.Invoke(() => VM.GameSateInfo.Dice2 = gameinfo.Dice2);
             Dispatcher.Invoke(() => VM.GameSateInfo.PuppetList = gameinfo.PuppetList);
-            
+
+            Dispatcher.Invoke(() => RotateDice1()); Dispatcher.Invoke(() => RotateDice2());
+            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.ActivePlayerID + "**");
+            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.Dice1 + " - " + VM.GameSateInfo.Dice2);
+
+
+
+
+
             if (!String.IsNullOrEmpty(gameinfo.Msg) && (gameinfo.Msg.ToLower().Contains("server"))) { VM.ServerMsgs.Add(gameinfo.Msg); }
             if (gameinfo.OnManHit && !String.IsNullOrEmpty(gameinfo.Msg))
             {
