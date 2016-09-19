@@ -399,7 +399,7 @@ namespace SignalRServer
                         default:
                             break;
                     }
-                    if (pozition == 109) pozition++;
+                    if (pozition == 109) pozition = 149;
                     puppetlist.Add(new Puppet(i + 1, pozition, newplayer));
                 }
             }
