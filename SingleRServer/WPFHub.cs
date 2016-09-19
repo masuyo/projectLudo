@@ -442,7 +442,9 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
                 Clients.Caller.SendMove(gameinfo);
             }
 
+            
             WriteOutGame(table.getGame());
+            Console.WriteLine("Dice1 {0} \n Dice2 {1}",(table.Gamemanager as LudoGameManager).Dice1, (table.Gamemanager as LudoGameManager).Dice2);
             Console.WriteLine("aktív player ID:"+gameinfo.ActivePlayerID);
         }
 
