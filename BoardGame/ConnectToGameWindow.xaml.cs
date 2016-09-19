@@ -133,7 +133,7 @@ namespace BoardGame
             {
                 foreach (Room r in allRoom)
                 {
-                    
+
                     Console.WriteLine(r.Name);
                     VM.RoomList.Add(r);
                 }
@@ -149,12 +149,19 @@ namespace BoardGame
 
         private void LBL_Start_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is Label)
+            if (VM.UsersInRoom.Count == 4)
             {
-                if (HelperClass.Connection?.State == ConnectionState.Connected)
+                if (sender is Label)
                 {
-                    HelperClass.HubProxy.Invoke("GetStart", HelperClass.GUID, HelperClass.UserName); //answer : call my "SendStart(IStartGameInfo startGameInfo);"
+                    if (HelperClass.Connection?.State == ConnectionState.Connected)
+                    {
+                        HelperClass.HubProxy.Invoke("GetStart", HelperClass.GUID, HelperClass.UserName); //answer : call my "SendStart(IStartGameInfo startGameInfo);"
+                    }
                 }
+            }
+            else
+            {
+                Dispatcher.Invoke(() => MessageBox.Show("4 users must be connected to start the game."));
             }
         }
 
@@ -211,6 +218,7 @@ namespace BoardGame
             {
                 HelperClass.HubProxy.Invoke("GetConnectUserToRoom", HelperClass.GUID, new User(HelperClass.UserName), new Room(VM.SelectedRoom.AvailablePlaces, VM.SelectedRoom.ID, VM.SelectedRoom.Name, VM.SelectedRoom.Password));
             }
+
             //test
             //if (HelperClass.Connection?.State == ConnectionState.Connected)
             //{
