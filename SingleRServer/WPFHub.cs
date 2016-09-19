@@ -436,7 +436,7 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
             }
 
             WriteOutGame(table.getGame());
-            
+            Console.WriteLine("aktív player ID:"+gameinfo.ActivePlayerID);
         }
 
         private int CountAmount(int actPoz, int destPoz, puppetColor color)
@@ -481,7 +481,7 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
                     amount = destPoz - actPoz;
                     break;
                 case puppetColor.Blue:
-                    if (actPoz > 21 && actPoz < 25)
+                    if (actPoz > 20 && actPoz < 25)
                     {
                         actPoz = 119;
                         amount = destPoz - actPoz;
