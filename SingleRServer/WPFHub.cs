@@ -411,7 +411,7 @@ namespace SignalRServer
             
             LudoPlayer caller = guid_player[guid];
             LudoTable table = name_table.Where(akt => akt.Value.Players.Where(pakt => pakt.Name==caller.Name).SingleOrDefault()!=null).SingleOrDefault().Value;
-            int amount = CountAmount(actPoz, destPoz, table.getGame().Nextplayer.color);
+            int amount = CountAmount(actPoz, destPoz, caller.color);
             Console.WriteLine("Player with {0} guid and {1} name {2} color moved from {3} to {4} with amount {5}",
 guid,caller.Name,caller.color,actPoz,destPoz,amount);
 
@@ -419,7 +419,7 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
             try
             {
                 if (amount == 0) table.Gamemanager.DoAction(new Game.LudoActions.CheckLudoAction(table.getGame().Nextplayer));
-                else table.Gamemanager.DoAction(new MoveLudoAction(table.getGame().Nextplayer, puppetID, amount));
+                else table.Gamemanager.DoAction(new MoveLudoAction(table.getGame().Nextplayer, puppetID-1, amount));
 
                 gameinfo = MakeGameInfo(table);
                 Clients.Group(table.Name).SendMove(gameinfo);
