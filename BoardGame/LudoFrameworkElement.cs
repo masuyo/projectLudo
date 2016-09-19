@@ -79,16 +79,9 @@ namespace BoardGame
         List<int> targretFields = new List<int>();
         private int MoveOne(int poz, PlayerColor color)
         {
-            for (int i = 1; i < 5; i++)
+            if (poz == 104 || poz == 204 || poz == 304 || poz == 404 || poz == 500)
             {
-                if (LudoView.GetVM.GameSateInfo.Dice1 != 6 && LudoView.GetVM.GameSateInfo.Dice2 != 6)
-                {
-                    return 500;
-                }
-                if (poz == i * 100 + 4 || poz == 500)
-                {
-                    return 500;
-                }
+                return 500;
             }
             if (color == PlayerColor.RED)
             {
@@ -122,7 +115,12 @@ namespace BoardGame
             {
                 return 110;
             }
-            return poz + 1;
+            if (poz != 11 && poz != 12 && poz != 13 && poz != 14 && poz != 21 && poz != 22 && poz != 23 && poz != 24 &&
+                poz != 31 && poz != 32 && poz != 33 && poz != 34 && poz != 41 && poz != 42 && poz != 43 && poz != 44)
+            {
+                return poz + 1;
+            }
+            return 500;          
         }
 
         //todo business logic
@@ -146,69 +144,83 @@ namespace BoardGame
             {
                 //if (LudoView.GetVM.GameSateInfo.ActivePlayerID == LudoView.GetVM.WPFPlayer.ID)
                 //{
-                    Console.WriteLine("ID");
-                    int dest1 = onHoverPuppet.Poz;
-                    int dest2 = onHoverPuppet.Poz;
-                    int d1 = LudoView.GetVM.GameSateInfo.Dice1;
-                    int d2 = LudoView.GetVM.GameSateInfo.Dice2;
-                    bool started = false;
+                Console.WriteLine("ID");
+                int dest1 = onHoverPuppet.Poz;
+                int dest2 = onHoverPuppet.Poz;
+                int d1 = LudoView.GetVM.GameSateInfo.Dice1;
+                int d2 = LudoView.GetVM.GameSateInfo.Dice2;
+                bool started = false;
 
-                    for (int i = 1; i < 5; i++)
+                if (onHoverPuppet.Poz == 11 || onHoverPuppet.Poz == 12 || onHoverPuppet.Poz == 13 || onHoverPuppet.Poz == 14)
+                {
+                    if (d1 == 6 && d2 == 6)
                     {
-                        if (d1 == 6 && d2 == 6)
-                        {
-                            if (dest1 > i * 10 && dest1 < i * 10 + 5)
-                            {
-                                dest1 = 100 + i * 10; started = true;
-                            }
-                            if (dest2 > i * 10 && dest2 < i * 10 + 5)
-                            {
-                                dest2 = 100 + i * 10; started = true;
-                            }
-                        }
+                        dest1 = 110; started = true; dest2 = 110;
                     }
-                    if (!started)
+                }
+                if (onHoverPuppet.Poz == 21 || onHoverPuppet.Poz == 22 || onHoverPuppet.Poz == 23 || onHoverPuppet.Poz == 24)
+                {
+                    if (d1 == 6 && d2 == 6)
                     {
-                        while (d1 > 0)
-                        {
-                            dest1 = MoveOne(dest1, LudoView.GetVM.WPFPlayer.Color);
-                            d1--;
-                        }
-                        while (d2 > 0)
-                        {
-                            dest2 = MoveOne(dest2, LudoView.GetVM.WPFPlayer.Color);
-                            d2--;
-                        }
+                        dest1 = 120; started = true; dest2 = 120;
                     }
-                    bool p1 = true; bool p2 = true;
-                    foreach (IPuppet p in puppetList.Where(p => p.Player.ID == LudoView.GetVM.GameSateInfo.ActivePlayerID))
+                }
+                if (onHoverPuppet.Poz == 31 || onHoverPuppet.Poz == 32 || onHoverPuppet.Poz == 33 || onHoverPuppet.Poz == 34)
+                {
+                    if (d1 == 6 && d2 == 6)
                     {
-                        if (p.Poz == dest1)
-                        {
-                            p1 = false;
-                        }
-                        if (p.Poz == dest2)
-                        {
-                            p2 = false;
-                        }
+                        dest1 = 130; started = true; dest2 = 130;
                     }
-                    if (p1 && p2)
+                }
+                if (onHoverPuppet.Poz == 41 || onHoverPuppet.Poz == 42 || onHoverPuppet.Poz == 43 || onHoverPuppet.Poz == 44)
+                {
+                    if (d1 == 6 && d2 == 6)
                     {
-                        targretFields.Add(dest1);
-                        targretFields.Add(dest2);
+                        dest1 = 140; started = true; dest2 = 140;
                     }
-                    else if (p1)
+                }
+                if (!started)
+                {
+                    while (d1 > 0)
                     {
-                        targretFields.Add(dest1);
+                        dest1 = MoveOne(dest1, LudoView.GetVM.WPFPlayer.Color);
+                        d1--;
                     }
-                    else if (p2)
+                    while (d2 > 0)
                     {
-                        targretFields.Add(dest2);
+                        dest2 = MoveOne(dest2, LudoView.GetVM.WPFPlayer.Color);
+                        d2--;
                     }
-                    else
+                }
+                bool p1 = true; bool p2 = true;
+                foreach (IPuppet p in puppetList.Where(p => p.Player.ID == LudoView.GetVM.GameSateInfo.ActivePlayerID))
+                {
+                    if (p.Poz == dest1)
                     {
-                        targretFields.Add(500);
+                        p1 = false;
                     }
+                    if (p.Poz == dest2)
+                    {
+                        p2 = false;
+                    }
+                }
+                if (p1 && p2)
+                {
+                    targretFields.Add(dest1);
+                    targretFields.Add(dest2);
+                }
+                else if (p1)
+                {
+                    targretFields.Add(dest1);
+                }
+                else if (p2)
+                {
+                    targretFields.Add(dest2);
+                }
+                else
+                {
+                    targretFields.Add(500);
+                }
                 //}
 
                 InvalidateVisual();

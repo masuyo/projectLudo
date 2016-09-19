@@ -34,7 +34,7 @@ namespace BoardGame
         {
             //this.Dispatcher.Invoke(() => Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
 
-            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
+            //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
 
             Ludo.Init(startGameInfo);
 
@@ -193,19 +193,20 @@ namespace BoardGame
         {
             //this.Dispatcher.Invoke(() => Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
+            //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.PuppetList.Where(p =>p.Player.Color == VM.WPFPlayer.Color).ToString());
 
             VM.UserName = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Name;
             VM.ActiveColor = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Color;
 
             VM.GameSateInfo.Dice1 = gameinfo.Dice1;
             VM.GameSateInfo.Dice2 = gameinfo.Dice2;
+            VM.GameSateInfo.PuppetList = gameinfo.PuppetList;
             
             if (!String.IsNullOrEmpty(gameinfo.Msg) && (gameinfo.Msg.ToLower().Contains("server"))) { VM.ServerMsgs.Add(gameinfo.Msg); }
             if (gameinfo.OnManHit && !String.IsNullOrEmpty(gameinfo.Msg))
             {
                 HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, String.Empty, gameinfo.Msg);
             }
-
             Ludo.MovePuppets(gameinfo.PuppetList);
         }
 
