@@ -31,9 +31,9 @@ namespace BoardGame
         DispatcherTimer dt;
         List<IPlayer> players;
         private void Init(IStartGameInfo startGameInfo)
-        {            
+        {
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
-
+            this.Dispatcher.Invoke(() => VM.OnHover = false);
             Ludo.Init(startGameInfo);
 
             VM.WPFPlayer = new Player(startGameInfo.WPFPlayer.ID, startGameInfo.WPFPlayer.Name, startGameInfo.WPFPlayer.Color);
@@ -163,6 +163,7 @@ namespace BoardGame
                 dt.Stop();
                 RotateDice1(); RotateDice2();
                 time = 0;
+                this.Dispatcher.Invoke(() => VM.OnHover = true);
                 //Ludo.IsEnabled = true;
             }
         }
@@ -199,6 +200,14 @@ namespace BoardGame
 
         private void SendMove(GameInfo gameinfo)
         {
+            if (gameinfo.Dice1 == 0 || gameinfo.Dice2 ==0)
+            {
+                this.Dispatcher.Invoke(() => VM.OnHover = true);
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() => VM.OnHover = false);
+            }
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.PuppetList.Where(p =>p.Player.Color == VM.WPFPlayer.Color).ToString());
 

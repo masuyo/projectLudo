@@ -425,7 +425,7 @@ namespace BoardGame
         {
             Draw(drawingContext);
 
-            if (onHover)
+            if (LudoView.GetVM.OnHover)
             {
                 foreach (int fieldID in targretFields)
                 {

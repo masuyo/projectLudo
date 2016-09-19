@@ -57,7 +57,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>-->
         </ListBox>
-        <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" MaxHeight="300" Background="DimGray" Margin="0,5,5,5" MouseDown="Dice_MouseDown">
+        <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" MaxHeight="300" Background="Transparent" Margin="0,5,5,5" MouseDown="Dice_MouseDown">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
