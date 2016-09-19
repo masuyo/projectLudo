@@ -119,7 +119,7 @@ namespace BoardGame
         }
         private void RotateDice2()
         {
-            if (VM.GameSateInfo.Dice1 == 1)
+            if (VM.GameSateInfo.Dice2 == 1)
             {
                 rotate2X.Angle = 270; rotate2Y.Angle = 90; rotate2Z.Angle = 0;//1
             }
@@ -267,11 +267,11 @@ namespace BoardGame
 
         private void Dice_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //if (VM.WPFPlayer.ID == VM.GameSateInfo.ActivePlayerID)
-            //{
+            if (VM.WPFPlayer.ID == VM.GameSateInfo.ActivePlayerID)
+            {
                 HelperClass.HubProxy.Invoke("GetDice", HelperClass.GUID);
                 //Ludo.IsEnabled = false;
-            //}
+            }
         }
     }
 }
