@@ -76,8 +76,11 @@ namespace Game
             
             Dice1 = randomgenerator.Next(1, 6);
             Dice2 = randomgenerator.Next(1, 6);
-            Dice1 = 6;
-            Dice2 = 6;
+            if (randomgenerator.Next(0, 10) > 3)
+            {
+                Dice1 = 6;
+                Dice2 = 6;
+            }
         }
 
         private void Move(MoveLudoAction action)
