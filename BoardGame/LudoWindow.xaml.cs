@@ -42,11 +42,9 @@ namespace BoardGame
             players = new List<IPlayer>();
             foreach (IPlayer p in startGameInfo.OtherWPFPlayers)
             {
-                players.Add(p);
-                Console.WriteLine(p.Color);
+                players.Add(p); 
             }
             players.Add(startGameInfo.WPFPlayer);
-            Console.WriteLine(startGameInfo.WPFPlayer.Color);
 
             VM.UserName = players.Where(p => p.ID == startGameInfo.MsgFromServer.ActivePlayerID).First().Name;
             VM.ActiveColor = players.Where(p => p.ID == startGameInfo.MsgFromServer.ActivePlayerID).First().Color;
@@ -168,10 +166,12 @@ namespace BoardGame
             }
         }
 
-        private void Ludo_PuppetMove(int from, int to)
+        private void Ludo_PuppetMove(int from, int to, int puppetID)
         {
-            HelperClass.HubProxy.Invoke("GetMove", HelperClass.GUID, VM.GameSateInfo.ActivePlayerID, from, to);
-            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, from + ">> " + to);
+            HelperClass.HubProxy.Invoke("GetMove", HelperClass.GUID, puppetID, from, to);
+
+            //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.ActivePlayerID + "::");
+            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, puppetID +"::"+ from + ">> " + to);
             //Console.WriteLine(from + ">> " + to);
         }
 
@@ -194,20 +194,21 @@ namespace BoardGame
             //this.Dispatcher.Invoke(() => Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.PuppetList.Where(p =>p.Player.Color == VM.WPFPlayer.Color).ToString());
+            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.ActivePlayerID + "**");
 
-            VM.UserName = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Name;
-            VM.ActiveColor = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Color;
+            Dispatcher.Invoke(() => VM.UserName = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Name);
+            Dispatcher.Invoke(() => VM.ActiveColor = players.Where(p => p.ID == gameinfo.ActivePlayerID).First().Color);
 
-            VM.GameSateInfo.Dice1 = gameinfo.Dice1;
-            VM.GameSateInfo.Dice2 = gameinfo.Dice2;
-            VM.GameSateInfo.PuppetList = gameinfo.PuppetList;
+            Dispatcher.Invoke(() => VM.GameSateInfo.Dice1 = gameinfo.Dice1);
+            Dispatcher.Invoke(() => VM.GameSateInfo.Dice2 = gameinfo.Dice2);
+            Dispatcher.Invoke(() => VM.GameSateInfo.PuppetList = gameinfo.PuppetList);
             
             if (!String.IsNullOrEmpty(gameinfo.Msg) && (gameinfo.Msg.ToLower().Contains("server"))) { VM.ServerMsgs.Add(gameinfo.Msg); }
             if (gameinfo.OnManHit && !String.IsNullOrEmpty(gameinfo.Msg))
             {
                 HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, String.Empty, gameinfo.Msg);
             }
-            Ludo.MovePuppets(gameinfo.PuppetList);
+            Dispatcher.Invoke(() => Ludo.MovePuppets(gameinfo.PuppetList));
         }
 
         private void SendMessage(string uname, string text, DateTime date)

@@ -24,11 +24,11 @@ namespace BoardGame
 
 
 
-        public event Action<int, int> PuppetMove; //event
+        public event Action<int, int, int> PuppetMove; //event
 
-        private void OnPuppetMove(int from, int to)
+        private void OnPuppetMove(int from, int to, int puppetID)
         {
-            PuppetMove?.Invoke(from, to);
+            PuppetMove?.Invoke(from, to, puppetID);
         }
 
 
@@ -122,7 +122,6 @@ namespace BoardGame
             }
             return 500;          
         }
-
         //todo business logic
         private void LudoFrameworkElement_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -241,7 +240,7 @@ namespace BoardGame
             }
             if (toFieldID != -1)
             {
-                PuppetMove(onHoverPuppet.Poz, toFieldID);
+                PuppetMove(onHoverPuppet.Poz, toFieldID, onHoverPuppet.ID);
             }
 
         }
@@ -337,7 +336,6 @@ namespace BoardGame
             }
         }
 
-
         private void DeleteMan(DrawingContext drawingContext, int from)
         {
             if (from != 0)
@@ -380,8 +378,6 @@ namespace BoardGame
 
             return rec;
         }
-
-
         private void MoveMan(DrawingContext drawingContext, int from, int where, PlayerColor color, bool onHover)
         {
             DeleteMan(drawingContext, from);
