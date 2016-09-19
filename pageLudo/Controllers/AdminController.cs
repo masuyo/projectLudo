@@ -54,11 +54,24 @@ namespace pageLudo.Controllers
                 aa = new AdminActions();
                 string editUserEmailID = HttpContext.Session["EditUserEmailID"].ToString();
 
-                var sha1 = new SHA1CryptoServiceProvider();
-                byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
-                string hashedPassword = new ASCIIEncoding().GetString(sha1data);
+                string hashedPassword = null;
 
-                aa.UserSetting(editUserEmailID, u.Username, hashedPassword, u.EmailID, u.Role);
+                if (u.Password != null)
+                {
+                    var sha1 = new SHA1CryptoServiceProvider();
+                    byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
+                    hashedPassword = new ASCIIEncoding().GetString(sha1data);
+                }
+
+                if (aa.UserSetting(editUserEmailID, u.Username, hashedPassword, u.EmailID, u.Role))
+                {
+                    ViewBag.Message = "Edit was successful";
+                }
+                else
+                {
+                    ViewBag.Message = "Unsuccessful edit";
+                }
+
                 return RedirectToAction("AllUsersPage");
             }
             catch

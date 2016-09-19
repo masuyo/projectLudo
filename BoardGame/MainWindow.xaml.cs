@@ -56,7 +56,7 @@ namespace BoardGame
             }
             this.DataContext = VM;
             HelperClass.Connection.StateChanged += Connection_StateChanged;
-            // this.Background = LoginView.GetBG;
+            this.Background = LoginView.GetBG;
 
         }
 

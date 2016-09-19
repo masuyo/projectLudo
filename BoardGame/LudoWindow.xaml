@@ -40,7 +40,7 @@
             Foreground="White" Padding="400,0,0,0" Margin="0,0,0,620" Grid.RowSpan="2" FontSize="24" />
         <Label             
             Grid.Column="2" Grid.Row="0"  VerticalContentAlignment="Center" Height="40" Width="200" HorizontalAlignment="Left" Margin="375,20,0,40"
-            Background="Transparent" BorderBrush="Black" Foreground="Black" BorderThickness="2" MouseDown="LBL_Friend_MouseDown"/>
+            Background="Transparent" BorderBrush="White" Foreground="Black" BorderThickness="2" MouseDown="LBL_Friend_MouseDown"/>
         <ListBox Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" 
                  MinHeight="100" 
                  ItemsSource="{Binding Path=ServerMsgs}" 
@@ -105,7 +105,7 @@
                    Background="Transparent" Foreground="Transparent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="ExtraBold" FontSize="30"  />
             <Viewport3D DataContext="{Binding Path=DVM}" Grid.Row="1">
                 <Viewport3D.Camera>
-                    <PerspectiveCamera Position="1 2 5" LookDirection="-1 -2 -5">
+                    <PerspectiveCamera Position="1 2 4" LookDirection="-1 -2 -4">
                     </PerspectiveCamera>
                 </Viewport3D.Camera>
                 <ModelVisual3D>

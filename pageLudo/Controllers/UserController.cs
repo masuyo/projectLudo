@@ -21,12 +21,16 @@ namespace pageLudo.Controllers
             if (ModelState.IsValid)
             {
                 UserActions ua = new UserActions();
+                string hashedPassword = null;
 
-                var sha1 = new SHA1CryptoServiceProvider();
-                byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
-                string hashedPassword = new ASCIIEncoding().GetString(sha1data);
+                if (u.Password != null)
+                {
+                    var sha1 = new SHA1CryptoServiceProvider();
+                    byte[] sha1data = sha1.ComputeHash(Encoding.ASCII.GetBytes(u.Password));
+                    hashedPassword = new ASCIIEncoding().GetString(sha1data);
+                }
 
-                if (ua.ProfileSetting(Session["LogedEmailID"].ToString(), u.Username,u.Password,hashedPassword))
+                if (ua.ProfileSetting(Session["LogedEmailID"].ToString(), u.Username,u.Password, hashedPassword))
                 {
                     ViewBag.Message = "User settings saved";
                 }
