@@ -16,6 +16,7 @@ namespace BoardGame.Views
         ObservableCollection<string> chatMsgs;
         string chatMsg;
         string userName;
+        bool onHover;
         PlayerColor activeColor;
         public ObservableCollection<string> ServerMsgs
         {
@@ -48,6 +49,7 @@ namespace BoardGame.Views
             serverMsgs = new ObservableCollection<string>();
             chatMsgs = new ObservableCollection<string>();
             diceVM = new DiceView();
+            onHover = false;
 
         }
         public static LudoView GetVM
@@ -97,6 +99,13 @@ namespace BoardGame.Views
             get { return activeColor; }
 
             set { SetProperty(ref activeColor, value); }
+        }
+
+        public bool OnHover
+        {
+            get { return onHover; }
+
+            set { SetProperty(ref onHover, value); }
         }
     }
 }
