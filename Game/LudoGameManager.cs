@@ -102,7 +102,8 @@ namespace Game
                 if (nextposition > 44) throw new InvalidOperationException("Player can move out of the house");
                 foreach (var puppet in doer.Puppets)
                 {
-                    if (nextposition == puppet) throw new InvalidOperationException("Player already has a puppet on that cell");
+                    if (nextposition == puppet) //throw new InvalidOperationException("Player already has a puppet on that cell");
+                        nextposition++;
                 }
 
                 if (action.Amount == Dice1)

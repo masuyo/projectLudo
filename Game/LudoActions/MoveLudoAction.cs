@@ -9,8 +9,8 @@ namespace Game
 {
     public class MoveLudoAction : LudoAction
     {
-        public int Puppet { get; private set; }
-        public int Amount { get; private set; }
+        public int Puppet { get; set; }
+        public int Amount { get;  set; }
 
         public MoveLudoAction(Player newDoer,int puppet,int amount) : base(newDoer,LudoActionType.Move)
         {
