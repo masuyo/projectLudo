@@ -470,6 +470,11 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
 
                     }
                     else
+                    if (actPoz > 109 && actPoz < 116 && destPoz < 116)
+                    {
+                        amount = destPoz - actPoz;
+                    }
+                    else
                     if (destPoz > 100 && destPoz < 105)
                     {
                         destPoz = destPoz + 49;
@@ -487,6 +492,10 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
                     if (destPoz>300 && destPoz<305)
                     {
                         destPoz = destPoz - 171;
+                        amount = destPoz - actPoz;
+                    }else
+                    if(actPoz>109 && actPoz<116 && destPoz < 116)
+                    {
                         amount = destPoz - actPoz;
                     }else
                     if (actPoz<150 && destPoz <116)
@@ -509,6 +518,11 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
                         amount = destPoz - actPoz;
                     }
                     else
+                    if (actPoz > 109 && actPoz < 116 && destPoz < 116)
+                    {
+                        amount = destPoz - actPoz;
+                    }
+                    else
                    if (actPoz < 150 && destPoz < 116)
                     {
                         actPoz = actPoz - 40;
@@ -527,6 +541,11 @@ guid,caller.Name,caller.color,actPoz,destPoz,amount);
                     if (destPoz > 400 && destPoz < 405)
                     {
                         destPoz = destPoz - 261;
+                        amount = destPoz - actPoz;
+                    }
+                    else
+                    if (actPoz > 109 && actPoz < 116 && destPoz < 116)
+                    {
                         amount = destPoz - actPoz;
                     }
                     else
