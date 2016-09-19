@@ -31,9 +31,7 @@ namespace BoardGame
         DispatcherTimer dt;
         List<IPlayer> players;
         private void Init(IStartGameInfo startGameInfo)
-        {
-            //this.Dispatcher.Invoke(() => Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
-
+        {            
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
 
             Ludo.Init(startGameInfo);
@@ -54,6 +52,9 @@ namespace BoardGame
                 new Player(startGameInfo.OtherWPFPlayers[2].ID, startGameInfo.OtherWPFPlayers[2].Name, startGameInfo.OtherWPFPlayers[2].Color)
             };
             VM.GameSateInfo = startGameInfo.MsgFromServer;
+
+            this.Dispatcher.Invoke(() => Ludo.IsEnabled = startGameInfo.WPFPlayer.ID == startGameInfo.MsgFromServer.ActivePlayerID);
+
         }
         public LudoWindow(IStartGameInfo startGameInfo)
         {
@@ -198,7 +199,6 @@ namespace BoardGame
 
         private void SendMove(GameInfo gameinfo)
         {
-            //this.Dispatcher.Invoke(() => Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.PuppetList.Where(p =>p.Player.Color == VM.WPFPlayer.Color).ToString());
 
@@ -212,6 +212,9 @@ namespace BoardGame
             Dispatcher.Invoke(() => VM.GameSateInfo.PuppetList = gameinfo.PuppetList);
 
             Dispatcher.Invoke(() => RotateDice1()); Dispatcher.Invoke(() => RotateDice2());
+
+            this.Dispatcher.Invoke(() => Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
+
             HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.ActivePlayerID + "**");
             HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.Dice1 + " - " + VM.GameSateInfo.Dice2);
 
