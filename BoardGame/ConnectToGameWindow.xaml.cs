@@ -43,6 +43,7 @@ namespace BoardGame
             HelperClass.HubProxy.On<Room>("SendCreateRoom", (createdRoom) => this.Dispatcher.Invoke(() => { CreateRoom(createdRoom); }));
             HelperClass.HubProxy.On<bool>("SendConnectUserToRoom", (connectedToRoom) => this.Dispatcher.Invoke(() => { ConnectUserToRoom(connectedToRoom); }));
             HelperClass.HubProxy.On<StartGameInfo>("SendStart", (startGameInfo) => this.Dispatcher.Invoke(() => { Start(startGameInfo); }));
+            HelperClass.HubProxy.On<bool>("SendLeaveUserFromRoom", (left) => this.Dispatcher.Invoke(() => { LeaveUserFromRoom(left); }));
 
 
             AllRoom(new List<Room>());
@@ -56,6 +57,14 @@ namespace BoardGame
             }
         }
 
+        private void LeaveUserFromRoom(bool left)
+        {
+            Console.WriteLine("left");
+            if (left && HelperClass.Connection?.State == ConnectionState.Connected)
+            {
+                HelperClass.HubProxy.Invoke("GetUsersInRoom", HelperClass.GUID, VM.SelectedRoom); //answer : call my "SendAllRoomList"
+            }
+        }
         private void Connection_StateChanged(StateChange e)
         {
             if (e.NewState != ConnectionState.Connected) { MessageBox.Show(e.OldState.ToString() + " >> " + e.NewState.ToString()); }
@@ -255,7 +264,10 @@ namespace BoardGame
         private void LBL_ExitRoom_MouseDown(object sender, MouseButtonEventArgs e)
         {
             VM.UsersInRoom.Clear();
-            VM.UsersInRoom = new ObservableCollection<IUser>();
+            if (HelperClass.Connection?.State == ConnectionState.Connected)
+            {
+                HelperClass.HubProxy.Invoke("GetLeaveUserFromRoom", HelperClass.GUID); //answer : call my "SendLeaveUserFromRoom"
+            }
         }
 
         private void PSWDBX_PasswordChanged(object sender, RoutedEventArgs e)

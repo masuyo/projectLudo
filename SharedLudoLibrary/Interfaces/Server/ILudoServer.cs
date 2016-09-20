@@ -15,6 +15,7 @@ namespace SharedLudoLibrary.Interfaces.Server
         void GetUsersInRoom(string guid, Room room);
         void GetCreateRoom(string guid, Room newRoom);
         void GetConnectUserToRoom(string guid, User user, Room room);
+        void GetLeaveUserFromRoom(string guid);
         void GetStart(string guid, string userID);
         void GetMove(string guid, int playerID, int actPoz, int destPoz);
         void GetOverall(string guid, int playerID);
