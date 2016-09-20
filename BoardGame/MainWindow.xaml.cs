@@ -44,7 +44,7 @@ namespace BoardGame
                 HelperClass.HubProxy.On<string>("SendLogin", (guid) => this.Dispatcher.Invoke(() => { Login(guid); }));
                 HelperClass.HubProxy.On("SendLoginError", () => this.Dispatcher.Invoke(() => { LoginError(); }));
                 HelperClass.HubProxy.On<string>("SendForgot", (linkToPage) => this.Dispatcher.Invoke(() => { Forgot(linkToPage); }));
-
+                
                 try
                 {
                     HelperClass.Connection.Start();
@@ -59,6 +59,7 @@ namespace BoardGame
             this.Background = LoginView.GetBG;
 
         }
+
 
         private void Forgot(string linkToPage)
         {

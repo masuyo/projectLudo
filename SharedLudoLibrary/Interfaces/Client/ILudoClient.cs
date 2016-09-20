@@ -19,6 +19,7 @@ namespace SharedLudoLibrary.Interfaces.Client
         void SendUsersInRoom(List<User> usersInRoom);
         void SendCreateRoom(Room createdRoom);
         void SendConnectUserToRoom(bool connectedToRoom);
+        void SendLeaveUserFromRoom(bool left);
 
         void SendStart(StartGameInfo startGameInfo);
         void SendMove(GameInfo gameInfo);
