@@ -180,7 +180,7 @@ namespace BoardGame
         {
             HelperClass.HubProxy.Invoke("GetMove", HelperClass.GUID, puppetID, from, to);
             //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.ActivePlayerID + "::");
-            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, puppetID +"::"+ from + ">> " + to);
+            //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, puppetID +"::"+ from + ">> " + to);
             //Console.WriteLine(from + ">> " + to);
         }
 
@@ -224,8 +224,8 @@ namespace BoardGame
 
             this.Dispatcher.Invoke(() => Ludo.IsEnabled = gameinfo.ActivePlayerID == VM.WPFPlayer.ID);
 
-            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.ActivePlayerID + "**");
-            HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.Dice1 + " - " + VM.GameSateInfo.Dice2);
+            //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.ActivePlayerID + "**");
+            //HelperClass.HubProxy.Invoke("GetMessage", HelperClass.GUID, HelperClass.UserName, VM.GameSateInfo.Dice1 + " - " + VM.GameSateInfo.Dice2);
 
 
 

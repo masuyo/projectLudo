@@ -112,7 +112,7 @@ namespace SignalRServer
             {
                 LudoTable room = item.Value;
 
-                Room newroom = new Room() { Name = room.Name, ID = 0, AvailablePlaces = 4 - room.Players.Count, Password = room.Password };
+                Room newroom = new Room() { Name = room.Name, ID = 0, AvailablePlaces = 4 - room.Players.Count, Password = ""}; //PW
                 rooms.Add(newroom);
             }
             Clients.Caller.SendAllRoomList(rooms);
@@ -190,6 +190,33 @@ namespace SignalRServer
             }
 
             Clients.Caller.SendConnectUserToRoom(connectedToRoom);
+        }
+
+        public void GetLeaveUserFromRoom(string guid)
+        {
+            LudoPlayer caller = guid_player[guid];
+            LudoTable table = name_table.Where(akt => akt.Value.Players.Where(pakt => pakt.Name == caller.Name).SingleOrDefault() != null).SingleOrDefault().Value;
+
+            if (table?.Creator?.Name == caller.Name)
+            {
+                LudoTable removed;
+                name_table.TryRemove(table.Name,out removed );
+
+                foreach (var item in removed.Players)
+                {
+                    string g = guid_player.Where(akt => akt.Value.Name == item.Name).SingleOrDefault().Key;
+                    string c = connectionid_guid.Where(akt => akt.Value == g).SingleOrDefault().Key;
+
+                    Groups.Remove(c, table.Name);
+                }
+            }
+            else
+            {
+                table.LeavePlayer(caller);
+                string c = connectionid_guid.Where(akt => akt.Value == guid).SingleOrDefault().Key;
+                Groups.Remove(c, table.Name);
+            }
+
         }
 
         public void GetStart(string guid, string playerID)
