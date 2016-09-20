@@ -164,7 +164,7 @@ namespace pageLudo.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("WrongUNorPW", "Incorrect username or password");
+                    ModelState.AddModelError("WrongUNorPW", "Incorrect e-mail address or password");
                     return View();
                 }
 
